@@ -16,136 +16,174 @@
     <style>
         :root {
             --color-bg: #F5F3EF;
+            --color-bg-card: #FFFFFF;
+            --color-bg-alt: #FFFFFF;
             --color-text: #3D4A3A;
+            --color-text-light: #6B7280;
+            --color-heading: #2F4F4F;
             --color-primary: #4CAF50;
             --color-secondary: #2F4F4F;
             --color-accent: #FFC107;
+            --color-border: #E5E7EB;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --font-serif: 'Tinos', serif;
             --font-sans: 'Raleway', sans-serif;
         }
+
+        html.dark {
+            --color-bg: #111827;
+            --color-bg-card: #1F2937;
+            --color-bg-alt: #374151;
+            --color-text: #D1D5DB;
+            --color-text-light: #9CA3AF;
+            --color-heading: #F9FAFB;
+            --color-primary: #34D399;
+            --color-accent: #FBBF24;
+            --color-border: #374151;
+        }
+
         body {
             background-color: var(--color-bg);
             font-family: var(--font-sans);
             color: var(--color-text);
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.05' fill='%23BDB76B'%3E%3Cpath d='M98.6 30L50 50L1.4 30L50 10L98.6 30ZM50 70L98.6 50L50 90L1.4 70L50 50Z' /%3E%3C/g%3E%3C/svg%3E");
             background-size: 50px 50px;
-        }
-        .font-serif { font-family: var(--font-serif); }
-
-        .theme-pill-button { transition: all 0.2s ease-in-out; }
-        .theme-pill-button.active {
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+            transition: background-color 0.3s, color 0.3s;
         }
         
-        .card-theme-badge:hover {
-            background-color: var(--color-accent);
-            color: var(--color-secondary);
-            transform: scale(1.05);
-        }
+        .font-serif { font-family: var(--font-serif); }
+        .theme-pill-button, .card-theme-badge, .mobile-nav-btn, .desktop-nav-btn, #back-to-top, .action-btn { transition: all 0.2s ease-in-out; }
+        .theme-pill-button.active { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .card-theme-badge:hover { background-color: var(--color-accent); color: var(--color-secondary); transform: scale(1.05); }
+        .search-highlight { background-color: var(--color-accent); padding: 2px 4px; border-radius: 4px; color: var(--color-secondary); font-weight: 700; }
 
-        .search-highlight {
-            background-color: var(--color-accent);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         
+        .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
 
-        .highlight {
-            transition: all 0.3s ease;
-            transform: scale(1.03);
-            box-shadow: 0 0 0 5px var(--color-accent), 0 10px 30px rgba(0,0,0,0.15);
-        }
-        .suggestion-highlight {
-            transition: all 0.5s ease-in-out;
-            transform: scale(1.05);
-            box-shadow: 0 0 0 6px rgba(47, 79, 79, 0.5), 0 10px 30px rgba(0,0,0,0.2);
-            border-color: var(--color-secondary) !important;
-        }
+        .highlight { transition: all 0.3s ease; transform: scale(1.03); box-shadow: 0 0 0 5px var(--color-accent), var(--shadow-lg); }
+        .suggestion-highlight { transition: all 0.5s ease-in-out; transform: scale(1.05); box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-secondary) 50%, transparent), var(--shadow-lg); border-color: var(--color-secondary) !important; }
 
         #toast { transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
-        #back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .loader {
-            width: 20px; height: 20px; border: 3px solid #FFF; border-bottom-color: transparent;
-            border-radius: 50%; display: inline-block; box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
+        .loader { width: 20px; height: 20px; border: 3px solid #FFF; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; }
         .loader-dark { border-color: #666; border-bottom-color: transparent; }
-
+        html.dark .loader-dark { border-color: #9CA3AF; border-bottom-color: transparent; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .custom-scrollbar::-webkit-scrollbar { height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #aaa; }
+        html.dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #4B5563; }
         
-        .mobile-nav-btn.active {
-             color: var(--color-primary);
-             transform: translateY(-4px) scale(1.1);
-             background-color: var(--color-bg);
-             border-radius: 50%;
-        }
+        .mobile-nav-btn.active { color: var(--color-primary); transform: translateY(-4px) scale(1.1); background-color: var(--color-bg); border-radius: 50%; }
+        .desktop-nav-btn.active { color: var(--color-primary); border-color: var(--color-primary); background-color: var(--color-primary)/10; }
         
-        /* NOUVEAU: Styles pour la modale */
         #modal-backdrop.visible { opacity: 1; pointer-events: auto; }
-        #modal-content.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .prose h3 { margin-top: 1em; margin-bottom: 0.5em; font-size: 1.1em; color: var(--color-primary); }
-        .prose p { margin-bottom: 1em; }
+        #modal-content.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+        #modal-body { -webkit-overflow-scrolling: touch; }
 
+        .prose h3 { margin-top: 1.2em; margin-bottom: 0.6em; font-size: 1.1em; font-weight: bold; color: var(--color-primary); }
+        .prose p { margin-bottom: 1em; }
+        .prose ul { list-style-position: inside; padding-left: 1em; margin-bottom: 1em; }
+        .prose li { margin-bottom: 0.5em; }
+
+        .favorite-btn.favorited svg { fill: #EC4899; stroke: #EC4899; color: #EC4899; }
+
+        .quiz-option { border: 2px solid var(--color-border); padding: 0.75rem 1rem; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; }
+        .quiz-option:hover { border-color: var(--color-primary); background-color: color-mix(in srgb, var(--color-primary) 10%, transparent); }
+        .quiz-option.correct { border-color: #10B981; background-color: #D1FAE5; color: #064E3B; font-weight: bold; }
+        html.dark .quiz-option.correct { background-color: #064E3B; color: #D1FAE5; }
+        .quiz-option.incorrect { border-color: #EF4444; background-color: #FEE2E2; color: #991B1B; font-weight: bold; }
+        html.dark .quiz-option.incorrect { background-color: #991B1B; color: #FEE2E2; }
+        
+        .search-wrapper { position: relative; }
+        .clear-search-btn {
+            position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
+            color: var(--color-text-light); opacity: 0; pointer-events: none; transition: opacity 0.2s;
+        }
+        .search-wrapper input:not(:placeholder-shown) + .clear-search-btn {
+            opacity: 1; pointer-events: auto; cursor: pointer;
+        }
     </style>
 </head>
-<body class="p-4 sm:p-6 md:p-8 pb-28 sm:pb-8">
+<body class="p-4 sm:p-6 md:p-8 pb-32 sm:pb-8">
     <div class="max-w-7xl mx-auto">
+        
+        <div class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+            <button id="theme-toggle" aria-label="Changer de thème" class="p-2 rounded-full bg-[var(--color-bg-alt)] text-[var(--color-text)] shadow-md hover:scale-110 transition-transform">
+                <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            </button>
+        </div>
+
         <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-4xl md:text-7xl font-serif font-bold text-[var(--color-secondary)] mb-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+            <h1 class="text-4xl md:text-7xl font-serif font-bold text-[var(--color-heading)] mb-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                 <span class="text-[var(--color-accent)] text-5xl md:text-6xl font-normal">ⵟ</span>
                 <span>Inzan n Teqbaylit</span>
                 <span class="text-[var(--color-accent)] text-5xl md:text-6xl font-normal">ⵣ</span>
             </h1>
-            <p class="text-lg md:text-xl text-[var(--color-text)] font-light">Trésors de la Sagesse Kabyle</p>
+            <p class="text-lg md:text-xl text-[var(--color-text-light)] font-light">Trésors de la Sagesse Kabyle</p>
         </header>
 
+        <!-- Desktop Navigation -->
+        <nav id="desktop-nav" class="hidden sm:flex justify-center mb-8">
+            <div class="flex items-center gap-2 p-2 bg-[var(--color-bg-card)]/80 backdrop-blur-md rounded-xl shadow-md border border-[var(--color-border)]">
+                <button data-tab="accueil-tab" class="desktop-nav-btn flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span class="font-semibold">Accueil</span>
+                </button>
+                <button data-tab="explorer-tab" class="desktop-nav-btn flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span class="font-semibold">Explorer</span>
+                </button>
+                <button data-tab="favoris-tab" class="desktop-nav-btn flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                    <span class="font-semibold">Favoris</span>
+                </button>
+                <button data-tab="ai-sage-tab" class="desktop-nav-btn flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                    <span class="font-semibold">Sage AI</span>
+                </button>
+                 <button data-tab="quiz-tab" class="desktop-nav-btn flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.879 7.519c.355-.83.954-1.535 1.76-2.022A4.5 4.5 0 0 1 16.5 9.25c0 1.51-1.023 2.77-2.5 3.25"/><path d="M8.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M12.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M16.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M18 17a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2Z"/></svg>
+                    <span class="font-semibold">Quiz</span>
+                </button>
+            </div>
+        </nav>
+
         <div class="main-content-container">
-            <section id="accueil-tab" class="tab-content active" aria-labelledby="proverb-of-the-day-title">
-                <div class="max-w-4xl mx-auto mb-10 text-center p-4 bg-white/70 rounded-xl shadow-inner border border-gray-100">
+            <section id="accueil-tab" class="tab-content" aria-labelledby="proverb-of-the-day-title">
+                <div class="max-w-4xl mx-auto mb-10 text-center p-6 bg-[var(--color-bg-card)]/70 rounded-xl shadow-inner border border-[var(--color-border)]">
                     <p class="text-lg text-[var(--color-secondary)] italic font-light">
                         Comme un médicament, le proverbe doit être utilisé à bon escient. Pour ce, il ne suffit pas de le connaître, il faut surtout le comprendre. 
-                        <span class="block mt-2 font-medium">Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem.</span>
+                        <span class="block mt-2 font-medium text-[var(--color-primary)]">Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem.</span>
                     </p>
-                    <div class="mt-6 pt-4 border-t border-gray-200">
-                        <p class="text-sm text-gray-600">
-                            Cette banque de proverbes (en kabyle et leur adaptation en français) est extraite des
-                            <strong class="text-[var(--color-primary)]">3<sup>ème</sup> et 4<sup>ème</sup> tomes</strong> de l'œuvre magistrale de <strong class="text-[var(--color-secondary)]">Monsieur Aomar SIDER</strong> :
-                            <strong class="font-serif">"INZAN amek i d-llan"</strong> (<em class="italic">"Origines des proverbes et expressions kabyles"</em>).
-                            <br>
-                            Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en <strong class="text-[var(--color-primary)]">4 tomes</strong> dans les librairies.
-                        </p>
-                    </div>
                 </div>
-            
                 <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Proverbe du Jour 💡</h2>
                 <div id="proverb-of-the-day-card" class="max-w-3xl mx-auto fade-in"></div>
+
+                <footer class="text-center mt-16 py-6 border-t-2 border-[var(--color-border)]">
+                    <p class="text-[var(--color-text-light)] font-medium">Une collection de la sagesse populaire kabyle.</p>
+                    <p class="text-sm text-[var(--color-text-light)] mt-1">Données initiales récoltées par Aomar SIDER. <button id="about-btn" class="text-[var(--color-primary)] underline">En savoir plus</button>.</p>
+                </footer>
             </section>
 
-            <section id="explorer-tab" class="tab-content hidden" aria-labelledby="explorer-title">
+            <section id="explorer-tab" class="tab-content" aria-labelledby="explorer-title">
                  <div class="sticky top-4 z-20">
-                     <div class="mb-4 p-4 bg-white/80 backdrop-blur-md rounded-xl shadow-lg border border-gray-100">
+                     <div class="mb-4 p-4 bg-[var(--color-bg-card)]/80 backdrop-blur-md rounded-xl shadow-lg border border-[var(--color-border)]">
                         <div class="flex flex-col sm:flex-row gap-4 items-stretch">
-                            <input type="text" id="search-input" placeholder="Rechercher un proverbe..." aria-label="Champ de recherche de proverbe" class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner">
+                            <div class="search-wrapper w-full">
+                                <input type="text" id="search-input" placeholder="Rechercher un proverbe..." aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
+                                <button class="clear-search-btn" aria-label="Vider la recherche">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                            </div>
                             <button id="random-btn" aria-label="Afficher un proverbe aléatoire" class="w-full sm:w-auto px-5 py-3 bg-[var(--color-accent)] text-[var(--color-secondary)] font-semibold rounded-lg hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg>
                                 <span>Aléatoire</span>
@@ -153,40 +191,47 @@
                         </div>
                     </div>
                 </div>
-                
                 <nav id="theme-filter-nav" aria-label="Filtres de thèmes Kabyles" class="mb-8 p-3 -mt-2">
                     <div class="flex items-center gap-3">
-                        <h3 class="text-sm font-bold text-[var(--color-secondary)] flex-shrink-0">Thèmes :</h3>
+                        <h3 class="text-sm font-bold text-[var(--color-heading)] flex-shrink-0">Thèmes :</h3>
                         <div class="flex-grow overflow-x-auto custom-scrollbar">
                             <div id="theme-list-container" class="flex gap-2"></div>
                         </div>
                     </div>
                 </nav>
-                
-                <main id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></main>
-                <p id="no-results" class="text-center text-2xl text-gray-500 mt-12 hidden font-serif p-4 border border-dashed rounded-lg">
+                <main id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[400px]"></main>
+                <p id="no-results" class="text-center text-2xl text-[var(--color-text-light)] mt-12 hidden font-serif p-4 border border-dashed rounded-lg">
                     😔 Aucun proverbe ne correspond à votre recherche.
                 </p>
             </section>
-
-            <section id="ai-sage-tab" class="tab-content hidden" aria-labelledby="ai-sage-title">
+            
+            <section id="favoris-tab" class="tab-content" aria-labelledby="favoris-title">
+                <h2 id="favoris-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Mes Favoris ❤️</h2>
+                <main id="favorites-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[400px]"></main>
+                <div id="no-favorites" class="text-center text-xl text-[var(--color-text-light)] mt-12 hidden font-serif p-4">
+                    <p>Vous n'avez pas encore de proverbes favoris.</p>
+                    <button id="go-to-explorer-btn" class="mt-4 px-5 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-[1.02] transition-transform">Explorer les proverbes</button>
+                </div>
+            </section>
+            
+            <section id="ai-sage-tab" class="tab-content" aria-labelledby="ai-sage-title">
                  <h2 id="ai-sage-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Le Sage Artificiel 🤖</h2>
-                <div class="fade-in max-w-3xl mx-auto bg-white/95 p-6 rounded-xl shadow-lg border border-gray-200">
-                    <p class="text-center text-gray-600 mb-4">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
-                    <textarea id="ai-context-input" class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4" rows="3" placeholder="Exemple : Mon ami parle beaucoup mais n'agit jamais..."></textarea>
+                <div class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
+                    <p class="text-center text-[var(--color-text-light)] mb-4">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
+                    <textarea id="ai-context-input" class="w-full p-3 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4 bg-[var(--color-bg)]" rows="3" placeholder="Exemple : Mon ami parle beaucoup mais n'agit jamais..."></textarea>
                     <button id="ai-suggest-btn" class="w-full px-5 py-3 bg-[var(--color-secondary)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
                         <span>✨ Demander conseil</span>
                     </button>
-                    <div id="ai-result-feedback" role="status" class="text-center mt-4 min-h-[24px]"></div>
+                    <div id="ai-result-feedback" role="status" class="mt-4 min-h-[24px]"></div>
                 </div>
             </section>
 
-            <section id="atelier-tab" class="tab-content hidden" aria-labelledby="atelier-title">
+            <section id="atelier-tab" class="tab-content" aria-labelledby="atelier-title">
                 <h2 id="atelier-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Atelier Créatif 🎨</h2>
-                <div class="fade-in max-w-3xl mx-auto bg-white/95 p-6 rounded-xl shadow-lg border border-gray-200">
-                    <p class="text-center text-gray-600 mb-4">Entrez un thème ou une idée, et laissez l'IA générer un nouveau proverbe dans le style kabyle.</p>
-                    <input type="text" id="atelier-input" class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4" placeholder="Exemple : la patience sur internet...">
+                <div class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
+                    <p class="text-center text-[var(--color-text-light)] mb-4">Entrez un thème ou une idée, et laissez l'IA générer un nouveau proverbe dans le style kabyle.</p>
+                    <input type="text" id="atelier-input" class="w-full p-3 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4 bg-[var(--color-bg)]" placeholder="Exemple : la patience sur internet...">
                     <button id="atelier-btn" class="w-full px-5 py-3 bg-[var(--color-accent)] text-[var(--color-secondary)] font-semibold rounded-lg hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v2"/><path d="M18 13v7"/><path d="M21 16h-6"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
                         <span>✨ Créer un proverbe</span>
@@ -194,30 +239,42 @@
                     <div id="atelier-result" class="mt-6 min-h-[50px]"></div>
                 </div>
             </section>
+            
+            <section id="quiz-tab" class="tab-content" aria-labelledby="quiz-title">
+                <h2 id="quiz-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Quiz de Sagesse 🧠</h2>
+                <div id="quiz-container" class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
+                    </div>
+            </section>
+
         </div>
     </div>
     
-    <nav id="mobile-nav" class="sm:hidden fixed bottom-4 left-4 right-4 bg-white/80 backdrop-blur-lg border border-gray-200 flex justify-around shadow-2xl z-50 rounded-full p-1">
-        <button data-tab="accueil-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-secondary)] transition-all duration-300">
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="sm:hidden fixed bottom-4 left-4 right-4 bg-[var(--color-bg-alt)]/80 backdrop-blur-lg border border-[var(--color-border)] flex justify-around shadow-2xl z-50 rounded-full p-1">
+        <button data-tab="accueil-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span class="text-xs font-semibold">Accueil</span>
         </button>
-        <button data-tab="explorer-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-secondary)] transition-all duration-300">
+        <button data-tab="explorer-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <span class="text-xs font-semibold">Explorer</span>
         </button>
-        <button data-tab="ai-sage-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-secondary)] transition-all duration-300">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="8" y="8" width="8" height="12" rx="2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M16 20h2a2 2 0 0 0 2-2V8"/></svg>
+        <button data-tab="favoris-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+            <span class="text-xs font-semibold">Favoris</span>
+        </button>
+        <button data-tab="ai-sage-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
             <span class="text-xs font-semibold">Sage AI</span>
         </button>
-        <button data-tab="atelier-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-secondary)] transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.3 0 .6.1.8.4l6.4 6.4c.2.2.4.5.4.8v8.8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10.6c0-.3.2-.6.4-.8L11.2 3.4a1 1 0 0 1 .8-.4z"/><path d="m9 12 2 2 4-4"/></svg>
-            <span class="text-xs font-semibold">Atelier</span>
+        <button data-tab="quiz-tab" class="mobile-nav-btn flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.879 7.519c.355-.83.954-1.535 1.76-2.022A4.5 4.5 0 0 1 16.5 9.25c0 1.51-1.023 2.77-2.5 3.25"/><path d="M8.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M12.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M16.5 10.5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/><path d="M18 17a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2Z"/></svg>
+            <span class="text-xs font-semibold">Quiz</span>
         </button>
     </nav>
     
-    <div id="toast" class="fixed bottom-[-100px] left-1/2 -translate-x-1/2 bg-green-700 text-white py-2 px-5 rounded-full shadow-xl opacity-0 z-[1000]">
-        <p>✅ Proverbe copié !</p>
+    <div id="toast" role="status" aria-live="polite" class="fixed bottom-[-100px] left-1/2 -translate-x-1/2 bg-green-700 text-white py-2 px-5 rounded-full shadow-xl opacity-0 z-[1000]">
+        <p>Message</p>
     </div>
 
     <button id="back-to-top" title="Retour en haut" aria-label="Retourner en haut de la page" class="fixed bottom-[100px] sm:bottom-10 right-5 p-3 bg-[var(--color-secondary)] text-white rounded-full shadow-xl hover:bg-[var(--color-primary)] focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-[var(--color-primary)] transition-all opacity-0 visibility-hidden transform-gpu translate-y-5 z-50">
@@ -225,564 +282,538 @@
     </button>
     
     <div id="modal-backdrop" class="fixed inset-0 bg-black/60 z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <div id="modal-content" class="prose fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-2xl max-h-[80vh] bg-white p-6 rounded-lg shadow-2xl z-[101] opacity-0 scale-95 pointer-events-none transition-all duration-300 overflow-y-auto">
-        <button id="modal-close-btn" class="absolute top-3 right-3 text-gray-400 hover:text-gray-800">&times;</button>
-        <h2 id="modal-title" class="text-2xl font-serif text-[var(--color-secondary)] mt-0 mb-4"></h2>
-        <div id="modal-body"></div>
-    </div>
     
-    <footer class="text-center mt-16 py-6 border-t-2 border-gray-300 hidden sm:block">
-        <p class="text-gray-600 font-medium">Une collection de la sagesse populaire kabyle.</p>
-        <p class="text-sm text-gray-500 mt-1">Données initiales récoltées par Aomar SIDER.</p>
-    </footer>
+    <!-- MODAL CORRIGÉE POUR LE DÉFILEMENT -->
+    <div id="modal-content" role="dialog" aria-modal="true" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-2xl max-h-[80vh] bg-[var(--color-bg-card)] rounded-lg shadow-2xl z-[101] opacity-0 scale-95 pointer-events-none transition-all duration-300 flex flex-col">
+        <div class="flex-shrink-0 p-6 pb-4 pr-12 border-b border-[var(--color-border)]">
+             <h2 id="modal-title" class="text-2xl font-serif text-[var(--color-heading)]"></h2>
+        </div>
+        <div id="modal-body" class="prose max-w-none text-[var(--color-text)] p-6 overflow-y-auto"></div>
+        <button id="modal-close-btn" aria-label="Fermer la modale" class="absolute top-4 right-4 text-gray-400 hover:text-[var(--color-heading)] transition-colors z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+    </div>
 
     <script>
+        // Data is unchanged as requested
         const proverbsData = [
-            {kabyle: "Yerẓa tamgarḍt", francais: "C’est le déclin", theme: "Déclin, Fléchissement, Abdication"},
-            {kabyle: "Mi tɛedda lɛid, tezluḍ ufrik", francais: "Hors contexte", theme: "Inopportunité, Absurdité"},
-            {kabyle: "Tedder ɣef ufareẓ mellal!?", francais: "Elle vit du jaune d’œuf!?", theme: "Dissimulation, Hypocrisie, Abstinence"},
-            {kabyle: "Yetti ufegag ɣef wayeḍ", francais: "C’est la fin de tout", theme: "Achèvement, Fin"},
-            {kabyle: "Ay asmi teǧǧel telkit, yenna-as ukured ad kem-aɣeɣ", francais: "La puce veuve, le pou demanda sa main", theme: "Prétention, Aggravation, Empirement"},
-            {kabyle: "Wa d lɛin, wa d ameslu, neɣ: Da, d tala ; da, d tiqesrit.", francais: "Ici, c’est la fontaine, et là, c’est le lavoir", theme: "Commodité, Aisance"},
-            {kabyle: "Aḍu d argaz n tuǧǧal", francais: "Le vent est le maître des veuves", theme: "Maître, Aidant"},
-            {kabyle: "Azekka ad temmet temɣart, ad yenɣed ubrid ɣer teεrict", francais: "Le malheur des uns fait le bonheur des autres", theme: "Liberté, Autonomie, Anarchie"},
-            {kabyle: "Aceṭṭiḍ thuba tqesrit", francais: "C’est le vêtement qu’appréhende le lavoir", theme: "Antipathie, Répugnance"},
-            {kabyle: "D isem-is i d nnaɛt-is", francais: "Son nom, comme son image", theme: "Apparence"},
-            {kabyle: "Tɛawed aseɛmer", francais: "Changer son fusil d’épaule", theme: "Apprêtement, Intention"},
-            {kabyle: "Iḍal Waεṛab ɣef lexrif !", francais: "Le gourmand tomba sur ce qu’il désirait", theme: "Assouvissement, Frénésie"},
-            {kabyle: "Afus-iw ɣef texsayt : ma ulac udi, d iɣi", francais: "La baratte est entre mes mains", theme: "Essentiel, Atout"},
-            {kabyle: "Akeyyal d aɛezzug", francais: "Il n’y a pas plus sourd que celui qui ne veut entendre", theme: "Concentration, Attention"},
-            {kabyle: "Fkiɣ-tt i Ṛebbi?!", francais: "Je l’offre au nom de Dieu ?!", theme: "Hypocrisie, Avarice"},
-            {kabyle: "Win tbbeɛjeḍ, ad d-yefk qqeḍran", francais: "Qui tu piques, il déverse du fiel !", theme: "Haine, Aversion"},
-            {kabyle: "Imi-s deg usegres, allen-is s akufi.", francais: "Par avidité, on désire toujours l’inaccessible", theme: "Avidité, Convoitise"},
-            {kabyle: "Tawant deg wul !", francais: "La satiété, c’est dans la tête", theme: "Avidité, Satiété"},
-            {kabyle: "Ad k-yebxeṣ Ṛebbi", francais: "Que Dieu t’avilisse", theme: "Avilissement, Malédiction"},
-            {kabyle: "Yuɣal-as usadel", francais: "Il est bâillonné", theme: "Bâillonnement, Censure"},
-            {kabyle: "Lqeḍ a tayaziḍt, lqeḍ!?", francais: "Picore, poule, picore!?", theme: "Baliverne, Exploitation, Hypocrisie"},
-            {kabyle: "Yessared iḍarren-is", francais: "C’est l’aller sans retour", theme: "Exil, Bannissement"},
-            {kabyle: "D uggi uḥeddur", francais: "C’est la farine pétrie", theme: "Splendeur, Beauté"},
-            {kabyle: "Cwiṭ i teṛwiḥt, cwiṭ i telwiḥt", francais: "Vivre sa vie ici-bas sans ignorer celle de l’audelà", theme: "Piété, Bienfait"},
-            {kabyle: "Anwa ara yarzen tagmart", francais: "Qui attache la jument?", theme: "Entêtement, Blocage"},
-            {kabyle: "Yeqqen uyeffus d azelmaḍ", francais: "Le droitier est attelé à gauche", theme: "Blocage, Usurpation"},
-            {kabyle: "Aṭas iɣur ṭṭbel-ik, ma d nekk ur tedduɣ ara.", francais: "Ton tambour en a dupé bien d’autres, mais pas moi!", theme: "Bluff, Tromperie, Illusion"},
-            {kabyle: "D aɣaref n wadda", francais: "C’est la meule fixe!", theme: "Fermeté, Constance, Calme"},
-            {kabyle: "Yexdem deg-s afernas", francais: "Il a fait un carnage (des dégâts)", theme: "Carnage, Dégâts"},
-            {kabyle: "Ṛebbi yella, iɣzer yella", francais: "Dieu est omnipotent", theme: "Châtiment"},
-            {kabyle: "Ad iban w’ara irun ɣef yemma-s", francais: "Nous verrons qui va pleurer sa mère", theme: "Revanche, Châtiment"},
-            {kabyle: "Yeṭṭef-as ssabeɛ", francais: "Il lui a bloqué la voie", theme: "Monopole, Clé, Dépendance"},
-            {kabyle: "Lammer mačči d llyali, ma ad tekseb taǧǧalt ulli ?", francais: "Sans hivers rigoureux, la veuve peut-elle élever des brebis ?", theme: "Condition, Préalable"},
-            {kabyle: "Ilaq ad k-yečč uqejjun !?", francais: "Il faut qu’un chien te morde!?", theme: "Préalable, Condition, Mérite"},
-            {kabyle: "Aḍerri qbel aserwet", francais: "Avant le battage, il faut apprêter l’aire", theme: "Préalable, Condition"},
-            {kabyle: "Yeẓẓel iḍarren-is", francais: "Il a croisé les doigts", theme: "Conjuration"},
-            {kabyle: "Yečča taḥbult", francais: "Il a consommé sa galette", theme: "Conscience"},
-            {kabyle: "Wa yella fell-as lettkal, wa d lmuḥal", francais: "Il faut savoir à qui faire confiance", theme: "Fiabilité, Confiance"},
-            {kabyle: "Ala win yewten d win yettewten, i yeẓran tiyita", francais: "N’a idée du coup que celui qui l’a donné et celui qui l’a reçu", theme: "Coup fourré, Traitrise"},
-            {kabyle: "Akken txedmeḍ, ad ak-sḍefren", francais: "Comme tu fais, on te critique", theme: "Critiques, Jugements"},
-            {kabyle: "Ẓriɣ anda ten-zelfen", francais: "J’ai vu où on rôtit mes semblables", theme: "Danger"},
-            {kabyle: "Tarewla n uṛumi", francais: "Sauve-qui-peut", theme: "Débandade, Fuite"},
-            {kabyle: "Aẓiẓen n waydi, s wallen", francais: "De la chaleur, le chien n’en profite jamais", theme: "Déconsidération, Mépris"},
-            {kabyle: "Win yettextiṛin di tqeḍεit, ɣer taggara, ur yettaṭṭaf tiqit", francais: "Qui fait la fine bouche, à la fin, perd tout", theme: "Mécompte, Dédain"},
-            {kabyle: "Tagujilt am lḥemgga", francais: "C'est le dernier choix", theme: "Mépris, Dédain"},
-            {kabyle: "Asmi ddreɣ!?", francais: "De mon vivant !?", theme: "Défaitisme"},
-            {kabyle: "Tislit d umeksa ma nḥafen, anwa i ɣaḍen", francais: "Si la bru et le berger sont défavorisés, qui s’en soucie ?", theme: "Discrimination, Défavorisation"},
-            {kabyle: "Lammer mačči d aḍad, ad sewwqeɣ", francais: "N’eût été le doigt qui me montre, j’aurais été au marché", theme: "Délation"},
-            {kabyle: "Nekk yid-k kif kif a lǧamaɛ; tifeḍ-iyi ɛad, s ugertil", francais: "Nous sommes égaux en dénuement, mosquée", theme: "Dénuement, Indigence"},
-            {kabyle: "Taguni ar ṭṭhur, acmux yezga yeččur", francais: "C’est toujours la grasse matinée, ma cruche ne désemplit pas", theme: "Dénuement"},
-            {kabyle: "Meqbeṛ-mensi", francais: "Le Reclus", theme: "Dénuement, Reclu"},
-            {kabyle: "D aqlaε n lebṣel", francais: "C’est le déracinement", theme: "Déracinement"},
-            {kabyle: "Ad ak-d-ḥkuɣ tamacahut n tecraḍ-iw a lmeṣbaḥ?", francais: "Chandelier, je te raconte l’histoire de mon tatouage ?", theme: "Dérobade, Simulation"},
-            {kabyle: "Taruẓi ujeqduṛ deg uɣud", francais: "C’est une fin malheureuse", theme: "Désillusion, Fiasco"},
-            {kabyle: "À quoi sert une bonne récolte si la maison est infestée de charançons ?", francais: "À rien", theme: "Gaspillage, Détournement"},
-            {kabyle: "Ma yebɣa Ṛebbi ad d-yefk, yessen axxam", francais: "Si Dieu veut me nantir, il connaît ma maison", theme: "Prédestinée"},
-            {kabyle: "Tirezzaf ɣer lehl-im i d lehem-im", francais: "Ta visite familiale causera ton malheur", theme: "Dévoiement, Transgression"},
-            {kabyle: "Leḥkem n Bubriṭ", francais: "C’est le pouvoir de Beauprêtre", theme: "Totalitarisme, Dictature"},
-            {kabyle: "Yifxir ad mmteɣ d azwaw, wala ad εiceɣ d Ḥlima", francais: "Je préfère mourir en tant qu’Azouaou que vivre comme Hlima", theme: "Dignité, Principes"},
-            {kabyle: "Ɣer mmi-s n laṣel, lxir yettuɣal", francais: "Le fils de bonne famille n’est jamais ingrat", theme: "Dignité, Gratitude"},
-            {kabyle: "Ddiɣ sebεa wussan d wuḍan ɣef ucenfir n Waεrab", francais: "J’ai marché durant sept jours et sept nuits suite à un signe des lèvres", theme: "Éloignement, Distance, Repère"},
-            {kabyle: "Eǧǧ-it kan akka, ulay as-terniḍ!", francais: "Le mieux est l’ennemi du bien !", theme: "Docilité, Soumission, Manipulation"},
-            {kabyle: "Am teslit mi ara teddu", francais: "Comme la mariée au jour de ses noces", theme: "Paradoxe, Dualité"},
-            {kabyle: "Tameṭṭut ad k-tneɣ, ad k-teḥyu", francais: "La femme peut te tuer, comme elle peut te sauver", theme: "Duplicité, Malice"},
-            {kabyle: "Deg uzal, ttemyexẓaren; tameddit, ttemyeẓmaḍen", francais: "Le jour, ils se narguent ; le soir, ils s’entrelacent", theme: "Hypocrisie, Duplicité"},
-            {kabyle: "Win yenɣan yezdeɣ tamda", francais: "Qui assassine s’en va habiter Tamda", theme: "Fief, Echappatoire"},
-            {kabyle: "Mi ẓdiɣ, ad yeg Ṛebbi tsaq", francais: "Après moi, le déluge", theme: "Égocentrisme"},
-            {kabyle: "Yečča-ten/ yeṛkeḍ-iten/ yečča meqqen-iẓri", francais: "Il est ensorcelé", theme: "Ensorcellement"},
-            {kabyle: "Ad ak-d-nawi imṛabḍen?!", francais: "Attends qu’on te ramène les marabouts?!", theme: "Entêtement"},
-            {kabyle: "Ay At Sisan, izgaren uɣalen d tistan?!", francais: "Ô les Ayt Sissan, les bœufs sont devenus des vaches!", theme: "Leurre, Entourloupe"},
-            {kabyle: "Aẓru deg usebbaḍ", francais: "Un caillou dans le soulier", theme: "Entrave, Handicap"},
-            {kabyle: "Ṛebbi nebɣa-t, asakku iɣerrez", francais: "La charité, on veut bien en faire, mais le sac est cousu", theme: "Entrave, Radinerie"},
-            {kabyle: "Ur d-sekkar ara lmujat!", francais: "Ne me mets pas l’eau à la bouche", theme: "Ravivement, Envie"},
-            {kabyle: "Ṭṭmeɛ yessexsar ṭṭbeɛ", francais: "L’envie corrompt les âmes", theme: "Envie"},
-            {kabyle: "Ma yif-ik gma-k meṭṭu, a mmi xdem neɣ qqim", francais: "Si ton frère a une meilleure épouse, quoique tu fasses, tu ne peux l’égaler.", theme: "Épouse, Femme"},
-            {kabyle: "Leḥbab m’ur myuzzamen, yella kra deg wulawen", francais: "La franchise préserve l’amitié", theme: "Franchise, Suspicion"},
-            {kabyle: "Mi tbeddeḍ, medden akk, inek; mi teɣliḍ, ḥedd ur k-yessin", francais: "Puissant, tout le monde est à tes côtés ; à terre, personne ne l’est", theme: "Hypocrisie"},
-            {kabyle: "Taɛekkazt ad ak-tt-rquɣ, rnu-as asḥedwi", francais: "Je t’ai béni la canne, à toi de la tournoyer", theme: "Protection, Autodéfense"},
-            {kabyle: "Simal jerrḥen, ttaẓen", francais: "Elles persistent à se meurtrir", theme: "Jusqu’au-boutisme"},
-            {kabyle: "Refdeɣ-tt tettru ; sserseɣ-tt tettru", francais: "Je la soulève, elle pleure ; je la dépose, elle pleure", theme: "Invivable, Capricieuse"},
-            {kabyle: "Yeɛreq uqermiḍ gar yiqremyaḍ", francais: "L’estropié s’est mélangé aux estropiés", theme: "Confusion, Dissimulation"},
-            {kabyle: "Aṭṭiwen tugareḍ-iyi", francais: "Tu as de plus gros yeux que moi", theme: "Responsabilité, Conscience"},
-            {kabyle: "Astaɛfu n At Bu Waddu", francais: "C’est le repos d’Aït Bouadou", theme: "Endurance, Infatigable"},
-            {kabyle: "Aṣurdi n waman, wwin-t waman", francais: "L’eau emporte l’argent qui vient de l’eau", theme: "Escroquerie, Tromperie"},
-            {kabyle: "Imi deg ufus n llah i nella, ɣurwat a madden wi yettaysen", francais: "Puisque nous dépendons du bon vouloir de Dieu, gare à celui qui perd espoir !", theme: "Espoir, Optimisme"},
-            {kabyle: "Tisirt mi ara tent-taɣ di leryac, ulay das d-gen yiɣuraf", francais: "Que peuvent faire les meules, si le moulin perd ses aubes?", theme: "Essentiel, Principal"},
-            {kabyle: "Yečča imnenneḍ", francais: "Il tourne en rond", theme: "Étourderie, Inattention"},
-            {kabyle: "A wi yufan axxam-is d acluḥ", francais: "J’envie le nomade sous la tente", theme: "Liberté, Évasion"},
-            {kabyle: "A yemma i yi-yexdem wuɣud!", francais: "Ô maman, quel tour m’a joué le brasier !", theme: "Factice, Illusion"},
-            {kabyle: "Ur ttaɣ aɣyul di tefsut; ur xeṭṭeb taqcict di tmeɣra", francais: "Les apparences sont trompeuses", theme: "Factice, Illusoire"},
-            {kabyle: "A baba wwten-aɣ; a mmi εeqlen-aɣ.", francais: "Père, on nous a frappés ; fils, on nous a remarqués (étudiés)", theme: "Faiblesse, Naïveté"},
-            {kabyle: "Dinna i tuḍen taɣaḍt iccew-is", francais: "C’est là, le hic", theme: "Faiblesse, Vulnérabilité"},
-            {kabyle: "Laẓ ur yesɛi tinzar", francais: "La faim ne connaît pas d’honneur", theme: "Faim, Honneur"},
-            {kabyle: "Ayen tugadeḍ, ad yis temteḍ", francais: "Ce que tu appréhendes te tue", theme: "Fatalité"},
-            {kabyle: "Ulac xali-k di tessirt!", francais: "Il n’y a pas d’oncle au moulin !", theme: "Passe-droit, Favoritisme"},
-            {kabyle: "Teqqen lḥenni!?", francais: "Elle se croise les bras!?", theme: "Paresse, Fainéantise"},
-            {kabyle: "Ulac ass ur nesɛi tameddit", francais: "Il n’est pas de jour sans crépuscule", theme: "Fin"},
-            {kabyle: "Tixsi d idammen-is i tt-yenɣan", francais: "Son sang est son malheur", theme: "Haine (familiale)"},
-            {kabyle: "Akken tebɣuḍ ɛzizeḍ a tiṭ, timmi nnig-m", francais: "Notre amour pour toi a des limites", theme: "Honneur, Interdit"},
-            {kabyle: "Ay aɛziz ay aɣyul-iw, temliḍ-iyi-d iɛdawen-iw", francais: "Que Dieu te garde, mon âne, tu as désigné mes ennemis", theme: "Hypocrisie, Profit"},
-            {kabyle: "Teṭṭef asɣar tɣil d aḍar", francais: "Elle lâche la proie pour l’ombre", theme: "Leurre, Illusion"},
-            {kabyle: "Ad d-yefk ugudu lexrif?!", francais: "Le tas de fumier peut-il produire des figues ?", theme: "Ingratitude, Illusion, Négatif"},
-            {kabyle: "Ṭṭef a Ḥlima di tlilit", francais: "Agrippe-toi au laurier rose, Hlima !", theme: "Illusoire, Leurre"},
-            {kabyle: "Adfel deg udrar, ssem-is deg uzaɣar", francais: "La neige sur la montagne, son impact dans la plaine", theme: "Impact"},
-            {kabyle: "Izem d Mḥend i t-yenɣan, cciɛa-s d Abusliman", francais: "Mhend tua le lion, Abouslimane en reçut les honneurs.", theme: "Spoliation, Ingratitude"},
-            {kabyle: "Ɛuhdeɣ tirezzaf n meɣres d winɣur-s", francais: "Plus jamais de visite en mars et avril", theme: "Imprévoyance, Mécompte"},
-            {kabyle: "Bubbeɣ-tt", francais: "Je donne ma langue au chat", theme: "Inaptitude, Incompréhension"},
-            {kabyle: "D lεub n Daεdi", francais: "Le simulacre de Daεdi", theme: "Simulacre, Incohérence, Inopportunité"},
-            {kabyle: "Kif Ḥemmu, kif temmu!", francais: "C’est à l’œuvre qu’on reconnaît l’artisan", theme: "Incompétence, Maladresse"},
-            {kabyle: "Segmi temmut merḥuma, ur ččiɣ aɣrum merquma", francais: "Depuis la défunte, je n’ai plus mangé de belles galettes", theme: "Inconscience, Naïveté"},
-            {kabyle: "Yekker ukeččiw di lmelḥ / Yekker wactul di lemleḥ", francais: "Le sel ne pourrit jamais", theme: "Incorruptibilité, Integrité"},
-            {kabyle: "Ur t-tettafeḍ i nnɛi wala i twizi", francais: "Il n’est jamais disponible", theme: "Marginalité, Individualisme"},
-            {kabyle: "Iteddu ur iɛeyyu; itett ur iṛewwu", francais: "Il travaille sans relâche et se nourrit sans se rassasier (Une devinette)", theme: "Insatiabilité"},
-            {kabyle: "Taɣzut terɣa, xelli ɛad a tigdert deg usebbaḍ!?", francais: "Toute la récolte a cramé, qu’est-ce qu’un épi de plus ?", theme: "Insignifiance, Relativisation"},
-            {kabyle: "Aḥbub yebleɛ, xelli ɛad ay aqedmiṛ", francais: "La figue étant perdue, que faire du pédoncule ?", theme: "Insignifiance, Relativisation"},
-            {kabyle: "Akken d-nuɣ ay nezzenz!", francais: "On a encaissé autant qu’on a dépensé", theme: "Investissement"},
-            {kabyle: "Ṛṛay ha-t-an ɣer bu tsakut, tasakut yeṭṭes fell-as", francais: "La décision dépend de l’homme au couffin, lui s’est vautré dessus", theme: "Pouvoir, Monopole"},
-            {kabyle: "Ad neǧreɣ azduz, ay at Ṛebbi get-as afus", francais: "Je sculpte un pilon qui terrasse ; ô saints, dotez-le de manche", theme: "Invocation, Revanche"},
-            {kabyle: "Timizar ar tiwwura, akridi ar timira", francais: "Des vergers jusqu’aux seuils ; des crédits jusqu’aux cous", theme: "Radinerie"},
-            {kabyle: "Iga-as tawwurt", francais: "Laisser une issue (échappatoire)", theme: "Issue, Tolérance"},
-            {kabyle: "Ma yesɛa ṭikkuk axxam!?", francais: "Le coucou n’a pas de foyer", theme: "Irresponsabilité, Parasitisme"},
-            {kabyle: "Ansi d-yetteffeɣ ṛṛuḥ, i d-yetteffeɣ wawal", francais: "La parole et l’âme sortent du même orifice", theme: "Irrévocabilité, Parole (donnée)"},
-            {kabyle: "Menyif akmac d uxbac, wala asmiεεu n yimcac", francais: "Mieux vaut maigreur et égratignures que la présence du chat", theme: "Liberté, Oppression"},
-            {kabyle: "Di lmux n wuccen i yella ddwa", francais: "C’est dans la cervelle du chacal qu’il y a remède", theme: "Malveillance"},
-            {kabyle: "D ṣṣbuḥ n uwtul", francais: "Mauvais augure", theme: "Mauvais augure"},
-            {kabyle: "Ur ttamen azberbuṛ, ama zegzaw ama yeqqur", francais: "Méfie-toi des vrilles, qu’elles soient vertes ou sèches", theme: "Prudence, Mécompte"},
-            {kabyle: "Kkseɣ-tt-id seg yiri-k, rriɣ-tt-d i yiri-w", francais: "Je t’ai épargné le couteau… et je l’ai tourné vers ma propre gorge.", theme: "Mécompte, Tragédie"},
-            {kabyle: "Azermaq, ur fell-as armaq", francais: "Méfie-toi de l’homme aux yeux bleus", theme: "Méfiance, Prudence"},
-            {kabyle: "Izinzer yeɣli ɣer tamment yemmut", francais: "Le bousier tomba dans le miel, il mourut", theme: "Nature, Milieu"},
-            {kabyle: "Yeggugem am yisɣi", francais: "Il est resté de marbre", theme: "Mutisme, Placidité"},
-            {kabyle: "Bu nneyya yaɣ-itt", francais: "Que le plus naïf l’épouse", theme: "Naïveté"},
-            {kabyle: "Ad teččeḍ ajennad ay asif!?", francais: "Tu n’emporteras jamais l’Ajennad, ô rivière", theme: "Ténacité, Opiniâtreté"},
-            {kabyle: "Imi d amejjuḍ nesɛa-t, ur wala lhem nniḍen", francais: "Supporter Amejjoudh mieux qu’un autre écueil", theme: "Renoncement, Pondération"},
-            {kabyle: "Iɣil wucmit ibeddel ṣṣifa", francais: "Le laid s’est embelli, croit-il", theme: "Prétention"},
-            {kabyle: "Ṛǧu ar d ak-tt-awin, tḍemεeḍ di dada-k xemsin", francais: "Attends qu’on te la vole, espère que ton oncle paie la rançon", theme: "Prévention, Vigilance"},
-            {kabyle: "Tiqcert uḥeggan, ffer-itt ula deg yikufan", francais: "La bûche de “Aḥeggan”, préserve-la, même dans la jarre à provisions", theme: "Prudence, Prévoyance"},
-            {kabyle: "D ibawen n yilef, netta ur ten-itett", francais: "Les fèves sont au sanglier, mais il ne les mange pas", theme: "Spoliation, Privation"},
-            {kabyle: "Tunes d tamdint yiwet, kul-wa ayen inuda, yufa-t", francais: "Tunis, il n’y en a qu’une : chacun y trouve ce qu’il cherche", theme: "Subjectivité, Priorité, Passion"},
-            {kabyle: "Mesɛud yuɣal d Mesɛuda, taduṭ tuɣal d tilezda", francais: "Le garçon s’est transformé en fille", theme: "Progéniture, Tromperie"},
-            {kabyle: "Segmi urweɣ, ur swiɣ aman zeddigen", francais: "Depuis que j’ai mis bas, je n’ai plus bu d’eau claire", theme: "Progéniture, Résignation"},
-            {kabyle: "Aman iḥegganen, yeffeɣ lhemm ixxamen", francais: "Avec les pluies des Iḥegganen, point de famine", theme: "Promesse"},
-            {kabyle: "Ziɣ yella Ṛebbi!", francais: "Dieu est omniprésent !", theme: "Protection, Rassurance, Réconfort"},
-            {kabyle: "Talqimt rẓagen, i tt-itetten d imawlan", francais: "Le rebut ne se vend pas", theme: "Rebut"},
-            {kabyle: "Brant snat n tlawin, tixsi mazal-itt di ssuq", francais: "Deux femmes sont répudiées alors que la brebis est encore en marchandage", theme: "Versatilité, Rétractation"},
-            {kabyle: "Ma d afrux, ad afgeɣ; ma d tamellalt, ad rẓeɣ", francais: "Oiseau, je m’envole ; œuf, je me brise", theme: "Risque, Tentative"},
-            {kabyle: "Wi yebɣan ad yidir, yemmet", francais: "Qui veut survivre, fait le mort", theme: "Ruse, Simulation"},
-            {kabyle: "Afus iɛemden i wurɣu, yerɣ meqqar i wayen yelhan", francais: "La main qui accepte la brûlure, qu’elle se brûle pour le meilleur", theme: "Sacrifice"}
+            {kabyle: "Yerẓa tamgarḍt", francais: "C’est le déclin", theme: "Déclin, Fléchissement, Abdication"},{kabyle: "Mi tɛedda lɛid, tezluḍ ufrik", francais: "Hors contexte", theme: "Inopportunité, Absurdité"},{kabyle: "Tedder ɣef ufareẓ mellal!?", francais: "Elle vit du jaune d’œuf!?", theme: "Dissimulation, Hypocrisie, Abstinence"},{kabyle: "Yetti ufegag ɣef wayeḍ", francais: "C’est la fin de tout", theme: "Achèvement, Fin"},{kabyle: "Ay asmi teǧǧel telkit, yenna-as ukured ad kem-aɣeɣ", francais: "La puce veuve, le pou demanda sa main", theme: "Prétention, Aggravation, Empirement"},{kabyle: "Wa d lɛin, wa d ameslu, neɣ: Da, d tala ; da, d tiqesrit.", francais: "Ici, c’est la fontaine, et là, c’est le lavoir", theme: "Commodité, Aisance"},{kabyle: "Aḍu d argaz n tuǧǧal", francais: "Le vent est le maître des veuves", theme: "Maître, Aidant"},{kabyle: "Azekka ad temmet temɣart, ad yenɣed ubrid ɣer teεrict", francais: "Le malheur des uns fait le bonheur des autres", theme: "Liberté, Autonomie, Anarchie"},{kabyle: "Aceṭṭiḍ thuba tqesrit", francais: "C’est le vêtement qu’appréhende le lavoir", theme: "Antipathie, Répugnance"},{kabyle: "D isem-is i d nnaɛt-is", francais: "Son nom, comme son image", theme: "Apparence"},{kabyle: "Tɛawed aseɛmer", francais: "Changer son fusil d’épaule", theme: "Apprêtement, Intention"},{kabyle: "Iḍal Waεṛab ɣef lexrif !", francais: "Le gourmand tomba sur ce qu’il désirait", theme: "Assouvissement, Frénésie"},{kabyle: "Afus-iw ɣef texsayt : ma ulac udi, d iɣi", francais: "La baratte est entre mes mains", theme: "Essentiel, Atout"},{kabyle: "Akeyyal d aɛezzug", francais: "Il n’y a pas plus sourd que celui qui ne veut entendre", theme: "Concentration, Attention"},{kabyle: "Fkiɣ-tt i Ṛebbi?!", francais: "Je l’offre au nom de Dieu ?!", theme: "Hypocrisie, Avarice"},{kabyle: "Win tbbeɛjeḍ, ad d-yefk qqeḍran", francais: "Qui tu piques, il déverse du fiel !", theme: "Haine, Aversion"},{kabyle: "Imi-s deg usegres, allen-is s akufi.", francais: "Par avidité, on désire toujours l’inaccessible", theme: "Avidité, Convoitise"},{kabyle: "Tawant deg wul !", francais: "La satiété, c’est dans la tête", theme: "Avidité, Satiété"},{kabyle: "Ad k-yebxeṣ Ṛebbi", francais: "Que Dieu t’avilisse", theme: "Avilissement, Malédiction"},{kabyle: "Yuɣal-as usadel", francais: "Il est bâillonné", theme: "Bâillonnement, Censure"},{kabyle: "Lqeḍ a tayaziḍt, lqeḍ!?", francais: "Picore, poule, picore!?", theme: "Baliverne, Exploitation, Hypocrisie"},{kabyle: "Yessared iḍarren-is", francais: "C’est l’aller sans retour", theme: "Exil, Bannissement"},{kabyle: "D uggi uḥeddur", francais: "C’est la farine pétrie", theme: "Splendeur, Beauté"},{kabyle: "Cwiṭ i teṛwiḥt, cwiṭ i telwiḥt", francais: "Vivre sa vie ici-bas sans ignorer celle de l’audelà", theme: "Piété, Bienfait"},{kabyle: "Anwa ara yarzen tagmart", francais: "Qui attache la jument?", theme: "Entêtement, Blocage"},{kabyle: "Yeqqen uyeffus d azelmaḍ", francais: "Le droitier est attelé à gauche", theme: "Blocage, Usurpation"},{kabyle: "Aṭas iɣur ṭṭbel-ik, ma d nekk ur tedduɣ ara.", francais: "Ton tambour en a dupé bien d’autres, mais pas moi!", theme: "Bluff, Tromperie, Illusion"},{kabyle: "D aɣaref n wadda", francais: "C’est la meule fixe!", theme: "Fermeté, Constance, Calme"},{kabyle: "Yexdem deg-s afernas", francais: "Il a fait un carnage (des dégâts)", theme: "Carnage, Dégâts"},{kabyle: "Ṛebbi yella, iɣzer yella", francais: "Dieu est omnipotent", theme: "Châtiment"},{kabyle: "Ad iban w’ara irun ɣef yemma-s", francais: "Nous verrons qui va pleurer sa mère", theme: "Revanche, Châtiment"},{kabyle: "Yeṭṭef-as ssabeɛ", francais: "Il lui a bloqué la voie", theme: "Monopole, Clé, Dépendance"},{kabyle: "Lammer mačči d llyali, ma ad tekseb taǧǧalt ulli ?", francais: "Sans hivers rigoureux, la veuve peut-elle élever des brebis ?", theme: "Condition, Préalable"},{kabyle: "Ilaq ad k-yečč uqejjun !?", francais: "Il faut qu’un chien te morde!?", theme: "Préalable, Condition, Mérite"},{kabyle: "Aḍerri qbel aserwet", francais: "Avant le battage, il faut apprêter l’aire", theme: "Préalable, Condition"},{kabyle: "Yeẓẓel iḍarren-is", francais: "Il a croisé les doigts", theme: "Conjuration"},{kabyle: "Yečča taḥbult", francais: "Il a consommé sa galette", theme: "Conscience"},{kabyle: "Wa yella fell-as lettkal, wa d lmuḥal", francais: "Il faut savoir à qui faire confiance", theme: "Fiabilité, Confiance"},{kabyle: "Ala win yewten d win yettewten, i yeẓran tiyita", francais: "N’a idée du coup que celui qui l’a donné et celui qui l’a reçu", theme: "Coup fourré, Traitrise"},{kabyle: "Akken txedmeḍ, ad ak-sḍefren", francais: "Comme tu fais, on te critique", theme: "Critiques, Jugements"},{kabyle: "Ẓriɣ anda ten-zelfen", francais: "J’ai vu où on rôtit mes semblables", theme: "Danger"},{kabyle: "Tarewla n uṛumi", francais: "Sauve-qui-peut", theme: "Débandade, Fuite"},{kabyle: "Aẓiẓen n waydi, s wallen", francais: "De la chaleur, le chien n’en profite jamais", theme: "Déconsidération, Mépris"},{kabyle: "Win yettextiṛin di tqeḍεit, ɣer taggara, ur yettaṭṭaf tiqit", francais: "Qui fait la fine bouche, à la fin, perd tout", theme: "Mécompte, Dédain"},{kabyle: "Tagujilt am lḥemgga", francais: "C'est le dernier choix", theme: "Mépris, Dédain"},{kabyle: "Asmi ddreɣ!?", francais: "De mon vivant !?", theme: "Défaitisme"},{kabyle: "Tislit d umeksa ma nḥafen, anwa i ɣaḍen", francais: "Si la bru et le berger sont défavorisés, qui s’en soucie ?", theme: "Discrimination, Défavorisation"},{kabyle: "Lammer mačči d aḍad, ad sewwqeɣ", francais: "N’eût été le doigt qui me montre, j’aurais été au marché", theme: "Délation"},{kabyle: "Nekk yid-k kif kif a lǧamaɛ; tifeḍ-iyi ɛad, s ugertil", francais: "Nous sommes égaux en dénuement, mosquée", theme: "Dénuement, Indigence"},{kabyle: "Taguni ar ṭṭhur, acmux yezga yeččur", francais: "C’est toujours la grasse matinée, ma cruche ne désemplit pas", theme: "Dénuement"},{kabyle: "Meqbeṛ-mensi", francais: "Le Reclus", theme: "Dénuement, Reclu"},{kabyle: "D aqlaε n lebṣel", francais: "C’est le déracinement", theme: "Déracinement"},{kabyle: "Ad ak-d-ḥkuɣ tamacahut n tecraḍ-iw a lmeṣbaḥ?", francais: "Chandelier, je te raconte l’histoire de mon tatouage ?", theme: "Dérobade, Simulation"},{kabyle: "Taruẓi ujeqduṛ deg uɣud", francais: "C’est une fin malheureuse", theme: "Désillusion, Fiasco"},{kabyle: "À quoi sert une bonne récolte si la maison est infestée de charançons ?", francais: "À rien", theme: "Gaspillage, Détournement"},{kabyle: "Ma yebɣa Ṛebbi ad d-yefk, yessen axxam", francais: "Si Dieu veut me nantir, il connaît ma maison", theme: "Prédestinée"},{kabyle: "Tirezzaf ɣer lehl-im i d lehem-im", francais: "Ta visite familiale causera ton malheur", theme: "Dévoiement, Transgression"},{kabyle: "Leḥkem n Bubriṭ", francais: "C’est le pouvoir de Beauprêtre", theme: "Totalitarisme, Dictature"},{kabyle: "Yifxir ad mmteɣ d azwaw, wala ad εiceɣ d Ḥlima", francais: "Je préfère mourir en tant qu’Azouaou que vivre comme Hlima", theme: "Dignité, Principes"},{kabyle: "Ɣer mmi-s n laṣel, lxir yettuɣal", francais: "Le fils de bonne famille n’est jamais ingrat", theme: "Dignité, Gratitude"},{kabyle: "Ddiɣ sebεa wussan d wuḍan ɣef ucenfir n Waεrab", francais: "J’ai marché durant sept jours et sept nuits suite à un signe des lèvres", theme: "Éloignement, Distance, Repère"},{kabyle: "Eǧǧ-it kan akka, ulay as-terniḍ!", francais: "Le mieux est l’ennemi du bien !", theme: "Docilité, Soumission, Manipulation"},{kabyle: "Am teslit mi ara teddu", francais: "Comme la mariée au jour de ses noces", theme: "Paradoxe, Dualité"},{kabyle: "Tameṭṭut ad k-tneɣ, ad k-teḥyu", francais: "La femme peut te tuer, comme elle peut te sauver", theme: "Duplicité, Malice"},{kabyle: "Deg uzal, ttemyexẓaren; tameddit, ttemyeẓmaḍen", francais: "Le jour, ils se narguent ; le soir, ils s’entrelacent", theme: "Hypocrisie, Duplicité"},{kabyle: "Win yenɣan yezdeɣ tamda", francais: "Qui assassine s’en va habiter Tamda", theme: "Fief, Echappatoire"},{kabyle: "Mi ẓdiɣ, ad yeg Ṛebbi tsaq", francais: "Après moi, le déluge", theme: "Égocentrisme"},{kabyle: "Yečča-ten/ yeṛkeḍ-iten/ yečča meqqen-iẓri", francais: "Il est ensorcelé", theme: "Ensorcellement"},{kabyle: "Ad ak-d-nawi imṛabḍen?!", francais: "Attends qu’on te ramène les marabouts?!", theme: "Entêtement"},{kabyle: "Ay At Sisan, izgaren uɣalen d tistan?!", francais: "Ô les Ayt Sissan, les bœufs sont devenus des vaches!", theme: "Leurre, Entourloupe"},{kabyle: "Aẓru deg usebbaḍ", francais: "Un caillou dans le soulier", theme: "Entrave, Handicap"},{kabyle: "Ṛebbi nebɣa-t, asakku iɣerrez", francais: "La charité, on veut bien en faire, mais le sac est cousu", theme: "Entrave, Radinerie"},{kabyle: "Ur d-sekkar ara lmujat!", francais: "Ne me mets pas l’eau à la bouche", theme: "Ravivement, Envie"},{kabyle: "Ṭṭmeɛ yessexsar ṭṭbeɛ", francais: "L’envie corrompt les âmes", theme: "Envie"},{kabyle: "Ma yif-ik gma-k meṭṭu, a mmi xdem neɣ qqim", francais: "Si ton frère a une meilleure épouse, quoique tu fasses, tu ne peux l’égaler.", theme: "Épouse, Femme"},{kabyle: "Leḥbab m’ur myuzzamen, yella kra deg wulawen", francais: "La franchise préserve l’amitié", theme: "Franchise, Suspicion"},{kabyle: "Mi tbeddeḍ, medden akk, inek; mi teɣliḍ, ḥedd ur k-yessin", francais: "Puissant, tout le monde est à tes côtés ; à terre, personne ne l’est", theme: "Hypocrisie"},{kabyle: "Taɛekkazt ad ak-tt-rquɣ, rnu-as asḥedwi", francais: "Je t’ai béni la canne, à toi de la tournoyer", theme: "Protection, Autodéfense"},{kabyle: "Simal jerrḥen, ttaẓen", francais: "Elles persistent à se meurtrir", theme: "Jusqu’au-boutisme"},{kabyle: "Refdeɣ-tt tettru ; sserseɣ-tt tettru", francais: "Je la soulève, elle pleure ; je la dépose, elle pleure", theme: "Invivable, Capricieuse"},{kabyle: "Yeɛreq uqermiḍ gar yiqremyaḍ", francais: "L’estropié s’est mélangé aux estropiés", theme: "Confusion, Dissimulation"},{kabyle: "Aṭṭiwen tugareḍ-iyi", francais: "Tu as de plus gros yeux que moi", theme: "Responsabilité, Conscience"},{kabyle: "Astaɛfu n At Bu Waddu", francais: "C’est le repos d’Aït Bouadou", theme: "Endurance, Infatigable"},{kabyle: "Aṣurdi n waman, wwin-t waman", francais: "L’eau emporte l’argent qui vient de l’eau", theme: "Escroquerie, Tromperie"},{kabyle: "Imi deg ufus n llah i nella, ɣurwat a madden wi yettaysen", francais: "Puisque nous dépendons du bon vouloir de Dieu, gare à celui qui perd espoir !", theme: "Espoir, Optimisme"},{kabyle: "Tisirt mi ara tent-taɣ di leryac, ulay das d-gen yiɣuraf", francais: "Que peuvent faire les meules, si le moulin perd ses aubes?", theme: "Essentiel, Principal"},{kabyle: "Yečča imnenneḍ", francais: "Il tourne en rond", theme: "Étourderie, Inattention"},{kabyle: "A wi yufan axxam-is d acluḥ", francais: "J’envie le nomade sous la tente", theme: "Liberté, Évasion"},{kabyle: "A yemma i yi-yexdem wuɣud!", francais: "Ô maman, quel tour m’a joué le brasier !", theme: "Factice, Illusion"},{kabyle: "Ur ttaɣ aɣyul di tefsut; ur xeṭṭeb taqcict di tmeɣra", francais: "Les apparences sont trompeuses", theme: "Factice, Illusoire"},{kabyle: "A baba wwten-aɣ; a mmi εeqlen-aɣ.", francais: "Père, on nous a frappés ; fils, on nous a remarqués (étudiés)", theme: "Faiblesse, Naïveté"},{kabyle: "Dinna i tuḍen taɣaḍt iccew-is", francais: "C’est là, le hic", theme: "Faiblesse, Vulnérabilité"},{kabyle: "Laẓ ur yesɛi tinzar", francais: "La faim ne connaît pas d’honneur", theme: "Faim, Honneur"},{kabyle: "Ayen tugadeḍ, ad yis temteḍ", francais: "Ce que tu appréhendes te tue", theme: "Fatalité"},{kabyle: "Ulac xali-k di tessirt!", francais: "Il n’y a pas d’oncle au moulin !", theme: "Passe-droit, Favoritisme"},{kabyle: "Teqqen lḥenni!?", francais: "Elle se croise les bras!?", theme: "Paresse, Fainéantise"},{kabyle: "Ulac ass ur nesɛi tameddit", francais: "Il n’est pas de jour sans crépuscule", theme: "Fin"},{kabyle: "Tixsi d idammen-is i tt-yenɣan", francais: "Son sang est son malheur", theme: "Haine (familiale)"},{kabyle: "Akken tebɣuḍ ɛzizeḍ a tiṭ, timmi nnig-m", francais: "Notre amour pour toi a des limites", theme: "Honneur, Interdit"},{kabyle: "Ay aɛziz ay aɣyul-iw, temliḍ-iyi-d iɛdawen-iw", francais: "Que Dieu te garde, mon âne, tu as désigné mes ennemis", theme: "Hypocrisie, Profit"},{kabyle: "Teṭṭef asɣar tɣil d aḍar", francais: "Elle lâche la proie pour l’ombre", theme: "Leurre, Illusion"},{kabyle: "Ad d-yefk ugudu lexrif?!", francais: "Le tas de fumier peut-il produire des figues ?", theme: "Ingratitude, Illusion, Négatif"},{kabyle: "Ṭṭef a Ḥlima di tlilit", francais: "Agrippe-toi au laurier rose, Hlima !", theme: "Illusoire, Leurre"},{kabyle: "Adfel deg udrar, ssem-is deg uzaɣar", francais: "La neige sur la montagne, son impact dans la plaine", theme: "Impact"},{kabyle: "Izem d Mḥend i t-yenɣan, cciɛa-s d Abusliman", francais: "Mhend tua le lion, Abouslimane en reçut les honneurs.", theme: "Spoliation, Ingratitude"},{kabyle: "Ɛuhdeɣ tirezzaf n meɣres d winɣur-s", francais: "Plus jamais de visite en mars et avril", theme: "Imprévoyance, Mécompte"},{kabyle: "Bubbeɣ-tt", francais: "Je donne ma langue au chat", theme: "Inaptitude, Incompréhension"},{kabyle: "D lεub n Daεdi", francais: "Le simulacre de Daεdi", theme: "Simulacre, Incohérence, Inopportunité"},{kabyle: "Kif Ḥemmu, kif temmu!", francais: "C’est à l’œuvre qu’on reconnaît l’artisan", theme: "Incompétence, Maladresse"},{kabyle: "Segmi temmut merḥuma, ur ččiɣ aɣrum merquma", francais: "Depuis la défunte, je n’ai plus mangé de belles galettes", theme: "Inconscience, Naïveté"},{kabyle: "Yekker ukeččiw di lmelḥ / Yekker wactul di lemleḥ", francais: "Le sel ne pourrit jamais", theme: "Incorruptibilité, Integrité"},{kabyle: "Ur t-tettafeḍ i nnɛi wala i twizi", francais: "Il n’est jamais disponible", theme: "Marginalité, Individualisme"},{kabyle: "Iteddu ur iɛeyyu; itett ur iṛewwu", francais: "Il travaille sans relâche et se nourrit sans se rassasier (Une devinette)", theme: "Insatiabilité"},{kabyle: "Taɣzut terɣa, xelli ɛad a tigdert deg usebbaḍ!?", francais: "Toute la récolte a cramé, qu’est-ce qu’un épi de plus ?", theme: "Insignifiance, Relativisation"},{kabyle: "Aḥbub yebleɛ, xelli ɛad ay aqedmiṛ", francais: "La figue étant perdue, que faire du pédoncule ?", theme: "Insignifiance, Relativisation"},{kabyle: "Akken d-nuɣ ay nezzenz!", francais: "On a encaissé autant qu’on a dépensé", theme: "Investissement"},{kabyle: "Ṛṛay ha-t-an ɣer bu tsakut, tasakut yeṭṭes fell-as", francais: "La décision dépend de l’homme au couffin, lui s’est vautré dessus", theme: "Pouvoir, Monopole"},{kabyle: "Ad neǧreɣ azduz, ay at Ṛebbi get-as afus", francais: "Je sculpte un pilon qui terrasse ; ô saints, dotez-le de manche", theme: "Invocation, Revanche"},{kabyle: "Timizar ar tiwwura, akridi ar timira", francais: "Des vergers jusqu’aux seuils ; des crédits jusqu’aux cous", theme: "Radinerie"},{kabyle: "Iga-as tawwurt", francais: "Laisser une issue (échappatoire)", theme: "Issue, Tolérance"},{kabyle: "Ma yesɛa ṭikkuk axxam!?", francais: "Le coucou n’a pas de foyer", theme: "Irresponsabilité, Parasitisme"},{kabyle: "Ansi d-yetteffeɣ ṛṛuḥ, i d-yetteffeɣ wawal", francais: "La parole et l’âme sortent du même orifice", theme: "Irrévocabilité, Parole (donnée)"},{kabyle: "Menyif akmac d uxbac, wala asmiεεu n yimcac", francais: "Mieux vaut maigreur et égratignures que la présence du chat", theme: "Liberté, Oppression"},{kabyle: "Di lmux n wuccen i yella ddwa", francais: "C’est dans la cervelle du chacal qu’il y a remède", theme: "Malveillance"},{kabyle: "D ṣṣbuḥ n uwtul", francais: "Mauvais augure", theme: "Mauvais augure"},{kabyle: "Ur ttamen azberbuṛ, ama zegzaw ama yeqqur", francais: "Méfie-toi des vrilles, qu’elles soient vertes ou sèches", theme: "Prudence, Mécompte"},{kabyle: "Kkseɣ-tt-id seg yiri-k, rriɣ-tt-d i yiri-w", francais: "Je t’ai épargné le couteau… et je l’ai tourné vers ma propre gorge.", theme: "Mécompte, Tragédie"},{kabyle: "Azermaq, ur fell-as armaq", francais: "Méfie-toi de l’homme aux yeux bleus", theme: "Méfiance, Prudence"},{kabyle: "Izinzer yeɣli ɣer tamment yemmut", francais: "Le bousier tomba dans le miel, il mourut", theme: "Nature, Milieu"},{kabyle: "Yeggugem am yisɣi", francais: "Il est resté de marbre", theme: "Mutisme, Placidité"},{kabyle: "Bu nneyya yaɣ-itt", francais: "Que le plus naïf l’épouse", theme: "Naïveté"},{kabyle: "Ad teččeḍ ajennad ay asif!?", francais: "Tu n’emporteras jamais l’Ajennad, ô rivière", theme: "Ténacité, Opiniâtreté"},{kabyle: "Imi d amejjuḍ nesɛa-t, ur wala lhem nniḍen", francais: "Supporter Amejjoudh mieux qu’un autre écueil", theme: "Renoncement, Pondération"},{kabyle: "Iɣil wucmit ibeddel ṣṣifa", francais: "Le laid s’est embelli, croit-il", theme: "Prétention"},{kabyle: "Ṛǧu ar d ak-tt-awin, tḍemεeḍ di dada-k xemsin", francais: "Attends qu’on te la vole, espère que ton oncle paie la rançon", theme: "Prévention, Vigilance"},{kabyle: "Tiqcert uḥeggan, ffer-itt ula deg yikufan", francais: "La bûche de “Aḥeggan”, préserve-la, même dans la jarre à provisions", theme: "Prudence, Prévoyance"},{kabyle: "D ibawen n yilef, netta ur ten-itett", francais: "Les fèves sont au sanglier, mais il ne les mange pas", theme: "Spoliation, Privation"},{kabyle: "Tunes d tamdint yiwet, kul-wa ayen inuda, yufa-t", francais: "Tunis, il n’y en a qu’une : chacun y trouve ce qu’il cherche", theme: "Subjectivité, Priorité, Passion"},{kabyle: "Mesɛud yuɣal d Mesɛuda, taduṭ tuɣal d tilezda", francais: "Le garçon s’est transformé en fille", theme: "Progéniture, Tromperie"},{kabyle: "Segmi urweɣ, ur swiɣ aman zeddigen", francais: "Depuis que j’ai mis bas, je n’ai plus bu d’eau claire", theme: "Progéniture, Résignation"},{kabyle: "Aman iḥegganen, yeffeɣ lhemm ixxamen", francais: "Avec les pluies des Iḥegganen, point de famine", theme: "Promesse"},{kabyle: "Ziɣ yella Ṛebbi!", francais: "Dieu est omniprésent !", theme: "Protection, Rassurance, Réconfort"},{kabyle: "Talqimt rẓagen, i tt-itetten d imawlan", francais: "Le rebut ne se vend pas", theme: "Rebut"},{kabyle: "Brant snat n tlawin, tixsi mazal-itt di ssuq", francais: "Deux femmes sont répudiées alors que la brebis est encore en marchandage", theme: "Versatilité, Rétractation"},{kabyle: "Ma d afrux, ad afgeɣ; ma d tamellalt, ad rẓeɣ", francais: "Oiseau, je m’envole ; œuf, je me brise", theme: "Risque, Tentative"},{kabyle: "Wi yebɣan ad yidir, yemmet", francais: "Qui veut survivre, fait le mort", theme: "Ruse, Simulation"},{kabyle: "Afus iɛemden i wurɣu, yerɣ meqqar i wayen yelhan", francais: "La main qui accepte la brûlure, qu’elle se brûle pour le meilleur", theme: "Sacrifice"}
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements & State ---
             const dom = {
+                html: document.documentElement,
                 searchInput: document.getElementById('search-input'),
+                clearSearchBtn: document.querySelector('.clear-search-btn'),
                 resultsContainer: document.getElementById('results-container'),
+                favoritesContainer: document.getElementById('favorites-container'),
                 noResults: document.getElementById('no-results'),
+                noFavorites: document.getElementById('no-favorites'),
+                goToExplorerBtn: document.getElementById('go-to-explorer-btn'),
                 toast: document.getElementById('toast'),
                 proverbOfTheDayCard: document.getElementById('proverb-of-the-day-card'),
                 randomBtn: document.getElementById('random-btn'),
                 backToTopBtn: document.getElementById('back-to-top'),
                 themeListContainer: document.getElementById('theme-list-container'),
-                aiContextInput: document.getElementById('ai-context-input'),
-                aiSuggestBtn: document.getElementById('ai-suggest-btn'),
-                aiResultFeedback: document.getElementById('ai-result-feedback'),
                 mobileNavButtons: document.querySelectorAll('.mobile-nav-btn'),
+                desktopNavButtons: document.querySelectorAll('.desktop-nav-btn'),
                 tabContents: document.querySelectorAll('.tab-content'),
-                atelierInput: document.getElementById('atelier-input'),
-                atelierBtn: document.getElementById('atelier-btn'),
-                atelierResult: document.getElementById('atelier-result'),
+                quizContainer: document.getElementById('quiz-container'),
+                aboutBtn: document.getElementById('about-btn'),
+                themeToggle: document.getElementById('theme-toggle'),
+                themeIcons: {
+                    light: document.getElementById('theme-icon-light'),
+                    dark: document.getElementById('theme-icon-dark')
+                },
                 modal: {
                     backdrop: document.getElementById('modal-backdrop'),
                     content: document.getElementById('modal-content'),
                     title: document.getElementById('modal-title'),
                     body: document.getElementById('modal-body'),
                     closeBtn: document.getElementById('modal-close-btn'),
+                },
+                ai: {
+                    contextInput: document.getElementById('ai-context-input'),
+                    suggestBtn: document.getElementById('ai-suggest-btn'),
+                    resultFeedback: document.getElementById('ai-result-feedback'),
+                },
+                atelier: {
+                    input: document.getElementById('atelier-input'),
+                    btn: document.getElementById('atelier-btn'),
+                    result: document.getElementById('atelier-result'),
                 }
             };
 
             let state = {
-                activeTheme: 'tous',
-                isApiCallInProgress: false,
+                activeTheme: sessionStorage.getItem('inzan_theme_filter') || 'tous',
                 searchTimeout: null,
-                proverbs: proverbsData.map((p, index) => ({ ...p, id: index })),
+                proverbs: proverbsData.map((p, index) => ({ ...p, id: index
+                })),
+                favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
+                trapFocusHandler: null 
             };
-
-            // --- Fonctions utilitaires ---
-            const normalizeText = (text) => text ? text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : '';
             
-            const highlightMatch = (text, query) => {
-                if (!query) return text;
-                const normalizedQuery = normalizeText(query);
-                try {
-                    const regex = new RegExp(normalizedQuery.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
-                    return text.replace(regex, match => `<span class="search-highlight">${match}</span>`);
-                } catch (e) { console.error("Invalid regex:", e); return text; }
+            // --- Utility Functions ---
+            const normalizeText = (text) => text ? text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : '';
+            const debounce = (func, delay) => (...args) => {
+                clearTimeout(state.searchTimeout);
+                state.searchTimeout = setTimeout(() => func(...args), delay);
+            };
+            
+            const renderMarkdown = (text) => {
+                let html = text
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/\*(.*)\*/gim, '<em>$1</em>');
+                
+                html = html.replace(/^\* (.*$)/gim, '<ul>\n<li>$1</li>\n</ul>')
+                           .replace(/<\/ul>\n<ul>/gim, '');
+
+                return html.split('\n\n').map(paragraph => {
+                    if (paragraph.startsWith('<ul>') || paragraph.startsWith('<h3>')) {
+                        return paragraph;
+                    }
+                    return `<p>${paragraph.replace(/\n/g, '<br>')}</p>`;
+                }).join('');
             };
 
-            const showToast = (message = "✅ Proverbe copié !") => {
-                dom.toast.textContent = message;
+            // --- UI & Render Functions ---
+            const showToast = (message, isError = false) => {
+                dom.toast.querySelector('p').textContent = message;
+                dom.toast.className = `fixed bottom-[-100px] left-1/2 -translate-x-1/2 text-white py-2 px-5 rounded-full shadow-xl opacity-0 z-[1000] ${isError ? 'bg-red-600' : 'bg-green-700'}`;
                 dom.toast.classList.add('bottom-28', 'sm:bottom-10', 'opacity-100');
                 setTimeout(() => dom.toast.classList.remove('bottom-28', 'sm:bottom-10', 'opacity-100'), 2500);
             };
 
-            const copyToClipboard = (text) => {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast();
-                }).catch(err => { console.error('Erreur lors de la copie :', err); showToast("❌ La copie a échoué."); });
-            };
-            
-            const debounce = (func, delay) => {
-                return (...args) => {
-                    clearTimeout(state.searchTimeout);
-                    state.searchTimeout = setTimeout(() => func(...args), delay);
-                };
-            };
+            const highlightText = (text, query) => text.replace(new RegExp(normalizeText(query).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi'), match => `<span class="search-highlight">${match}</span>`);
 
-            // --- NOUVEAU: Gestion de la modale ---
-            const openModal = (title, bodyContent) => {
-                dom.modal.title.textContent = title;
-                dom.modal.body.innerHTML = bodyContent;
-                dom.modal.backdrop.classList.add('visible');
-                dom.modal.content.classList.add('visible');
-            };
-
-            const closeModal = () => {
-                dom.modal.backdrop.classList.remove('visible');
-                dom.modal.content.classList.remove('visible');
-            };
-
-            // --- Fonctions de Rendu (UI) ---
             const createProverbCardHTML = (proverb, isDaily = false, query = '') => {
+                if (!proverb) return '';
                 const themes = proverb.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
-                const themesHtml = themes.map(theme => {
-                    const capitalizedTheme = theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase();
-                    return `<button class="card-theme-badge px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800" data-theme="${normalizeText(capitalizedTheme)}">${capitalizedTheme}</button>`;
-                }).join('');
-                
-                const cardClasses = isDaily 
-                    ? 'bg-white/95 p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)]' 
-                    : 'fade-in bg-white/90 p-5 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col border-l-4 border-[var(--color-primary)]';
-                
-                const safeFrancais = proverb.francais.replace(/"/g, '&quot;');
-
-                return `
-                    <div class="${cardClasses}" id="proverb-${proverb.id}">
-                        <div class="flex-grow">
-                            <p class="text-xl font-serif font-bold text-[var(--color-secondary)] mb-2 italic">« ${highlightMatch(proverb.kabyle, query)} »</p>
-                            <p class="text-gray-700 text-lg mb-4 border-b pb-3 font-light">— ${highlightMatch(proverb.francais, query)}</p>
-                            <div class="flex flex-wrap gap-2 items-center min-h-[30px]">${themesHtml}</div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-gray-200 flex justify-between items-center gap-2">
-                           <div class="flex gap-2">
-                                <button class="explain-btn text-xs font-semibold text-gray-500 hover:text-[var(--color-primary)] transition-colors" title="Expliquer ce proverbe">Expliquer ✨</button>
-                                <button class="story-btn text-xs font-semibold text-gray-500 hover:text-[var(--color-primary)] transition-colors" title="Générer une histoire">Histoire ✨</button>
-                           </div>
-                           <button class="copy-btn text-gray-400 hover:text-[var(--color-primary)] transition-colors" title="Copier" aria-label="Copier le proverbe '${safeFrancais}'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                           </button>
-                        </div>
-                    </div>`;
+                const themesHtml = themes.map(theme => `<button class="card-theme-badge px-2 py-1 rounded-full text-xs font-semibold bg-[var(--color-primary)]/10 text-[var(--color-primary)]" data-theme="${normalizeText(theme)}">${theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()}</button>`).join('');
+                const cardClasses = isDaily ? `bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)]` : `fade-in bg-[var(--color-bg-card)] p-5 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col border-l-4 border-[var(--color-primary)]`;
+                const isFavorited = state.favorites.has(proverb.id);
+                return `<div class="${cardClasses}" id="proverb-${proverb.id}">
+                            <div class="flex-grow">
+                                <p class="text-xl font-serif font-bold text-[var(--color-heading)] mb-2 italic">« ${query ? highlightText(proverb.kabyle, query) : proverb.kabyle} »</p>
+                                <p class="text-[var(--color-text)] text-lg mb-4 border-b border-[var(--color-border)] pb-3 font-light">— ${query ? highlightText(proverb.francais, query) : proverb.francais}</p>
+                                <div class="flex flex-wrap gap-2 items-center min-h-[30px]">${themesHtml}</div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-[var(--color-border)] flex justify-between items-center gap-2">
+                               <div class="flex gap-2 text-xs font-semibold text-[var(--color-text-light)]">
+                                    <button class="explain-btn hover:text-[var(--color-primary)] transition-colors" title="Expliquer ce proverbe">Expliquer ✨</button>
+                               </div>
+                               <div class="flex items-center gap-1 text-[var(--color-text-light)]">
+                                    <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''} hover:text-pink-500" aria-label="Ajouter aux favoris" data-id="${proverb.id}">
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                    </button>
+                                    <button class="action-btn copy-btn hover:text-[var(--color-primary)]" aria-label="Copier le proverbe" data-id="${proverb.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                    </button>
+                                    <button class="action-btn share-btn hover:text-[var(--color-primary)]" aria-label="Partager le proverbe" data-id="${proverb.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
+                                    </button>
+                               </div>
+                            </div>
+                        </div>`;
             };
 
-            const addCardEventListeners = (cardElement, proverb) => {
-                cardElement.querySelector('.copy-btn')?.addEventListener('click', e => {
-                    e.stopPropagation();
-                    copyToClipboard(`« ${proverb.kabyle} »\n— ${proverb.francais}`);
-                });
-
-                cardElement.querySelector('.explain-btn')?.addEventListener('click', () => getProverbExplanation(proverb));
-                cardElement.querySelector('.story-btn')?.addEventListener('click', () => getProverbStory(proverb));
-
-                cardElement.querySelectorAll('.card-theme-badge').forEach(badge => {
-                    badge.addEventListener('click', e => {
-                        e.stopPropagation();
-                        setActiveTab('explorer-tab');
-                        const themeToFilter = badge.dataset.theme;
-                        document.querySelector(`.theme-pill-button[data-theme="${themeToFilter}"]`)?.click();
-                    });
-                });
+            const renderProverbs = (container, proverbs, query, noResultsElement) => {
+                noResultsElement.classList.toggle('hidden', proverbs.length > 0);
+                container.innerHTML = proverbs.map(p => createProverbCardHTML(p, false, query)).join('');
+                container.querySelectorAll('.fade-in').forEach(addCardEventListeners);
             };
 
-            const renderProverbs = (proverbs, query) => {
-                dom.resultsContainer.innerHTML = '';
-                dom.noResults.classList.toggle('hidden', proverbs.length > 0);
-                proverbs.forEach(proverb => {
-                    const cardWrapper = document.createElement('div');
-                    cardWrapper.innerHTML = createProverbCardHTML(proverb, false, query);
-                    dom.resultsContainer.appendChild(cardWrapper);
-                    addCardEventListeners(cardWrapper.firstElementChild, proverb);
-                });
-            };
-            
+            // --- Business Logic & State Management ---
             const updateDisplay = () => {
                 const query = dom.searchInput.value;
                 const normalizedQuery = normalizeText(query);
-                
                 const filteredProverbs = state.proverbs.filter(p => {
                     const themeMatch = state.activeTheme === 'tous' || normalizeText(p.theme).includes(state.activeTheme);
                     const queryMatch = !normalizedQuery || normalizeText(p.kabyle).includes(normalizedQuery) || normalizeText(p.francais).includes(normalizedQuery);
                     return themeMatch && queryMatch;
                 });
-                renderProverbs(filteredProverbs, query);
+                renderProverbs(dom.resultsContainer, filteredProverbs, query, dom.noResults);
             };
 
-            const renderThemeFilters = () => {
-                const themes = [...new Set(state.proverbs.flatMap(p => p.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean)))];
-                const uniqueThemes = [...new Map(themes.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()]
-                    .sort((a, b) => a[1].localeCompare(b[1]));
-
-                let themeButtonsHTML = `<button class="theme-pill-button active flex-shrink-0 px-4 py-2 rounded-full text-white bg-[var(--color-primary)] cursor-pointer font-semibold text-sm" data-theme="tous">Tous</button>`;
-                themeButtonsHTML += uniqueThemes.map(([normalized, display]) => 
-                    `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-white/80 cursor-pointer font-medium text-sm text-[var(--color-secondary)] hover:bg-[var(--color-primary)]/20" data-theme="${normalized}">${display}</button>`
-                ).join('');
-                
-                dom.themeListContainer.innerHTML = themeButtonsHTML;
+            const renderFavorites = () => {
+                const favoriteProverbs = state.proverbs.filter(p => state.favorites.has(p.id));
+                renderProverbs(dom.favoritesContainer, favoriteProverbs, '', dom.noFavorites);
             };
 
-            // --- NOUVEAU: Logique d'appel à l'API Gemini ---
-            const callGeminiAPI = async (payload, buttonToDisable = null) => {
-                const originalButtonContent = buttonToDisable ? buttonToDisable.innerHTML : '';
-                if (buttonToDisable) {
-                    buttonToDisable.disabled = true;
-                    buttonToDisable.innerHTML = `<span class="loader"></span><span class="ml-2">Génération...</span>`;
+            const toggleFavorite = (id) => {
+                const isFavorited = state.favorites.has(id);
+                if (isFavorited) {
+                    state.favorites.delete(id);
+                    showToast("💔 Retiré des favoris", true);
+                } else {
+                    state.favorites.add(id);
+                    showToast("❤️ Ajouté aux favoris !");
+                }
+                localStorage.setItem('inzan_favorites', JSON.stringify([...state.favorites]));
+
+                document.querySelectorAll(`#proverb-${id} .favorite-btn`).forEach(btn => {
+                    btn.classList.toggle('favorited', !isFavorited);
+                });
+
+                if (document.getElementById('favoris-tab').classList.contains('active')) {
+                    renderFavorites();
+                }
+            };
+
+            // --- Navigation & Modal Logic ---
+            const setActiveTab = (tabId) => {
+                dom.tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
+                dom.mobileNavButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+                dom.desktopNavButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+
+                if (tabId !== 'explorer-tab' && dom.searchInput.value) {
+                    dom.searchInput.value = '';
+                    updateDisplay();
                 }
 
+                if (tabId === 'favoris-tab') renderFavorites();
+                if (tabId === 'quiz-tab' && !dom.quizContainer.innerHTML.includes('quiz-option')) startQuiz();
+
+                if (document.body.clientWidth < 640) window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            const openModal = (title, bodyContent) => {
+                dom.modal.title.textContent = title;
+                dom.modal.body.innerHTML = bodyContent;
+                dom.modal.backdrop.classList.add('visible');
+                dom.modal.content.classList.add('visible');
+
+                const focusableElements = dom.modal.content.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                firstElement?.focus();
+
+                state.trapFocusHandler = (e) => {
+                    if (e.key === 'Tab') {
+                        if (e.shiftKey) {
+                            if (document.activeElement === firstElement) {
+                                lastElement.focus();
+                                e.preventDefault();
+                            }
+                        } else {
+                            if (document.activeElement === lastElement) {
+                                firstElement.focus();
+                                e.preventDefault();
+                            }
+                        }
+                    } else if (e.key === 'Escape') {
+                        closeModal();
+                    }
+                };
+                document.addEventListener('keydown', state.trapFocusHandler);
+            };
+
+            const closeModal = () => {
+                dom.modal.backdrop.classList.remove('visible');
+                dom.modal.content.classList.remove('visible');
+                if (state.trapFocusHandler) {
+                    document.removeEventListener('keydown', state.trapFocusHandler);
+                    state.trapFocusHandler = null;
+                }
+            };
+
+            // --- API Logic ---
+            const callGeminiAPI = async (payload, expectJson = false) => {
+                // TODO: Collez votre clé API Gemini ici
+                // Vous pouvez en obtenir une sur : https://aistudio.google.com/
+                const GEMINI_API_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4";
+                
+                if (!GEMINI_API_KEY) {
+                    throw new Error("La clé API Gemini n'est pas configurée.");
+                }
+
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+                
+                if (expectJson) {
+                    payload.generationConfig = { responseMimeType: "application/json" };
+                }
+
+                const response = await fetch(API_URL, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload) 
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Erreur API Gemini:", errorData);
+                    throw new Error(errorData?.error?.message || `Erreur HTTP ${response.status}`);
+                }
+                
+                const result = await response.json();
+                const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!textResponse) {
+                    console.error("Réponse API inattendue:", result);
+                    throw new Error("Réponse de l'API malformée ou vide.");
+                }
+                
+                return expectJson ? JSON.parse(textResponse) : textResponse;
+            };
+
+            const getProverbExplanation = async (proverb) => {
+                openModal("Explication du Proverbe", `<div class="flex justify-center p-8"><span class="loader loader-dark"></span></div>`);
+                const systemPrompt = `Vous êtes un expert de la culture kabyle. Expliquez le proverbe suivant de manière claire. Structurez votre réponse en Markdown avec les titres: '### Signification littérale', '### Signification imagée', et '### Exemple d'utilisation'. Soyez concis et direct.`;
                 try {
-                    const API_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4";
-                    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
-                    
-                    const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData?.error?.message || `Erreur HTTP ${response.status}`);
-                    }
-                    const result = await response.json();
-                    const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!textResponse) throw new Error("Réponse de l'API malformée ou vide.");
-                    return textResponse;
-                } finally {
-                    if (buttonToDisable) {
-                        buttonToDisable.disabled = false;
-                        buttonToDisable.innerHTML = originalButtonContent;
-                    }
+                    const explanation = await callGeminiAPI({
+                        contents: [{
+                            parts: [{
+                                text: `Explique ce proverbe kabyle : "${proverb.kabyle}" (qui se traduit par "${proverb.francais}")`
+                            }]
+                        }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    });
+                    dom.modal.body.innerHTML = renderMarkdown(explanation);
+                } catch (error) {
+                    dom.modal.body.innerHTML = `<p class="text-red-500">Désolé, une erreur est survenue lors de la communication avec le Sage Artificiel. <br><strong>Détail :</strong> ${error.message}</p>`;
                 }
             };
             
-            const getProverbExplanation = async (proverb) => {
-                openModal("Explication du Proverbe", `<div class="flex justify-center p-8"><span class="loader loader-dark"></span></div>`);
-                const systemPrompt = `Vous êtes un expert de la culture et de la langue kabyle. Expliquez le proverbe suivant de manière claire et concise. Structurez votre réponse en utilisant du Markdown avec les titres suivants : '### Signification littérale', '### Signification imagée', et '### Exemple d'utilisation'. Soyez pédagogique.`;
-                const userQuery = `Proverbe kabyle: "${proverb.kabyle}"\nTraduction française: "${proverb.francais}"`;
+            const generateProverb = async (theme) => {
+                dom.atelier.btn.disabled = true;
+                dom.atelier.btn.innerHTML = `<span class="loader"></span> <span>Création...</span>`;
+                dom.atelier.result.innerHTML = '';
                 
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
+                const systemPrompt = `Vous êtes un poète et sage kabyle. Générez un nouveau proverbe authentique en kabyle (avec transcription latine) sur un thème donné, suivi de sa traduction française et d'une brève explication. Structurez la réponse en Markdown : '**Proverbe généré :** _[Proverbe en kabyle]_ ([Traduction en français])\n\n**Explication :** [Brève explication]'`;
 
                 try {
-                    const explanation = await callGeminiAPI(payload);
-                    dom.modal.body.innerHTML = explanation.replace(/\n/g, '<br>'); // Simple Markdown conversion
-                } catch (error) {
-                    console.error("Erreur Gemini (Explication):", error);
-                    dom.modal.body.innerHTML = `<p class="text-red-600">Désolé, une erreur est survenue lors de la génération de l'explication.</p>`;
+                    const generatedProverb = await callGeminiAPI({
+                        contents: [{ parts: [{ text: `Génère un proverbe kabyle sur le thème : ${theme}` }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    });
+                    dom.atelier.result.innerHTML = `<div class="p-4 bg-[var(--color-bg)] rounded-lg border-l-4 border-[var(--color-accent)]">${renderMarkdown(generatedProverb)}</div>`;
+                } catch (e) {
+                    dom.atelier.result.innerHTML = `<p class="text-red-500 text-center">L'atelier est momentanément fermé. Réessayez plus tard. <br><strong>Détail :</strong> ${e.message}</p>`;
+                } finally {
+                    dom.atelier.btn.disabled = false;
+                    dom.atelier.btn.innerHTML = `✨ Créer un proverbe`;
                 }
             };
+            
+            const getAISuggestion = async (context) => {
+                dom.ai.suggestBtn.disabled = true;
+                dom.ai.suggestBtn.innerHTML = `<span class="loader"></span> <span>Analyse...</span>`;
+                dom.ai.resultFeedback.innerHTML = '';
 
-            const getProverbStory = async (proverb) => {
-                openModal("Le Proverbe en Histoire", `<div class="flex justify-center p-8"><span class="loader loader-dark"></span></div>`);
-                const systemPrompt = `Vous êtes un conteur talentueux. Rédigez une histoire courte et moderne (2-3 paragraphes) qui illustre parfaitement la morale du proverbe kabyle fourni. L'histoire doit être facile à comprendre et engageante.`;
-                const userQuery = `Proverbe à illustrer:\n- Kabyle: "${proverb.kabyle}"\n- Français: "${proverb.francais}"`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                try {
-                    const story = await callGeminiAPI(payload);
-                    dom.modal.body.innerHTML = story.replace(/\n/g, '<br>');
-                } catch (error) {
-                    console.error("Erreur Gemini (Histoire):", error);
-                    dom.modal.body.innerHTML = `<p class="text-red-600">Désolé, une erreur est survenue lors de la génération de l'histoire.</p>`;
-                }
-            };
-
-            const getAiSuggestions = async () => {
-                const context = dom.aiContextInput.value.trim();
-                if (context.length < 10) {
-                    dom.aiResultFeedback.innerHTML = `<p class="text-red-600">Veuillez décrire votre situation plus en détail.</p>`;
-                    return;
-                }
-                dom.aiResultFeedback.innerHTML = `<p class="text-[var(--color-secondary)]">Le sage réfléchit...</p>`;
+                const simplifiedProverbs = state.proverbs.map(({ id, kabyle, francais }) => ({ id, kabyle, francais }));
                 
-                const proverbsForApi = state.proverbs.map(({ id, kabyle, francais, theme }) => ({ id, kabyle, francais, theme }));
-                const systemPrompt = `Vous êtes un sage kabyle. Trouvez les 1 à 3 proverbes les plus pertinents dans la liste fournie pour le contexte donné. Votre réponse DOIT être un objet JSON valide : { "suggestions": [id1, id2, ...] }. Si aucun ne correspond, retournez { "suggestions": [] }.`;
-                const userQuery = `Contexte: "${context}".\nListe des proverbes: ${JSON.stringify(proverbsForApi)}`;
-                
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    generationConfig: { responseMimeType: "application/json" }
-                };
+                const systemPrompt = `Vous êtes un sage kabyle expert en proverbes. Analysez la situation de l'utilisateur et choisissez jusqu'à 2 proverbes les plus pertinents à partir de la liste fournie. Vous devez OBLIGATOIREMENT répondre avec un objet JSON valide et rien d'autre.`;
+                const userPrompt = `Situation de l'utilisateur: "${context}"
 
+Liste des proverbes disponibles:
+${JSON.stringify(simplifiedProverbs)}
+
+Choisissez les proverbes les plus appropriés et répondez UNIQUEMENT avec un objet JSON au format suivant:
+{
+  "reasoning": "Votre analyse générale de la situation en une phrase.",
+  "proverbs": [
+    { "id": <id_du_proverbe_1>, "justification": "Pourquoi ce proverbe est pertinent." }
+  ]
+}`;
+                
                 try {
-                    const responseText = await callGeminiAPI(payload, dom.aiSuggestBtn);
-                    const parsedJson = JSON.parse(responseText);
-                    const suggestedIds = parsedJson.suggestions;
-                    
-                    if (suggestedIds && Array.isArray(suggestedIds) && suggestedIds.length > 0) {
-                        dom.aiResultFeedback.innerHTML = `<p class="text-green-700 font-semibold">Voici des proverbes pertinents !</p>`;
-                        highlightSuggestedProverbs(suggestedIds);
-                    } else {
-                        dom.aiResultFeedback.innerHTML = `<p class="text-gray-600">Le sage n'a pas trouvé de proverbe pour cette situation.</p>`;
+                    const suggestion = await callGeminiAPI({
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    }, true);
+
+                    if (!suggestion || !suggestion.proverbs || suggestion.proverbs.length === 0) {
+                        dom.ai.resultFeedback.innerHTML = `<p>Le sage n'a pas trouvé de proverbe parfaitement adapté à cette situation. Essayez de reformuler.</p>`;
+                        return;
                     }
-                } catch (error) {
-                    console.error("Erreur API Gemini (Suggestions):", error);
-                    dom.aiResultFeedback.innerHTML = `<p class="text-red-600">Désolé, une erreur est survenue: ${error.message}</p>`;
-                }
-            };
 
-            const generateNewProverb = async () => {
-                const theme = dom.atelierInput.value.trim();
-                if (theme.length < 3) {
-                    dom.atelierResult.innerHTML = `<p class="text-red-600 text-center">Veuillez entrer un thème plus descriptif.</p>`;
-                    return;
-                }
-                dom.atelierResult.innerHTML = `<div class="flex justify-center p-4"><span class="loader loader-dark"></span></div>`;
-
-                const systemPrompt = `Vous êtes un poète et sage kabyle. Créez un NOUVEAU proverbe original inspiré par le thème fourni. Le proverbe doit sembler authentique. Fournissez une version en kabyle (translittération latine) et sa traduction française. Votre réponse DOIT être un objet JSON valide avec les clés "kabyle" et "francais".`;
-                const userQuery = `Thème: "${theme}"`;
-                
-                const payload = {
-                    contents: [{ parts: [{ text: userQuery }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    generationConfig: { responseMimeType: "application/json" }
-                };
-
-                try {
-                    const responseText = await callGeminiAPI(payload, dom.atelierBtn);
-                    const newProverb = JSON.parse(responseText);
-                    const generatedCardHTML = `
-                        <div class="fade-in bg-white/90 p-5 rounded-lg shadow-md border-l-4 border-[var(--color-accent)]">
-                            <p class="text-lg font-serif font-bold text-[var(--color-secondary)] mb-2 italic">« ${newProverb.kabyle} »</p>
-                            <p class="text-gray-700">— ${newProverb.francais}</p>
-                            <p class="text-xs text-gray-400 mt-3 text-right">Généré par l'IA</p>
-                        </div>`;
-                    dom.atelierResult.innerHTML = generatedCardHTML;
-                } catch (error) {
-                    console.error("Erreur API Gemini (Atelier):", error);
-                    dom.atelierResult.innerHTML = `<p class="text-red-600 text-center">Désolé, une erreur est survenue lors de la création du proverbe.</p>`;
-                }
-            };
-
-
-            // --- Fonctions d'interaction et de navigation ---
-            const setActiveTab = (tabId) => {
-                dom.tabContents.forEach(content => {
-                    content.classList.toggle('active', content.id === tabId);
-                    content.classList.toggle('hidden', content.id !== tabId);
-                });
-                dom.mobileNavButtons.forEach(button => {
-                    button.classList.toggle('active', button.dataset.tab === tabId);
-                });
-                if (document.body.clientWidth < 640) {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                }
-            };
-
-            const highlightCard = (proverbId, className = 'highlight', duration = 2500) => {
-                 setTimeout(() => {
-                    const cardElement = document.getElementById(`proverb-${proverbId}`);
-                    if (cardElement) {
-                        cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        cardElement.classList.add(className);
-                        setTimeout(() => cardElement.classList.remove(className), duration);
-                    }
-                }, 100);
-            };
-
-            const highlightSuggestedProverbs = (ids) => {
-                setActiveTab('explorer-tab');
-                const tousButton = dom.themeListContainer.querySelector('[data-theme="tous"]');
-                if (state.activeTheme !== 'tous' && tousButton) tousButton.click();
-                if (dom.searchInput.value !== '') { dom.searchInput.value = ''; updateDisplay(); }
-
-                setTimeout(() => {
-                    ids.forEach((id, index) => {
-                        const cardElement = document.getElementById(`proverb-${id}`);
-                         if (cardElement) {
-                            if (index === 0) { cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-                            cardElement.classList.add('suggestion-highlight');
-                            setTimeout(() => cardElement.classList.remove('suggestion-highlight'), 4000);
+                    let htmlResult = `<p class="text-center italic text-[var(--color-text-light)] mb-4">"${suggestion.reasoning}"</p>`;
+                    suggestion.proverbs.forEach(p => {
+                        const fullProverb = state.proverbs.find(fp => fp.id === p.id);
+                        if (fullProverb) {
+                             htmlResult += `<div class="p-3 mb-3 bg-[var(--color-bg)] rounded-lg border-l-4 border-dashed border-[var(--color-secondary)]">
+                                            <p class="font-semibold text-sm">Justification du sage :</p>
+                                            <p class="italic text-sm">"${p.justification}"</p>
+                                          </div>`;
+                            htmlResult += `<div class="suggestion-highlight">${createProverbCardHTML(fullProverb)}</div>`;
                         }
                     });
-                }, 200);
+
+                    dom.ai.resultFeedback.innerHTML = htmlResult;
+                    dom.ai.resultFeedback.querySelectorAll('.fade-in').forEach(addCardEventListeners);
+
+                } catch (e) {
+                    dom.ai.resultFeedback.innerHTML = `<p class="text-red-500 text-center">Le sage doit se reposer. Une erreur est survenue. <br><strong>Détail :</strong> ${e.message}</p>`;
+                } finally {
+                    dom.ai.suggestBtn.disabled = false;
+                    dom.ai.suggestBtn.innerHTML = `✨ Demander conseil`;
+                }
             };
 
+
+            // --- Quiz Logic ---
+            const startQuiz = () => {
+                const correctAnswer = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
+                let options = [correctAnswer];
+                while (options.length < 4) {
+                    const randomOption = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
+                    if (!options.some(opt => opt.id === randomOption.id)) options.push(randomOption);
+                }
+                options.sort(() => Math.random() - 0.5);
+
+                dom.quizContainer.innerHTML = `<p class="text-center text-lg mb-4">Que signifie ce proverbe ?</p>
+                        <p class="text-2xl font-serif text-center font-bold text-[var(--color-heading)] mb-6 p-4 bg-[var(--color-bg)] rounded-lg">« ${correctAnswer.kabyle} »</p>
+                        <div id="quiz-options" class="space-y-3">
+                            ${options.map(opt => `<div class="quiz-option" data-id="${opt.id}">${opt.francais}</div>`).join('')}
+                        </div><div id="quiz-feedback" class="mt-6 text-center"></div>`;
+
+                document.getElementById('quiz-options').addEventListener('click', (e) => {
+                    if (e.target.classList.contains('quiz-option')) {
+                        const isCorrect = parseInt(e.target.dataset.id) === correctAnswer.id;
+                        checkQuizAnswer(e.target, isCorrect, correctAnswer.francais);
+                    }
+                });
+            };
+
+            const checkQuizAnswer = (selectedElement, isCorrect, correctAnswerText) => {
+                document.querySelectorAll('.quiz-option').forEach(el => el.style.pointerEvents = 'none');
+                selectedElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+                const feedback = document.getElementById('quiz-feedback');
+                feedback.innerHTML = `<p class="text-xl font-bold ${isCorrect ? 'text-green-500' : 'text-red-500'}">${isCorrect ? 'Bravo !' : 'Dommage !'}</p>
+                        ${!isCorrect ? `<p class="mt-2">La bonne réponse était : <strong class="font-semibold">"${correctAnswerText}"</strong></p>` : ''}
+                        <button id="next-quiz-btn" class="mt-4 px-6 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform">Question suivante</button>`;
+                document.getElementById('next-quiz-btn').addEventListener('click', startQuiz);
+            };
+
+            // --- Event Listeners Setup ---
+            const addCardEventListeners = (cardElement) => {
+                if (!cardElement) return;
+                const proverbId = parseInt(cardElement.id.split('-')[1]);
+                const proverb = state.proverbs.find(p => p.id === proverbId);
+                if (!proverb) return;
+                cardElement.querySelector('.explain-btn')?.addEventListener('click', () => getProverbExplanation(proverb));
+                cardElement.querySelector('.favorite-btn')?.addEventListener('click', () => toggleFavorite(proverb.id));
+                cardElement.querySelector('.share-btn')?.addEventListener('click', () => {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Proverbe Kabyle',
+                            text: `« ${proverb.kabyle} »\n— ${proverb.francais}`,
+                            url: window.location.href,
+                        }).catch(console.error);
+                    } else {
+                        showToast("La fonction de partage n'est pas supportée.", true);
+                    }
+                });
+                cardElement.querySelector('.copy-btn')?.addEventListener('click', () => {
+                    navigator.clipboard.writeText(`« ${proverb.kabyle} »\n— ${proverb.francais}`).then(() => showToast("✅ Proverbe copié !"));
+                });
+                cardElement.querySelectorAll('.card-theme-badge').forEach(badge => badge.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    setActiveTab('explorer-tab');
+                    dom.themeListContainer.querySelector(`[data-theme="${badge.dataset.theme}"]`)?.click();
+                }));
+            };
+            
             const setupEventListeners = () => {
                 dom.searchInput.addEventListener('input', debounce(updateDisplay, 300));
+                dom.clearSearchBtn.addEventListener('click', () => {
+                    dom.searchInput.value = '';
+                    updateDisplay();
+                    dom.searchInput.focus();
+                });
+
+                dom.goToExplorerBtn.addEventListener('click', () => setActiveTab('explorer-tab'));
                 
                 dom.randomBtn.addEventListener('click', () => {
-                    setActiveTab('explorer-tab');
-                    const randomIndex = Math.floor(Math.random() * state.proverbs.length);
-                    const randomProverbId = state.proverbs[randomIndex].id;
-                    highlightCard(randomProverbId);
+                    const visibleProverbs = Array.from(dom.resultsContainer.children)
+                        .map(c => state.proverbs.find(p => `proverb-${p.id}` === c.id))
+                        .filter(Boolean);
+
+                    if(visibleProverbs.length > 0){
+                        const randomProverb = visibleProverbs[Math.floor(Math.random() * visibleProverbs.length)];
+                        const card = document.getElementById(`proverb-${randomProverb.id}`);
+                        if (card) {
+                            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            card.classList.add('highlight');
+                            setTimeout(() => card.classList.remove('highlight'), 2000);
+                        }
+                    } else {
+                         showToast("Aucun proverbe à afficher. Essayez une autre recherche.", true);
+                    }
                 });
-                
-                dom.aiSuggestBtn.addEventListener('click', getAiSuggestions);
-                dom.atelierBtn.addEventListener('click', generateNewProverb);
-                
-                window.addEventListener('scroll', () => { dom.backToTopBtn.classList.toggle('visible', window.scrollY > 300); });
+
+                window.addEventListener('scroll', () => dom.backToTopBtn.classList.toggle('visible', window.scrollY > 300));
                 dom.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-                dom.mobileNavButtons.forEach(button => {
-                    button.addEventListener('click', () => setActiveTab(button.dataset.tab));
-                });
+                dom.mobileNavButtons.forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.tab)));
+                dom.desktopNavButtons.forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.tab)));
+
 
                 dom.themeListContainer.addEventListener('click', (e) => {
                     if (e.target.matches('.theme-pill-button')) {
                         state.activeTheme = e.target.dataset.theme;
-                        dom.searchInput.value = '';
-                        dom.themeListContainer.querySelector('.active')?.classList.replace('bg-[var(--color-primary)]','bg-white/80');
-                        dom.themeListContainer.querySelector('.active')?.classList.replace('text-white','text-[var(--color-secondary)]');
-                        dom.themeListContainer.querySelector('.active')?.classList.remove('active');
-                        e.target.classList.add('active');
-                        e.target.classList.replace('bg-white/80','bg-[var(--color-primary)]');
-                        e.target.classList.replace('text-[var(--color-secondary)]','text-white');
+                        sessionStorage.setItem('inzan_theme_filter', state.activeTheme);
+                        dom.themeListContainer.querySelector('.active')?.classList.remove('active', 'bg-[var(--color-primary)]', 'text-white');
+                        e.target.classList.add('active', 'bg-[var(--color-primary)]', 'text-white');
+                        e.target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                         updateDisplay();
                     }
                 });
 
                 dom.modal.closeBtn.addEventListener('click', closeModal);
                 dom.modal.backdrop.addEventListener('click', closeModal);
+
+                dom.aboutBtn.addEventListener('click', () => openModal("À propos de l'Œuvre", `<p>Cette collection numérique est un hommage à la richesse de la sagesse populaire kabyle. Elle est basée sur les données initiales patiemment récoltées par <strong>Aomar SIDER</strong>, dont le travail a permis de préserver et de partager ces trésors culturels.</p><p>Ce site a pour vocation de rendre ces proverbes accessibles à tous, de manière interactive et moderne. Il a été conçu comme un outil d'apprentissage et de découverte, enrichi par des technologies contemporaines pour explorer, comprendre et même créer dans l'esprit de la tradition kabyle.</p>`));
+
+                dom.themeToggle.addEventListener('click', () => {
+                    const isDark = dom.html.classList.toggle('dark');
+                    localStorage.setItem('inzan_theme', isDark ? 'dark' : 'light');
+                    dom.themeIcons.light.classList.toggle('hidden', isDark);
+                    dom.themeIcons.dark.classList.toggle('hidden', !isDark);
+                });
+                
+                dom.ai.suggestBtn.addEventListener('click', () => {
+                    const context = dom.ai.contextInput.value.trim();
+                    if (!context) {
+                        showToast("Veuillez décrire une situation.", true);
+                        return;
+                    }
+                    getAISuggestion(context);
+                });
+
+                dom.atelier.btn.addEventListener('click', () => {
+                     const theme = dom.atelier.input.value.trim();
+                    if (!theme) {
+                        showToast("Veuillez entrer un thème.", true);
+                        return;
+                    }
+                    generateProverb(theme);
+                });
             };
 
-            // --- Initialisation de l'application ---
+            // --- Initialization ---
             const initialize = () => {
+                const savedTheme = localStorage.getItem('inzan_theme') || 'light';
+                dom.html.classList.toggle('dark', savedTheme === 'dark');
+                dom.themeIcons.light.classList.toggle('hidden', savedTheme === 'dark');
+                dom.themeIcons.dark.classList.toggle('hidden', savedTheme === 'light');
+
                 const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-                const dailyIndex = dayOfYear % state.proverbs.length;
-                const dailyProverb = state.proverbs[dailyIndex];
-                
+                const dailyProverb = state.proverbs[dayOfYear % state.proverbs.length];
                 dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(dailyProverb, true);
-                addCardEventListeners(dom.proverbOfTheDayCard.firstElementChild, dailyProverb);
-                
-                renderThemeFilters();
-                updateDisplay();
-                setActiveTab('accueil-tab');
+                addCardEventListeners(dom.proverbOfTheDayCard.firstElementChild);
+
+                const themes = [...new Map([...new Set(state.proverbs.flatMap(p => p.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean)))].map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+                dom.themeListContainer.innerHTML = `<button class="theme-pill-button" data-theme="tous">Tous</button>` + themes.map(([norm, disp]) => `<button class="theme-pill-button" data-theme="${norm}">${disp}</button>`).join('');
+                document.querySelectorAll('.theme-pill-button').forEach(b => b.className = 'theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20');
+                dom.themeListContainer.querySelector(`[data-theme="${state.activeTheme}"]`)?.classList.add('active', 'bg-[var(--color-primary)]', 'text-white');
+
                 setupEventListeners();
+                setActiveTab('accueil-tab');
+                updateDisplay();
             };
 
             initialize();
@@ -790,3 +821,4 @@
     </script>
 </body>
 </html>
+
