@@ -59,7 +59,13 @@
         
         /* Amélioration de la lisibilité et des transitions */
         .action-btn, .theme-pill-button, .card-theme-badge, .nav-btn, #back-to-top { 
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            /* MODIFIÉ: Remplacement de 'all' pour la performance */
+            transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .theme-pill-button.active { 
             box-shadow: var(--shadow-md); 
@@ -219,9 +225,9 @@
             </div>
 
             <h1 class="text-4xl md:text-6xl font-serif font-bold text-[var(--color-heading)] mb-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 pt-4">
-                <svg width="40" height="40" viewBox="0 0 100 100" class="text-[var(--color-accent)] hidden md:inline-block"><text x="50" y="85" font-size="90" text-anchor="middle" fill="currentColor">ⵟ</text></svg>
+                <svg aria-hidden="true" width="40" height="40" viewBox="0 0 100 100" class="text-[var(--color-accent)] hidden md:inline-block"><text x="50" y="85" font-size="90" text-anchor="middle" fill="currentColor">ⵟ</text></svg>
                 <span>Inzan n Teqbaylit</span>
-                <svg width="40" height="40" viewBox="0 0 100 100" class="text-[var(--color-accent)] hidden md:inline-block"><text x="50" y="85" font-size="90" text-anchor="middle" fill="currentColor">ⵣ</text></svg>
+                <svg aria-hidden="true" width="40" height="40" viewBox="0 0 100 100" class="text-[var(--color-accent)] hidden md:inline-block"><text x="50" y="85" font-size="90" text-anchor="middle" fill="currentColor">ⵣ</text></svg>
             </h1>
             <p class="text-lg md:text-xl text-[var(--color-text-light)] font-light">Trésors de la Sagesse Kabyle</p>
         </header>
@@ -574,9 +580,11 @@
                 }
             };
 
-            const updateAvailableThemes = () => {
+            // MODIFIÉ: Accepte une liste de proverbes pour corriger le bug du filtre
+            const updateAvailableThemes = (proverbsList) => {
                 if (!state.isCoreDataLoaded) return;
-                const source = state.displayedProverbs.length > 0 ? state.displayedProverbs : state.proverbs;
+                // MODIFIÉ: Utilise la liste fournie (résultats filtrés) ou la liste complète par défaut
+                const source = proverbsList || state.proverbs;
                 const allThemesRaw = source.flatMap(p => (p.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean));
                 const uniqueNormalizedThemes = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
                 uniqueNormalizedThemes.sort((a, b) => a[1].localeCompare(b[1]));
@@ -637,36 +645,36 @@
                 state.isLoading = true;
                 dom.loaderContainer.classList.remove('hidden');
 
-                setTimeout(() => {
-                    const filteredProverbs = filterProverbs();
-                    
-                    if (reset) {
-                        state.totalFilteredCount = filteredProverbs.length;
-                    }
+                // MODIFIÉ: Suppression du setTimeout de 200ms pour un affichage instantané
+                const filteredProverbs = filterProverbs();
+                
+                if (reset) {
+                    state.totalFilteredCount = filteredProverbs.length;
+                }
 
-                    const startIndex = state.currentPage * PROVERBS_PER_PAGE;
-                    const endIndex = startIndex + PROVERBS_PER_PAGE;
-                    const chunkToLoad = filteredProverbs.slice(startIndex, endIndex);
+                const startIndex = state.currentPage * PROVERBS_PER_PAGE;
+                const endIndex = startIndex + PROVERBS_PER_PAGE;
+                const chunkToLoad = filteredProverbs.slice(startIndex, endIndex);
 
-                    if (chunkToLoad.length === 0 && reset) {
-                        dom.noResults.classList.remove('hidden');
-                        dom.resultsFeedback.textContent = '';
-                    } else {
-                        dom.noResults.classList.add('hidden');
-                        renderChunk(dom.resultsContainer, chunkToLoad, dom.searchInput.value, true);
-                        state.displayedProverbs.push(...chunkToLoad);
-                        state.currentPage++;
-                        dom.resultsFeedback.textContent = `Affichage de ${state.displayedProverbs.length} sur ${state.totalFilteredCount} proverbes`;
-                    }
-                    
-                    if (reset) updateAvailableThemes();
+                if (chunkToLoad.length === 0 && reset) {
+                    dom.noResults.classList.remove('hidden');
+                    dom.resultsFeedback.textContent = '';
+                } else {
+                    dom.noResults.classList.add('hidden');
+                    renderChunk(dom.resultsContainer, chunkToLoad, dom.searchInput.value, true);
+                    state.displayedProverbs.push(...chunkToLoad);
+                    state.currentPage++;
+                    dom.resultsFeedback.textContent = `Affichage de ${state.displayedProverbs.length} sur ${state.totalFilteredCount} proverbes`;
+                }
+                
+                // MODIFIÉ: Passe la liste complète filtrée pour corriger le bug des thèmes
+                if (reset) updateAvailableThemes(filteredProverbs);
 
-                    if (state.displayedProverbs.length >= state.totalFilteredCount) {
-                        dom.loaderContainer.classList.add('hidden');
-                    }
-                    
-                    state.isLoading = false;
-                }, 200);
+                if (state.displayedProverbs.length >= state.totalFilteredCount) {
+                    dom.loaderContainer.classList.add('hidden');
+                }
+                
+                state.isLoading = false;
             };
 
             // --- FONCTIONS D'AFFICHAGE ET DE NAVIGATION ---
@@ -870,8 +878,21 @@
                         ${options.map(opt => `<div class="quiz-option" data-id="${opt.id}" tabindex="0">${opt.francais}</div>`).join('')}
                     </div><div id="quiz-feedback" class="mt-6 text-center"></div>`;
                 
-                dom.quizContainer.querySelector('#quiz-options').addEventListener('click', (e) => {
-                    if(e.target.closest('.quiz-option')) handleQuizAnswer(e.target.closest('.quiz-option'), correctAnswer, 'meaning', quizProverbs);
+                // MODIFIÉ: Ajout de la gestion du clavier (Enter/Space) pour l'accessibilité
+                const optionsContainer = dom.quizContainer.querySelector('#quiz-options');
+                const handleSelection = (target) => {
+                    const selectedOption = target.closest('.quiz-option');
+                    if (selectedOption && !selectedOption.hasAttribute('disabled')) {
+                        handleQuizAnswer(selectedOption, correctAnswer, 'meaning', quizProverbs);
+                    }
+                };
+
+                optionsContainer.addEventListener('click', (e) => handleSelection(e.target));
+                optionsContainer.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleSelection(e.target);
+                    }
                 });
             };
 
@@ -902,8 +923,21 @@
                         ${options.map(opt => `<div class="quiz-option text-center" data-theme="${opt}" tabindex="0">${opt}</div>`).join('')}
                     </div><div id="quiz-feedback" class="mt-6 text-center"></div>`;
 
-                dom.quizContainer.querySelector('#quiz-options').addEventListener('click', (e) => {
-                    if(e.target.closest('.quiz-option')) handleQuizAnswer(e.target.closest('.quiz-option'), correctAnswer, 'theme', quizProverbs);
+                // MODIFIÉ: Ajout de la gestion du clavier (Enter/Space) pour l'accessibilité
+                const optionsContainer = dom.quizContainer.querySelector('#quiz-options');
+                const handleSelection = (target) => {
+                    const selectedOption = target.closest('.quiz-option');
+                    if (selectedOption && !selectedOption.hasAttribute('disabled')) {
+                        handleQuizAnswer(selectedOption, correctAnswer, 'theme', quizProverbs);
+                    }
+                };
+
+                optionsContainer.addEventListener('click', (e) => handleSelection(e.target));
+                optionsContainer.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleSelection(e.target);
+                    }
                 });
             };
             
@@ -989,9 +1023,14 @@
                     // Afficher la nouvelle sélection aléatoire
                     renderChunk(dom.resultsContainer, randomSelection, dom.searchInput.value, false);
 
+                    // MODIFIÉ: Correction du bug de pagination après un tirage aléatoire
+                    state.totalFilteredCount = randomSelection.length; // Signale que le total est juste ce qui est affiché
+                    state.currentPage = 1; // Signale que la "page 1" (de 1) est chargée, empêchant le scroll infini
+
                     // Mettre à jour l'état de l'application
                     state.displayedProverbs = randomSelection;
-                    updateAvailableThemes();
+                    // MODIFIÉ: Passe la sélection aléatoire pour que les thèmes correspondent
+                    updateAvailableThemes(randomSelection);
                     
                     // Mettre à jour le message de feedback
                     dom.resultsFeedback.textContent = `Affichage d'une sélection aléatoire de ${count} sur ${matchingProverbs.length} proverbes correspondants.`;
@@ -1092,7 +1131,8 @@
                         const dailyProverb = state.proverbs[dayOfYear % state.proverbs.length];
                         dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(dailyProverb, true);
 
-                        updateAvailableThemes();
+                        // MODIFIÉ: Appel initial pour charger tous les thèmes
+                        updateAvailableThemes(state.proverbs);
                         
                         setTimeout(() => dom.splashScreen.classList.add('hidden'), 500);
                     })
