@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Découvrez et explorez des centaines de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et des suggestions par IA.">
+    <meta name="description" content="Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et des suggestions par IA.">
     
     <title>Inzan n Teqbaylit - Trésors de la Sagesse Kabyle</title>
     
@@ -255,12 +255,18 @@
             <section id="accueil-tab" class="tab-content" aria-labelledby="proverb-of-the-day-title">
                 <div class="max-w-4xl mx-auto mb-10 text-center p-6 bg-[var(--color-bg-card)]/70 rounded-xl shadow-inner border border-[var(--color-border)]">
                     <p class="text-lg text-[var(--color-secondary)] italic font-light">
-                        Comme un médicament, le proverbe doit être utilisé à bon escient. 
-                        <span class="block mt-2 font-medium text-[var(--color-primary)]">Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem.</span>
+                        Une Banque de <strong class="text-[var(--color-primary)] font-semibold">"plus de 2000 proverbes"</strong>
+                        <p class="text-[var(--color-text-light)] font-medium">Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et une recherche assistée par IA.</p>
+                        <span class="block mt-2 font-medium text-[var(--color-primary)]">"Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem."</span>
                     </p>
                 </div>
                 <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Proverbe du Jour 💡</h2>
-                <div id="proverb-of-the-day-card" class="max-w-3xl mx-auto fade-in"></div>
+                <div id="proverb-of-the-day-card" class="max-w-3xl mx-auto fade-in">
+                    <div class="bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)] flex flex-col justify-center items-center h-40">
+                         <span class="loader loader-dark"></span> 
+                         <p class="mt-4 text-sm text-[var(--color-text-light)]">Chargement de la sagesse...</p>
+                    </div>
+                </div>
 
                 <div class="max-w-3xl mx-auto mt-12 fade-in">
                     <div class="bg-gradient-to-br from-yellow-50/50 to-amber-100/50 dark:from-gray-700/50 dark:to-gray-800/50 border-t-4 border-[var(--color-accent)] rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 shadow-lg">
@@ -270,10 +276,10 @@
                         <div>
                             <h3 class="text-xl font-serif font-bold text-[var(--color-heading)] mb-2">Découvrez l'Œuvre Originale</h3>
                             <p class="text-[var(--color-text)] mb-2">
-                                Cette banque de proverbes est extraite des 3ème et 4ème tomes de l'œuvre magistrale de Monsieur Aomar SIDER : <strong class="text-[var(--color-primary)] font-semibold">"INZAN amek i d-llan"</strong> ("Origines des proverbes et expressions kabyles").
+                                Une partie de cette banque de proverbes est extraite des 4 tomes de l'œuvre magistrale de Monsieur Aomar SIDER : <strong class="text-[var(--color-primary)] font-semibold">"INZAN amek i d-llan"</strong> ("Origines des proverbes et expressions kabyles").
                             </p>
                             <p class="text-sm text-[var(--color-text-light)]">
-                                Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en 4 tomes dans les librairies.
+                        </strong>Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en 4 tomes dans les librairies.</strong>
                             </p>
                         </div>
                     </div>
@@ -290,7 +296,7 @@
                      <div class="p-4 space-y-4">
                         <div class="flex flex-col sm:flex-row gap-4 items-stretch">
                             <div class="search-wrapper flex-grow">
-                                <input type="text" id="search-input" placeholder="Rechercher par mot-clé..." aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
+                                <input type="text" id="search-input" placeholder="Rechercher par mot-clé ou thème..." aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
                                 <button class="clear-search-btn" aria-label="Vider la recherche">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
@@ -304,7 +310,8 @@
                             <div class="flex items-center gap-3">
                                 <h3 class="text-sm font-bold text-[var(--color-heading)] flex-shrink-0">Thèmes:</h3>
                                 <div class="flex-grow overflow-x-auto custom-scrollbar">
-                                    <div id="theme-list-container" class="flex gap-2 py-1"></div>
+                                    <div id="theme-list-container" class="flex gap-2 py-1">
+                                        </div>
                                 </div>
                             </div>
                         </nav>
@@ -313,8 +320,18 @@
                 
                 <div id="results-feedback" class="mb-4 text-center text-[var(--color-text-light)] font-semibold min-h-[24px]"></div>
 
-                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[400px]"></div>
+                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[400px]">
+                    <div id="initial-load-message" class="md:col-span-2 xl:col-span-3 text-center p-8 bg-[var(--color-bg-card)] rounded-lg shadow-inner flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-[var(--color-text-light)] opacity-70"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                        <p class="mt-4 text-lg text-[var(--color-text-light)]">Commencez votre recherche pour trouver un proverbe.</p>
+                        <p class="text-md text-[var(--color-text-light)]">Ou cliquez sur "Aléatoire" pour une découverte.</p>
+                    </div>
+                </div>
                 
+                <div id="infinite-scroll-loader" class="text-center mt-8 p-4 hidden">
+                    <span class="loader loader-dark"></span>
+                </div>
+
                 <p id="no-results" class="text-center text-2xl text-[var(--color-text-light)] mt-12 hidden font-serif p-4 border border-dashed rounded-lg">
                     😔 Aucun proverbe ne correspond à votre recherche. <br> <span class="text-lg font-sans">Essayez de modifier vos mots-clés.</span>
                 </p>
@@ -335,7 +352,7 @@
                     <p class="text-center text-[var(--color-text-light)] mb-4">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
                     <textarea id="ai-context-input" class="w-full p-3 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4 bg-[var(--color-bg)]" rows="3" placeholder="Exemple : Mon ami parle beaucoup mais n'agit jamais..."></textarea>
                     <button id="ai-suggest-btn" class="w-full px-5 py-3 bg-[var(--color-secondary)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                         <span>✨ Demander conseil</span>
                     </button>
                     <div id="ai-result-feedback" role="status" aria-live="polite" class="mt-4 min-h-[24px]"></div>
@@ -345,7 +362,11 @@
             <section id="quiz-tab" class="tab-content" aria-labelledby="quiz-title">
                 <h2 id="quiz-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Quiz de Sagesse 🧠</h2>
                 <div id="quiz-container" class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
+                    <div class="text-center p-8">
+                        <span class="loader loader-dark"></span> 
+                        <p class="mt-4 text-sm text-[var(--color-text-light)]">Chargement des données du Quiz...</p>
                     </div>
+                </div>
             </section>
 
         </main>
@@ -394,13 +415,9 @@
     </div>
 
     <script>
-        // --- DONNÉES DES PROVERBES (INCHANGÉES) ---
-        const proverbsData = [
-            {kabyle: "Yerẓa tamgarḍt", francais: "C’est le déclin", theme: "Déclin, Fléchissement, Abdication"},{kabyle: "Mi tɛedda lɛid, tezluḍ ufrik", francais: "Hors contexte", theme: "Inopportunité, Absurdité"},{kabyle: "Tedder ɣef ufareẓ mellal!?", francais: "Elle vit du jaune d’œuf!?", theme: "Dissimulation, Hypocrisie, Abstinence"},{kabyle: "Yetti ufegag ɣef wayeḍ", francais: "C’est la fin de tout", theme: "Achèvement, Fin"},{kabyle: "Ay asmi teǧǧel telkit, yenna-as ukured ad kem-aɣeɣ", francais: "La puce veuve, le pou demanda sa main", theme: "Prétention, Aggravation, Empirement"},{kabyle: "Wa d lɛin, wa d ameslu, neɣ: Da, d tala ; da, d tiqesrit.", francais: "Ici, c’est la fontaine, et là, c’est le lavoir", theme: "Commodité, Aisance"},{kabyle: "Aḍu d argaz n tuǧǧal", francais: "Le vent est le maître des veuves", theme: "Maître, Aidant"},{kabyle: "Azekka ad temmet temɣart, ad yenɣed ubrid ɣer teεrict", francais: "Le malheur des uns fait le bonheur des autres", theme: "Liberté, Autonomie, Anarchie"},{kabyle: "Aceṭṭiḍ thuba tqesrit", francais: "C’est le vêtement qu’appréhende le lavoir", theme: "Antipathie, Répugnance"},{kabyle: "D isem-is i d nnaɛt-is", francais: "Son nom, comme son image", theme: "Apparence"},{kabyle: "Tɛawed aseɛmer", francais: "Changer son fusil d’épaule", theme: "Apprêtement, Intention"},{kabyle: "Iḍal Waεṛab ɣef lexrif !", francais: "Le gourmand tomba sur ce qu’il désirait", theme: "Assouvissement, Frénésie"},{kabyle: "Afus-iw ɣef texsayt : ma ulac udi, d iɣi", francais: "La baratte est entre mes mains", theme: "Essentiel, Atout"},{kabyle: "Akeyyal d aɛezzug", francais: "Il n’y a pas plus sourd que celui qui ne veut entendre", theme: "Concentration, Attention"},{kabyle: "Fkiɣ-tt i Ṛebbi?!", francais: "Je l’offre au nom de Dieu ?!", theme: "Hypocrisie, Avarice"},{kabyle: "Win tbbeɛjeḍ, ad d-yefk qqeḍran", francais: "Qui tu piques, il déverse du fiel !", theme: "Haine, Aversion"},{kabyle: "Imi-s deg usegres, allen-is s akufi.", francais: "Par avidité, on désire toujours l’inaccessible", theme: "Avidité, Convoitise"},{kabyle: "Tawant deg wul !", francais: "La satiété, c’est dans la tête", theme: "Avidité, Satiété"},{kabyle: "Ad k-yebxeṣ Ṛebbi", francais: "Que Dieu t’avilisse", theme: "Avilissement, Malédiction"},{kabyle: "Yuɣal-as usadel", francais: "Il est bâillonné", theme: "Bâillonnement, Censure"},{kabyle: "Lqeḍ a tayaziḍt, lqeḍ!?", francais: "Picore, poule, picore!?", theme: "Baliverne, Exploitation, Hypocrisie"},{kabyle: "Yessared iḍarren-is", francais: "C’est l’aller sans retour", theme: "Exil, Bannissement"},{kabyle: "D uggi uḥeddur", francais: "C’est la farine pétrie", theme: "Splendeur, Beauté"},{kabyle: "Cwiṭ i teṛwiḥt, cwiṭ i telwiḥt", francais: "Vivre sa vie ici-bas sans ignorer celle de l’audelà", theme: "Piété, Bienfait"},{kabyle: "Anwa ara yarzen tagmart", francais: "Qui attache la jument?", theme: "Entêtement, Blocage"},{kabyle: "Yeqqen uyeffus d azelmaḍ", francais: "Le droitier est attelé à gauche", theme: "Blocage, Usurpation"},{kabyle: "Aṭas iɣur ṭṭbel-ik, ma d nekk ur tedduɣ ara.", francais: "Ton tambour en a dupé bien d’autres, mais pas moi!", theme: "Bluff, Tromperie, Illusion"},{kabyle: "D aɣaref n wadda", francais: "C’est la meule fixe!", theme: "Fermeté, Constance, Calme"},{kabyle: "Yexdem deg-s afernas", francais: "Il a fait un carnage (des dégâts)", theme: "Carnage, Dégâts"},{kabyle: "Ṛebbi yella, iɣzer yella", francais: "Dieu est omnipotent", theme: "Châtiment"},{kabyle: "Ad iban w’ara irun ɣef yemma-s", francais: "Nous verrons qui va pleurer sa mère", theme: "Revanche, Châtiment"},{kabyle: "Yeṭṭef-as ssabeɛ", francais: "Il lui a bloqué la voie", theme: "Monopole, Clé, Dépendance"},{kabyle: "Lammer mačči d llyali, ma ad tekseb taǧǧalt ulli ?", francais: "Sans hivers rigoureux, la veuve peut-elle élever des brebis ?", theme: "Condition, Préalable"},{kabyle: "Ilaq ad k-yečč uqejjun !?", francais: "Il faut qu’un chien te morde!?", theme: "Préalable, Condition, Mérite"},{kabyle: "Aḍerri qbel aserwet", francais: "Avant le battage, il faut apprêter l’aire", theme: "Préalable, Condition"},{kabyle: "Yeẓẓel iḍarren-is", francais: "Il a croisé les doigts", theme: "Conjuration"},{kabyle: "Yečča taḥbult", francais: "Il a consommé sa galette", theme: "Conscience"},{kabyle: "Wa yella fell-as lettkal, wa d lmuḥal", francais: "Il faut savoir à qui faire confiance", theme: "Fiabilité, Confiance"},{kabyle: "Ala win yewten d win yettewten, i yeẓran tiyita", francais: "N’a idée du coup que celui qui l’a donné et celui qui l’a reçu", theme: "Coup fourré, Traitrise"},{kabyle: "Akken txedmeḍ, ad ak-sḍefren", francais: "Comme tu fais, on te critique", theme: "Critiques, Jugements"},{kabyle: "Ẓriɣ anda ten-zelfen", francais: "J’ai vu où on rôtit mes semblables", theme: "Danger"},{kabyle: "Tarewla n uṛumi", francais: "Sauve-qui-peut", theme: "Débandade, Fuite"},{kabyle: "Aẓiẓen n waydi, s wallen", francais: "De la chaleur, le chien n’en profite jamais", theme: "Déconsidération, Mépris"},{kabyle: "Win yettextiṛin di tqeḍεit, ɣer taggara, ur yettaṭṭaf tiqit", francais: "Qui fait la fine bouche, à la fin, perd tout", theme: "Mécompte, Dédain"},{kabyle: "Tagujilt am lḥemgga", francais: "C'est le dernier choix", theme: "Mépris, Dédain"},{kabyle: "Asmi ddreɣ!?", francais: "De mon vivant !?", theme: "Défaitisme"},{kabyle: "Tislit d umeksa ma nḥafen, anwa i ɣaḍen", francais: "Si la bru et le berger sont défavorisés, qui s’en soucie ?", theme: "Discrimination, Défavorisation"},{kabyle: "Lammer mačči d aḍad, ad sewwqeɣ", francais: "N’eût été le doigt qui me montre, j’aurais été au marché", theme: "Délation"},{kabyle: "Nekk yid-k kif kif a lǧamaɛ; tifeḍ-iyi ɛad, s ugertil", francais: "Nous sommes égaux en dénuement, mosquée", theme: "Dénuement, Indigence"},{kabyle: "Taguni ar ṭṭhur, acmux yezga yeččur", francais: "C’est toujours la grasse matinée, ma cruche ne désemplit pas", theme: "Dénuement"},{kabyle: "Meqbeṛ-mensi", francais: "Le Reclus", theme: "Dénuement, Reclu"},{kabyle: "D aqlaε n lebṣel", francais: "C’est le déracinement", theme: "Déracinement"},{kabyle: "Ad ak-d-ḥkuɣ tamacahut n tecraḍ-iw a lmeṣbaḥ?", francais: "Chandelier, je te raconte l’histoire de mon tatouage ?", theme: "Dérobade, Simulation"},{kabyle: "Taruẓi ujeqduṛ deg uɣud", francais: "C’est une fin malheureuse", theme: "Désillusion, Fiasco"},{kabyle: "À quoi sert une bonne récolte si la maison est infestée de charançons ?", francais: "À rien", theme: "Gaspillage, Détournement"},{kabyle: "Ma yebɣa Ṛebbi ad d-yefk, yessen axxam", francais: "Si Dieu veut me nantir, il connaît ma maison", theme: "Prédestinée"},{kabyle: "Tirezzaf ɣer lehl-im i d lehem-im", francais: "Ta visite familiale causera ton malheur", theme: "Dévoiement, Transgression"},{kabyle: "Leḥkem n Bubriṭ", francais: "C’est le pouvoir de Beauprêtre", theme: "Totalitarisme, Dictature"},{kabyle: "Yifxir ad mmteɣ d azwaw, wala ad εiceɣ d Ḥlima", francais: "Je préfère mourir en tant qu’Azouaou que vivre comme Hlima", theme: "Dignité, Principes"},{kabyle: "Ɣer mmi-s n laṣel, lxir yettuɣal", francais: "Le fils de bonne famille n’est jamais ingrat", theme: "Dignité, Gratitude"},{kabyle: "Ddiɣ sebεa wussan d wuḍan ɣef ucenfir n Waεrab", francais: "J’ai marché durant sept jours et sept nuits suite à un signe des lèvres", theme: "Éloignement, Distance, Repère"},{kabyle: "Eǧǧ-it kan akka, ulay as-terniḍ!", francais: "Le mieux est l’ennemi du bien !", theme: "Docilité, Soumission, Manipulation"},{kabyle: "Am teslit mi ara teddu", francais: "Comme la mariée au jour de ses noces", theme: "Paradoxe, Dualité"},{kabyle: "Tameṭṭut ad k-tneɣ, ad k-teḥyu", francais: "La femme peut te tuer, comme elle peut te sauver", theme: "Duplicité, Malice"},{kabyle: "Deg uzal, ttemyexẓaren; tameddit, ttemyeẓmaḍen", francais: "Le jour, ils se narguent ; le soir, ils s’entrelacent", theme: "Hypocrisie, Duplicité"},{kabyle: "Win yenɣan yezdeɣ tamda", francais: "Qui assassine s’en va habiter Tamda", theme: "Fief, Echappatoire"},{kabyle: "Mi ẓdiɣ, ad yeg Ṛebbi tsaq", francais: "Après moi, le déluge", theme: "Égocentrisme"},{kabyle: "Yečča-ten/ yeṛkeḍ-iten/ yečča meqqen-iẓri", francais: "Il est ensorcelé", theme: "Ensorcellement"},{kabyle: "Ad ak-d-nawi imṛabḍen?!", francais: "Attends qu’on te ramène les marabouts?!", theme: "Entêtement"},{kabyle: "Ay At Sisan, izgaren uɣalen d tistan?!", francais: "Ô les Ayt Sissan, les bœufs sont devenus des vaches!", theme: "Leurre, Entourloupe"},{kabyle: "Aẓru deg usebbaḍ", francais: "Un caillou dans le soulier", theme: "Entrave, Handicap"},{kabyle: "Ṛebbi nebɣa-t, asakku iɣerrez", francais: "La charité, on veut bien en faire, mais le sac est cousu", theme: "Entrave, Radinerie"},{kabyle: "Ur d-sekkar ara lmujat!", francais: "Ne me mets pas l’eau à la bouche", theme: "Ravivement, Envie"},{kabyle: "Ṭṭmeɛ yessexsar ṭṭbeɛ", francais: "L’envie corrompt les âmes", theme: "Envie"},{kabyle: "Ma yif-ik gma-k meṭṭu, a mmi xdem neɣ qqim", francais: "Si ton frère a une meilleure épouse, quoique tu fasses, tu ne peux l’égaler.", theme: "Épouse, Femme"},{kabyle: "Leḥbab m’ur myuzzamen, yella kra deg wulawen", francais: "La franchise préserve l’amitié", theme: "Franchise, Suspicion"},{kabyle: "Mi tbeddeḍ, medden akk, inek; mi teɣliḍ, ḥedd ur k-yessin", francais: "Puissant, tout le monde est à tes côtés ; à terre, personne ne l’est", theme: "Hypocrisie"},{kabyle: "Taɛekkazt ad ak-tt-rquɣ, rnu-as asḥedwi", francais: "Je t’ai béni la canne, à toi de la tournoyer", theme: "Protection, Autodéfense"},{kabyle: "Simal jerrḥen, ttaẓen", francais: "Elles persistent à se meurtrir", theme: "Jusqu’au-boutisme"},{kabyle: "Refdeɣ-tt tettru ; sserseɣ-tt tettru", francais: "Je la soulève, elle pleure ; je la dépose, elle pleure", theme: "Invivable, Capricieuse"},{kabyle: "Yeɛreq uqermiḍ gar yiqremyaḍ", francais: "L’estropié s’est mélangé aux estropiés", theme: "Confusion, Dissimulation"},{kabyle: "Aṭṭiwen tugareḍ-iyi", francais: "Tu as de plus gros yeux que moi", theme: "Responsabilité, Conscience"},{kabyle: "Astaɛfu n At Bu Waddu", francais: "C’est le repos d’Aït Bouadou", theme: "Endurance, Infatigable"},{kabyle: "Aṣurdi n waman, wwin-t waman", francais: "L’eau emporte l’argent qui vient de l’eau", theme: "Escroquerie, Tromperie"},{kabyle: "Imi deg ufus n llah i nella, ɣurwat a madden wi yettaysen", francais: "Puisque nous dépendons du bon vouloir de Dieu, gare à celui qui perd espoir !", theme: "Espoir, Optimisme"},{kabyle: "Tisirt mi ara tent-taɣ di leryac, ulay das d-gen yiɣuraf", francais: "Que peuvent faire les meules, si le moulin perd ses aubes?", theme: "Essentiel, Principal"},{kabyle: "Yečča imnenneḍ", francais: "Il tourne en rond", theme: "Étourderie, Inattention"},{kabyle: "A wi yufan axxam-is d acluḥ", francais: "J’envie le nomade sous la tente", theme: "Liberté, Évasion"},{kabyle: "A yemma i yi-yexdem wuɣud!", francais: "Ô maman, quel tour m’a joué le brasier !", theme: "Factice, Illusion"},{kabyle: "Ur ttaɣ aɣyul di tefsut; ur xeṭṭeb taqcict di tmeɣra", francais: "Les apparences sont trompeuses", theme: "Factice, Illusoire"},{kabyle: "A baba wwten-aɣ; a mmi εeqlen-aɣ.", francais: "Père, on nous a frappés ; fils, on nous a remarqués (étudiés)", theme: "Faiblesse, Naïveté"},{kabyle: "Dinna i tuḍen taɣaḍt iccew-is", francais: "C’est là, le hic", theme: "Faiblesse, Vulnérabilité"},{kabyle: "Laẓ ur yesɛi tinzar", francais: "La faim ne connaît pas d’honneur", theme: "Faim, Honneur"},{kabyle: "Ayen tugadeḍ, ad yis temteḍ", francais: "Ce que tu appréhendes te tue", theme: "Fatalité"},{kabyle: "Ulac xali-k di tessirt!", francais: "Il n’y a pas d’oncle au moulin !", theme: "Passe-droit, Favoritisme"},{kabyle: "Teqqen lḥenni!?", francais: "Elle se croise les bras!?", theme: "Paresse, Fainéantise"},{kabyle: "Ulac ass ur nesɛi tameddit", francais: "Il n’est pas de jour sans crépuscule", theme: "Fin"},{kabyle: "Tixsi d idammen-is i tt-yenɣan", francais: "Son sang est son malheur", theme: "Haine (familiale)"},{kabyle: "Akken tebɣuḍ ɛzizeḍ a tiṭ, timmi nnig-m", francais: "Notre amour pour toi a des limites", theme: "Honneur, Interdit"},{kabyle: "Ay aɛziz ay aɣyul-iw, temliḍ-iyi-d iɛdawen-iw", francais: "Que Dieu te garde, mon âne, tu as désigné mes ennemis", theme: "Hypocrisie, Profit"},{kabyle: "Teṭṭef asɣar tɣil d aḍar", francais: "Elle lâche la proie pour l’ombre", theme: "Leurre, Illusion"},{kabyle: "Ad d-yefk ugudu lexrif?!", francais: "Le tas de fumier peut-il produire des figues ?", theme: "Ingratitude, Illusion, Négatif"},{kabyle: "Ṭṭef a Ḥlima di tlilit", francais: "Agrippe-toi au laurier rose, Hlima !", theme: "Illusoire, Leurre"},{kabyle: "Adfel deg udrar, ssem-is deg uzaɣar", francais: "La neige sur la montagne, son impact dans la plaine", theme: "Impact"},{kabyle: "Izem d Mḥend i t-yenɣan, cciɛa-s d Abusliman", francais: "Mhend tua le lion, Abouslimane en reçut les honneurs.", theme: "Spoliation, Ingratitude"},{kabyle: "Ɛuhdeɣ tirezzaf n meɣres d winɣur-s", francais: "Plus jamais de visite en mars et avril", theme: "Imprévoyance, Mécompte"},{kabyle: "Bubbeɣ-tt", francais: "Je donne ma langue au chat", theme: "Inaptitude, Incompréhension"},{kabyle: "D lεub n Daεdi", francais: "Le simulacre de Daεdi", theme: "Simulacre, Incohérence, Inopportunité"},{kabyle: "Kif Ḥemmu, kif temmu!", francais: "C’est à l’œuvre qu’on reconnaît l’artisan", theme: "Incompétence, Maladresse"},{kabyle: "Segmi temmut merḥuma, ur ččiɣ aɣrum merquma", francais: "Depuis la défunte, je n’ai plus mangé de belles galettes", theme: "Inconscience, Naïveté"},{kabyle: "Yekker ukeččiw di lmelḥ / Yekker wactul di lemleḥ", francais: "Le sel ne pourrit jamais", theme: "Incorruptibilité, Integrité"},{kabyle: "Ur t-tettafeḍ i nnɛi wala i twizi", francais: "Il n’est jamais disponible", theme: "Marginalité, Individualisme"},{kabyle: "Iteddu ur iɛeyyu; itett ur iṛewwu", francais: "Il travaille sans relâche et se nourrit sans se rassasier (Une devinette)", theme: "Insatiabilité"},{kabyle: "Taɣzut terɣa, xelli ɛad a tigdert deg usebbaḍ!?", francais: "Toute la récolte a cramé, qu’est-ce qu’un épi de plus ?", theme: "Insignifiance, Relativisation"},{kabyle: "Aḥbub yebleɛ, xelli ɛad ay aqedmiṛ", francais: "La figue étant perdue, que faire du pédoncule ?", theme: "Insignifiance, Relativisation"},{kabyle: "Akken d-nuɣ ay nezzenz!", francais: "On a encaissé autant qu’on a dépensé", theme: "Investissement"},{kabyle: "Ṛṛay ha-t-an ɣer bu tsakut, tasakut yeṭṭes fell-as", francais: "La décision dépend de l’homme au couffin, lui s’est vautré dessus", theme: "Pouvoir, Monopole"},{kabyle: "Ad neǧreɣ azduz, ay at Ṛebbi get-as afus", francais: "Je sculpte un pilon qui terrasse ; ô saints, dotez-le de manche", theme: "Invocation, Revanche"},{kabyle: "Timizar ar tiwwura, akridi ar timira", francais: "Des vergers jusqu’aux seuils ; des crédits jusqu’aux cous", theme: "Radinerie"},{kabyle: "Iga-as tawwurt", francais: "Laisser une issue (échappatoire)", theme: "Issue, Tolérance"},{kabyle: "Ma yesɛa ṭikkuk axxam!?", francais: "Le coucou n’a pas de foyer", theme: "Irresponsabilité, Parasitisme"},{kabyle: "Ansi d-yetteffeɣ ṛṛuḥ, i d-yetteffeɣ wawal", francais: "La parole et l’âme sortent du même orifice", theme: "Irrévocabilité, Parole (donnée)"},{kabyle: "Menyif akmac d uxbac, wala asmiεεu n yimcac", francais: "Mieux vaut maigreur et égratignures que la présence du chat", theme: "Liberté, Oppression"},{kabyle: "Di lmux n wuccen i yella ddwa", francais: "C’est dans la cervelle du chacal qu’il y a remède", theme: "Malveillance"},{kabyle: "D ṣṣbuḥ n uwtul", francais: "Mauvais augure", theme: "Mauvais augure"},{kabyle: "Ur ttamen azberbuṛ, ama zegzaw ama yeqqur", francais: "Méfie-toi des vrilles, qu’elles soient vertes ou sèches", theme: "Prudence, Mécompte"},{kabyle: "Kkseɣ-tt-id seg yiri-k, rriɣ-tt-d i yiri-w", francais: "Je t’ai épargné le couteau… et je l’ai tourné vers ma propre gorge.", theme: "Mécompte, Tragédie"},{kabyle: "Azermaq, ur fell-as armaq", francais: "Méfie-toi de l’homme aux yeux bleus", theme: "Méfiance, Prudence"},{kabyle: "Izinzer yeɣli ɣer tamment yemmut", francais: "Le bousier tomba dans le miel, il mourut", theme: "Nature, Milieu"},{kabyle: "Yeggugem am yisɣi", francais: "Il est resté de marbre", theme: "Mutisme, Placidité"},{kabyle: "Bu nneyya yaɣ-itt", francais: "Que le plus naïf l’épouse", theme: "Naïveté"},{kabyle: "Ad teččeḍ ajennad ay asif!?", francais: "Tu n’emporteras jamais l’Ajennad, ô rivière", theme: "Ténacité, Opiniâtreté"},{kabyle: "Imi d amejjuḍ nesɛa-t, ur wala lhem nniḍen", francais: "Supporter Amejjoudh mieux qu’un autre écueil", theme: "Renoncement, Pondération"},{kabyle: "Iɣil wucmit ibeddel ṣṣifa", francais: "Le laid s’est embelli, croit-il", theme: "Prétention"},{kabyle: "Ṛǧu ar d ak-tt-awin, tḍemεeḍ di dada-k xemsin", francais: "Attends qu’on te la vole, espère que ton oncle paie la rançon", theme: "Prévention, Vigilance"},{kabyle: "Tiqcert uḥeggan, ffer-itt ula deg yikufan", francais: "La bûche de “Aḥeggan”, préserve-la, même dans la jarre à provisions", theme: "Prudence, Prévoyance"},{kabyle: "D ibawen n yilef, netta ur ten-itett", francais: "Les fèves sont au sanglier, mais il ne les mange pas", theme: "Spoliation, Privation"},{kabyle: "Tunes d tamdint yiwet, kul-wa ayen inuda, yufa-t", francais: "Tunis, il n’y en a qu’une : chacun y trouve ce qu’il cherche", theme: "Subjectivité, Priorité, Passion"},{kabyle: "Mesɛud yuɣal d Mesɛuda, taduṭ tuɣal d tilezda", francais: "Le garçon s’est transformé en fille", theme: "Progéniture, Tromperie"},{kabyle: "Segmi urweɣ, ur swiɣ aman zeddigen", francais: "Depuis que j’ai mis bas, je n’ai plus bu d’eau claire", theme: "Progéniture, Résignation"},{kabyle: "Aman iḥegganen, yeffeɣ lhemm ixxamen", francais: "Avec les pluies des Iḥegganen, point de famine", theme: "Promesse"},{kabyle: "Ziɣ yella Ṛebbi!", francais: "Dieu est omniprésent !", theme: "Protection, Rassurance, Réconfort"},{kabyle: "Talqimt rẓagen, i tt-itetten d imawlan", francais: "Le rebut ne se vend pas", theme: "Rebut"},{kabyle: "Brant snat n tlawin, tixsi mazal-itt di ssuq", francais: "Deux femmes sont répudiées alors que la brebis est encore en marchandage", theme: "Versatilité, Rétractation"},{kabyle: "Ma d afrux, ad afgeɣ; ma d tamellalt, ad rẓeɣ", francais: "Oiseau, je m’envole ; œuf, je me brise", theme: "Risque, Tentative"},{kabyle: "Wi yebɣan ad yidir, yemmet", francais: "Qui veut survivre, fait le mort", theme: "Ruse, Simulation"},{kabyle: "Afus iɛemden i wurɣu, yerɣ meqqar i wayen yelhan", francais: "La main qui accepte la brûlure, qu’elle se brûle pour le meilleur", theme: "Sacrifice"},{"kabyle": "Aɣyul, menwala iɛabbi fell-as",  "francais": "L’âne peut servir au chargement de n’importe qui",  "theme": "Servitude"},{"kabyle": "Aɣyul n leḥbas, ɛabbi, u rkeb fell-as",  "francais": "L’âne de la communauté, charge-le et monte-le",  "theme": "Abus, Exploitation"},{"kabyle": "Mi tt-iɛabba, ad as-tmil",  "francais": "Chaque fois qu’il charge, le fardeau se penche",  "theme": "Échec, Déboires"},{"kabyle": "Qebleɣ tabarda n xali, ɛabbaɣ p, ur iyi tehwi",  "francais": "J’ai accepté le bât de mon oncle, je l’ai porté contre mon gré",  "theme": "Travail forcé"},{"kabyle": "Tafsut tettṛebbi, anebdu ittɛabbi",  "francais": "Le printemps fait pousser, l’été on charge",  "theme": "Chaque chose en son temps"},{"kabyle": "Wi isɛan mmi-s, iṛebbi-t, ig as takumma, iɛabbi t",  "francais": "Celui qui a un fils, qu’il l’éduque, et lui fabrique une poche pour le porter",  "theme": "Responsabilité, Assomption"},{"kabyle": "Anwa aɛbbad n ddebza, ur neẓẓil di taggara ?",  "francais": "Quel amateur de bagarre qui, finalement, ne se retrouve pas étendu ?",  "theme": "Sanction, Châtiment"},{"kabyle": "Arraw is, di tmurt, aɛran, netta yaɛbed lkisan",  "francais": "Ses enfants, au pays, sont nus, et lui vénère les boissons",  "theme": "Désinvolture"},{"kabyle": "Ɣeṛ lexxeṛ is, ad ttɛaccicen fell-as ifrax",  "francais": "Dans ses derniers jours, les oiseaux nicheront sur lui",  "theme": "Décrépitude"},{"kabyle": "Tɛacceq degs am tin iwumi ddreɣlent wallen",  "francais": "Elle l’aime comme si elle était aveugle",  "theme": "L’amour est aveugle"},{"kabyle": "Ur ɛacceq deg uzeqquṛ, a t tbibbeḍ",  "francais": "Ne sois pas amoureux d'un tronc d'arbre, tu vas l'avoir sur le dos",  "theme": "Danger des passions"},{"kabyle": "Amellal d uberkan laɛmeṛ mɛacaṛen",  "francais": "Le blanc et le noir ne s’accordent jamais",  "theme": "Incompatibilité"},{"kabyle": "Xellun tt ɛacṛa, yaɛmeṛ itt yiwen",  "francais": "Dix ruinent, un édifie",  "theme": "Prédominance de dévastateurs"},{"kabyle": "Aɛdaw, am lexṛif, mi ibbwa, teččeḍ t",  "francais": "L’ennemi c’est comme les figues, on le mange quand il est mûr",  "theme": "Stratégie"},{"kabyle": "Aɛdaw, am turett, ansi tewɛiḍ, bbi t",  "francais": "L’ennemi est comme du mou, attaque-le par où tu peux",  "theme": "Stratégie guerrière"},{"kabyle": "Aɛdaw, ma iɣza yak tasraft, armi ɛalmen iḥbiben",  "francais": "Lorsqu’un ennemi te piège dans une fosse, tes amis sont sûrement informés",  "theme": "Trahison, Duplicité"},{"kabyle": "Aɛdaw ur itettu ara tigad is",  "francais": "Un ennemi n’oublie pas les siennes",  "theme": "Vigilance"},{"kabyle": "Iɛdawen imeqqwranen d at igennuren",  "francais": "Les grands ennemis sont les hommes enturbannés",  "theme": "Duplicité des hommes politiques"},{"kabyle": "Issebdad ssellum i yaɛdawen",  "francais": "Il dispose l’échelle aux ennemis",  "theme": "Stupidité, Naïveté"},{"kabyle": "Werǧin iqqwil uclim d ddqiq, uɛdaw d ssdiq",  "francais": "Le son ne devient jamais farine, ni l’ennemi ami",  "theme": "Inimitié"},{"kabyle": "Win ur nesɛi aɛdaw, ad yaṛǧu aggaw !",  "francais": "Celui qui n’a pas d’ennemi, qu’il attende son neveu !",  "theme": "Danger familial"},{"kabyle": "Ɛaddan iḍaṛṛen is",  "francais": "Ses pieds sont passés",  "theme": "Mort"},{"kabyle": "Awal am uṣurdi, ṣerref it anda ara iɛaddi",  "francais": "La parole est comme de l’argent. Utilise-la là où elle a de la valeur",  "theme": "Pertinence, Eloquence"},{"kabyle": "Iɛadda am nnda",  "francais": "Il est passé comme la rosée",  "theme": "Discrétion"},{"kabyle": "Lɛid a ttɛaddi am aḍu, kul cci ittfukku",  "francais": "La fête va passer comme le vent, tout a une fin",  "theme": "Mélancolie"},{"kabyle": "Ssiḥlew iles ik, a ttɛaddiḍ",  "francais": "Adoucis tes paroles et tu réussiras",  "theme": "Politesse, Diplomatie"},{"kabyle": "Tɛadda fell-as",  "francais": "Il a subi une épreuve",  "theme": "Épreuve"},{"kabyle": "Uccen ur tt isɛadday ɣef uccen",  "francais": "Un chacal ne peut pas berner un chacal",  "theme": "On ne trompe pas son semblable"},{"kabyle": "Ddheb ur yaɛdil d ulelluc, tazart ur taɛdil d uqeṛquc",  "francais": "L’or n’est pas comparable à un jouet, la figue mûre ne se compare pas à la figue verte",  "theme": "Incomparable"},{"kabyle": "yaɛdel wassa d yiḍelli",  "francais": "Ce jour est identique à hier",  "theme": "Stagnation, Constance"},{"kabyle": "Ddunit d lmaɛdum, siwa Ṛebbi iwumi ara tdum",  "francais": "La vie est éphémère, l’éternité n’appartient qu’ à Dieu",  "theme": "Éphémère"},{"kabyle": "Win itetten, ur ixeddem, leqraṛ is, d laɛdem",  "francais": "Celui qui mange sans travailler sera finalement condamné",  "theme": "Importance du travail"},{"kabyle": "Aɛebbuḍ d arɣib. w’ur t neɣlib, ur isƐi aḥbib",  "francais": "Le ventre est cupide. Qui ne le maîtrise pas n’aura pas d’amis",  "theme": "Avidité"},{"kabyle": "Aɛebbuḍ d ilemẓi, uglan d imɣaṛen",  "francais": "Le ventre est jeune, les dents sont vieilles",  "theme": "Contraste"},{"kabyle": "Atmaten d atmaten, aɛebbuḍ ibḍa ten",  "francais": "Ils ont beau être frères, l’estomac les sépare",  "theme": "Égoïsme, Intérêt personnel"},{"kabyle": "Muḥend iɣelb it taɣruṭ, Aɛli ikerrec it si tɛabbuṭ",  "francais": "Mohand a le bras plus fort, Ali l’a mordu au ventre",  "theme": "Arme du faible"},{"kabyle": "Aɛekkwaz amaɛwaju, ma ur k isderɣel, a k yaɛmu",  "francais": "Un bâton tordu s’il ne t’aveugle pas, t’éborgnera",  "theme": "Danger du défaut"},{"kabyle": "Aɛekkwaz ad iečč aksum",  "francais": "Le bâton va déguster de la chair",  "theme": "Châtiment"},{"kabyle": "Taɛekkwazt n Ṛebbi, laɛmeṛ teɣli",  "francais": "La canne de Dieu ne tombe jamais",  "theme": "Omnipotence divine"},{"kabyle": "Aɛeqqa, aɛeqqa, ad immed meqqa",  "francais": "Graine après graine, les gouttes vont s’accumuler",  "theme": "Persévérance"},{"kabyle": "Iṛẓa uɛeẓẓi tazemmurt",  "francais": "Le rouge-gorge a détruit l’olivier",  "theme": "Absurdité"},{"kabyle": "yaɛfes tirgett, ur irɣi",  "francais": "Il a mis le pied sur une braise sans se brûler",  "theme": "Résistance, Capacité"},{"kabyle": "Tayerza b ulɣwem, ayen ikrez a t yaɛfes",  "francais": "Labour de chameau, il piétine ce qu’il laboure",  "theme": "Maladresse"},{"kabyle": "Ibbweḍ laɛfu n Ṛebbi",  "francais": "Il a rejoint la clémence de Dieu",  "theme": "Décès"},{"kabyle": "Ṛebbi iɛaffu, lamaɛna iceffu",  "francais": "Dieu pardonne mais se souvient",  "theme": "Rappel, Avertissement"},{"kabyle": "Mi tɛagzeḍ ɣef yiwen n ccɣwel ad ak ifṛuṛex ɣef ɛacṛa",  "francais": "Quand tu traînes sur un travail, il sera multiplié par dix",  "theme": "Procrastination"},{"kabyle": "Ittɛaggiḍ, ur ittazzal",  "francais": "Il crie mais ne se démène pas",  "theme": "Gesticulations"},{"kabyle": "Kul wa, iɛǧeb it ṛṛay is, ulukan dir it",  "francais": "Chacun apprécie son avis, même s’il est mauvais",  "theme": "Subjectivité"},{"kabyle": "Am win iččan am win f iɛakkan, yiwen ubrid iten ifkan",  "francais": "Un seul chemin réunit celui qui mange et celui dont on se moque",  "theme": "La mort"},{"kabyle": "Mi tɛakkaḍ ɣef albaɛḍ, ad ɛakkin ɣef dderrya k",  "francais": "Quand tu railles quelqu’un, on raillera tes enfants",  "theme": "Karma"},{"kabyle": "Igla, usexḍi, d urgaz l-lɛali",  "francais": "La vermine déprave l’homme valeureux",  "theme": "Engrenage"},{"kabyle": "Aɣerbal ajdid iḥwaǧ aɛalleq",  "francais": "Un tamis neuf doit être suspendu",  "theme": "Soin de l’objet précieux"},{"kabyle": "Aɣyul iɛalleq asegres, aɛudiw la ismuqul",  "francais": "L’âne a la musette au museau, le cheval regarde",  "theme": "Anomalie"},{"kabyle": "Aɛli, n Yiflis, ixla taxxamt is, yaɛmeṛ tin uḍeggal is",  "francais": "Ali d’Iflis a ruiné son foyer et entretenu celui de son beau-père",  "theme": "Inconscience, Stupidité"},{"kabyle": "Lɛibad am tjujtin, wa yaɛmeṛ, wa d lxali",  "francais": "Les gens sont tels des noix, l’une est vide, l’autre est remplie",  "theme": "Dissemblance des êtres humains"},{"kabyle": "Amɣaṛ iɛanden llufan, ass kamel, tameddit, idda lɛameṛ is",  "francais": "Un vieillard qui imite un bébé toute la journée, meurt dans la soirée",  "theme": "Inadéquation"},{"kabyle": "Lemɛanda n tnuḍin, yinɣan argaz ur nuḍin",  "francais": "Rivalité des belles-sœurs qui ont tué un homme en bonne santé",  "theme": "Drame de l’antagonisme sournois"},{"kabyle": "Ur ttɛanad win ik yifen, a k issens deg ɣilifen",  "francais": "N’imite pas celui qui te dépasse, il t’occasionnera des tourments",  "theme": "Modestie, Réalisme"},{"kabyle": "Aɛnu yi, tefkeḍ iyi iɣes",  "francais": "Prends soin de moi, et ne me donne qu’un os",  "theme": "La manière d’accueillir vaut mieux que ce qu’on offre"},{"kabyle": "Ccɣwel, ma teǧǧiḍ-t, d izem, ma taɛniḍ-t, d awtul",  "francais": "Le labeur est un lion si tu y renonces, mais si tu l’entreprends, c’est un lapin",  "theme": "Volonté"},{"kabyle": "Aɛqeln aɣ, yizan, nuḍen",  "francais": "Les mouches se sont aperçues que nous sommes malades",  "theme": "Agression, Lâcheté"},{"kabyle": "Wwet uzzal, a k ɛaqlen !",  "francais": "Manie le fer et tu seras reconnu !",  "theme": "On respecte la force"},{"kabyle": "Taɛṛeḍ acrured n tsekkurt, iɛaṛq as win n tyaziṭ",  "francais": "Elle essaie la démarche de la perdrix, elle oublie celle de la poule",  "theme": "Sanction de l’ambition"},{"kabyle": "Win yaɛran, wayeḍ a t idel",  "francais": "Si l’un est nu, l’autre le vêt",  "theme": "Solidarité"},{"kabyle": "Uliɣtaslent, s waɛrur",  "francais": "J’ai grimpé un frêne sur le dos",  "theme": "Supplice"},{"kabyle": "Aɛṛus, ur izmir i yiman is, ittbibbi ajeɣwlal is",  "francais": "L’escargot déjà impotent, trouve moyen de transporter son coquillage",  "theme": "Prétention, Naïveté"},{"kabyle": "Azemmur, ar t ɛaṣren iɣuraf, ay d ittak zzit",  "francais": "Les olives ne libèrent l’huile que lorsque les meules les pressent",  "theme": "Dressage, Exigence"},{"kabyle": "Dderya yaɛṣan lwaldin, garasen ara ttemyandin",  "francais": "Des enfants rebelles à leurs parents se piègent mutuellement",  "theme": "Effet de l’irrespect des parents"},{"kabyle": "Xas kkaten ṭṭbel, ttɛassan aɣyul",  "francais": "Même s’ils jouent du tambour, ils surveillent l’âne",  "theme": "Vigilance"},{"kabyle": "Win iɛattben, ad iɣellet",  "francais": "Qui a besogné, va récolter",  "theme": "Récompense"},{"kabyle": "Amger ur iwala ara lɛawj is",  "francais": "La faucille ne voit pas qu’elle est tordue",  "theme": "Aveuglement, Narcissisme"},{"kabyle": "Aɛyan wid ittaken, ur yaɛyi win ittaṭṭafen",  "francais": "Ceux qui donnent sont las, celui qui reçoit ne l’est pas",  "theme": "Avidité, Appétence"},{"kabyle": "Aḥbib am tɛakkwemt, anda taɛyiḍ, sers it",  "francais": "Un ami est comme un fardeau, dès que tu es fatigué, tu le déposes",  "theme": "Liberté de détachement"},{"kabyle": "Lebḥeṛ ittbibbi lembwabeṛ, ur iɛaggu",  "francais": "La mer charrie les bateaux sans se lasser",  "theme": "Endurance, Encouragement"},{"kabyle": "A k ineɣ, ad iɛazzi deg k !",  "francais": "Il te tue et présente ses condoléances pour ton décès !",  "theme": "Comble de l’effronterie"},{"kabyle": "Lexbaṛ n teẓgi, atan ar uɛẓẓi",  "francais": "Les nouvelles de la forêt se trouvent chez le rouge-gorge",  "theme": "La taille n'est pas une tare"},{"kabyle": "Iɣli d, fell-as, ubabder",  "francais": "Un talus est tombé sur lui",  "theme": "Effondrement"},{"kabyle": "Asaɣur d abaɣur",  "francais": "Le foin est une richesse",  "theme": "Capital"},{"kabyle": "Ikker umɣar ad iqdec, iṛẓa abaqec",  "francais": "Le vieillard a souhaité servir, il a cassé un plat",  "theme": "Maladresse, Décrépitude"},{"kabyle": "Ad iṛwu ubazin tasilt !",  "francais": "Le mets va mijoter !",  "theme": "Atermoiements"},{"kabyle": "Imlal wabbu nneɣ",  "francais": "Nos fumées se mêlent",  "theme": "Voisinage"},{"kabyle": "Tuɣal iyi d abeɛɛuq",  "francais": "Elle est devenue pour moi de l’arum",  "theme": "Insoutenable"},{"kabyle": "Teɣli am ubeḥnuq",  "francais": "Elle git telle un chiffon",  "theme": "Épuisement"},{"kabyle": "Abeḥri, tili",  "francais": "Brise et ombre",  "theme": "Confort"},{"kabyle": "D abekkuc n ṛṛeḥma",  "francais": "Il est d’un calme paradisiaque",  "theme": "Calme"},{"kabyle": "Tga tiqit abellaɛ",  "francais": "La goutte a provoqué une mare",  "theme": "La goutte qui fait déborder le vase"},{"kabyle": "Abelluḍ d yirden, laɛmeṛ zdin",  "francais": "Les glands et le blé ne se mélangent jamais",  "theme": "Mésalliance"},{"kabyle": "Ičča abelluḍ, iḥmed Ṛebbi",  "francais": "Il mange des glands et glorifie Dieu",  "theme": "Simplicité"},{"kabyle": "Awal am beɣwli, mi tekkseḍ yiwen, wayeḍ a d iɣli",  "francais": "Une parole est comme un mortier de terre, si tu enlèves une partie, une autre chute",  "theme": "Loquacité"},{"kabyle": "Ar k ččeɣ, a yaberčečču, ilmend n ciccu !",  "francais": "Que je te mange, petit oiseau, pour la viande !",  "theme": "Faire feu de tout bois"},{"kabyle": "Aberkan uqeṛṛu, seḥq it, ulac ddaɛwessu",  "francais": "Tu peux anéantir, sans risque de calamité, l’être à la tête noire",  "theme": "Racisme"},{"kabyle": "Ala abeṛnus it iɛamṛen",  "francais": "Seul le burnous l’habite",  "theme": "Bon à rien"},{"kabyle": "Ečč abeṛwaq, lḥal iḍaq",  "francais": "Mange de l’asphodèle, le temps presse",  "theme": "Urgence"},{"kabyle": "Ifer nnsen d aberwaq, ma ɣer daxel d uffalen",  "francais": "Ils ont des feuilles d’asphodèle, mais des férules à l’intérieur",  "theme": "Force apparente, faiblesse réelle"},{"kabyle": "Iṛuḥ am tqeṭṭiṭ ubiṣar, ula wi s d irran ttaṛ",  "francais": "Il s’en est allé comme la viande d’une purée, n’ayant personne pour le venger",  "theme": "Mort impunie"},{"kabyle": "Akken ibɣu yiḥmel wasif, iblaḍen is zgan rṣan",  "francais": "Quelle que soit la crue d'une rivière, ses galets restent enfoncés",  "theme": "Résistance"},{"kabyle": "Iḍ, iǧǧa t id i ubrak, ass, iǧǧa t id i uḥbak",  "francais": "Il a créé la nuit pour le sommeil, le jour pour l’action",  "theme": "Création divine"},{"kabyle": "Asawen deg idis, tessneḍ-t, abrid i k ihwan, taɣeḍ t",  "francais": "Tu connais la côte et le plat, suis le chemin de ton choix",  "theme": "Responsabilité en connaissance de cause"},{"kabyle": "Lmut d abrid ur nexli",  "francais": "La mort est un chemin qui n’est jamais désert",  "theme": "Fatalité"},{"kabyle": "Nleḥḥu, ur neqḍiɛ abrid",  "francais": "Nous cheminons mais n’atteignons pas le terme du chemin",  "theme": "Errance, Indétermination"},{"kabyle": "Ssu yas a ḥebruri, i udfel ad innerni",  "francais": "Étale la grêle pour la neige afin qu’elle s'amasse",  "theme": "Remplir les conditions requises"},{"kabyle": "Iɛba i uselqweb, d usmejger",  "francais": "Il s’y connaît en critiques et en grimaces",  "theme": "Expertise"},{"kabyle": "Acu k ixuṣṣen a yabuɛaryan ? - d tixutam",  "francais": "Qu’est-ce qui te manque, homme nu ?- Des bagues",  "theme": "Aliénation, Égarement"},{"kabyle": "Abuhal inefɛan iman is",  "francais": "Un dément qui connaît ses intérêts",  "theme": "Faux-semblant, Hypocrysie"},{"kabyle": "Iṛwa ubujad tamuḍli",  "francais": "Le néophyte se comble de luxure",  "theme": "Plaisirs immérités"},{"kabyle": "ḍliɣak abux",  "francais": "Je t’ai enduit de suie",  "theme": "Salir la réputation"},{"kabyle": "Win qqsen waṛẓen, itterra zzɛaf f ibẓiẓen",  "francais": "Celui que les guêpes ont piqué, se venge sur les criquets",  "theme": "Revanche facile"},{"kabyle": "Issemɣi d acciwen",  "francais": "Il s’est fait pousser des cornes",  "theme": "Agressivité"},{"kabyle": "Iẓra Ṛebbi, i gllan deg uɣyul, ikkes as acciwen",  "francais": "Dieu connaît la nature de l’âne, Il l’a dépourvu de cornes",  "theme": "Défiance, Prévention"},{"kabyle": "D acḍaḍ zeddigen i ɣef ittban wammus",  "francais": "C’est sur un tissu propre que se voient les saletés",  "theme": "Évidence"},{"kabyle": "Am tecḍaṭ n bururu",  "francais": "C’est comme l’aile du hibou",  "theme": "Joie et peine mêlées"},{"kabyle": "Ma tewwteḍ deg ucebbwaḍ d wudi, a t teččeḍ",  "francais": "Si tu dénigres la soupe au beurre, tu vas en manger",  "theme": "Retour de bâton"},{"kabyle": "Aceggaɛ d aṛeggaɛ",  "francais": "Confier une commission signifie omission",  "theme": "Faire les choses soi-même"},{"kabyle": "Yir ceqquf werǧin iṛṛiẓ",  "francais": "Un mauvais tesson ne se casse jamais",  "theme": "Endurance du laid"},{"kabyle": "Iṭij n tmeddit, ur isskaw aceṭṭiḍ, ur itekkes asemmiḍ",  "francais": "Le soleil du soir ne sèche pas un habit, ne débarrasse pas du froid",  "theme": "Inefficacité d’un acte tardif"},{"kabyle": "Cudd icifaḍ ik !",  "francais": "Attache tes sandales !",  "theme": "Dégage !"},{"kabyle": "Zzuɣer acifuḍ ar d-yas warkas",  "francais": "Traîne des sandales jusqu’à avoir des souliers",  "theme": "Patienter"},{"kabyle": "Iqqaṛ-as,  i Lleh : « acimi ? »",  "francais": "Il dit à Dieu : « pour quelle raison ? »",  "theme": "Irresponsabilité, Incrédulité"},{"kabyle": "Aclim ur ittuɣal s iɣuṛaf",  "francais": "Le son ne retourne pas aux meules",  "theme": "Expérience mémorable"},{"kabyle": "Acṛuf, yif it uclim",  "francais": "Le son est préférable à l'abîme",  "theme": "Le moindre mal"},{"kabyle": "Tacluḥt taɛǧeb win i tt ilsan, mačči win i tt iwalan",  "francais": "Le burnous plaît à qui le porte et non pas à qui le voit",  "theme": "Goûts personnels"},{"kabyle": "Irra t lḥewj ar wacnaf",  "francais": "Le manque l’a réduit à manger de la roquette",  "theme": "Pauvreté"},{"kabyle": "Ikker uctal di lemleḥ",  "francais": "La vermine s’est développée dans le sel",  "theme": "Énormité, Aberration"},{"kabyle": "Aseḍsu itekkes acuffu",  "francais": "Le sourire ôte l'arrogance",  "theme": "Bienfait du sourire"},{"kabyle": "« Azul » itekkes acuffu, « anṣuf » itekkes aɣunzu",  "francais": "« Salut» met fin à l'arrogance, « bienvenue» met fin à la fâcherie",  "theme": "Politesse"},{"kabyle": "Adaɛmamac, di tmurt iderɣalen, d azerqaq",  "francais": "L’homme à la vue faible, est un homme aux yeux bleus, au pays des aveugles",  "theme": "Tout est relatif"},{"kabyle": "Udem d aqelwac, iẓṛi d adaɛmamac",  "francais": "La face d'un bouc, les yeux disgracieux",  "theme": "Laideur"},{"kabyle": "Lxwedma ar lwaldin, am win iṭṭummun addaynin",  "francais": "Le travail chez les parents, c’est comme nettoyer l’étable",  "theme": "Gratuité, Servitude"},{"kabyle": "Ur d tttekk, tafat, seg uddaynin",  "francais": "La lumière ne vient jamais de l'étable",  "theme": "La pensée n’est pas animale"},{"kabyle": "Am win i gceṭṭḥen i uderɣal",  "francais": "C’est comme qui danse pour un aveugle",  "theme": "Absurdité"},{"kabyle": "Iqqwel uderɣal d aṣeggad",  "francais": "L’aveugle est devenu chasseur",  "theme": "Énormité"},{"kabyle": "Adfel ikkat deg udrar, tismeṭ ines deg uzaɣar",  "francais": "La neige tombe en montagne, son froid est dans la plaine",  "theme": "Impact distant"},{"kabyle": "Am takurt n wudfel",  "francais": "Telle une boule de neige",  "theme": "Ce qui grossit vite"},{"kabyle": "Ulac adfel azeqqal",  "francais": "Il n’existe pas de neige tiède",  "theme": "Défaut, Imperfection"},{"kabyle": "Zzhu, n ddunit, d aman n udfel",  "francais": "Les plaisirs de la vie sont pareils à la neige fondante",  "theme": "Fugacité"},{"kabyle": "F nnif, yiɣli wadif",  "francais": "La moelle est tombée pour l’honneur",  "theme": "Sacrifice pour sa dignité"},{"kabyle": "Win ara iṛǧu udles, acimi a la idess ?",  "francais": "Celui que le travail du diss attend, comment peut-il rigoler ?",  "theme": "Imbécillité"},{"kabyle": "Adɣaɣɣef udɣaɣ, ad yali uxxam",  "francais": "Pierre sur pierre et la maison s’édifie",  "theme": "Construction"},{"kabyle": "Exdem lxiṛ i udɣaɣ, a k t id ierr !",  "francais": "Fais du bien à une pierre, elle te le revaudra !",  "theme": "Reconnaissance"},{"kabyle": "Ala idurar ur nettemlili ara",  "francais": "Il n’y a que les montagnes qui ne se rencontrent pas",  "theme": "Retrouvailles imprévues"},{"kabyle": "Izzi amrar i udrar",  "francais": "Il entoure la montagne d’une corde",  "theme": "Prouesse, Complication"},{"kabyle": "Zzux illa, adrim ulac",  "francais": "La fierté est là, l’argent est absent",  "theme": "Coexistence de l’orgueil et de la pauvreté"},{"kabyle": "Izzenz adrum s uɣrum",  "francais": "Il a vendu le quartier pour une galette",  "theme": "Indignité"},{"kabyle": "Aḍad ur issenɛat ara ar yiman is",  "francais": "Le doigt ne se désigne pas",  "theme": "On médit des autres"},{"kabyle": "Dduklen iḍudan ufus",  "francais": "Les doigts d’une main sont solidaires",  "theme": "Fraternité"},{"kabyle": "Iḍudan mxallafen, xelliɛad a yimdanen",  "francais": "Les doigts sont distincts, à plus forte raison les humains",  "theme": "Différences"},{"kabyle": "Teḍṛa yidi am uḍajin, ssebbwayed, medden tetten",  "francais": "Je suis tel un plat de cuisson, je fais cuire, les gens mangent",  "theme": "Exploitation"},{"kabyle": "Aḍaṛ ileḥḥun, ittawi d, neɣittaǧǧa n",  "francais": "Un pied qui se meut amène ou égare",  "theme": "Contrecoups de l’errance"},{"kabyle": "Ur ikkat wugur, ala aḍaṛ yiddan ḥafi",  "francais": "L’obstacle ne heurte que le pied nu",  "theme": "Responsabilité, Implication"},{"kabyle": "Kul aḍebbal, akken ittḍebbil",  "francais": "Chaque tambourineur a sa façon de tambouriner",  "theme": "Individualité"},{"kabyle": "Ičča Beẓẓi, iṛẓa aḍebsi",  "francais": "Le petiot a mangé et cassé l'assiette",  "theme": "Maladresse"},{"kabyle": "Aḍeggal ik, am umrabeḍ, aɣafus is, tṛuḥeḍ",  "francais": "Ton gendre est tel un marabout, serre-lui la main et quitte-le",  "theme": "Éviter la familiarité, Distance"},{"kabyle": "Axir lkwemca n tzizwa, wala aḍellaɛ n yizan",  "francais": "Mieux vaut une poignée d’abeilles qu’un couffin de mouches",  "theme": "Qualité et quantité"},{"kabyle": "Izem iɛaḍs ed amcic, ilef iɛɛḍs ed aɣerda",  "francais": "En éternuant, un lion rejette un chat, un sanglier rejette un rat",  "theme": "Différences"},{"kabyle": "Tasga umuḍin, a tamettant !",  "francais": "Mort, va du côté du malade !",  "theme": "Lâcheté, Peur de la mort"},{"kabyle": "Yir wal iqebbeṛ am ḍiḥan",  "francais": "Un outrage étouffe comme la rate",  "theme": "Effet désastreux des injures et humiliations"},{"kabyle": "Ittcuddu tagut s aḍu",  "francais": "Il lie la brume au vent",  "theme": "Chimère, Inanité"},{"kabyle": "Lxiṛ n tiɣilt, ittawi t waḍu",  "francais": "Le bien d’une colline est emporté par le vent",  "theme": "Indiscrétion"},{"kabyle": "Win izerɛen aḍu ad imger tabuciḍant",  "francais": "Qui sème le vent récolte la tempête",  "theme": "Conséquences"},{"kabyle": "Awufan iḍes umulab, deg uxxam ur nesɛi bab !",  "francais": "On languit le sommeil d’un lézard vert dans une maison sans maître",  "theme": "Repos, Farniente"},{"kabyle": "Celleḥ it, melleḥ it, a ttafeḍ zzman iḥerz it",  "francais": "Découpe-le, sale-le, le temps le conservera",  "theme": "Soin"},{"kabyle": "Ufan lɛib, ula di tmellalt",  "francais": "Ils trouvent une difformité même à un œuf",  "theme": "Malveillance, Désobligeance"},{"kabyle": "Win iufan, ur iṭṭif, ad iqelleb, ur ittaf",  "francais": "Celui qui trouve et ne prend pas, cherchera à prendre et ne trouvera pas",  "theme": "Saisir les opportunités"},{"kabyle": "Ayaziḍ ičča afalku",  "francais": "Le coq a dévoré le faucon",  "theme": "Invraisemblance, Plaisanterie"},{"kabyle": "Tuli tyaẓitt ar ujgu, terra, iman is, d afalku",  "francais": "La poule est montée sur une poutre, elle se prend pour un faucon",  "theme": "Audace, Prétention"},{"kabyle": "Aql i, am wuzzal ilizeq, ger ẓẓebra d ifḍisen",  "francais": "Je suis tel du fer rouge entre l’enclume et les marteaux",  "theme": "Contrainte, Servitude"},{"kabyle": "Ikkat uḥeddad afḍis, iḥefḍ it mmi s",  "francais": "Le forgeron manie le marteau, son fils a appris",  "theme": "Transmission du savoir-faire, Héritage"},{"kabyle": "Acu k ibbwin, a yaḥuli, a ttettafgeḍ !",  "francais": "Pourquoi cherches-tu à t’envoler, ô chevreau !",  "theme": "Démesure, Ambition"},{"kabyle": "Win ur ɛayyecen izgaren, ur t ɛayyecen ifeggagen",  "francais": "Qui ne gagne pas sa vie avec des bœufs, ne peut pas la gagner avec un métier à tisser",  "theme": "Comparaison des moyens de subsistance"},{"kabyle": "Iẓra, ufellaḥ, anida yiǧǧa leslaḥ",  "francais": "Le paysan sait où il a laissé les outils",  "theme": "L’acteur est le mieux informé"},{"kabyle": "Bu nnḥas, am bu uferḍas, ad ittenfufud kullas, alamma igla s ṛṛas",  "francais": "L’envieux est tel un teigneux : le mal se propage chaque jour jusqu’à emporter la tête",  "theme": "La convoitise est une maladie mortelle"},{"kabyle": "Inebgi n yibbwass, d afessas, inebgi n yumayen, d amessas, inebgi n kullas, ddu tt fell-as !",  "francais": "Un invité d’un jour n’est pas contraignant, un invité de deux jours est déplaisant, un invité permanent, chasse-le !",  "theme": "Gêne et savoir-vivre"},{"kabyle": "Amkan n waffar, ffer it, amkan ifilku, zzenz it",  "francais": "Dissimule une terre à chiendent, vends une terre à fougère",  "theme": "Différenciations"},{"kabyle": "Sɛumt afrag, a yallen !",  "francais": "Ô mes yeux, ayez une limite !",  "theme": "Retenue, Réserve"},{"kabyle": "Ittuger lḥebb, afriwen",  "francais": "Les fruits sont plus nombreux que les feuilles",  "theme": "Abondance, Profusion"},{"kabyle": "Ikker ed ufrux, yisselqwaḍen baba s",  "francais": "Il naît un oiseau qui donne la becquée à son père",  "theme": "Prétention"},{"kabyle": "Anda yissarem wul, ad yaweḍ ufud",  "francais": "Là où le cœur aspire, le pied se rend",  "theme": "Ambition, Volonté"},{"kabyle": "Igzem afurk ɣef iqqim",  "francais": "Il a coupé la branche sur laquelle il est assis",  "theme": "Bêtise, Ineptie"},{"kabyle": "Win iṛẓan afurk, izzuɣer it",  "francais": "Celui qui a coupé une branche doit la traîner",  "theme": "Implication, Responsabilité"},{"kabyle": "Afus ayeffus ur igezzem azelmaḍ",  "francais": "La main droite ne sectionne pas la gauche",  "theme": "Alliance, Solidarité, Clan"},{"kabyle": "Afus deg ufus, taɛekkwemt ẓẓayen a ttifsus",  "francais": "Main dans la main, la charge lourde devient légère",  "theme": "Entraide, Solidarité"},{"kabyle": "Afus, ma ur tewɛiḍ, a t tkerrceḍ, ssuden it !",  "francais": "La main que tu ne peux mordre, embrasse-la !",  "theme": "Tactique, Diplomatie"},{"kabyle": "Afus n Ṛebbi ɣezzif",  "francais": "La main de Dieu est longue",  "theme": "Omnipotence divine"},{"kabyle": "Iles d aɣezzfan, afus d awezlan",  "francais": "La langue est longue, la main est courte",  "theme": "Bavardage et paresse"},{"kabyle": "ttif afus yiṭṭfen, win yibran",  "francais": "Mieux vaut la main qui tient que celle qui lâche",  "theme": "Mieux vaut tenir que courir"},{"kabyle": "Idir, idir, leqraṛ nneɣd agadir",  "francais": "On a beau vivre, notre destination finale est le talus",  "theme": "Tombe"},{"kabyle": "Agdud, mebla idles, am umdan mebla iles",  "francais": "Un peuple sans culture est comme un être dénué de langue",  "theme": "Civilisation, Connaissance"},{"kabyle": "Iwwet agejdur s umcic",  "francais": "Il a poussé de terribles cris de colère",  "theme": "Colère"},{"kabyle": "Agellid idda d arbib",  "francais": "Un prince est considéré comme un enfant d’un premier lit",  "theme": "Abaissement, Dégradation"},{"kabyle": "Ul, d agellid, udem, d ayeddid",  "francais": "Un cœur de roi, une face d’outre",  "theme": "Bonté et beauté"},{"kabyle": "Lqedd, annect n uzduz, ṛṛɛud, iɣleb agenduz",  "francais": "Il a la taille d’un maillet, mais il crie plus fort qu’un veau",  "theme": "Le cri comme arme du petit"},{"kabyle": "Tameṭṭut ijemmɛan, d agerruj n uxxam i tt isɛan",  "francais": "Une femme économe est un trésor pour son foyer",  "theme": "Importance de la prévoyance"},{"kabyle": "Ufan agerruj, iuɣal asen d tirgin",  "francais": "Ils ont découvert un trésor, il leur est devenu charbon",  "theme": "Grosse déception"},{"kabyle": "Am uberriḍ ɣef ugertil",  "francais": "Comme la diarrhée sur une natte",  "theme": "Situation compliquée"},{"kabyle": "Ïṭbiɛa ugertil ur tettbeddil",  "francais": "La face d’une natte ne change jamais",  "theme": "Fidélité, Constance"},{"kabyle": "D agezzar, ičča s tebṣelt",  "francais": "Il est boucher mais mange du couscous à l’oignon",  "theme": "Avarice"},{"kabyle": "Ifsi waggus is",  "francais": "Sa ceinture s'est dénouée",  "theme": "Confusion"},{"kabyle": "Ula d agrireb, s leṣlaḥ",  "francais": "Même une dégringolade a un intérêt (À quelque chose le malheur est bon)",  "theme": "Relativisme, Résilience"},{"kabyle": "Ul is, d agris aberkan",  "francais": "Son cœur est de glace noire",  "theme": "Dureté"},{"kabyle": "Ittnadi iẓuran n tagut !",  "francais": "Il cherche des racines au brouillard !",  "theme": "Chercher l’impossible"},{"kabyle": "I ittemɣuṛen, ala agudu",  "francais": "Seul le dépotoir grossit",  "theme": "Péché d'orgueil"},{"kabyle": "Ili d zzbel, a ttuɣaleḍ d agudu, ili d adfel, a ttuɣaleḍ d adrar",  "francais": "Soit fumier, tu deviendras dépotoir. Soit neige, tu deviendras mont",  "theme": "On forge son destin"},{"kabyle": "Lemmer tasusmi d cci, agugam d ameṛkanti",  "francais": "Si le silence était un bien, le muet serait fortuné",  "theme": "Réprobation de silences pleutres ou complices"},{"kabyle": "Agujil, d agujil, a lukan s učamar",  "francais": "Un orphelin demeure orphelin, même avec la barbe",  "theme": "Empreinte indélébile"},{"kabyle": "Imma s temmal i yilli-s, tagujilt temmal i yixf is",  "francais": "La mère conseille sa fille, l’orpheline se conseille elle-même",  "theme": "Solitude de l’orphelin"},{"kabyle": "Aggad Ṛebbi, akked win ur nettaggad ara",  "francais": "Crains Dieu et celui qui ne craint pas",  "theme": "Prudence"},{"kabyle": "Ayen tugadeḍ, ad yis temmteḍ",  "francais": "Tu seras victime de ce que tu crains",  "theme": "Intuition, Pressentiment"},{"kabyle": "Win iqqes uzrem, ittaggad ula d aseɣwen",  "francais": "Celui qu’un serpent a piqué craint même une cordelette",  "theme": "Méfiance exacerbée"},{"kabyle": "Win ur nettaggad, ittwaggad",  "francais": "Celui qui ne craint pas, est craint",  "theme": "Le courage est une force"},{"kabyle": "Akken agwḍi, akken tameɣrust",  "francais": "Le figuier ressemble au trou creusé pour le planter",  "theme": "Corrélation, Dépendance"},{"kabyle": "Am wi ittagmen s uɣerbal",  "francais": "Tel celui qui puise l’eau à l’aide d’un tamis",  "theme": "Aberration, Stupidité"},{"kabyle": "Times ugemmaḍ, ur tesseḥmay ameṣṣaḍ",  "francais": "Le feu du versant d’en face ne réchauffe pas les hanches",  "theme": "Inutilité, Impuissance"},{"kabyle": "Agercal, ur ittuɣal ara d awren, aɛdaw, ur ittuɣal ara d aḥbib",  "francais": "Le son ne devient pas farine, l’ennemi ne devient pas un ami",  "theme": "Inimitié"},{"kabyle": "Agercal ur ittuɣal s iɣuṛaf",  "francais": "Le son ne retourne pas aux meules",  "theme": "Expérience mémorable"},{"kabyle": "Inza ugercal s urḍel",  "francais": "Le son est vendu à la livre",  "theme": "Misère, Indigence"},{"kabyle": "A benyaɛqub, a ccmata, taglimt ik tenza di ttlata !",  "francais": "Ô chacal, ô l’ignoble, ta peau a été vendue au marché du mardi !",  "theme": "La fin d’un traître"},{"kabyle": "Ur ttaǧǧa ara aglim ik, ad fellak ittraḥ",  "francais": "Ne laisse pas ta peau sentir mauvais",  "theme": "Mener une action jusqu’à son terme"},{"kabyle": "Nneyya iuṛǧan ahu, n tiɣri yisseblaɛ wanu",  "francais": "Naïf qui espère un écho d’un appel englouti par un gouffre",  "theme": "Crédulité, Innocence"},{"kabyle": "Aḥlil lweḍn abaɛli, yinzan d asuki !",  "francais": "Plaignons un champ dépourvu d’eau et vendu en friche !",  "theme": "Misère, Indigence"},{"kabyle": "Aḥbib am leḥrir, ḥader it, aggad ad yames",  "francais": "Un ami est comme la soie, prends-en soin, crains qu’il ne se salisse",  "theme": "Préciosité de l'amitié"},{"kabyle": "Aḥbib n lqahwa, d tissit, tiflest ubelluḍ, tif it",  "francais": "Un lobe de gland est préférable à l’ami du bar et de la boisson",  "theme": "Fausses amitiés"},{"kabyle": "Laẓ ur isɛi aḥbib",  "francais": "La faim n’a pas d’ami",  "theme": "Le dénuement isole"},{"kabyle": "Iɣli d seg genni, am uḥbub",  "francais": "Il est tombé du ciel tel une figue sèche",  "theme": "Sans ascendants, sans passé"},{"kabyle": "Tayuga, ma teǧhed, mi tebbweḍ s aḥdid, a ttbedd",  "francais": "Une paire de bœufs, aussi forte soit-elle, s’arrête au talus",  "theme": "Limite, Borne"},{"kabyle": "Aḥeddad ur nesɛi tafrut !",  "francais": "Un forgeron dépourvu d’un couteau !",  "theme": "Anomalie"},{"kabyle": "Aḥeddur d uggwan, abeṛnus d ulman",  "francais": "La crêpe est une pâtisserie, le burnous, un tissage",  "theme": "Différenciation, Distinction"},{"kabyle": "Iɣli d, iɣli d, ɣef ččilmum, iɣil d aḥeddur, wumcum",  "francais": "Il a dévoré des fleurs d’orme, croyant, pauvre diable, que c’était des crêpes",  "theme": "Méprise"},{"kabyle": "Mara ffɣen iḥegganen, ad iffeɣlhemm ixxamen",  "francais": "Quand le mauvais temps se termine, le mal quitte la maison",  "theme": "Guérison"},{"kabyle": "Kul yiwen ittḥalab s uḥellab is",  "francais": "Chacun trait avec son pot",  "theme": "Distinctions"},{"kabyle": "Win ikesben yir lmal, yif it w’illan d aḥemmal",  "francais": "Il vaut mieux être portefaix que de posséder un mauvais troupeau",  "theme": "Simplicité"},{"kabyle": "Iẓra, uḥeṛṛat, anida yiǧǧa awzir",  "francais": "Le bœuf expérimenté connaît l’endroit qu’il n’a pas labouré",  "theme": "Identification des anomalies"},{"kabyle": "Ur yaɛdil umanun d uḥeṛṛat",  "francais": "Le bœuf novice ne vaut pas le bœuf aguerri",  "theme": "Expérience, Expertise"},{"kabyle": "Ttfuh iɣleb aḥlalas",  "francais": "Le mépris est pire que des plombs de fusil",  "theme": "Force du mépris"},{"kabyle": "Üṣyada, ṣṣbeḥ i tt feṛqen, aḥlil imeɣban yiṭṭsen !",  "francais": "Plaignons les miséreux qui dorment !",  "theme": "Nonchalance, Oisiveté"},{"kabyle": "ttif aɛbbas aḥṛuṛ, wala meyya di laɛṛuṛ",  "francais": "Un homme libre des At Abbas est meilleur que cent sacripants",  "theme": "Considération de la vertu"},{"kabyle": "Ïṭiṛ aḥṛuṛ, ma iḥṣel, ur ittemqellaɛ",  "francais": "Un oiseau noble, quand il est pris, ne s’agite pas",  "theme": "Stoïcité"},{"kabyle": "Aḥuddu, aḥunu !",  "francais": "Protection et compassion !",  "theme": "Souhait bienveillant"},{"kabyle": "Lḥut, di lebḥeṛ, iɛac, axelli ɛad, a lɛabd is",  "francais": "Le poisson vit dans la mer, à plus forte raison Sa créature",  "theme": "Foi en la providence"},{"kabyle": "Ṛṛay d lɛic",  "francais": "Le jugement est une nourriture",  "theme": "Importance du discernement"},{"kabyle": "Tamɛict teṣɛab i lefḥel",  "francais": "Dure est la subsistance pour l’homme valeureux",  "theme": "Vertu sanctionnée"},{"kabyle": "Ɛiwen win ibɣan ad ikker",  "francais": "Aide celui qui veut s’élever",  "theme": "Solidarité sélective"},{"kabyle": "Axxam yittɛirin aɣerbal d teṛbut, yif it lebḥeṛ n lḥut",  "francais": "Une maison qui emprunte tamis et plat ne vaut pas la mer aux poissons",  "theme": "Autosuffisance"},{"kabyle": "Ddunit d lmaɛira",  "francais": "Le monde est un emprunt",  "theme": "Provisoire"},{"kabyle": "Ɛiwed-as,  i ddunit, asnulfu !",  "francais": "Conçois le monde à nouveau !",  "theme": "Défi, Fanfaronnade"},{"kabyle": "Ayen d ifka waxux, ičča t ujaxux",  "francais": "Ce que le champ a rapporté, le gosier l’a englouti",  "theme": "Avidité, Précarité"},{"kabyle": "Ad iɣli w’innumen ajdab",  "francais": "Celui qui pratique la transe finira par chuter",  "theme": "Trouble, Émoi, Saisissement"},{"kabyle": "Awal ajdid iteqqes",  "francais": "Une parole inédite est âpre",  "theme": "Nouveauté"},{"kabyle": "Ur ittwaṭṭaf, ujenwi, si leqḍaɛ",  "francais": "On ne prend pas un poignard par la lame",  "theme": "Déraison"},{"kabyle": "Tifawtin, deg ujerbub ay ṭṭfent",  "francais": "Les pièces s'attachent au haillon",  "theme": "Raccommodage, Replâtrage"},{"kabyle": "Iugar ujgagal, tara",  "francais": "La treille regorge de sarments",  "theme": "Abondance"},{"kabyle": "Zerɛaɣtaferka n yirden, teffeɣiyi d d ajilban",  "francais": "J’ai semé un champ de blé, il a poussé des petits pois",  "theme": "Subir une falsification"},{"kabyle": "Ajlal yif lɛalf",  "francais": "Une couverture sur le dos d’une bête est meilleure qu’un bon aliment",  "theme": "Assistance durable"},{"kabyle": "Abeṛṛaɛqu d gma s n ujṛad",  "francais": "Le criquet est le frère de la sauterelle",  "theme": "Même engeance"},{"kabyle": "Eṭṭes f ikaɛruren !",  "francais": "Dors sur des protubérances !",  "theme": "Supporter des épreuves"},{"kabyle": "Akal d amassaṛ",  "francais": "La terre est une protection",  "theme": "Protection"},{"kabyle": "Seg wakal, s akal",  "francais": "De la terre à la terre",  "theme": "Destin de la chair"},{"kabyle": "Uqbel a ttzerɛaḍ kra, muqel akal amek iga",  "francais": "Avant de semer, étudie l’état du sol",  "theme": "Précaution, Prévoyance"},{"kabyle": "Yir aɛbaṛ di yir keṛṭuc, yir awal di yir qemmuc",  "francais": "Ridicule coup de feu d’une mauvaise cartouche, piètre parole d’une mauvaise bouche",  "theme": "Inadéquation"},{"kabyle": "Akken llan medden, a nili",  "francais": "Nous serons comme sont les autres",  "theme": "Adaptation, Assimilation"},{"kabyle": "Akken yilla baba-s, ad yili mmi s",  "francais": "Tel père, tel fils",  "theme": "Hérédité"},{"kabyle": "Irgazen, akken reffden tiẓayanin, ay tetten tiẓidanin",  "francais": "De la même façon que les hommes portent des fardeaux, ils dégustent des gâteries",  "theme": "Récompenses"},{"kabyle": "Lxiṛ, d cceṛ, d imsaɛfen, akken ay ddukulen",  "francais": "Le bien et le mal s’accompagnent. Ils vont conjointement",  "theme": "Rencontre des extrêmes"},{"kabyle": "Akli, ifuḥ, lqesma-s, ẓidet",  "francais": "Le boucher est détesté, mais sa viande est bonne",  "theme": "Savoir mesurer le pour et le contre"},{"kabyle": "Iuɣal wakli d amellal",  "francais": "Un noir est devenu blanc",  "theme": "Utopie, Aberration"},{"kabyle": "D aksum i gcebbḥen iɣes",  "francais": "Le charme de l’os c’est la chair",  "theme": "Complémentarité"},{"kabyle": "Iggul ɣef uksum, imceḥ lmeṛqa",  "francais": "Il a juré de ne pas manger de viande, mais il a léché la sauce",  "theme": "Contradiction, Fausseté"},{"kabyle": "Ur telliḍ d akufi, ad, deg k, xezzneɣ!",  "francais": "Tu n’es pas une jarre pour que je te confie mes provisions",  "theme": "Méfiance"},{"kabyle": "Bu ukumbaṣ, ur ittnuddum",  "francais": "L’homme intelligent ne somnole pas",  "theme": "Vigilance"},{"kabyle": "A yasmi teǧǧel telkett, inna yas ukured : a kem aɣeɣ",  "francais": "Quand le pou devint veuf, la puce voulut l’épouser",  "theme": "Mésalliance"},{"kabyle": "Amakwar useggas a, d win n qabel",  "francais": "Le voleur de cette année, sera celui de l’année prochaine",  "theme": "Récidive"},{"kabyle": "Iuker d imukwar, ittru d at uxxam",  "francais": "Il a volé avec les cambrioleurs, il se lamente avec les victimes",  "theme": "Hypocrisie, Duplicité"},{"kabyle": "Ur ttakwer zdat warrac, ur sseknaf zdat imcac",  "francais": "Ne vole pas devant des enfants, ne grille pas la viande devant des chats",  "theme": "Précautions appropriées"},{"kabyle": "Temẓi inu truḥ d akweṛfi",  "francais": "Mon enfance est passée comme une corvée",  "theme": "Enfance difficile"},{"kabyle": "Texleḍ tirect d ukwerfa",  "francais": "Le grain est mêlé à l’ivraie",  "theme": "Le bon et le mauvais mélangés"},{"kabyle": "Akwessar, d akwessar, Ṛebbi ifka afus",  "francais": "La pente est raide et Dieu a laissé faire",  "theme": "Dégringolade méritée"},{"kabyle": "Irra akwessar d asawen",  "francais": "Il a transformé une descente en montée",  "theme": "Compliquer quelque chose de simple"},{"kabyle": "A taqbaylit, ma iṭṭes ssaɛd im, ssakwi t !",  "francais": "Ô femme kabyle, si ton bien-être sommeille, réveille-le !",  "theme": "Exhortation, Encouragement"},{"kabyle": "Ur ssakway tizizwa yiṭṭsen !",  "francais": "Ne réveille pas les abeilles endormies !",  "theme": "Prudence, Discernement"},{"kabyle": "Acimi « ala », imi « irbeḥ » illa",  "francais": "Pourquoi dire « non » puisque « oui » existe ?",  "theme": "Rejet du négationnisme"},{"kabyle": "Jjwaǧ n walag, d amedlalag",  "francais": "Un mariage entre parents est gluant",  "theme": "Entraves, Contraintes"},{"kabyle": "Lɛabd alemmam, iteẓẓu ilili deg uxxam",  "francais": "Le rapporteur plante du laurier-rose au foyer",  "theme": "Brouille, Amertume"},{"kabyle": "Aleqqim, aleqqim, taẓallit teqqim",  "francais": "Bouchée après bouchée, la prière est délaissée",  "theme": "Gourmandise, Négligence, Défaillance"},{"kabyle": "Anda terziḍ, a ttalseḍ",  "francais": "Où tu passes, tu repasses",  "theme": "L’habitude est une seconde nature"},{"kabyle": "ttaṛ uɛudiw af ulgam",  "francais": "Revanche du cheval sur le mors",  "theme": "Défoulement"},{"kabyle": "A lfeṭṭa, a kem id yali nnḥas",  "francais": "Ô argent, le cuivre va te ternir",  "theme": "Révolte, Rébellion"},{"kabyle": "Ddheb, ur t ittali nnkel",  "francais": "L’or ne se ternit pas",  "theme": "Personne droite, irréprochable"},{"kabyle": "Itran ɣlin, iɣerdayen ulin",  "francais": "Les étoiles sont tombées, les rats sont montés",  "theme": "Monde à l’envers"},{"kabyle": "Bu yiwet n tiṭ, ur iggan deg walim",  "francais": "Un borgne ne dort jamais sur de la paille",  "theme": "Prudence"},{"kabyle": "Nnaɛma, iluqeb itt walim",  "francais": "La paille se moque des céréales",  "theme": "Inversion des valeurs"},{"kabyle": "Alemman tegḍ as tallalt, i bu yirbiben d tuknant ?",  "francais": "Jusqu’à quand approvisionneras-tu le bigame aux enfants d’un premier lit ?",  "theme": "Rejet de la polygamie"},{"kabyle": "Allen yizhan, d imnernan",  "francais": "Les yeux joyeux portent bonheur",  "theme": "Enthousiasme, Gaieté"},{"kabyle": "D aɣebbaṛ s allen",  "francais": "C’est « de la poudre aux yeux »",  "theme": "Vantardise, Tromperie, Illusion"},{"kabyle": "Am ulɣem aɣeẓẓug",  "francais": "Tel le chameau sourd",  "theme": "Insouciance"},{"kabyle": "Taweṭṭuft tezzuɣer alɣem",  "francais": "Une fourmi traîne un chameau",  "theme": "Prouesse, Hardiesse"},{"kabyle": "Win ibɣan lbaṛaka, ad ileqqem, win ibɣan alqim, ad iccelqem",  "francais": "Celui qui désire la baraka, qu’il greffe, celui qui désire la nourriture, qu’il avale",  "theme": "Vertus, Attitudes"},{"kabyle": "A win ixellen leḥrir, ur ssiɣzif abruɛ i waluḍ",  "francais": "Ô toi qui couds la soie, ne rallonge pas les pans vers la boue",  "theme": "Réserve, Précaution"},{"kabyle": "Iberdan heddṛen, rennun, af uɛwiǧ akw d umaɛfun",  "francais": "Les chemins relatent beaucoup au sujet du tordu et de l’ignoble",  "theme": "Témoignages, Médisances"},{"kabyle": "D amaɛlal, irna ṭṭaglal",  "francais": "Il est maladif et sujet aux malaises",  "theme": "Malédiction"},{"kabyle": "Amaflas, ur fell-as nudant tullas",  "francais": "Celui qui est désargenté n’est pas recherché par les jeunes filles",  "theme": "Vénalité"},{"kabyle": "A d ikk usalas seg umagraman",  "francais": "Une poutre proviendra de l’aunée",  "theme": "Utopie"},{"kabyle": "Uzzal d amalal",  "francais": "Le fer est une assistance",  "theme": "Outillage"},{"kabyle": "Asammer d aɣuṛaṛ, amalu d agris",  "francais": "L’adret est aride, l’ubac gelé",  "theme": "Justifications invraisemblables d’un paresseux"},{"kabyle": "Isɛa amalu, asammer",  "francais": "Il a des propriétés en ubac et en adret",  "theme": "Signe de fortune"},{"kabyle": "Am aman, akked yiɣi",  "francais": "Tels l’eau et le petit-lait",  "theme": "Relation intime"},{"kabyle": "Aql i, am texwnact ɣef waman",  "francais": "Je suis tel un liège sur l’eau",  "theme": "Fragile"},{"kabyle": "Ibra i ṭṭbel deg waman",  "francais": "Il a laissé tombé le tambour dans l’eau",  "theme": "Maladresse"},{"kabyle": "Laman bbwin t waman",  "francais": "La confiance est emportée par les eaux",  "theme": "Défiance"},{"kabyle": "Uǧǧwen aman, s llitra, akal, s lmitra",  "francais": "Ils achètent l’eau au litre, la terre, au mètre",  "theme": "Urbanisation"},{"kabyle": "Amayaf, amayaf, kul wa, ayen ixdem, a t yaf",  "francais": "Décelé, décelé, chacun récolte le fruit de ses actes",  "theme": "Sanction"},{"kabyle": "Amayeg ufella, iteffeẓ ur issebliɛ",  "francais": "La machoire supérieure mâche mais n’avale pas",  "theme": "Que des inconvénients"},{"kabyle": "Am win iteffẓen, af sin imuyag",  "francais": "Tel celui qui mastique des deux côtés",  "theme": "Gaucherie"},{"kabyle": "Amaẓuẓ, d amaɛzuz",  "francais": "Le dernier né est bien-aimé",  "theme": "Affection"},{"kabyle": "Urfan umceddal, i gɣeẓẓen taqejjiṛt is",  "francais": "Colère de la fourmi rouge qui mord sa patte",  "theme": "Se châtier soi-même"},{"kabyle": "Ad isebbel, wumcic, tacriḥt",  "francais": "Le chat va abandonner le morceau de viande",  "theme": "Impossibilité"},{"kabyle": "Amcic innumen ad iskef, leqraṛ is ad ittwaṭṭef",  "francais": "Le chat habitué à boire du lait, finira par être attrapé",  "theme": "Issue inéluctable"},{"kabyle": "Am umcic d uɣerda",  "francais": "Tel chat et rat",  "theme": "Ennemis"},{"kabyle": "Amcic ur ittaǧǧa ara laɛwayed is",  "francais": "Le chat ne perd pas ses habitudes",  "theme": "Habitude"},{"kabyle": "Lemmer issimɣur iɣimi, yili amcic ad innerni",  "francais": "Si le repos permettait de grandir, le chat aurait crû",  "theme": "L’oisiveté fustigée"},{"kabyle": "Llɛab n uqjun, d tikerrac, win n umcic, d tixebbac",  "francais": "Le jeu du chien c’est de mordre, celui du chat c’est de griffer",  "theme": "Jeu dangereux"},{"kabyle": "Ad ifk, Ṛebbi, amcum i wumcum, asaɛdi ad izger meslum !",  "francais": "Dieu fasse qu’un méchant soit confronté à un méchant, que le bon soit sauvé !",  "theme": "Justice divine"},{"kabyle": "Ddu d umcum, a ttcumeḍ, ddu d usaɛdi, a ttsaɛdeḍ",  "francais": "Fréquente un méchant, tu vas porter malheur, fréquente un homme de bien, tu vas rendre heureux",  "theme": "Influence"},{"kabyle": "Amdan ilhan, ittarra awal aẓidan",  "francais": "Un homme sensé répond avec gentillesse",  "theme": "Amabilité"},{"kabyle": "Imdanen d ileɣluɣen, kkes ed tamda ur sluɣen",  "francais": "Les gens sont mous, ils troublent toute mare",  "theme": "Nuisance"},{"kabyle": "A k ierr d amder, i umdun",  "francais": "Il va te placer comme rebord d’un bassin",  "theme": "Figé"},{"kabyle": "La ikkat umeččim, a nečč, a neqqim, a nefk i yizgaren, alim",  "francais": "Il tombe de la neige, on va manger et se reposer, on donnera de la paille aux bœufs",  "theme": "Quiétude hivernale"},{"kabyle": "Inger qeccuc, meccuc",  "francais": "Il est ruiné liège et natte",  "theme": "Anéantissement, Annihilation"},{"kabyle": "Ulamma aɛzizeḍ, a yameddakwel iw, tif ik teṛwiḥt iw",  "francais": "Bien que tu me sois cher, ô compagnon, c’est mon âme que je préfère",  "theme": "Égocentrisme"},{"kabyle": "Amehbul, ur ittiṛqiq",  "francais": "Un capricieux ne maigrit point",  "theme": "Caractère"},{"kabyle": "Imla yas lkil umehraz",  "francais": "Il lui a montré ce que contient le mortier",  "theme": "Revanche bien concoctée"},{"kabyle": "Akken yilla wass, a t iks umeksa",  "francais": "Le berger fait paître quel que soit le temps",  "theme": "Adaptation, Opiniâtreté"},{"kabyle": "Ddu d umeksa, a ttekseḍ, ddu d ṭṭaleb, a tteɣreḍ, ddu d uḍebbal, a ttewteḍ",  "francais": "Si tu fréquentes un berger, tu vas faire paître, si tu fréquentes un étudiant, tu vas t’instruire, si tu fréquentes un tambourineur, tu vas tambouriner",  "theme": "Dis-moi qui tu fréquentes…"},{"kabyle": "Ittru d umeksa, itett d wuccanen",  "francais": "Il se lamente avec le berger et mange avec les chacals",  "theme": "Duplicité"},{"kabyle": "Aman, d laman",  "francais": "L’eau, c’est la sécurité",  "theme": "Bénéfique"},{"kabyle": "A laman, irna k lexdaɛ",  "francais": "Ô confiance, tu es vaincue par la trahison",  "theme": "Triomphe du mal sur le bien"},{"kabyle": "Anwa ara yamnen akeddab, asmi ara d yini tidett ?",  "francais": "Qui va croire un menteur, le jour où il dira la vérité ?",  "theme": "Crédibilité"},{"kabyle": "Illa laman ger lxeyyan, ulac it ger lexwan",  "francais": "La confiance règne chez les cambrioleurs, elle est inexistante chez les pieux adeptes",  "theme": "Étonnante répartition des vertus et des tares"},{"kabyle": "Ur ttamen asif asusam !",  "francais": "Ne te fie pas à une rivière qui coule en silence !",  "theme": "Se méfier des gens sournois"},{"kabyle": "Ikkat as amendayer, ad icḍeḥ",  "francais": "Il lui joue du tambour, pour le faire danser",  "theme": "Berner"},{"kabyle": "Ɣumm ṭṭɛam ik, s umendil ik !",  "francais": "Couvre ton couscous avec ton foulard !",  "theme": "Assomption, Responsabilité"},{"kabyle": "Lxiṛ d amengur",  "francais": "Le bien n’a pas de progéniture",  "theme": "Abnégation"},{"kabyle": "Amennuɣn yizem : ibbwas, win n waydi : kullas",  "francais": "La dispute du lion dure un jour, celle du chien est permanente",  "theme": "Noblesse et mesquinerie"},{"kabyle": "Amenṭas, mara iḥṣel, ma tjebdeḍ t id, ad inṣel",  "francais": "Quand la cognée est coincée, elle se démanche si on la tire",  "theme": "Situation embarrassante"},{"kabyle": "A yameɣcuc, i k isbezgen a ɣiṛuc",  "francais": "Ô dévoyé, ce qui t’a trempé va nous asperger",  "theme": "Ricochet, Contrecoup des agissements des autres"},{"kabyle": "Taleqqwimt tameṛẓagut, i tt itetten, d imawlan",  "francais": "La nourriture amère est mangée par les propriétaires (Assumer les défaillances de sa progéniture)",  "theme": "Responsabilité, Assomption"},{"kabyle": "A lḥif n tegrar, ameṛṛẓu n tgecrar !",  "francais": "Malheur des vieux jours, aux genoux brisés !",  "theme": "Vieillesse"},{"kabyle": "Issames iyi abux",  "francais": "Il m’a sali avec de la suie",  "theme": "Calomnie"},{"kabyle": "Lɛazza uɛeggun d ameslay",  "francais": "Le plaisir du muet c’est la parole",  "theme": "Combler sa carence"},{"kabyle": "Tameslayt, d ayen isehlen, lefhama, d ayen iwaɛṛen",  "francais": "La parole est aisée, la sagacité est difficile",  "theme": "Pensée, Discernement"},{"kabyle": "Amezhul ma ad inaḍeḥ ?",  "francais": "Un faible peut-il lutter ?",  "theme": "Faiblesse"},{"kabyle": "Amezwaru, zwarent-as,  aneggaru, ggrant-as",  "francais": "Le premier est bien servi, le dernier prend ce qui reste",  "theme": "Ordre d'arrivée"},{"kabyle": "Ur d ǧǧin imezwura, ara rnun ineggura",  "francais": "Les premiers hommes n’ont rien laissé que puissent ajouter les derniers",  "theme": "Hommage aux ancêtres"},{"kabyle": "D amennuɣ n tnuḍin, ur ittawi, ur issufuɣ",  "francais": "Tel la dispute de belles sœurs, sans intérêt, sans suite",  "theme": "Dispute stérile"}
-        ];
-
         document.addEventListener('DOMContentLoaded', () => {
-            // --- ÉLÉMENTS DU DOM & ÉTAT DE L'APPLICATION ---
+            // --- CONSTANTES & ÉLÉMENTS DU DOM ---
+            const PROVERBS_PER_PAGE = 50;
             const dom = {
                 html: document.documentElement,
                 splashScreen: document.getElementById('splash-screen'),
@@ -408,6 +425,8 @@
                 clearSearchBtn: document.querySelector('.clear-search-btn'),
                 resultsContainer: document.getElementById('results-container'),
                 resultsFeedback: document.getElementById('results-feedback'),
+                initialLoadMessage: document.getElementById('initial-load-message'),
+                loaderContainer: document.getElementById('infinite-scroll-loader'),
                 favoritesContainer: document.getElementById('favorites-container'),
                 noResults: document.getElementById('no-results'),
                 noFavorites: document.getElementById('no-favorites'),
@@ -422,10 +441,7 @@
                 quizContainer: document.getElementById('quiz-container'),
                 aboutBtn: document.getElementById('about-btn'),
                 themeToggle: document.getElementById('theme-toggle'),
-                themeIcons: {
-                    light: document.getElementById('theme-icon-light'),
-                    dark: document.getElementById('theme-icon-dark')
-                },
+                themeIcons: { light: document.getElementById('theme-icon-light'), dark: document.getElementById('theme-icon-dark') },
                 modal: {
                     backdrop: document.getElementById('modal-backdrop'),
                     content: document.getElementById('modal-content'),
@@ -440,17 +456,35 @@
                 }
             };
 
+            // --- ÉTAT GLOBAL DE L'APPLICATION ---
             const state = {
-                activeTheme: sessionStorage.getItem('inzan_theme_filter') || 'tous',
+                activeTheme: 'tous',
                 searchTimeout: null,
-                proverbs: proverbsData.map((p, index) => ({ ...p, id: index })),
+                proverbs: [],
                 favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
-                uniqueThemes: [],
-                trapFocusHandler: null 
+                trapFocusHandler: null,
+                isCoreDataLoaded: false,
+                currentPage: 0,
+                displayedProverbs: [],
+                isLoading: false,
+                totalFilteredCount: 0
             };
             
             // --- FONCTIONS UTILITAIRES ---
-            const normalizeText = (text) => text ? text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : '';
+            const normalizeText = (text) => {
+                if (!text) return '';
+                return text
+                    .toLowerCase()
+                    .replace(/ǧ/g, 'g')
+                    .replace(/č/g, 'c')
+                    .replace(/ṣ/g, 's')
+                    .replace(/ṭ/g, 't')
+                    .replace(/ẓ/g, 'z')
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .trim();
+            };
+
             const debounce = (func, delay) => (...args) => {
                 clearTimeout(state.searchTimeout);
                 state.searchTimeout = setTimeout(() => func(...args), delay);
@@ -468,7 +502,6 @@
                 }).join('');
             };
 
-            // --- FONCTIONS D'AFFICHAGE (UI) ---
             const showToast = (message, isError = false) => {
                 dom.toast.querySelector('p').textContent = message;
                 dom.toast.className = `fixed bottom-[-100px] left-1/2 -translate-x-1/2 text-white py-2 px-5 rounded-full shadow-xl opacity-0 z-[1000] ${isError ? 'bg-red-600' : 'bg-green-700'}`;
@@ -479,16 +512,20 @@
             };
 
             const highlightText = (text, query) => {
+                if (!text) return text;
                 if (!query) return text;
                 const normalizedQuery = normalizeText(query);
-                // Regex to find the query but not inside an HTML tag
-                const regex = new RegExp(`(?![^<]*>)${normalizedQuery.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}`, 'gi');
-                return text.replace(regex, match => `<span class="search-highlight">${match}</span>`);
+                if (!normalizedQuery) return text;
+                const keywords = normalizedQuery.split(' ').filter(k => k.length > 0);
+                if (keywords.length === 0) return text;
+                const regex = new RegExp(`(${keywords.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')).join('|')})`, 'gi');
+                return text.replace(regex, `<span class="search-highlight">$1</span>`);
             };
             
+            // --- RENDU UI DYNAMIQUE ---
             const createProverbCardHTML = (proverb, isDaily = false, query = '') => {
                 if (!proverb) return '';
-                const themes = proverb.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
+                const themes = (proverb.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
                 const themesHtml = themes.map(theme => `<button class="card-theme-badge px-2 py-1 rounded-full text-xs font-semibold bg-[var(--color-primary)]/10 text-[var(--color-primary)]" data-theme="${normalizeText(theme)}">${theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()}</button>`).join('');
                 
                 const cardClasses = isDaily 
@@ -513,16 +550,15 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                                     </button>
                                     <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager le proverbe">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367 2.684z" /></svg>
                                     </button>
                                </div>
                             </div>
                         </div>`;
             };
             
-            const renderProverbs = (container, proverbs, query, noResultsElement) => {
-                noResultsElement.classList.toggle('hidden', proverbs.length > 0);
-                container.innerHTML = proverbs.map((p, i) => {
+            const renderChunk = (container, proverbs, query, append = true) => {
+                const chunkHtml = proverbs.map((p, i) => {
                     const cardHTML = createProverbCardHTML(p, false, query);
                     const wrapper = document.createElement('div');
                     wrapper.innerHTML = cardHTML;
@@ -530,45 +566,133 @@
                     cardElement.style.animationDelay = `${i * 50}ms`;
                     return cardElement.outerHTML;
                 }).join('');
+                
+                if (append) {
+                    container.insertAdjacentHTML('beforeend', chunkHtml);
+                } else {
+                    container.innerHTML = chunkHtml;
+                }
             };
 
-            // --- LOGIQUE MÉTIER & GESTION D'ÉTAT ---
-            const updateDisplay = () => {
+            const updateAvailableThemes = () => {
+                if (!state.isCoreDataLoaded) return;
+                const source = state.displayedProverbs.length > 0 ? state.displayedProverbs : state.proverbs;
+                const allThemesRaw = source.flatMap(p => (p.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean));
+                const uniqueNormalizedThemes = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
+                uniqueNormalizedThemes.sort((a, b) => a[1].localeCompare(b[1]));
+
+                dom.themeListContainer.innerHTML = `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="tous">Tous</button>` + uniqueNormalizedThemes.map(([norm, disp]) => `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="${norm}">${disp}</button>`).join('');
+                
+                const activeThemeButton = dom.themeListContainer.querySelector(`[data-theme="${state.activeTheme}"]`);
+                if (activeThemeButton) activeThemeButton.classList.add('active');
+            };
+
+            // --- LOGIQUE DE L'ONGLET EXPLORER (FILTRES/PAGINATION) ---
+             const filterProverbs = () => {
+                if (!state.isCoreDataLoaded) return [];
+
                 const query = dom.searchInput.value;
                 const normalizedQuery = normalizeText(query);
                 
-                const filteredProverbs = state.proverbs.filter(p => {
-                    const themeMatch = state.activeTheme === 'tous' || normalizeText(p.theme).includes(state.activeTheme);
-                    const queryMatch = !normalizedQuery || normalizeText(p.kabyle).includes(normalizedQuery) || normalizeText(p.francais).includes(normalizedQuery);
-                    return themeMatch && queryMatch;
-                });
-                
-                renderProverbs(dom.resultsContainer, filteredProverbs, query, dom.noResults);
+                const keywords = normalizedQuery.split(' ').filter(k => k.length > 0);
 
-                // Update results feedback
-                const count = filteredProverbs.length;
-                if (query || state.activeTheme !== 'tous') {
-                    dom.resultsFeedback.textContent = `${count} proverbe${count !== 1 ? 's' : ''} trouvé${count !== 1 ? 's' : ''}`;
-                } else {
-                    dom.resultsFeedback.textContent = `Affichage des ${state.proverbs.length} proverbes`;
-                }
+                return state.proverbs.filter(p => {
+                    const themeMatch = state.activeTheme === 'tous' || (p.theme_norm || '').includes(state.activeTheme);
+                    if (!themeMatch) return false;
+                    
+                    const queryMatch = keywords.length === 0 || keywords.every(keyword => 
+                        `${p.kabyle_norm || ''} ${p.francais_norm || ''} ${p.theme_norm || ''}`.includes(keyword)
+                    );
+                    return queryMatch;
+                });
             };
 
+            const loadNextChunk = (reset = false) => {
+                if (state.isLoading || !state.isCoreDataLoaded) return;
+                
+                const isSearching = dom.searchInput.value.trim().length > 0 || state.activeTheme !== 'tous';
+
+                if (reset) {
+                    state.currentPage = 0;
+                    state.displayedProverbs = [];
+                    dom.resultsContainer.innerHTML = '';
+                    window.scrollTo(0, 0);
+                }
+                
+                if (!isSearching && reset) {
+                    dom.initialLoadMessage.classList.remove('hidden');
+                    dom.noResults.classList.add('hidden');
+                    dom.resultsFeedback.textContent = '';
+                    dom.loaderContainer.classList.add('hidden');
+                    return;
+                }
+                
+                dom.initialLoadMessage.classList.add('hidden');
+                
+                if (!reset && state.displayedProverbs.length >= state.totalFilteredCount) {
+                    dom.loaderContainer.classList.add('hidden');
+                    return;
+                }
+
+                state.isLoading = true;
+                dom.loaderContainer.classList.remove('hidden');
+
+                setTimeout(() => {
+                    const filteredProverbs = filterProverbs();
+                    
+                    if (reset) {
+                        state.totalFilteredCount = filteredProverbs.length;
+                    }
+
+                    const startIndex = state.currentPage * PROVERBS_PER_PAGE;
+                    const endIndex = startIndex + PROVERBS_PER_PAGE;
+                    const chunkToLoad = filteredProverbs.slice(startIndex, endIndex);
+
+                    if (chunkToLoad.length === 0 && reset) {
+                        dom.noResults.classList.remove('hidden');
+                        dom.resultsFeedback.textContent = '';
+                    } else {
+                        dom.noResults.classList.add('hidden');
+                        renderChunk(dom.resultsContainer, chunkToLoad, dom.searchInput.value, true);
+                        state.displayedProverbs.push(...chunkToLoad);
+                        state.currentPage++;
+                        dom.resultsFeedback.textContent = `Affichage de ${state.displayedProverbs.length} sur ${state.totalFilteredCount} proverbes`;
+                    }
+                    
+                    if (reset) updateAvailableThemes();
+
+                    if (state.displayedProverbs.length >= state.totalFilteredCount) {
+                        dom.loaderContainer.classList.add('hidden');
+                    }
+                    
+                    state.isLoading = false;
+                }, 200);
+            };
+
+            // --- FONCTIONS D'AFFICHAGE ET DE NAVIGATION ---
             const renderFavorites = () => {
+                if (!state.isCoreDataLoaded) {
+                    dom.favoritesContainer.innerHTML = `<div class="md:col-span-2 xl:col-span-3 text-center p-8 text-[var(--color-text-light)]"><span class="loader loader-dark"></span> <p class="mt-2">Chargement des données en cours...</p></div>`;
+                    return;
+                }
                 const favoriteProverbs = state.proverbs.filter(p => state.favorites.has(p.id));
-                renderProverbs(dom.favoritesContainer, favoriteProverbs, '', dom.noFavorites);
+                dom.noFavorites.classList.toggle('hidden', favoriteProverbs.length > 0);
+                renderChunk(dom.favoritesContainer, favoriteProverbs, '', false);
             };
             
-            const resetThemeFilter = (update = true) => {
-                state.activeTheme = 'tous';
-                sessionStorage.setItem('inzan_theme_filter', 'tous');
-                dom.themeListContainer.querySelector('.active')?.classList.remove('active');
-                const tousButton = dom.themeListContainer.querySelector('[data-theme="tous"]');
-                if (tousButton) {
-                    tousButton.classList.add('active');
-                    tousButton.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            const setActiveTab = (tabId) => {
+                if (['quiz-tab', 'ai-sage-tab'].includes(tabId) && !state.isCoreDataLoaded) {
+                    showToast("Les données de base ne sont pas encore chargées.", true);
+                    return;
                 }
-                if(update) updateDisplay();
+
+                dom.tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
+                dom.navButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+                
+                if (tabId === 'favoris-tab') renderFavorites();
+                if (tabId === 'quiz-tab' && state.isCoreDataLoaded && !dom.quizContainer.querySelector('#next-quiz-btn')) startQuiz();
+
+                if (document.body.clientWidth < 640) window.scrollTo({ top: 0, behavior: 'smooth' });
             };
 
             const toggleFavorite = (id) => {
@@ -590,19 +714,8 @@
                     renderFavorites();
                 }
             };
-
-            // --- LOGIQUE DE NAVIGATION & MODALE ---
-            const setActiveTab = (tabId) => {
-                dom.tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
-                dom.navButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
-                
-                if (tabId === 'explorer-tab') updateDisplay();
-                if (tabId === 'favoris-tab') renderFavorites();
-                if (tabId === 'quiz-tab' && !dom.quizContainer.innerHTML.includes('quiz-option')) startQuiz();
-
-                if (document.body.clientWidth < 640) window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
             
+            // --- MODALE ET LOGIQUE API ---
             const openModal = (title, bodyContent) => {
                 dom.modal.title.textContent = title;
                 dom.modal.body.innerHTML = bodyContent;
@@ -618,17 +731,8 @@
 
                 state.trapFocusHandler = (e) => {
                     if (e.key === 'Tab') {
-                        if (e.shiftKey) { 
-                            if (document.activeElement === firstElement) {
-                                lastElement.focus();
-                                e.preventDefault();
-                            }
-                        } else { 
-                            if (document.activeElement === lastElement) {
-                                firstElement.focus();
-                                e.preventDefault();
-                            }
-                        }
+                        if (e.shiftKey) { if (document.activeElement === firstElement) { lastElement.focus(); e.preventDefault(); } } 
+                        else { if (document.activeElement === lastElement) { firstElement.focus(); e.preventDefault(); } }
                     } else if (e.key === 'Escape') {
                         closeModal();
                     }
@@ -645,47 +749,28 @@
                     state.trapFocusHandler = null;
                 }
             };
-
-            // --- LOGIQUE API (INCHANGÉE) ---
+            
             const callGeminiAPI = async (payload, expectJson = false) => {
-                const GEMINI_API_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4"; 
-                
-                if (!GEMINI_API_KEY) {
-                    const errorMessage = "La clé API n'est pas configurée dans le code source.";
-                    console.error(errorMessage);
-                    throw new Error(errorMessage);
-                }
+                const GEMINI_API_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4";
+                if (!GEMINI_API_KEY) throw new Error("La clé API n'est pas configurée dans le code source.");
 
                 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
                 
-                if (expectJson) {
-                    payload.generationConfig = { responseMimeType: "application/json" };
-                }
+                if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
 
-                const response = await fetch(API_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
-                
+                const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 if (!response.ok) {
                     const errorData = await response.json();
-                    console.error("Erreur API Gemini:", errorData);
                     throw new Error(errorData?.error?.message || `Erreur HTTP ${response.status}`);
                 }
                 
                 const result = await response.json();
                 const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                
-                if (!textResponse) {
-                    console.error("Réponse API inattendue:", result);
-                    throw new Error("Réponse de l'API malformée ou vide.");
-                }
+                if (!textResponse) throw new Error("Réponse de l'API malformée ou vide.");
                 
                 return expectJson ? JSON.parse(textResponse) : textResponse;
             };
 
-            // --- FONCTIONS SPÉCIFIQUES AUX FONCTIONNALITÉS ---
             const getProverbExplanation = async (proverb) => {
                 openModal("Explication du Proverbe", `<div class="flex justify-center p-8"><span class="loader loader-dark"></span></div>`);
                 const systemPrompt = `Vous êtes un expert de la culture kabyle. Expliquez le proverbe suivant de manière claire. Structurez votre réponse en Markdown avec les titres: '### Signification littérale', '### Signification imagée', et '### Exemple d'utilisation'. Soyez concis et direct.`;
@@ -704,9 +789,11 @@
                 dom.ai.suggestBtn.disabled = true;
                 dom.ai.suggestBtn.innerHTML = `<span class="loader"></span> <span>Analyse...</span>`;
                 dom.ai.resultFeedback.innerHTML = '';
-                const simplifiedProverbs = state.proverbs.map(({ id, kabyle, francais }) => ({ id, kabyle, francais }));
-                const systemPrompt = `Vous êtes un sage kabyle expert en proverbes. Analysez la situation de l'utilisateur et choisissez jusqu'à 2 proverbes les plus pertinents à partir de la liste fournie. Vous devez OBLIGATOIREMENT répondre avec un objet JSON valide et rien d'autre.`;
-                const userPrompt = `Situation de l'utilisateur: "${context}"\n\nListe des proverbes disponibles:\n${JSON.stringify(simplifiedProverbs)}\n\nChoisissez les proverbes les plus appropriés et répondez UNIQUEMENT avec un objet JSON au format suivant:\n{ "reasoning": "Votre analyse générale de la situation en une phrase.", "proverbs": [ { "id": <id_du_proverbe_1>, "justification": "Pourquoi ce proverbe est pertinent." } ] }`;
+                
+                const rawProverbs = state.proverbs.map(({ kabyle, francais, theme, explication }, id) => ({ id, kabyle, francais, theme, explication }));
+                
+                const systemPrompt = `Vous êtes un sage kabyle expert en proverbes. Analysez la situation de l'utilisateur et choisissez jusqu'à 3 proverbes les plus pertinents à partir de la liste fournie. Vous devez OBLIGATOIREMENT répondre avec un objet JSON valide et rien d'autre.`;
+                const userPrompt = `Situation de l'utilisateur: "${context}"\n\nListe des proverbes disponibles (limité pour l'exemple):\n${JSON.stringify(rawProverbs.slice(0, 500))}\n\nChoisissez les proverbes les plus appropriés et répondez UNIQUEMENT avec un objet JSON au format suivant:\n{ "reasoning": "Votre analyse générale de la situation en une phrase.", "proverbs": [ { "id": <id_du_proverbe_1>, "justification": "Pourquoi ce proverbe est pertinent." } ] }`;
                 
                 try {
                     const suggestion = await callGeminiAPI({
@@ -739,23 +826,41 @@
                 }
             };
             
-            // --- Logique du Quiz ---
+            // --- LOGIQUE DU QUIZ ---
             const startQuiz = () => {
-                const questionType = Math.random() < 0.5 ? 'meaning' : 'theme'; // 50% de chance pour chaque type
-                
+                const quizProverbs = [];
+                const usedIds = new Set();
+                const sampleSize = Math.min(50, state.proverbs.length);
+                while(quizProverbs.length < sampleSize) {
+                    const randomIndex = Math.floor(Math.random() * state.proverbs.length);
+                    const randomProverb = state.proverbs[randomIndex];
+                    if (!usedIds.has(randomProverb.id)) {
+                        quizProverbs.push(randomProverb);
+                        usedIds.add(randomProverb.id);
+                    }
+                }
+
+                if (quizProverbs.length < 4) {
+                    dom.quizContainer.innerHTML = `<p class="text-center text-[var(--color-text-light)]">Pas assez de données pour générer un quiz.</p>`;
+                    return;
+                }
+
+                const questionType = Math.random() < 0.5 ? 'meaning' : 'theme';
                 if (questionType === 'meaning') {
-                    generateMeaningQuestion();
+                    generateMeaningQuestion(quizProverbs);
                 } else {
-                    generateThemeQuestion();
+                    generateThemeQuestion(quizProverbs);
                 }
             };
 
-            const generateMeaningQuestion = () => {
-                const correctAnswer = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
+            const generateMeaningQuestion = (quizProverbs) => {
+                const correctAnswer = quizProverbs[Math.floor(Math.random() * quizProverbs.length)];
                 let options = [correctAnswer];
                 while (options.length < 4) {
-                    const randomOption = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
-                    if (!options.some(opt => opt.id === randomOption.id)) options.push(randomOption);
+                    const randomOption = quizProverbs[Math.floor(Math.random() * quizProverbs.length)];
+                    if (!options.some(opt => opt.id === randomOption.id)) {
+                        options.push(randomOption);
+                    }
                 }
                 options.sort(() => Math.random() - 0.5);
 
@@ -766,22 +871,25 @@
                     </div><div id="quiz-feedback" class="mt-6 text-center"></div>`;
                 
                 dom.quizContainer.querySelector('#quiz-options').addEventListener('click', (e) => {
-                    const option = e.target.closest('.quiz-option');
-                    if(option) handleQuizAnswer(option, correctAnswer, 'meaning');
+                    if(e.target.closest('.quiz-option')) handleQuizAnswer(e.target.closest('.quiz-option'), correctAnswer, 'meaning', quizProverbs);
                 });
             };
 
-            const generateThemeQuestion = () => {
-                const proverb = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
-                const correctThemes = proverb.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
+            const generateThemeQuestion = (quizProverbs) => {
+                const proverb = quizProverbs[Math.floor(Math.random() * quizProverbs.length)];
+                const correctThemes = (proverb.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
+                if (correctThemes.length === 0) { // Fallback if a proverb has no theme
+                    startQuiz();
+                    return;
+                }
                 const correctAnswer = correctThemes[Math.floor(Math.random() * correctThemes.length)];
 
+                const uniqueThemesForOptions = [...new Set(quizProverbs.flatMap(p => (p.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean)))];
+                
                 let options = [correctAnswer];
-                while (options.length < 4) {
-                    const randomTheme = state.uniqueThemes[Math.floor(Math.random() * state.uniqueThemes.length)];
-                    if (!options.includes(randomTheme)) {
-                        options.push(randomTheme);
-                    }
+                while (options.length < 4 && options.length < uniqueThemesForOptions.length) {
+                    const randomTheme = uniqueThemesForOptions[Math.floor(Math.random() * uniqueThemesForOptions.length)];
+                    if (!options.includes(randomTheme)) options.push(randomTheme);
                 }
                 options.sort(() => Math.random() - 0.5);
 
@@ -795,27 +903,20 @@
                     </div><div id="quiz-feedback" class="mt-6 text-center"></div>`;
 
                 dom.quizContainer.querySelector('#quiz-options').addEventListener('click', (e) => {
-                    const option = e.target.closest('.quiz-option');
-                    if(option) handleQuizAnswer(option, correctAnswer, 'theme');
+                    if(e.target.closest('.quiz-option')) handleQuizAnswer(e.target.closest('.quiz-option'), correctAnswer, 'theme', quizProverbs);
                 });
             };
             
             const handleQuizAnswer = (selectedElement, correctAnswer, type) => {
-                let isCorrect;
-                if (type === 'meaning') {
-                    isCorrect = parseInt(selectedElement.dataset.id) === correctAnswer.id;
-                } else { // type === 'theme'
-                    isCorrect = normalizeText(selectedElement.dataset.theme) === normalizeText(correctAnswer);
-                }
+                const isCorrect = (type === 'meaning')
+                    ? parseInt(selectedElement.dataset.id) === correctAnswer.id
+                    : normalizeText(selectedElement.dataset.theme) === normalizeText(correctAnswer);
 
                 document.querySelectorAll('.quiz-option').forEach(el => {
                     el.setAttribute('disabled', true);
-                    let elIsCorrect;
-                    if (type === 'meaning') {
-                        elIsCorrect = parseInt(el.dataset.id) === correctAnswer.id;
-                    } else {
-                        elIsCorrect = normalizeText(el.dataset.theme) === normalizeText(correctAnswer);
-                    }
+                    const elIsCorrect = (type === 'meaning')
+                        ? parseInt(el.dataset.id) === correctAnswer.id
+                        : normalizeText(el.dataset.theme) === normalizeText(correctAnswer);
                     if(elIsCorrect) el.classList.add('correct');
                 });
                 
@@ -823,7 +924,6 @@
                 
                 const feedback = dom.quizContainer.querySelector('#quiz-feedback');
                 const correctAnswerText = type === 'meaning' ? correctAnswer.francais : correctAnswer;
-
                 feedback.innerHTML = `<p class="text-xl font-bold ${isCorrect ? 'text-green-500' : 'text-red-500'}">${isCorrect ? 'Bravo !' : 'Dommage !'}</p>
                     ${!isCorrect ? `<p class="mt-2">La bonne réponse était : <strong class="font-semibold">"${correctAnswerText}"</strong></p>` : ''}
                     <button id="next-quiz-btn" class="mt-4 px-6 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform">Question suivante</button>`;
@@ -834,43 +934,68 @@
             };
 
             // --- GESTION DES ÉVÉNEMENTS ---
-            const setupEventListeners = () => {
-                dom.searchInput.addEventListener('input', debounce(() => {
-                    if (dom.searchInput.value) {
-                         // When user types, reset theme filter to 'tous' for a global search
-                        resetThemeFilter(false); // false to prevent double rendering
+            const setupInfiniteScroll = () => {
+                const observer = new IntersectionObserver((entries) => {
+                    const firstEntry = entries[0];
+                    if (firstEntry.isIntersecting) {
+                        loadNextChunk(false);
                     }
-                    updateDisplay();
-                }, 300));
+                }, { threshold: 0.1 });
+
+                observer.observe(dom.loaderContainer);
+            };
+
+            const setupEventListeners = () => {
+                dom.searchInput.addEventListener('input', debounce(() => loadNextChunk(true), 350));
                 
                 dom.clearSearchBtn.addEventListener('click', () => {
                     dom.searchInput.value = '';
-                    updateDisplay();
+                    loadNextChunk(true);
                     dom.searchInput.focus();
                 });
-
+                
                 dom.goToExplorerBtn.addEventListener('click', () => setActiveTab('explorer-tab'));
                 
                 dom.randomBtn.addEventListener('click', () => {
-                    if (dom.searchInput.value !== '') {
-                        dom.searchInput.value = '';
+                    if (!state.isCoreDataLoaded) {
+                        return showToast("Veuillez attendre le chargement des proverbes.", true);
                     }
-                    resetThemeFilter(false);
+                    
+                    // La fonction filterProverbs utilise déjà la recherche et le thème actuels
+                    const matchingProverbs = filterProverbs();
 
-                    setTimeout(() => {
-                         updateDisplay(); // Ensure the display is up to date before selecting
-                        const visibleProverbs = Array.from(dom.resultsContainer.children);
-                        if (visibleProverbs.length > 0) {
-                            const randomCard = visibleProverbs[Math.floor(Math.random() * visibleProverbs.length)];
-                            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            randomCard.classList.add('highlight');
-                            setTimeout(() => randomCard.classList.remove('highlight'), 2000);
-                        } else {
-                            showToast("Aucun proverbe à afficher.", true);
-                        }
-                    }, 100);
+                    // Cacher les messages et loaders
+                    dom.initialLoadMessage.classList.add('hidden');
+                    dom.loaderContainer.classList.add('hidden');
+                    dom.resultsContainer.innerHTML = '';
+
+                    if (matchingProverbs.length === 0) {
+                        dom.noResults.classList.remove('hidden');
+                        dom.resultsFeedback.textContent = 'Aucun proverbe ne correspond à vos critères pour un tirage aléatoire.';
+                        state.displayedProverbs = [];
+                        updateAvailableThemes();
+                        return;
+                    }
+                    
+                    dom.noResults.classList.add('hidden');
+
+                    // Mélanger tous les proverbes correspondants
+                    const shuffledProverbs = matchingProverbs.sort(() => 0.5 - Math.random());
+                    
+                    // Sélectionner un sous-ensemble à afficher
+                    const count = Math.min(20, shuffledProverbs.length);
+                    const randomSelection = shuffledProverbs.slice(0, count);
+
+                    // Afficher la nouvelle sélection aléatoire
+                    renderChunk(dom.resultsContainer, randomSelection, dom.searchInput.value, false);
+
+                    // Mettre à jour l'état de l'application
+                    state.displayedProverbs = randomSelection;
+                    updateAvailableThemes();
+                    
+                    // Mettre à jour le message de feedback
+                    dom.resultsFeedback.textContent = `Affichage d'une sélection aléatoire de ${count} sur ${matchingProverbs.length} proverbes correspondants.`;
                 });
-
 
                 window.addEventListener('scroll', () => dom.backToTopBtn.classList.toggle('visible', window.scrollY > 300));
                 dom.backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -879,17 +1004,12 @@
 
                 dom.themeListContainer.addEventListener('click', (e) => {
                     if (e.target.matches('.theme-pill-button')) {
-                        // Clear search input when a theme is manually selected
-                        if (dom.searchInput.value) {
-                            dom.searchInput.value = '';
-                        }
-                        
                         state.activeTheme = e.target.dataset.theme;
                         sessionStorage.setItem('inzan_theme_filter', state.activeTheme);
                         dom.themeListContainer.querySelector('.active')?.classList.remove('active');
                         e.target.classList.add('active');
                         e.target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                        updateDisplay();
+                        loadNextChunk(true);
                     }
                 });
 
@@ -903,31 +1023,27 @@
 
                     if (e.target.closest('.explain-btn')) getProverbExplanation(proverb);
                     if (e.target.closest('.favorite-btn')) toggleFavorite(proverbId);
-                    if (e.target.closest('.copy-btn')) {
-                        navigator.clipboard.writeText(`« ${proverb.kabyle} »\n— ${proverb.francais}`).then(() => showToast("✅ Proverbe copié !"));
-                    }
+                    if (e.target.closest('.copy-btn')) navigator.clipboard.writeText(`« ${proverb.kabyle} »\n— ${proverb.francais}`).then(() => showToast("✅ Proverbe copié !"));
                     if (e.target.closest('.share-btn')) {
-                        if (navigator.share) {
-                            navigator.share({
-                                title: 'Proverbe Kabyle',
-                                text: `Découvrez ce proverbe kabyle : « ${proverb.kabyle} »\n— ${proverb.francais}`,
-                                url: window.location.href,
-                            }).catch(console.error);
-                        } else {
-                            showToast("Le partage n'est pas supporté sur ce navigateur.", true);
-                        }
+                        if (navigator.share) navigator.share({ title: 'Proverbe Kabyle', text: `Découvrez ce proverbe kabyle : « ${proverb.kabyle} »\n— ${proverb.francais}`, url: window.location.href }).catch(console.error);
+                        else showToast("Le partage n'est pas supporté sur ce navigateur.", true);
                     }
                     if (e.target.closest('.card-theme-badge')) {
                          e.stopPropagation();
+                         const themeToFilter = e.target.closest('.card-theme-badge').dataset.theme;
                          setActiveTab('explorer-tab');
-                         dom.themeListContainer.querySelector(`[data-theme="${e.target.closest('.card-theme-badge').dataset.theme}"]`)?.click();
+                         setTimeout(() => {
+                            dom.searchInput.value = '';
+                            state.activeTheme = themeToFilter;
+                            loadNextChunk(true);
+                         }, 100);
                     }
                 });
 
                 dom.modal.closeBtn.addEventListener('click', closeModal);
                 dom.modal.backdrop.addEventListener('click', closeModal);
 
-                dom.aboutBtn.addEventListener('click', () => openModal("À propos de l'Œuvre", `<p>Cette collection numérique est un hommage à la richesse de la sagesse populaire kabyle. Elle est basée sur les données initiales patiemment récoltées par <strong>Aomar SIDER</strong>, dont le travail a permis de préserver et de partager ces trésors culturels.</p><p>Ce site a pour vocation de rendre ces proverbes accessibles à tous, de manière interactive et moderne. Il a été conçu comme un outil d'apprentissage et de découverte, enrichi par des technologies contemporaines pour explorer et comprendre l'esprit de la tradition kabyle.</p>`));
+                dom.aboutBtn.addEventListener('click', () => openModal("À propos de l'Œuvre", `<p>Cette collection numérique est un hommage à la richesse de la sagesse populaire kabyle. Elle est basée sur une partie des données patiemment récoltées par Monsieur <strong>Remḍan At Menṣur</strong> dans son </strong>Dictionnaire</strong> de proverbes Kabyles, dont le travail a permis de préserver et de partager ces trésors culturels.</p><p>Ce site a pour vocation de rendre ces proverbes accessibles à tous, de manière interactive et moderne. Il a été conçu comme un outil d'apprentissage et de découverte, enrichi par des technologies contemporaines pour explorer et comprendre l'esprit de la tradition kabyle.</p>`));
 
                 dom.themeToggle.addEventListener('click', () => {
                     const isDark = dom.html.classList.toggle('dark');
@@ -942,38 +1058,62 @@
                     getAISuggestion(context);
                 });
             };
-
-            // --- INITIALISATION DE L'APPLICATION ---
-            const initialize = () => {
-                // Gestion de l'écran de lancement
-                setTimeout(() => {
-                    dom.splashScreen.classList.add('hidden');
-                }, 1500);
-
+            
+            // --- PROCESSUS DE DÉMARRAGE ---
+            const main = () => {
                 const savedTheme = localStorage.getItem('inzan_theme') || 'light';
                 dom.html.classList.toggle('dark', savedTheme === 'dark');
                 dom.themeIcons.light.classList.toggle('hidden', savedTheme === 'dark');
                 dom.themeIcons.dark.classList.toggle('hidden', savedTheme === 'light');
 
-                const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-                const dailyProverb = state.proverbs[dayOfYear % state.proverbs.length];
-                dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(dailyProverb, true);
-
-                const allThemesRaw = state.proverbs.flatMap(p => p.theme.split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean));
-                const uniqueNormalizedThemes = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
-                uniqueNormalizedThemes.sort((a, b) => a[1].localeCompare(b[1]));
-
-                dom.themeListContainer.innerHTML = `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="tous">Tous</button>` + uniqueNormalizedThemes.map(([norm, disp]) => `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="${norm}">${disp}</button>`).join('');
-                dom.themeListContainer.querySelector(`[data-theme="${state.activeTheme}"]`)?.classList.add('active');
-
-                // Populate unique themes for the quiz
-                state.uniqueThemes = [...new Set(allThemesRaw.map(t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()))];
-
                 setupEventListeners();
+                setupInfiniteScroll();
                 setActiveTab('accueil-tab'); 
+                
+                fetch('proverbs.json')
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (!Array.isArray(data)) {
+                           throw new Error("Le fichier proverbs.json n'est pas un tableau (Array) valide.");
+                        }
+                        state.proverbs = data.map((p, index) => ({ 
+                            ...p, 
+                            id: index,
+                            kabyle_norm: normalizeText(p.kabyle),
+                            francais_norm: normalizeText(p.francais),
+                            theme_norm: normalizeText(p.theme)
+                        }));
+                        state.isCoreDataLoaded = true;
+                        
+                        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+                        const dailyProverb = state.proverbs[dayOfYear % state.proverbs.length];
+                        dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(dailyProverb, true);
+
+                        updateAvailableThemes();
+                        
+                        setTimeout(() => dom.splashScreen.classList.add('hidden'), 500);
+                    })
+                    .catch(error => {
+                        console.error("Could not load proverbs:", error);
+                        const errorMessage = `<div class="text-center p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                            <h1 class="text-2xl font-bold text-red-600 dark:text-red-400">Erreur de chargement</h1>
+                            <p class="text-red-500 dark:text-red-300 mt-2">Impossible de charger la banque de proverbes (proverbs.json).</p>
+                            <p class="mt-4 text-[var(--color-text-light)] text-sm">Veuillez vérifier que le fichier est bien présent à la racine du site et que son contenu est un JSON valide. L'erreur la plus probable est un chemin de fichier incorrect ou un fichier corrompu.</p>
+                            <p class="font-mono bg-red-100 dark:bg-red-900/30 text-xs p-2 mt-3 rounded">Détail : ${error.message}</p>
+                            </div>`;
+                        dom.resultsContainer.innerHTML = `<div class="md:col-span-2 xl:col-span-3">${errorMessage}</div>`;
+                        dom.initialLoadMessage.classList.add('hidden');
+                        dom.proverbOfTheDayCard.innerHTML = `<p class="text-center text-red-500">Erreur de chargement.</p>`;
+                        dom.themeListContainer.innerHTML = `<p class="text-center text-red-500 text-sm">Erreur.</p>`;
+                        dom.quizContainer.innerHTML = `<p class="text-center text-red-500">Erreur de chargement des données.</p>`;
+                        setTimeout(() => dom.splashScreen.classList.add('hidden'), 100);
+                    });
             };
 
-            initialize();
+            main();
         });
     </script>
 </body>
