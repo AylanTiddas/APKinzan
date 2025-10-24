@@ -985,13 +985,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- NOUVELLE LOGIQUE API GEMINI (PIPELINE RAG) ---
     const callGeminiAPI = async (payload, expectJson = false) => {
         // --- NE PAS TOUCHER ---
-        const GEMINI_API_KEY = "U78Ltq6nykEn0MkCgGzJ8a46MUO2Hl0N";
+        const GEMINI_API_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4";
         // --- NE PAS TOUCHER ---
         
         if (!GEMINI_API_KEY) throw new Error("La clé API n'est pas configurée dans le code source.");
 
         // AMÉLIORATION : Modèle mis à jour vers la dernière version
-        const API_URL = `https://api.mistral.ai/v1/chat/completions`;
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
         
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
 
@@ -1497,4 +1497,5 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
 </script>
 </body>
 </html>
+
 
