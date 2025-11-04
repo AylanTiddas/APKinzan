@@ -700,10 +700,10 @@ document.addEventListener('DOMContentLoaded', () => {
         totalFilteredCount: 0,
         // MODIFICATION: Ajout de l'état pour le nouveau quiz IA
         aiQuiz: {
-            questions: [],
+            questions: [], // Sera pré-chargé ici
             currentQuestionIndex: 0,
             score: 0,
-            isLoading: false
+            isLoading: false // Indique si le *pré-chargement* est en cours
         }
     };
 
@@ -1186,13 +1186,12 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
         dom.ai.stepFeedback.textContent = "";
     };
 
-    // --- MODIFICATION: NOUVELLE LOGIQUE DE QUIZ IA ---
-    // (Remplacement de l'ancienne logique startQuiz, generateMeaningQuestion, etc.)
+    // --- MODIFICATION: NOUVELLE LOGIQUE DE QUIZ IA (Basée sur les demandes utilisateur) ---
 
     const showQuizStartScreen = () => {
         dom.quizContainer.innerHTML = `
             <div id="quiz-start-screen" class="text-center">
-                <p class="text-lg text-[var(--color-text-light)] mb-6">Prêt à tester vos connaissances sur les proverbes kabyles avec notre Sage Artificiel ?</p>
+                <p class="text-lg text-[var(--color-text-light)] mb-6">Prêt à tester vos connaissances sur les proverbes de notre collection ?</p>
                 <button id="start-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-lg hover:bg-[var(--color-secondary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                     <span>Lancer le Quiz IA (10 Questions)</span>
@@ -1205,10 +1204,60 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
         document.getElementById('start-ai-quiz-btn').addEventListener('click', handleStartAiQuiz);
     };
 
-    const handleStartAiQuiz = async () => {
-        if (state.aiQuiz.isLoading) return;
+    // MODIFICATION: Logique pour pré-charger le quiz
+    const preloadQuizQuestions = async () => {
+        if (state.aiQuiz.questions.length > 0 || state.aiQuiz.isLoading) {
+            return; // Déjà chargé ou en cours de chargement
+        }
         state.aiQuiz.isLoading = true;
-        dom.quizContainer.innerHTML = `
+        console.log("Lancement du pré-chargement du quiz en arrière-plan...");
+        try {
+            const quizData = await fetchAndGenerateAiQuiz(); // Utilise la fonction de génération
+            if (quizData && quizData.questions && quizData.questions.length > 0) {
+                state.aiQuiz.questions = quizData.questions;
+                console.log("Quiz pré-chargé avec succès.");
+            } else {
+                throw new Error("L'IA n'a pas pu générer de questions valides.");
+            }
+        } catch (error) {
+            console.warn("Échec du pré-chargement du quiz:", error.message);
+            state.aiQuiz.questions = []; // S'assurer que c'est vide en cas d'échec
+        } finally {
+            state.aiQuiz.isLoading = false;
+        }
+    };
+
+    // MODIFICATION: Logique de démarrage du quiz mise à jour
+    const handleStartAiQuiz = async () => {
+        if (state.aiQuiz.questions.length > 0 && !state.aiQuiz.isLoading) {
+            // Les questions sont pré-chargées, démarrer immédiatement
+            console.log("Démarrage du quiz avec les questions pré-chargées.");
+            state.aiQuiz.currentQuestionIndex = 0;
+            state.aiQuiz.score = 0;
+            dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`;
+            displayAiQuizQuestion();
+        } else if (state.aiQuiz.isLoading) {
+            // Le pré-chargement est toujours en cours, afficher le spinner
+            dom.quizContainer.innerHTML = `
+                <div class="text-center p-8">
+                    <span class="loader loader-dark"></span>
+                    <p class="mt-4 text-sm text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions...</p>
+                    <p class="text-xs text-[var(--color-text-light)]">(Juste un instant...)</p>
+                </div>`;
+            // On pourrait attendre la promesse, mais c'est complexe.
+            // Pour l'instant, l'utilisateur devra recliquer, ou on lance une requête "à la demande".
+            // Optons pour le fallback "à la demande" s'il reclique.
+        } else {
+            // Le pré-chargement a échoué ou n'a jamais été lancé, on le fait à la demande
+            console.log("Pré-chargement échoué ou non fait. Lancement de la requête à la demande.");
+            await fetchQuizOnDemand();
+        }
+    };
+
+    // MODIFICATION: Nouvelle fonction pour le chargement à la demande (fallback)
+    const fetchQuizOnDemand = async () => {
+         state.aiQuiz.isLoading = true; // S'assurer que 'isLoading' est bien géré
+         dom.quizContainer.innerHTML = `
             <div class="text-center p-8">
                 <span class="loader loader-dark"></span>
                 <p class="mt-4 text-sm text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions...</p>
@@ -1216,18 +1265,16 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
             </div>`;
 
         try {
-            const quizData = await generateAiQuizQuestions();
+            const quizData = await fetchAndGenerateAiQuiz(); // Appelle la fonction de génération
             if (!quizData || !quizData.questions || quizData.questions.length === 0) {
                 throw new Error("L'IA n'a pas pu générer de questions.");
             }
             state.aiQuiz.questions = quizData.questions;
             state.aiQuiz.currentQuestionIndex = 0;
             state.aiQuiz.score = 0;
-            state.aiQuiz.isLoading = false;
             dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`; // Préparer le conteneur
             displayAiQuizQuestion();
         } catch (error) {
-            state.aiQuiz.isLoading = false;
             dom.quizContainer.innerHTML = `
                 <div class="text-center text-red-500">
                     <p><strong>Erreur lors de la génération du quiz.</strong></p>
@@ -1235,16 +1282,33 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
                     <button id="retry-ai-quiz-btn" class="mt-4 px-5 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-[1.02] transition-transform">Réessayer</button>
                 </div>`;
             document.getElementById('retry-ai-quiz-btn').addEventListener('click', showQuizStartScreen);
+        } finally {
+             state.aiQuiz.isLoading = false;
         }
     };
 
-    const generateAiQuizQuestions = async () => {
-        const systemPrompt = `Vous êtes un expert de la culture kabyle. Générez un quiz à choix multiples de 10 questions sur les proverbes kabyles.
+
+    // MODIFICATION: La fonction de génération est maintenant basée sur proverbs.json
+    const fetchAndGenerateAiQuiz = async () => {
+        // 1. Sélectionner un échantillon de proverbes de la base de données locale
+        const shuffled = [...state.proverbs].sort(() => 0.5 - Math.random());
+        // Prendre un échantillon plus grand pour donner plus de choix à l'IA
+        const proverbSample = shuffled.slice(0, 30).map(p => ({
+            kabyle: p.kabyle,
+            francais: p.francais,
+            theme: p.theme
+        }));
+        const proverbListJSON = JSON.stringify(proverbSample);
+
+        // 2. Définir le prompt système
+        const systemPrompt = `Vous êtes un expert de la culture kabyle. Générez un quiz à choix multiples de 10 questions.
+IMPORTANT : Vous DEVEZ baser TOUTES vos questions UNIQUEMENT sur la LISTE de proverbes fournie par l'utilisateur.
+Ne créez pas de questions sur des proverbes qui ne sont pas dans cette liste.
 Variez les types de questions :
 1.  Donner un proverbe en kabyle, demander sa signification en français.
 2.  Donner un proverbe en français, demander l'original en kabyle.
 3.  Donner le début d'un proverbe, demander de le compléter.
-4.  Donner une situation, demander quel proverbe s'applique.
+4.  Donner une situation (basée sur le thème), demander quel proverbe de la liste s'applique.
 
 Répondez OBLIGATOIREMENT avec un objet JSON au format suivant (assurez-vous que le JSON est valide) :
 {
@@ -1253,12 +1317,17 @@ Répondez OBLIGATOIREMENT avec un objet JSON au format suivant (assurez-vous que
       "question": "Question ici...",
       "options": [ "Option A", "Option B", "Option C", "Option D" ],
       "correctAnswerIndex": 0,
-      "explanation": "Brève explication de la bonne réponse."
+      "explanation": "Brève explication de la bonne réponse (peut inclure le proverbe complet)."
     }
   ]
 }`;
-        const userPrompt = "Génère 10 questions de quiz sur les proverbes kabyles, comme demandé.";
+        // 3. Définir le prompt utilisateur avec la liste
+        const userPrompt = `Voici la liste des proverbes à utiliser OBLIGATOIREMENT :
+${proverbListJSON}
+
+Génère 10 questions de quiz basées EXCLUSIVEMENT sur cette liste, en suivant le format JSON demandé.`;
         
+        // 4. Appeler l'API
         return callGeminiAPI({
             contents: [{ parts: [{ text: userPrompt }] }],
             systemInstruction: { parts: [{ text: systemPrompt }] }
@@ -1350,10 +1419,17 @@ Répondez OBLIGATOIREMENT avec un objet JSON au format suivant (assurez-vous que
     const showAiQuizResults = () => {
         const gameScreen = dom.quizContainer.querySelector('#quiz-game-screen');
         if (!gameScreen) return;
+        
+        // Réinitialiser les questions pour forcer un nouveau pré-chargement pour la prochaine fois
+        state.aiQuiz.questions = [];
+        state.aiQuiz.isLoading = false; // Important
+        // Lancer un nouveau pré-chargement pour la prochaine partie
+        setTimeout(preloadQuizQuestions, 1000); 
+
         gameScreen.innerHTML = `
             <div class="text-center">
                 <h3 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-4">Quiz Terminé !</h3>
-                <p class="text-4xl font-bold text-[var(--color-primary)] mb-2">${state.aiQuiz.score} / ${state.aiQuiz.questions.length}</p>
+                <p class="text-4xl font-bold text-[var(--color-primary)] mb-2">${state.aiQuiz.score} / 10</p>
                 <p class="text-lg text-[var(--color-text-light)] mb-8">Un excellent score !</p>
                 <button id="restart-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--color-secondary)] transition-all">
                     Recommencer un quiz
@@ -1547,6 +1623,10 @@ Répondez OBLIGATOIREMENT avec un objet JSON au format suivant (assurez-vous que
                 if (dom.quizContainer.offsetParent) { // vérifie si l'onglet quiz est visible
                      showQuizStartScreen();
                 }
+
+                // MODIFICATION: Lancer le pré-chargement du quiz en arrière-plan
+                // On attend 1 seconde pour ne pas surcharger le thread principal au démarrage
+                setTimeout(preloadQuizQuestions, 1000);
 
                 setTimeout(() => dom.splashScreen.classList.add('hidden'), 500);
             })
