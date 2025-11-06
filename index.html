@@ -703,7 +703,8 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: [], // Sera pré-chargé ici
             currentQuestionIndex: 0,
             score: 0,
-            isLoading: false // Indique si le *pré-chargement* est en cours
+            isLoading: false, // Indique si le *pré-chargement* est en cours
+            preloadPromise: null // AMÉLIORATION: Pour suivre le pré-chargement
         }
     };
 
@@ -1204,77 +1205,65 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
         document.getElementById('start-ai-quiz-btn').addEventListener('click', handleStartAiQuiz);
     };
 
-    // MODIFICATION: Logique pour pré-charger le quiz
+    // AMÉLIORATION: Logique pour pré-charger le quiz et stocker la promesse
     const preloadQuizQuestions = async () => {
-        if (state.aiQuiz.questions.length > 0 || state.aiQuiz.isLoading) {
-            return; // Déjà chargé ou en cours de chargement
+        if (state.aiQuiz.preloadPromise) {
+            return state.aiQuiz.preloadPromise; // Déjà en cours ou terminé
         }
         state.aiQuiz.isLoading = true;
         console.log("Lancement du pré-chargement du quiz en arrière-plan...");
-        try {
-            const quizData = await fetchAndGenerateAiQuiz(); // Utilise la fonction de génération
-            if (quizData && quizData.questions && quizData.questions.length > 0) {
-                state.aiQuiz.questions = quizData.questions;
-                console.log("Quiz pré-chargé avec succès.");
-            } else {
-                throw new Error("L'IA n'a pas pu générer de questions valides.");
+
+        // Créer la promesse et la stocker
+        state.aiQuiz.preloadPromise = (async () => {
+            try {
+                const quizData = await fetchAndGenerateAiQuiz(); // Utilise la fonction de génération
+                if (quizData && quizData.questions && quizData.questions.length > 0) {
+                    state.aiQuiz.questions = quizData.questions;
+                    console.log("Quiz pré-chargé avec succès.");
+                } else {
+                    throw new Error("L'IA n'a pas pu générer de questions valides.");
+                }
+            } catch (error) {
+                console.warn("Échec du pré-chargement du quiz:", error.message);
+                state.aiQuiz.questions = []; 
+                state.aiQuiz.preloadPromise = null; // Permettre une nouvelle tentative en cas d'échec
+                throw error; // Renvoyer l'erreur pour que l'appelant puisse la gérer
+            } finally {
+                state.aiQuiz.isLoading = false;
             }
-        } catch (error) {
-            console.warn("Échec du pré-chargement du quiz:", error.message);
-            state.aiQuiz.questions = []; // S'assurer que c'est vide en cas d'échec
-        } finally {
-            state.aiQuiz.isLoading = false;
-        }
+        })();
+        
+        return state.aiQuiz.preloadPromise;
     };
 
-    // MODIFICATION: Logique de démarrage du quiz mise à jour
+    // AMÉLIORATION: Logique de démarrage du quiz mise à jour pour être plus fluide
     const handleStartAiQuiz = async () => {
+        // Si les questions sont déjà prêtes (pré-chargées et non en cours de chargement)
         if (state.aiQuiz.questions.length > 0 && !state.aiQuiz.isLoading) {
-            // Les questions sont pré-chargées, démarrer immédiatement
             console.log("Démarrage du quiz avec les questions pré-chargées.");
-            state.aiQuiz.currentQuestionIndex = 0;
-            state.aiQuiz.score = 0;
-            dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`;
-            displayAiQuizQuestion();
-        } else if (state.aiQuiz.isLoading) {
-            // Le pré-chargement est toujours en cours, afficher le spinner
-            dom.quizContainer.innerHTML = `
-                <div class="text-center p-8">
-                    <span class="loader loader-dark"></span>
-                    <p class="mt-4 text-sm text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions...</p>
-                    <p class="text-xs text-[var(--color-text-light)]">(Juste un instant...)</p>
-                </div>`;
-            // On pourrait attendre la promesse, mais c'est complexe.
-            // Pour l'instant, l'utilisateur devra recliquer, ou on lance une requête "à la demande".
-            // Optons pour le fallback "à la demande" s'il reclique.
-        } else {
-            // Le pré-chargement a échoué ou n'a jamais été lancé, on le fait à la demande
-            console.log("Pré-chargement échoué ou non fait. Lancement de la requête à la demande.");
-            await fetchQuizOnDemand();
+            startQuizUI(); // Fonction séparée pour démarrer l'UI
+            return;
         }
-    };
 
-    // MODIFICATION: Nouvelle fonction pour le chargement à la demande (fallback)
-    const fetchQuizOnDemand = async () => {
-         state.aiQuiz.isLoading = true; // S'assurer que 'isLoading' est bien géré
+        // Afficher le spinner universel (soit pour le pré-chargement en cours, soit pour la demande)
          dom.quizContainer.innerHTML = `
             <div class="text-center p-8">
                 <span class="loader loader-dark"></span>
                 <p class="mt-4 text-sm text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions...</p>
-                <p class="text-xs text-[var(--color-text-light)]">(Cela peut prendre jusqu'à 30 secondes)</p>
+                <p class="text-xs text-[var(--color-text-light)]">(${state.aiQuiz.isLoading ? 'Pré-chargement en cours...' : 'Lancement...'})</p>
             </div>`;
 
         try {
-            const quizData = await fetchAndGenerateAiQuiz(); // Appelle la fonction de génération
-            if (!quizData || !quizData.questions || quizData.questions.length === 0) {
-                throw new Error("L'IA n'a pas pu générer de questions.");
-            }
-            state.aiQuiz.questions = quizData.questions;
-            state.aiQuiz.currentQuestionIndex = 0;
-            state.aiQuiz.score = 0;
-            dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`; // Préparer le conteneur
-            displayAiQuizQuestion();
+            // Attendre la promesse de pré-chargement (si elle existe) ou la lancer (si elle n'existe pas)
+            // preloadQuizQuestions() va maintenant soit la lancer, soit retourner la promesse existante.
+            await preloadQuizQuestions(); 
+            
+            // Si nous arrivons ici, le chargement (qu'il soit "pré" ou "à la demande") a réussi
+            startQuizUI();
+
         } catch (error) {
+            // Le pré-chargement ou le chargement à la demande a échoué
+            console.error("Échec du chargement du quiz:", error);
             dom.quizContainer.innerHTML = `
                 <div class="text-center text-red-500">
                     <p><strong>Erreur lors de la génération du quiz.</strong></p>
@@ -1282,11 +1271,21 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
                     <button id="retry-ai-quiz-btn" class="mt-4 px-5 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-[1.02] transition-transform">Réessayer</button>
                 </div>`;
             document.getElementById('retry-ai-quiz-btn').addEventListener('click', showQuizStartScreen);
-        } finally {
-             state.aiQuiz.isLoading = false;
+            // Réinitialiser la promesse pour permettre une nouvelle tentative
+            state.aiQuiz.preloadPromise = null; 
         }
     };
 
+    // AMÉLIORATION: Fonction séparée pour démarrer l'UI du quiz
+    const startQuizUI = () => {
+        state.aiQuiz.currentQuestionIndex = 0;
+        state.aiQuiz.score = 0;
+        // S'assurer que le conteneur est prêt
+        if (!dom.quizContainer.querySelector('#quiz-game-screen') || dom.quizContainer.querySelector('#quiz-start-screen')) {
+             dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`;
+        }
+        displayAiQuizQuestion();
+    };
 
     // MODIFICATION: La fonction de génération est maintenant basée sur proverbs.json
     const fetchAndGenerateAiQuiz = async () => {
@@ -1420,9 +1419,11 @@ Génère 10 questions de quiz basées EXCLUSIVEMENT sur cette liste, en suivant 
         const gameScreen = dom.quizContainer.querySelector('#quiz-game-screen');
         if (!gameScreen) return;
         
-        // Réinitialiser les questions pour forcer un nouveau pré-chargement pour la prochaine fois
+        // AMÉLIORATION: Réinitialiser les questions ET la promesse pour forcer un nouveau pré-chargement
         state.aiQuiz.questions = [];
-        state.aiQuiz.isLoading = false; // Important
+        state.aiQuiz.isLoading = false; 
+        state.aiQuiz.preloadPromise = null; // Important
+        
         // Lancer un nouveau pré-chargement pour la prochaine partie
         setTimeout(preloadQuizQuestions, 1000); 
 
