@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="Inzan n Teqbaylit : La sagesse kabyle à portée de main. Proverbes, traductions et intelligence artificielle.">
+    <meta name="description" content="Inzan n Teqbaylit : Une collection interactive de proverbes kabyles avec traduction, explications et intelligence artificielle.">
     <meta name="theme-color" content="#F9F7F3">
 
+    <!-- PWA & Social Meta -->
+    <meta property="og:title" content="Inzan n Teqbaylit - Sagesse Kabyle">
+    <meta property="og:description" content="Découvrez la richesse des proverbes kabyles assistée par IA.">
+    <meta property="og:type" content="website">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiSW56YW4gbiBUZXFiYXlsaXQiLCJzaG9ydF9uYW1lIjoiSW56YW4iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0Y5RjdFMyIsInRoZW1lX2NvbG9yIjoiIzNBNUY0MCIsImljb25zIjpbeyJzcmMiOiJodHRwczovL3ZpYS5wbGFjZWhvbGRlci5jb20vMTkyeDE5Mi5wbmc/dGV4dD0lRTIlOUMlQTciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn0seyJzcmMiOiJodHRwczovL3ZpYS5wbGFjZWhvbGRlci5jb20vNTEyeDUxMi5wbmc/dGV4dD0lRTIlOUMlQTciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dfQ==">
+    
     <title>Inzan | Sagesse Kabyle</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuration Tailwind Étendue -->
+    <!-- Configuration Tailwind (Design System) -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,158 +25,159 @@
                 extend: {
                     colors: {
                         kabyle: {
-                            base: '#F9F7F3',     // Parchemin clair
-                            dark: '#121212',     // Noir profond
+                            base: '#F9F7F3',     // Fond clair (Laine naturelle)
+                            dark: '#121212',     // Fond sombre
                             card: '#FFFFFF',
                             'card-dark': '#1E1E1E',
-                            primary: '#3A5F40',  // Vert Olive (Olea europaea)
-                            secondary: '#C07A50',// Terre Cuite (Poterie)
+                            primary: '#3A5F40',  // Vert Olivier (Identité)
+                            secondary: '#C07A50',// Terre Cuite (Tradition)
                             accent: '#D4AF37',   // Or (Bijoux)
-                            text: '#2D3748',
-                            'text-dark': '#E2E8F0'
+                            surface: '#F0FDF4',  // Vert très pâle
                         }
                     },
                     fontFamily: {
-                        serif: ['"Tinos"', 'Georgia', 'serif'],
-                        sans: ['"Raleway"', 'Helvetica', 'Arial', 'sans-serif'],
+                        serif: ['Tinos', 'serif'],   // Pour le Kabyle
+                        sans: ['Raleway', 'sans-serif'], // Pour le Français
                     },
                     animation: {
+                        'float': 'float 6s ease-in-out infinite',
                         'fade-in': 'fadeIn 0.5s ease-out forwards',
                         'slide-up': 'slideUp 0.4s ease-out forwards',
-                        'pulse-soft': 'pulseSoft 2s infinite',
                     },
                     keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
                         fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
-                        pulseSoft: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.7' } }
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
                     }
                 }
             }
         }
     </script>
 
-    <!-- Polices Google Fonts Optimisées -->
+    <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Favicon SVG Dynamique -->
+    <!-- Favicon SVG -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%233A5F40'>ⵣ</text></svg>">
 
     <style>
-        /* Reset & Base */
+        /* Styles Globaux & Glassmorphism */
         body {
             background-color: #F9F7F3;
-            /* Motif subtil style tapis berbère simplifié */
             background-image: radial-gradient(#3A5F40 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-            -webkit-tap-highlight-color: transparent;
+            background-size: 24px 24px;
+            /* Empêche le rebond élastique sur iOS */
+            overscroll-behavior-y: none; 
         }
         .dark body {
             background-color: #121212;
             background-image: radial-gradient(#3A5F40 0.5px, transparent 0.5px);
         }
 
-        /* Utilitaires */
-        .glass-nav {
-            background: rgba(249, 247, 243, 0.85);
+        /* Effet de verre (Glassmorphism) */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .dark .glass-nav {
-            background: rgba(18, 18, 18, 0.85);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .dark .glass {
+            background: rgba(30, 30, 30, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card-shadow:active { transform: scale(0.98); }
-        
-        /* Scrollbar Masquée mais fonctionnelle */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Highlight de recherche */
-        .highlight { background-color: rgba(212, 175, 55, 0.3); color: inherit; border-radius: 2px; padding: 0 2px; }
+        /* Scrollbar cachée mais fonctionnelle */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Loader */
-        .loader {
-            border: 3px solid rgba(58, 95, 64, 0.1);
-            border-left-color: #3A5F40;
-            border-radius: 50%;
+        .spinner {
             width: 24px; height: 24px;
+            border: 3px solid currentColor;
+            border-bottom-color: transparent;
+            border-radius: 50%;
             animation: spin 1s linear infinite;
+            display: inline-block;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Safe Area pour iPhone X+ */
+        /* Transitions de vues */
+        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        .view-section.active { display: block; opacity: 1; }
+
+        /* Highlight recherche */
+        mark { background-color: rgba(212, 175, 55, 0.4); color: inherit; border-radius: 2px; padding: 0 2px; }
+
+        /* Padding safe area pour mobile (encoche iPhone) */
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
     </style>
 </head>
-<body class="text-kabyle-text dark:text-kabyle-text-dark font-sans transition-colors duration-300 min-h-screen flex flex-col">
+<body class="text-gray-800 dark:text-gray-200 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
 
-    <!-- Écran de Chargement (Splash) -->
-    <div id="splash" class="fixed inset-0 z-50 bg-kabyle-base dark:bg-kabyle-dark flex flex-col items-center justify-center transition-opacity duration-500">
-        <div class="relative w-24 h-24 mb-4 animate-pulse-soft">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-kabyle-primary fill-current">
+    <!-- Splash Screen -->
+    <div id="splash" class="fixed inset-0 z-[100] bg-kabyle-base dark:bg-kabyle-dark flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="relative w-24 h-24 mb-4 animate-float">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-kabyle-primary fill-current drop-shadow-xl">
                 <text x="50" y="80" font-size="80" text-anchor="middle" font-weight="bold">ⵣ</text>
             </svg>
         </div>
-        <h1 class="text-3xl font-serif font-bold text-kabyle-primary tracking-widest uppercase">Inzan</h1>
-        <p id="splash-status" class="text-sm text-gray-500 mt-2 font-medium">Chargement de la sagesse...</p>
-        <!-- Bouton Retry caché par défaut -->
-        <button id="retry-btn" class="hidden mt-4 px-4 py-2 bg-kabyle-secondary text-white rounded-lg shadow-md hover:bg-opacity-90" onclick="window.location.reload()">Réessayer</button>
+        <h1 class="text-4xl font-serif font-bold text-kabyle-primary tracking-widest uppercase">Inzan</h1>
+        <p class="text-sm font-medium text-gray-500 mt-2 uppercase tracking-widest">Sagesse Kabyle</p>
+        <div id="splash-loader" class="mt-6 spinner text-kabyle-secondary"></div>
+        <div id="splash-error" class="hidden mt-4 text-red-500 text-center px-4">
+            <p>Erreur de chargement.</p>
+            <button onclick="window.location.reload()" class="mt-2 text-sm underline">Réessayer</button>
+        </div>
     </div>
 
-    <!-- Barre de Navigation (Desktop: Top, Mobile: Bottom) -->
-    <header class="fixed top-0 w-full z-40 glass-nav transition-transform duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            
+    <!-- Header Desktop & Mobile -->
+    <header class="fixed top-0 w-full z-40 glass transition-all duration-300 pt-safe">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <!-- Logo -->
-            <div class="flex items-center gap-2 cursor-pointer select-none" onclick="app.router.go('home')">
-                <span class="text-2xl text-kabyle-primary font-bold">ⵣ</span>
-                <span class="font-serif font-bold text-xl tracking-wide text-kabyle-primary dark:text-white">INZAN</span>
+            <div class="flex items-center gap-2 cursor-pointer" onclick="app.nav.go('home')">
+                <span class="text-2xl text-kabyle-secondary font-bold">ⵣ</span>
+                <h1 class="font-serif font-bold text-xl text-kabyle-primary dark:text-white hidden sm:block">Inzan n Teqbaylit</h1>
             </div>
 
-            <!-- Menu Desktop -->
-            <nav class="hidden md:flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-full">
-                <button data-page="home" class="nav-item px-5 py-1.5 rounded-full text-sm font-medium transition-colors hover:text-kabyle-primary" onclick="app.router.go('home')">Accueil</button>
-                <button data-page="explore" class="nav-item px-5 py-1.5 rounded-full text-sm font-medium transition-colors hover:text-kabyle-primary" onclick="app.router.go('explore')">Explorer</button>
-                <button data-page="favorites" class="nav-item px-5 py-1.5 rounded-full text-sm font-medium transition-colors hover:text-kabyle-primary" onclick="app.router.go('favorites')">Favoris</button>
-                <button data-page="ai" class="nav-item px-5 py-1.5 rounded-full text-sm font-medium transition-colors hover:text-kabyle-primary flex items-center gap-1" onclick="app.router.go('ai')">
+            <!-- Nav Desktop -->
+            <nav class="hidden md:flex items-center gap-1 bg-gray-100/50 dark:bg-gray-800/50 p-1.5 rounded-full border border-gray-200 dark:border-gray-700">
+                <button data-target="home" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('home')">Accueil</button>
+                <button data-target="explore" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('explore')">Explorer</button>
+                <button data-target="favorites" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('favorites')">Favoris</button>
+                <button data-target="ai" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary flex items-center gap-1" onclick="app.nav.go('ai')">
                     <span>Sage AI</span>
                 </button>
-                <button data-page="quiz" class="nav-item px-5 py-1.5 rounded-full text-sm font-medium transition-colors hover:text-kabyle-primary" onclick="app.router.go('quiz')">Quiz</button>
+                <button data-target="quiz" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('quiz')">Quiz</button>
             </nav>
 
-            <!-- Toggle Mode Sombre -->
-            <button id="theme-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-kabyle-primary dark:text-kabyle-accent" aria-label="Changer de thème">
-                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <!-- Theme Toggle -->
+            <button id="theme-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-kabyle-primary dark:text-kabyle-accent transition-colors">
+                <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
         </div>
     </header>
 
-    <!-- Contenu Principal -->
-    <main class="flex-grow pt-20 pb-24 md:pb-10 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+    <!-- Main Content -->
+    <main class="flex-grow pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto w-full">
         
-        <!-- VUE: ACCUEIL -->
-        <section id="view-home" class="view hidden animate-fade-in">
-            <div class="text-center mb-10 mt-4">
-                <span class="inline-block py-1 px-3 rounded-full bg-kabyle-primary/10 dark:bg-kabyle-primary/20 text-kabyle-primary dark:text-kabyle-accent text-xs font-bold uppercase tracking-wider mb-3 border border-kabyle-primary/20">Culture & Tradition</span>
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-kabyle-primary dark:text-white mb-4 leading-tight">La Sagesse des Ancêtres</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-light">
-                    Une collection numérique interactive des <span class="font-serif italic text-kabyle-secondary">Inzan</span>, préservée pour les générations futures.
+        <!-- VIEW: HOME -->
+        <section id="view-home" class="view-section active animate-fade-in">
+            <div class="text-center mb-10">
+                <span class="inline-block py-1 px-3 rounded-full bg-kabyle-primary/10 text-kabyle-primary text-xs font-bold uppercase tracking-wide mb-3 border border-kabyle-primary/20">Héritage Culturel</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-kabyle-primary dark:text-white mb-4">Trésors de la Sagesse</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    <span id="proverb-count" class="font-bold text-kabyle-secondary">...</span> proverbes préservés numériquement.
                 </p>
             </div>
 
-            <!-- Carte du Jour -->
-            <div class="max-w-3xl mx-auto mb-12 relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-kabyle-primary to-kabyle-secondary rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                <div class="relative bg-kabyle-card dark:bg-kabyle-card-dark rounded-xl p-6 md:p-10 card-shadow border border-gray-100 dark:border-gray-800">
+            <!-- Daily Card -->
+            <div class="max-w-3xl mx-auto mb-12 group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-kabyle-primary to-kabyle-secondary rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative bg-white dark:bg-kabyle-card-dark rounded-xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xs font-bold text-kabyle-secondary uppercase tracking-widest flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-kabyle-secondary animate-pulse"></span>
@@ -178,734 +185,753 @@
                         </h3>
                         <span id="daily-date" class="text-xs text-gray-400 font-mono"></span>
                     </div>
-                    <div id="daily-content" class="text-center">
-                        <!-- Injecté par JS -->
-                        <div class="loader mx-auto"></div>
+                    <div id="daily-content" class="text-center py-4">
+                        <div class="spinner text-kabyle-primary"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Navigation Rapide (Grid) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                <div onclick="app.router.go('explore')" class="cursor-pointer bg-white dark:bg-white/5 p-6 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-kabyle-primary dark:hover:border-kabyle-primary transition-all group">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <!-- Quick Actions Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+                <div onclick="app.nav.go('explore')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-primary transition-all group hover:-translate-y-1 shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                     <h4 class="font-bold text-lg mb-1">Rechercher</h4>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Parcourez la bibliothèque par thèmes ou mots-clés.</p>
+                    <p class="text-sm text-gray-500">Par mot-clé ou thématique.</p>
                 </div>
-                <div onclick="app.router.go('ai')" class="cursor-pointer bg-white dark:bg-white/5 p-6 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-kabyle-secondary dark:hover:border-kabyle-secondary transition-all group">
-                    <div class="w-12 h-12 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div onclick="app.nav.go('ai')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-secondary transition-all group hover:-translate-y-1 shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
-                    <h4 class="font-bold text-lg mb-1">Le Sage Artificiel</h4>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Posez une question, obtenez un proverbe adapté.</p>
+                    <h4 class="font-bold text-lg mb-1">Le Sage AI</h4>
+                    <p class="text-sm text-gray-500">Conseils contextuels intelligents.</p>
+                </div>
+                <div onclick="app.nav.go('quiz')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-accent transition-all group hover:-translate-y-1 shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Quiz</h4>
+                    <p class="text-sm text-gray-500">Testez vos connaissances.</p>
                 </div>
             </div>
         </section>
 
-        <!-- VUE: EXPLORER -->
-        <section id="view-explore" class="view hidden">
-            <!-- Search Bar Sticky -->
-            <div class="sticky top-16 z-30 bg-kabyle-base/95 dark:bg-kabyle-dark/95 backdrop-blur-md py-4 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-gray-200 dark:border-gray-800 mb-6">
-                <div class="flex gap-3 max-w-3xl mx-auto">
+        <!-- VIEW: EXPLORE -->
+        <section id="view-explore" class="view-section">
+            <div class="sticky top-20 z-30 bg-kabyle-base/95 dark:bg-kabyle-dark/95 backdrop-blur-md py-4 mb-6 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
+                    <!-- Search -->
                     <div class="relative flex-grow">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
-                        <input type="text" id="search-input" class="block w-full pl-10 pr-10 py-3 border-0 bg-white dark:bg-white/10 shadow-sm rounded-xl focus:ring-2 focus:ring-kabyle-primary text-base placeholder-gray-400 transition-all" placeholder="Chercher (ex: thamourth, amitié)...">
+                        <input type="text" id="search-input" class="block w-full pl-10 pr-10 py-3 border-0 bg-white dark:bg-gray-800 shadow-sm rounded-xl focus:ring-2 focus:ring-kabyle-primary placeholder-gray-400 transition-all" placeholder="Rechercher (ex: thamourth, patience)...">
                         <button id="clear-search" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 hidden">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     </div>
+                    <button onclick="app.explore.random()" class="flex items-center justify-center gap-2 px-6 py-3 bg-kabyle-secondary text-white rounded-xl font-bold shadow-sm hover:bg-kabyle-primary transition-colors active:scale-95">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <span>Aléatoire</span>
+                    </button>
                 </div>
-                <!-- Filtres Thèmes -->
-                <div class="mt-3 flex gap-2 overflow-x-auto hide-scrollbar max-w-3xl mx-auto py-1" id="theme-filters">
-                    <!-- Injecté via JS -->
+                <!-- Themes -->
+                <div class="mt-4 overflow-x-auto no-scrollbar max-w-4xl mx-auto">
+                    <div id="theme-filters" class="flex gap-2 min-w-max pb-2">
+                        <!-- Injected JS -->
+                    </div>
                 </div>
             </div>
 
+            <div id="results-stats" class="text-sm text-gray-500 mb-4 h-5 max-w-4xl mx-auto"></div>
             <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cartes injectées -->
+                <!-- Injected JS -->
+            </div>
+            <div id="load-more-sentinel" class="h-20 flex items-center justify-center mt-8 opacity-0">
+                <div class="spinner text-kabyle-primary"></div>
             </div>
             
-            <!-- Load More Sentinel -->
-            <div id="sentinel" class="h-20 flex items-center justify-center mt-8 opacity-0 transition-opacity">
-                <div class="loader"></div>
-            </div>
-            
-            <div id="no-results" class="hidden text-center py-20 text-gray-500">
-                <p class="text-lg">Aucun proverbe trouvé.</p>
+            <div id="no-results" class="hidden flex flex-col items-center justify-center py-12 text-gray-500">
+                <span class="text-4xl mb-2">😕</span>
+                <p>Aucun résultat trouvé.</p>
                 <button onclick="app.explore.reset()" class="mt-2 text-kabyle-primary underline">Réinitialiser</button>
             </div>
         </section>
 
-        <!-- VUE: FAVORIS -->
-        <section id="view-favorites" class="view hidden animate-slide-up">
+        <!-- VIEW: FAVORITES -->
+        <section id="view-favorites" class="view-section">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-serif font-bold text-kabyle-primary dark:text-white">Mes Favoris</h2>
+                <h2 class="text-3xl font-serif font-bold text-kabyle-primary dark:text-white">Vos Favoris</h2>
             </div>
-            <div id="fav-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[200px]">
-                <!-- Injecté -->
-            </div>
-            <div id="fav-empty" class="hidden text-center py-20 opacity-60">
-                <div class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <div id="fav-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="no-favs" class="hidden text-center py-20 opacity-70">
+                <div class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                 </div>
-                <p>Vous n'avez pas encore de favoris.</p>
+                <p class="text-lg text-gray-500">Vous n'avez pas encore de favoris.</p>
+                <button onclick="app.nav.go('explore')" class="mt-4 text-kabyle-primary hover:underline">Commencer à explorer</button>
             </div>
         </section>
 
-        <!-- VUE: AI SAGE -->
-        <section id="view-ai" class="view hidden max-w-2xl mx-auto animate-fade-in">
-            <div class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <!-- VIEW: AI SAGE -->
+        <section id="view-ai" class="view-section max-w-2xl mx-auto">
+            <div class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
                 <div class="bg-kabyle-primary p-6 text-white flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl backdrop-blur-sm border border-white/30">🧙‍♂️</div>
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl backdrop-blur-sm">🧙‍♂️</div>
                     <div>
                         <h2 class="text-xl font-bold font-serif">Amusnaw (Le Sage)</h2>
                         <p class="text-white/80 text-sm">Décrivez une situation, je trouverai le proverbe.</p>
                     </div>
                 </div>
                 <div class="p-6">
-                    <div class="relative">
-                        <textarea id="ai-prompt" rows="3" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-black/20 border-2 border-gray-200 dark:border-gray-700 focus:border-kabyle-primary focus:ring-0 resize-none transition-colors outline-none" placeholder="Exemple: Mon frère parle beaucoup mais ne fait rien..."></textarea>
-                        <button id="ai-send" class="absolute bottom-3 right-3 bg-kabyle-primary text-white p-2 rounded-lg hover:bg-kabyle-secondary transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                    <div class="relative mb-4">
+                        <textarea id="ai-input" rows="3" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 focus:border-kabyle-primary focus:ring-0 resize-none transition-colors" placeholder="Exemple: Mon frère parle beaucoup mais ne fait rien..."></textarea>
+                        <button id="ai-send-btn" class="absolute bottom-3 right-3 bg-kabyle-primary text-white p-2 rounded-lg hover:bg-kabyle-secondary transition-colors shadow-md disabled:opacity-50">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
                     </div>
-                    <div id="ai-result" class="mt-6 space-y-4">
-                        <!-- Réponses IA -->
-                    </div>
+                    <div id="ai-feedback" class="text-xs text-center text-gray-400 mb-4 min-h-[1.5em]"></div>
+                    <div id="ai-results" class="space-y-4 min-h-[100px]"></div>
                 </div>
             </div>
         </section>
 
-        <!-- VUE: QUIZ -->
-        <section id="view-quiz" class="view hidden max-w-2xl mx-auto animate-fade-in">
-            <div class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden p-8 text-center relative">
-                <!-- État: Start -->
-                <div id="quiz-state-start">
-                    <div class="w-20 h-20 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">🧠</div>
-                    <h2 class="text-2xl font-bold font-serif mb-2 dark:text-white">Défi de Sagesse</h2>
-                    <p class="text-gray-500 dark:text-gray-400 mb-8">Testez vos connaissances sur 5 proverbes aléatoires.</p>
-                    <button onclick="app.quiz.start()" class="w-full py-3 bg-kabyle-primary text-white rounded-xl font-bold hover:bg-kabyle-secondary transition-transform transform active:scale-95">Commencer</button>
+        <!-- VIEW: QUIZ -->
+        <section id="view-quiz" class="view-section max-w-2xl mx-auto">
+            <div id="quiz-container" class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden p-8 relative min-h-[400px] flex flex-col justify-center">
+                <!-- Start Screen -->
+                <div id="quiz-start" class="text-center">
+                    <div class="w-20 h-20 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">🧠</div>
+                    <h2 class="text-2xl font-bold font-serif mb-2 text-gray-800 dark:text-white">Défi de Sagesse</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mb-8">Testez vos connaissances sur 5 proverbes aléatoires ou laissez l'IA générer un défi.</p>
+                    <button onclick="app.quiz.startLocal()" class="w-full py-3 mb-3 bg-kabyle-primary text-white rounded-xl font-bold hover:bg-kabyle-secondary transition-transform transform active:scale-95">Quiz Classique</button>
+                    <button onclick="app.quiz.startAI()" class="w-full py-3 bg-kabyle-accent text-white rounded-xl font-bold hover:bg-yellow-600 transition-transform transform active:scale-95 flex items-center justify-center gap-2">
+                        <span>✨ Quiz Généré par IA</span>
+                    </button>
                 </div>
 
-                <!-- État: Game -->
-                <div id="quiz-state-game" class="hidden text-left">
+                <!-- Game Screen -->
+                <div id="quiz-game" class="hidden w-full">
                     <div class="flex justify-between items-center mb-2 text-xs font-bold uppercase tracking-widest text-gray-400">
-                        <span id="quiz-step">Question 1/5</span>
-                        <span id="quiz-score-display" class="text-kabyle-primary">Score: 0</span>
+                        <span id="quiz-progress-text">Question 1/5</span>
+                        <span class="text-kabyle-primary">Score: <span id="quiz-score">0</span></span>
                     </div>
-                    <!-- Progress Bar -->
                     <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full mb-8 overflow-hidden">
-                        <div id="quiz-progress" class="h-full bg-kabyle-secondary transition-all duration-300" style="width: 0%"></div>
+                        <div id="quiz-progress-bar" class="h-full bg-kabyle-secondary transition-all duration-300" style="width: 0%"></div>
                     </div>
-
-                    <div id="quiz-question-box" class="mb-8">
-                        <h3 class="text-xl font-serif font-bold text-center text-kabyle-dark dark:text-white mb-2" id="q-text">...</h3>
+                    <div class="mb-8 text-center">
+                        <h3 id="quiz-question" class="text-xl font-serif font-bold text-gray-800 dark:text-white leading-relaxed">...</h3>
                     </div>
-
-                    <div id="quiz-options" class="space-y-3">
-                        <!-- Boutons options -->
-                    </div>
+                    <div id="quiz-options" class="space-y-3"></div>
+                    <div id="quiz-feedback" class="mt-4 text-center font-medium min-h-[1.5em]"></div>
                 </div>
 
-                <!-- État: End -->
-                <div id="quiz-state-end" class="hidden">
+                <!-- End Screen -->
+                <div id="quiz-end" class="hidden text-center">
                     <div class="text-6xl mb-4">🏆</div>
-                    <h3 class="text-2xl font-bold mb-2 dark:text-white">Terminé !</h3>
-                    <p class="text-4xl font-bold text-kabyle-primary mb-4"><span id="final-score">0</span> / 5</p>
-                    <button onclick="app.quiz.start()" class="px-6 py-2 border-2 border-kabyle-primary text-kabyle-primary rounded-lg font-bold hover:bg-kabyle-primary hover:text-white transition-colors">Rejouer</button>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Terminé !</h3>
+                    <p class="text-4xl font-bold text-kabyle-primary mb-4"><span id="quiz-final-score">0</span></p>
+                    <button onclick="app.quiz.reset()" class="px-8 py-3 bg-kabyle-primary text-white rounded-xl font-bold shadow-lg hover:bg-kabyle-secondary transition-colors">Rejouer</button>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Navigation Mobile (Bottom Bar) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-[#121212]/95 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center pb-safe z-50 transition-transform duration-300" id="mobile-nav">
-        <button data-page="home" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.router.go('home')">
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-[#121212]/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center pb-safe z-50">
+        <button data-target="home" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('home')">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             <span class="text-[10px] font-medium">Accueil</span>
         </button>
-        <button data-page="explore" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.router.go('explore')">
+        <button data-target="explore" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('explore')">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             <span class="text-[10px] font-medium">Explorer</span>
         </button>
         <div class="relative -top-5">
-            <button onclick="app.router.go('ai')" class="w-14 h-14 bg-kabyle-secondary text-white rounded-full shadow-lg flex items-center justify-center border-4 border-kabyle-base dark:border-kabyle-dark active:scale-90 transition-transform">
+            <button onclick="app.nav.go('ai')" class="w-14 h-14 bg-kabyle-secondary text-white rounded-full shadow-lg flex items-center justify-center border-4 border-kabyle-base dark:border-kabyle-dark active:scale-90 transition-transform">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </button>
         </div>
-        <button data-page="favorites" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.router.go('favorites')">
+        <button data-target="favorites" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('favorites')">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
             <span class="text-[10px] font-medium">Favoris</span>
         </button>
-        <button data-page="quiz" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.router.go('quiz')">
+        <button data-target="quiz" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('quiz')">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
             <span class="text-[10px] font-medium">Quiz</span>
         </button>
     </nav>
 
-    <!-- Notification Toast -->
+    <!-- Toast Notification -->
     <div id="toast" class="fixed top-20 right-4 bg-gray-800 dark:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 z-[100] translate-x-[150%] transition-transform duration-300 max-w-xs">
         <span id="toast-icon">✅</span>
-        <p id="toast-msg" class="text-sm font-semibold">Message</p>
+        <p id="toast-msg" class="text-sm font-bold">Action effectuée</p>
     </div>
 
-    <!-- Modal Détails -->
-    <div id="modal-backdrop" class="fixed inset-0 bg-black/60 z-[150] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="app.ui.closeModal()"></div>
-    <div id="modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-2xl z-[151] hidden opacity-0 scale-95 transition-all duration-300 flex flex-col max-h-[85vh]">
+    <!-- Modal -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/60 z-[150] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="app.ui.closeModal()"></div>
+    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-2xl z-[151] hidden opacity-0 scale-95 transition-all duration-300 flex flex-col max-h-[80vh]">
         <div class="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-            <h3 class="text-lg font-bold text-gray-500 uppercase tracking-wider">Détails</h3>
-            <button onclick="app.ui.closeModal()" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full text-gray-500">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+            <h3 id="modal-title" class="text-lg font-bold text-gray-500 uppercase tracking-wider">Détails</h3>
+            <button onclick="app.ui.closeModal()" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full text-gray-500">✕</button>
         </div>
-        <div id="modal-content" class="p-6 overflow-y-auto prose dark:prose-invert max-w-none">
-            <!-- Contenu injecté -->
-        </div>
+        <div id="modal-body" class="p-6 overflow-y-auto prose dark:prose-invert"></div>
     </div>
 
-<script>
-    /**
-     * Inzan App - Core Logic
-     * Architecture Modulaire: Router, Data, UI, AI, Quiz
-     */
-    
-    const CONFIG = {
-        API_URL: 'proverbs.json',
-        ITEMS_PER_PAGE: 20,
-        // IMPORTANT: Ceci est une clé publique pour la démo. En production, utilisez un backend.
-        GEMINI_KEY: 'AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4' 
-    };
+    <script>
+        // Service Worker inline pour PWA (Gère le cache et le hors-ligne)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                // Fallback si sw.js n'existe pas (pour démo simple fichier)
+                console.log('SW non enregistré (mode démo single-file)');
+            });
+        }
 
-    const app = {
-        state: {
-            proverbs: [],
-            filtered: [],
-            favorites: new Set(),
-            theme: 'light',
-            currentPage: 1,
-            currentFilter: 'all',
-            searchQuery: '',
-            isLoading: false
-        },
+        const CONFIG = {
+            PROVERBS_URL: 'proverbs.json',
+            GEMINI_KEY: 'AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4', // ⚠️ En prod: Utiliser un backend
+            ITEMS_PER_PAGE: 24
+        };
 
-        init: async () => {
-            app.ui.loadTheme();
-            app.router.init();
-
-            try {
-                // Chargement des données
-                const res = await fetch(CONFIG.API_URL);
-                if (!res.ok) throw new Error('Fichier JSON introuvable');
-                const data = await res.json();
-                
-                // Normalisation des données pour la recherche rapide
-                app.state.proverbs = data.map((p, i) => ({
-                    ...p, 
-                    id: i, // ID stable basé sur l'index
-                    norm: app.utils.normalize(`${p.kabyle} ${p.francais} ${p.theme || ''}`)
-                }));
-                app.state.filtered = [...app.state.proverbs];
-
-                // Chargement des favoris
-                const storedFavs = JSON.parse(localStorage.getItem('favorites') || '[]');
-                app.state.favorites = new Set(storedFavs);
-
-                // Initialisation UI
-                app.home.renderDaily();
-                app.explore.renderThemes();
-                app.explore.loadChunk(true);
-                
-                // Suppression du Splash
-                setTimeout(() => {
-                    document.getElementById('splash').style.opacity = '0';
-                    setTimeout(() => document.getElementById('splash').style.display = 'none', 500);
-                }, 800);
-
-            } catch (e) {
-                console.error(e);
-                document.getElementById('splash-status').textContent = "Erreur de chargement des données.";
-                document.getElementById('splash-status').classList.add('text-red-500');
-                document.getElementById('retry-btn').classList.remove('hidden');
-            }
-            
-            app.events.setup();
-        },
-
-        // --- ROUTEUR SIMPLE (SPA) ---
-        router: {
-            init: () => {
-                // Gestion du bouton retour navigateur
-                window.onpopstate = (e) => {
-                    if (e.state && e.state.page) app.router.go(e.state.page, false);
-                };
-            },
-            go: (viewId, pushState = true) => {
-                // Masquer toutes les vues
-                document.querySelectorAll('.view').forEach(el => {
-                    el.classList.add('hidden');
-                    el.classList.remove('animate-fade-in'); // Reset animation
-                });
-                
-                // Afficher la vue cible
-                const target = document.getElementById(`view-${viewId}`);
-                if (target) {
-                    target.classList.remove('hidden');
-                    target.classList.add('animate-fade-in');
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
-
-                // Mise à jour Navigation
-                app.router.updateNav(viewId);
-
-                // Logique spécifique par vue
-                if (viewId === 'favorites') app.favorites.render();
-                if (viewId === 'explore') document.getElementById('search-input').focus();
-
-                if (pushState) history.pushState({page: viewId}, null, `#${viewId}`);
-            },
-            updateNav: (activeId) => {
-                // Desktop
-                document.querySelectorAll('nav .nav-item').forEach(btn => {
-                    const isActive = btn.dataset.page === activeId;
-                    btn.classList.toggle('bg-white', isActive);
-                    btn.classList.toggle('dark:bg-white/10', isActive);
-                    btn.classList.toggle('text-kabyle-primary', isActive);
-                    btn.classList.toggle('shadow-sm', isActive);
-                });
-                // Mobile
-                document.querySelectorAll('.mobile-item').forEach(btn => {
-                    const isActive = btn.dataset.page === activeId;
-                    btn.classList.toggle('text-kabyle-primary', isActive);
-                    btn.classList.toggle('text-gray-400', !isActive);
-                });
-            }
-        },
-
-        // --- MODULE HOME ---
-        home: {
-            renderDaily: () => {
-                if (!app.state.proverbs.length) return;
-                // Algorithme jour de l'année pour un proverbe constant
-                const now = new Date();
-                const start = new Date(now.getFullYear(), 0, 0);
-                const diff = now - start;
-                const day = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const p = app.state.proverbs[day % app.state.proverbs.length];
-                
-                document.getElementById('daily-date').textContent = now.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long'});
-                document.getElementById('daily-content').innerHTML = app.ui.cardTemplate(p, true);
-            }
-        },
-
-        // --- MODULE EXPLORE ---
-        explore: {
-            renderThemes: () => {
-                const themes = new Set();
-                app.state.proverbs.forEach(p => { if(p.theme) p.theme.split(',').forEach(t => themes.add(t.trim())); });
-                
-                const container = document.getElementById('theme-filters');
-                let html = `<button class="filter-btn whitespace-nowrap px-4 py-1 rounded-full text-sm font-medium transition-colors bg-kabyle-primary text-white shadow-md" data-filter="all" onclick="app.explore.setFilter('all', this)">Tous</button>`;
-                
-                Array.from(themes).sort().forEach(t => {
-                    html += `<button class="filter-btn whitespace-nowrap px-4 py-1 rounded-full text-sm font-medium transition-colors bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-kabyle-primary" data-filter="${t}" onclick="app.explore.setFilter('${t}', this)">${t}</button>`;
-                });
-                container.innerHTML = html;
+        const app = {
+            state: {
+                proverbs: [],
+                filtered: [],
+                favorites: new Set(),
+                themeMode: 'light',
+                currentTab: 'home',
+                currentPage: 1,
+                searchQuery: '',
+                currentTheme: 'all',
+                isLoading: false
             },
 
-            setFilter: (filter, btn) => {
-                app.state.currentFilter = filter;
+            init: async () => {
+                app.ui.loadTheme();
                 
-                // Update UI boutons
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.className = "filter-btn whitespace-nowrap px-4 py-1 rounded-full text-sm font-medium transition-colors bg-white dark:bg-white/10 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-kabyle-primary";
-                });
-                btn.className = "filter-btn whitespace-nowrap px-4 py-1 rounded-full text-sm font-medium transition-colors bg-kabyle-primary text-white shadow-md";
+                // Setup des événements
+                app.events.setup();
 
-                app.explore.runSearch();
-            },
-
-            runSearch: () => {
-                const query = app.state.searchQuery;
-                const filter = app.state.currentFilter;
-
-                app.state.filtered = app.state.proverbs.filter(p => {
-                    const matchesSearch = !query || p.norm.includes(query);
-                    const matchesFilter = filter === 'all' || (p.theme && p.theme.includes(filter));
-                    return matchesSearch && matchesFilter;
-                });
-
-                app.explore.loadChunk(true);
-            },
-
-            loadChunk: (reset = false) => {
-                const grid = document.getElementById('results-grid');
-                const sentinel = document.getElementById('sentinel');
-                const noResults = document.getElementById('no-results');
-
-                if (reset) {
-                    grid.innerHTML = '';
-                    app.state.currentPage = 1;
-                    window.scrollTo({top: 0});
-                }
-
-                const start = (app.state.currentPage - 1) * CONFIG.ITEMS_PER_PAGE;
-                const end = start + CONFIG.ITEMS_PER_PAGE;
-                const items = app.state.filtered.slice(start, end);
-
-                if (items.length === 0 && reset) {
-                    noResults.classList.remove('hidden');
-                    sentinel.style.opacity = 0;
-                    return;
-                }
-                noResults.classList.add('hidden');
-
-                // Utilisation de DocumentFragment pour la performance
-                const fragment = document.createDocumentFragment();
-                items.forEach(p => {
-                    const div = document.createElement('div');
-                    div.className = 'bg-white dark:bg-kabyle-card-dark p-6 rounded-xl card-shadow border border-gray-100 dark:border-gray-800 flex flex-col h-full hover:-translate-y-1 transition-transform duration-300';
-                    div.innerHTML = app.ui.cardTemplate(p);
-                    fragment.appendChild(div);
-                });
-                grid.appendChild(fragment);
-
-                if (end >= app.state.filtered.length) {
-                    sentinel.style.opacity = 0; // Fin de liste
-                    app.state.isLoading = false;
-                } else {
-                    sentinel.style.opacity = 1;
-                    app.state.currentPage++;
-                    app.state.isLoading = false;
-                }
-            },
-            
-            reset: () => {
-                document.getElementById('search-input').value = '';
-                app.state.searchQuery = '';
-                app.explore.setFilter('all', document.querySelector('[data-filter="all"]'));
-            }
-        },
-
-        // --- MODULE FAVORIS ---
-        favorites: {
-            toggle: (id, btn) => {
-                if (app.state.favorites.has(id)) {
-                    app.state.favorites.delete(id);
-                    app.ui.toast('Retiré des favoris', 'info');
-                } else {
-                    app.state.favorites.add(id);
-                    app.ui.toast('Ajouté aux favoris');
-                    // Animation confetti simple sur le bouton
-                    btn.classList.add('scale-125');
-                    setTimeout(() => btn.classList.remove('scale-125'), 200);
-                }
-                localStorage.setItem('favorites', JSON.stringify([...app.state.favorites]));
-                
-                // Mettre à jour toutes les instances du bouton pour ce proverbe
-                document.querySelectorAll(`.btn-fav[data-id="${id}"]`).forEach(el => {
-                    el.innerHTML = app.ui.heartIcon(app.state.favorites.has(id));
-                    el.classList.toggle('text-red-500', app.state.favorites.has(id));
-                    el.classList.toggle('text-gray-300', !app.state.favorites.has(id));
-                });
-
-                if (!document.getElementById('view-favorites').classList.contains('hidden')) {
-                    app.favorites.render();
-                }
-            },
-            render: () => {
-                const grid = document.getElementById('fav-grid');
-                const empty = document.getElementById('fav-empty');
-                
-                if (app.state.favorites.size === 0) {
-                    grid.innerHTML = '';
-                    empty.classList.remove('hidden');
-                    return;
-                }
-                empty.classList.add('hidden');
-                
-                const items = app.state.proverbs.filter(p => app.state.favorites.has(p.id));
-                grid.innerHTML = items.map(p => `
-                    <div class="bg-white dark:bg-kabyle-card-dark p-6 rounded-xl card-shadow border border-gray-100 dark:border-gray-800 flex flex-col h-full">
-                        ${app.ui.cardTemplate(p)}
-                    </div>
-                `).join('');
-            }
-        },
-
-        // --- MODULE QUIZ ---
-        quiz: {
-            current: 0,
-            score: 0,
-            questions: [],
-            
-            start: () => {
-                // Générer 5 questions aléatoires
-                const shuffled = [...app.state.proverbs].sort(() => 0.5 - Math.random()).slice(0, 5);
-                app.quiz.questions = shuffled.map(q => {
-                    // Créer des mauvaises réponses
-                    const distractors = [...app.state.proverbs]
-                        .filter(p => p.id !== q.id)
-                        .sort(() => 0.5 - Math.random())
-                        .slice(0, 3)
-                        .map(p => p.francais);
-                    const options = [q.francais, ...distractors].sort(() => 0.5 - Math.random());
-                    return { q: q.kabyle, a: q.francais, opts: options, expl: q.explication };
-                });
-                
-                app.quiz.current = 0;
-                app.quiz.score = 0;
-                
-                document.getElementById('quiz-state-start').classList.add('hidden');
-                document.getElementById('quiz-state-end').classList.add('hidden');
-                document.getElementById('quiz-state-game').classList.remove('hidden');
-                
-                app.quiz.renderStep();
-            },
-            
-            renderStep: () => {
-                const qData = app.quiz.questions[app.quiz.current];
-                document.getElementById('quiz-step').textContent = `Question ${app.quiz.current + 1}/5`;
-                document.getElementById('quiz-score-display').textContent = `Score: ${app.quiz.score}`;
-                document.getElementById('quiz-progress').style.width = `${((app.quiz.current)/5)*100}%`;
-                
-                document.getElementById('q-text').textContent = `« ${qData.q} »`;
-                
-                const optsContainer = document.getElementById('quiz-options');
-                optsContainer.innerHTML = qData.opts.map(opt => `
-                    <button onclick="app.quiz.check('${opt.replace(/'/g, "\\'")}', this)" class="quiz-opt w-full text-left p-4 rounded-xl border-2 border-gray-100 dark:border-gray-700 hover:border-kabyle-primary dark:hover:border-kabyle-primary dark:text-gray-300 transition-all">
-                        ${opt}
-                    </button>
-                `).join('');
-            },
-            
-            check: (answer, btn) => {
-                // Désactiver les clics
-                document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
-                
-                const qData = app.quiz.questions[app.quiz.current];
-                const isCorrect = answer === qData.a;
-                
-                if (isCorrect) {
-                    btn.classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900');
-                    app.quiz.score++;
-                } else {
-                    btn.classList.add('bg-red-100', 'border-red-500', 'dark:bg-red-900');
-                    // Montrer la bonne réponse
-                    Array.from(document.querySelectorAll('.quiz-opt')).find(b => b.textContent.trim() === qData.a)
-                        .classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900');
-                }
-                
-                setTimeout(() => {
-                    app.quiz.current++;
-                    if (app.quiz.current >= 5) {
-                        app.quiz.end();
-                    } else {
-                        app.quiz.renderStep();
-                    }
-                }, 1500);
-            },
-            
-            end: () => {
-                document.getElementById('quiz-state-game').classList.add('hidden');
-                document.getElementById('quiz-state-end').classList.remove('hidden');
-                document.getElementById('final-score').textContent = app.quiz.score;
-            }
-        },
-
-        // --- MODULE AI ---
-        ai: {
-            ask: async () => {
-                const input = document.getElementById('ai-prompt');
-                const container = document.getElementById('ai-result');
-                const btn = document.getElementById('ai-send');
-                const prompt = input.value.trim();
-                
-                if (!prompt) return;
-                
-                btn.disabled = true;
-                container.innerHTML = `<div class="flex items-center justify-center gap-2 text-gray-500"><div class="loader"></div> Le sage réfléchit...</div>`;
-                
                 try {
-                    // Recherche locale de contexte (RAG léger)
-                    const keywords = prompt.split(' ').filter(w => w.length > 3).slice(0, 3);
-                    const context = app.state.proverbs.filter(p => keywords.some(k => p.norm.includes(k))).slice(0, 5);
+                    const res = await fetch(CONFIG.PROVERBS_URL);
+                    if (!res.ok) throw new Error('JSON introuvable');
+                    const data = await res.json();
                     
-                    const systemPrompt = `Tu es un vieux sage kabyle (Amusnaw). L'utilisateur décrit une situation. Tu dois répondre avec un proverbe kabyle adapté.
-                    Contexte de proverbes possibles (JSON): ${JSON.stringify(context)}
-                    Si aucun ne convient, utilise tes connaissances générales mais reste dans le style kabyle.
-                    Format de réponse (HTML simple): 
-                    <p class='italic text-gray-600'>"Citation brève sur la situation"</p>
-                    <div class='mt-4 border-l-4 border-kabyle-secondary pl-4'>
-                        <p class='font-serif font-bold text-lg text-kabyle-primary'>« Proverbe en Kabyle »</p>
-                        <p class='text-gray-700'>Traduction française</p>
-                    </div>`;
+                    // Normalisation & Indexation légère
+                    app.state.proverbs = data.map((p, i) => ({
+                        ...p,
+                        id: i,
+                        norm: app.utils.normalize(`${p.kabyle} ${p.francais} ${p.theme || ''}`)
+                    }));
+                    app.state.filtered = [...app.state.proverbs];
+
+                    // Init Favoris
+                    const savedFavs = JSON.parse(localStorage.getItem('favs') || '[]');
+                    app.state.favorites = new Set(savedFavs);
+
+                    // Init UI
+                    document.getElementById('proverb-count').textContent = app.state.proverbs.length;
+                    app.home.renderDaily();
+                    app.explore.renderThemes();
+                    app.explore.loadChunk(true);
                     
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${CONFIG.GEMINI_KEY}`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: systemPrompt + "\n\nSituation: " + prompt }] }]
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-                    
-                    const text = data.candidates[0].content.parts[0].text;
-                    container.innerHTML = `<div class="animate-fade-in bg-gray-50 dark:bg-white/5 p-6 rounded-xl border border-gray-200 dark:border-gray-700">${text}</div>`;
-                    
+                    // Fin du splash
+                    setTimeout(() => {
+                        document.getElementById('splash').classList.add('opacity-0', 'pointer-events-none');
+                    }, 800);
+
                 } catch (e) {
                     console.error(e);
-                    container.innerHTML = `<div class="text-red-500 text-center">Le sage est fatigué (Erreur API). Réessayez plus tard.</div>`;
-                } finally {
-                    btn.disabled = false;
-                }
-            }
-        },
-
-        // --- UTILS & UI ---
-        ui: {
-            loadTheme: () => {
-                const theme = localStorage.getItem('theme');
-                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
+                    document.getElementById('splash-loader').classList.add('hidden');
+                    document.getElementById('splash-error').classList.remove('hidden');
                 }
             },
-            toggleTheme: () => {
-                document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            },
-            cardTemplate: (p, isDaily = false) => {
-                const isFav = app.state.favorites.has(p.id);
-                return `
-                    <div class="flex-grow">
-                        <p class="font-serif ${isDaily ? 'text-2xl md:text-3xl' : 'text-xl'} font-bold text-kabyle-primary dark:text-white mb-3 italic leading-relaxed">« ${p.kabyle} »</p>
-                        <p class="text-gray-600 dark:text-gray-300 ${isDaily ? 'text-lg' : 'text-sm'} leading-relaxed">${p.francais}</p>
-                        ${p.theme ? `<span class="inline-block mt-3 px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-[10px] uppercase tracking-wider text-gray-500 font-bold">${p.theme.split(',')[0]}</span>` : ''}
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                        <button class="text-xs font-bold text-kabyle-secondary hover:underline uppercase tracking-wide" onclick='app.ui.openModal(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Explication</button>
-                        <div class="flex gap-2">
-                            <button onclick="app.utils.copy('« ${p.kabyle} »')" class="p-2 text-gray-400 hover:text-kabyle-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-                            </button>
-                            <button class="btn-fav p-2 rounded-full transition-all hover:scale-110 ${isFav ? 'text-red-500' : 'text-gray-300 hover:text-red-400'}" data-id="${p.id}" onclick="app.favorites.toggle(${p.id}, this)">
-                                ${app.ui.heartIcon(isFav)}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            },
-            heartIcon: (filled) => `<svg class="w-5 h-5" fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
-            
-            openModal: (p) => {
-                const modal = document.getElementById('modal');
-                const backdrop = document.getElementById('modal-backdrop');
-                const content = document.getElementById('modal-content');
-                
-                content.innerHTML = `
-                    <div class="text-center mb-6">
-                        <p class="font-serif text-2xl font-bold text-kabyle-primary dark:text-white mb-2">« ${p.kabyle} »</p>
-                        <p class="text-gray-600 dark:text-gray-300">${p.francais}</p>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-white/5 p-5 rounded-xl border border-gray-100 dark:border-gray-700 mb-6">
-                        <h4 class="font-bold text-xs text-gray-400 uppercase mb-2">Signification</h4>
-                        <p class="text-gray-800 dark:text-gray-200 leading-relaxed">${p.explication || "Pas d'explication détaillée disponible pour le moment."}</p>
-                    </div>
-                    <button onclick="app.utils.share('« ${p.kabyle} » - ${p.francais}')" class="w-full py-3 bg-kabyle-primary text-white rounded-xl font-bold shadow-md hover:bg-kabyle-secondary transition-colors">Partager ce proverbe</button>
-                `;
-                
-                modal.classList.remove('hidden');
-                backdrop.classList.remove('hidden');
-                setTimeout(() => {
-                    modal.classList.remove('opacity-0', 'scale-95');
-                    backdrop.classList.remove('opacity-0');
-                }, 10);
-            },
-            closeModal: () => {
-                const modal = document.getElementById('modal');
-                const backdrop = document.getElementById('modal-backdrop');
-                modal.classList.add('opacity-0', 'scale-95');
-                backdrop.classList.add('opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    backdrop.classList.add('hidden');
-                }, 300);
-            },
-            toast: (msg, type='success') => {
-                const t = document.getElementById('toast');
-                document.getElementById('toast-msg').textContent = msg;
-                document.getElementById('toast-icon').textContent = type === 'info' ? 'ℹ️' : '✅';
-                t.classList.remove('translate-x-[150%]');
-                setTimeout(() => t.classList.add('translate-x-[150%]'), 3000);
-            }
-        },
 
-        utils: {
-            normalize: (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ǧ/g,'g').replace(/č/g,'c').replace(/ɣ/g,'gh').replace(/ɛ/g,'aa'),
-            debounce: (func, wait) => {
-                let timeout;
-                return function(...args) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            },
-            copy: (text) => {
-                navigator.clipboard.writeText(text).then(() => app.ui.toast('Copié !'));
-            },
-            share: (text) => {
-                if (navigator.share) {
-                    navigator.share({title: 'Inzan', text: text, url: window.location.href}).catch(console.error);
-                } else {
-                    app.utils.copy(text);
+            // --- NAVIGATION ---
+            nav: {
+                go: (targetId) => {
+                    app.state.currentTab = targetId;
+                    
+                    // Switch Vues
+                    document.querySelectorAll('.view-section').forEach(el => {
+                        el.classList.remove('active');
+                        if (el.id === `view-${targetId}`) el.classList.add('active');
+                    });
+
+                    // Update Navbar Desktop
+                    document.querySelectorAll('nav .nav-item').forEach(btn => {
+                        const isActive = btn.dataset.target === targetId;
+                        btn.className = `nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all ${isActive ? 'bg-white dark:bg-gray-700 text-kabyle-primary shadow-sm' : 'hover:text-kabyle-primary'}`;
+                    });
+
+                    // Update Navbar Mobile
+                    document.querySelectorAll('.mobile-item').forEach(btn => {
+                        const isActive = btn.dataset.target === targetId;
+                        btn.classList.toggle('text-kabyle-primary', isActive);
+                        btn.classList.toggle('text-gray-400', !isActive);
+                    });
+
+                    // Actions spécifiques
+                    if (targetId === 'favorites') app.favorites.render();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 }
-            }
-        },
+            },
 
-        events: {
-            setup: () => {
-                // Scroll Infini
-                const sentinel = document.getElementById('sentinel');
-                const observer = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting && !app.state.isLoading) {
-                        app.state.isLoading = true;
-                        app.explore.loadChunk();
+            // --- HOME ---
+            home: {
+                renderDaily: () => {
+                    if (!app.state.proverbs.length) return;
+                    // Proverbe stable basé sur la date
+                    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+                    const p = app.state.proverbs[dayOfYear % app.state.proverbs.length];
+                    
+                    document.getElementById('daily-date').textContent = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+                    document.getElementById('daily-content').innerHTML = app.ui.cardTemplate(p, true);
+                }
+            },
+
+            // --- EXPLORE ---
+            explore: {
+                renderThemes: () => {
+                    const themes = new Set();
+                    app.state.proverbs.forEach(p => { if(p.theme) p.theme.split(',').forEach(t => themes.add(t.trim())); });
+                    
+                    const container = document.getElementById('theme-filters');
+                    let html = `<button class="theme-btn active whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-kabyle-primary text-white shadow-md transition-all" data-theme="all" onclick="app.explore.filterTheme('all', this)">Tous</button>`;
+                    
+                    Array.from(themes).sort().forEach(t => {
+                        html += `<button class="theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-kabyle-primary/20 transition-all" data-theme="${t}" onclick="app.explore.filterTheme('${t}', this)">${t}</button>`;
+                    });
+                    container.innerHTML = html;
+                },
+
+                filterTheme: (theme, btn) => {
+                    app.state.currentTheme = theme;
+                    document.querySelectorAll('.theme-btn').forEach(b => {
+                        b.className = "theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-kabyle-primary/20 transition-all";
+                    });
+                    btn.className = "theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-kabyle-primary text-white shadow-md transition-all";
+                    app.explore.runFilter();
+                },
+
+                runFilter: () => {
+                    const { searchQuery, currentTheme, proverbs } = app.state;
+                    app.state.filtered = proverbs.filter(p => {
+                        const matchSearch = !searchQuery || p.norm.includes(searchQuery);
+                        const matchTheme = currentTheme === 'all' || (p.theme && p.theme.includes(currentTheme));
+                        return matchSearch && matchTheme;
+                    });
+                    app.explore.loadChunk(true);
+                },
+
+                loadChunk: (reset = false) => {
+                    const grid = document.getElementById('results-grid');
+                    const sentinel = document.getElementById('load-more-sentinel');
+                    const noResults = document.getElementById('no-results');
+
+                    if (reset) {
+                        grid.innerHTML = '';
+                        app.state.currentPage = 1;
                     }
-                }, { rootMargin: '200px' });
-                observer.observe(sentinel);
 
-                // Recherche
-                document.getElementById('search-input').addEventListener('input', app.utils.debounce((e) => {
-                    app.state.searchQuery = app.utils.normalize(e.target.value);
-                    app.state.currentPage = 1;
-                    app.explore.runSearch();
-                    const clearBtn = document.getElementById('clear-search');
-                    if(e.target.value) clearBtn.classList.remove('hidden');
-                    else clearBtn.classList.add('hidden');
-                }, 300));
+                    const start = (app.state.currentPage - 1) * CONFIG.ITEMS_PER_PAGE;
+                    const end = start + CONFIG.ITEMS_PER_PAGE;
+                    const items = app.state.filtered.slice(start, end);
 
-                document.getElementById('clear-search').addEventListener('click', () => {
-                    document.getElementById('search-input').value = '';
-                    app.explore.reset();
-                });
+                    document.getElementById('results-stats').textContent = `${app.state.filtered.length} résultat(s)`;
 
-                // Theme
-                document.getElementById('theme-btn').addEventListener('click', app.ui.toggleTheme);
+                    if (items.length === 0 && reset) {
+                        noResults.classList.remove('hidden');
+                        sentinel.classList.add('opacity-0');
+                        return;
+                    }
+                    noResults.classList.add('hidden');
+
+                    const fragment = document.createDocumentFragment();
+                    items.forEach(p => {
+                        const el = document.createElement('div');
+                        el.className = 'bg-white dark:bg-kabyle-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col hover:-translate-y-1 transition-transform duration-300 animate-slide-up';
+                        el.innerHTML = app.ui.cardTemplate(p);
+                        fragment.appendChild(el);
+                    });
+                    grid.appendChild(fragment);
+
+                    if (end >= app.state.filtered.length) {
+                        sentinel.classList.add('opacity-0');
+                        app.state.isLoading = false;
+                    } else {
+                        sentinel.classList.remove('opacity-0');
+                        app.state.currentPage++;
+                        app.state.isLoading = false;
+                    }
+                },
+
+                random: () => {
+                    const r = Math.floor(Math.random() * app.state.proverbs.length);
+                    app.ui.openModal(app.state.proverbs[r]);
+                },
                 
-                // AI
-                document.getElementById('ai-send').addEventListener('click', app.ai.ask);
-            }
-        }
-    };
+                reset: () => {
+                    document.getElementById('search-input').value = '';
+                    app.state.searchQuery = '';
+                    app.explore.filterTheme('all', document.querySelector('[data-theme="all"]'));
+                }
+            },
 
-    // Démarrage
-    document.addEventListener('DOMContentLoaded', app.init);
-</script>
+            // --- FAVORIS ---
+            favorites: {
+                toggle: (id, btn) => {
+                    if (app.state.favorites.has(id)) {
+                        app.state.favorites.delete(id);
+                        app.ui.toast('Retiré des favoris', 'info');
+                    } else {
+                        app.state.favorites.add(id);
+                        app.ui.toast('Ajouté aux favoris');
+                        btn.classList.add('scale-125'); // Effet Pop
+                        setTimeout(() => btn.classList.remove('scale-125'), 200);
+                    }
+                    localStorage.setItem('favs', JSON.stringify([...app.state.favorites]));
+                    
+                    // Update UI globale
+                    document.querySelectorAll(`.fav-btn[data-id="${id}"]`).forEach(el => {
+                        el.innerHTML = app.ui.icons.heart(app.state.favorites.has(id));
+                        el.classList.toggle('text-red-500', app.state.favorites.has(id));
+                        el.classList.toggle('text-gray-300', !app.state.favorites.has(id));
+                    });
+
+                    if (app.state.currentTab === 'favorites') app.favorites.render();
+                },
+
+                render: () => {
+                    const grid = document.getElementById('fav-grid');
+                    const empty = document.getElementById('no-favs');
+                    
+                    if (app.state.favorites.size === 0) {
+                        grid.innerHTML = '';
+                        empty.classList.remove('hidden');
+                        return;
+                    }
+                    empty.classList.add('hidden');
+                    
+                    const favs = app.state.proverbs.filter(p => app.state.favorites.has(p.id));
+                    grid.innerHTML = favs.map(p => `
+                        <div class="bg-white dark:bg-kabyle-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col">
+                            ${app.ui.cardTemplate(p)}
+                        </div>
+                    `).join('');
+                }
+            },
+
+            // --- AI LOGIC ---
+            ai: {
+                ask: async () => {
+                    const input = document.getElementById('ai-input');
+                    const feedback = document.getElementById('ai-feedback');
+                    const results = document.getElementById('ai-results');
+                    const btn = document.getElementById('ai-send-btn');
+                    
+                    const query = input.value.trim();
+                    if (!query) return;
+
+                    btn.disabled = true;
+                    feedback.textContent = "Le sage réfléchit...";
+                    results.innerHTML = `<div class="flex justify-center py-8"><div class="spinner text-kabyle-primary"></div></div>`;
+
+                    try {
+                        // Etape 1: Extraction de mots clés pour filtrage local (RAG simple)
+                        const keywordsPrompt = `Situation: "${query}". Donne-moi 3 mots-clés français pour trouver un proverbe kabyle adapté. Format JSON: ["mot1", "mot2"]`;
+                        const keywordsJson = await app.ai.callGemini(keywordsPrompt, true); // true = JSON mode
+                        
+                        let contextProverbs = [];
+                        if (keywordsJson && Array.isArray(keywordsJson)) {
+                            const keywords = keywordsJson.map(k => app.utils.normalize(k));
+                            contextProverbs = app.state.proverbs.filter(p => keywords.some(k => p.norm.includes(k))).slice(0, 8);
+                        }
+
+                        // Si rien trouvé localement, on en prend au hasard pour inspirer l'IA
+                        if (contextProverbs.length === 0) contextProverbs = app.state.proverbs.slice(0, 5);
+
+                        // Etape 2: Génération de la réponse finale
+                        const contextStr = JSON.stringify(contextProverbs.map(p => ({k: p.kabyle, f: p.francais})));
+                        const finalPrompt = `Tu es un sage kabyle. Situation: "${query}".
+                        Voici des proverbes qui pourraient convenir (ou pas): ${contextStr}.
+                        Choisis le meilleur ou utilise tes connaissances.
+                        Réponds au format HTML simple (sans balises html/body):
+                        <div class='text-center italic text-gray-500 mb-4'>"Une phrase de sagesse courte sur la situation"</div>
+                        <div class='bg-kabyle-surface/50 p-4 rounded-lg border-l-4 border-kabyle-secondary'>
+                            <p class='font-serif text-lg font-bold text-kabyle-primary'>« Proverbe Kabyle »</p>
+                            <p class='text-gray-700'>Traduction Française</p>
+                        </div>`;
+
+                        const htmlResponse = await app.ai.callGemini(finalPrompt, false);
+                        results.innerHTML = htmlResponse;
+                        feedback.textContent = "Le sage a parlé.";
+
+                    } catch (e) {
+                        console.error(e);
+                        results.innerHTML = `<p class="text-red-500 text-center">Le sage est momentanément indisponible.</p>`;
+                    } finally {
+                        btn.disabled = false;
+                    }
+                },
+
+                callGemini: async (prompt, jsonMode = false) => {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${CONFIG.GEMINI_KEY}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: jsonMode ? { responseMimeType: "application/json" } : {}
+                    };
+                    
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+                    const text = data.candidates[0].content.parts[0].text;
+                    return jsonMode ? JSON.parse(text) : text;
+                }
+            },
+
+            // --- QUIZ ---
+            quiz: {
+                questions: [],
+                score: 0,
+                current: 0,
+                
+                startLocal: () => {
+                    // Génération locale
+                    const selection = [...app.state.proverbs].sort(() => 0.5 - Math.random()).slice(0, 5);
+                    app.quiz.questions = selection.map(p => {
+                        const distractors = [...app.state.proverbs].filter(x => x.id !== p.id).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.francais);
+                        return {
+                            q: p.kabyle,
+                            correct: p.francais,
+                            options: [p.francais, ...distractors].sort(() => 0.5 - Math.random()),
+                            expl: p.explication
+                        };
+                    });
+                    app.quiz.launchUI();
+                },
+
+                startAI: async () => {
+                    // Génération via IA
+                    document.getElementById('quiz-start').innerHTML = `<div class="py-10"><div class="spinner text-kabyle-primary mb-2"></div><p class="text-sm text-gray-500">L'IA prépare un défi unique...</p></div>`;
+                    
+                    try {
+                        const sample = app.state.proverbs.slice(0, 20).map(p => ({k: p.kabyle, f: p.francais}));
+                        const prompt = `Génère 5 questions de quiz JSON basées sur ces proverbes ou d'autres connus: ${JSON.stringify(sample)}.
+                        Format: [{"q": "Proverbe en Kabyle", "correct": "Traduction correcte", "options": ["Choix1", "Choix2", "Choix3", "Correct"], "expl": "Explication brève"}]`;
+                        
+                        const data = await app.ai.callGemini(prompt, true);
+                        app.quiz.questions = data;
+                        app.quiz.launchUI();
+                    } catch (e) {
+                        app.quiz.startLocal(); // Fallback
+                    }
+                },
+
+                launchUI: () => {
+                    app.quiz.current = 0;
+                    app.quiz.score = 0;
+                    document.getElementById('quiz-start').classList.add('hidden');
+                    document.getElementById('quiz-end').classList.add('hidden');
+                    document.getElementById('quiz-game').classList.remove('hidden');
+                    app.quiz.renderQuestion();
+                },
+
+                renderQuestion: () => {
+                    const q = app.quiz.questions[app.quiz.current];
+                    document.getElementById('quiz-progress-text').textContent = `Question ${app.quiz.current + 1}/5`;
+                    document.getElementById('quiz-score').textContent = app.quiz.score;
+                    document.getElementById('quiz-progress-bar').style.width = `${(app.quiz.current / 5) * 100}%`;
+                    document.getElementById('quiz-question').textContent = `« ${q.q} »`;
+                    document.getElementById('quiz-feedback').textContent = '';
+                    
+                    document.getElementById('quiz-options').innerHTML = q.options.map(opt => `
+                        <button onclick="app.quiz.check(this, '${opt.replace(/'/g, "\\'")}')" class="quiz-opt w-full text-left p-4 rounded-xl border-2 border-gray-100 dark:border-gray-700 hover:border-kabyle-primary dark:hover:border-kabyle-primary transition-all dark:text-gray-300">
+                            ${opt}
+                        </button>
+                    `).join('');
+                },
+
+                check: (btn, answer) => {
+                    const q = app.quiz.questions[app.quiz.current];
+                    const isCorrect = answer === q.correct;
+                    const allBtns = document.querySelectorAll('.quiz-opt');
+                    allBtns.forEach(b => b.disabled = true);
+
+                    if (isCorrect) {
+                        btn.classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900/30');
+                        app.quiz.score++;
+                        document.getElementById('quiz-feedback').innerHTML = `<span class="text-green-600">Correct !</span>`;
+                    } else {
+                        btn.classList.add('bg-red-100', 'border-red-500', 'dark:bg-red-900/30');
+                        // Montrer la bonne réponse
+                        allBtns.forEach(b => {
+                            if (b.textContent.trim() === q.correct) b.classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900/30');
+                        });
+                        document.getElementById('quiz-feedback').innerHTML = `<span class="text-red-600">Incorrect !</span>`;
+                    }
+
+                    setTimeout(() => {
+                        app.quiz.current++;
+                        if (app.quiz.current >= 5) app.quiz.end();
+                        else app.quiz.renderQuestion();
+                    }, 1500);
+                },
+
+                end: () => {
+                    document.getElementById('quiz-game').classList.add('hidden');
+                    document.getElementById('quiz-end').classList.remove('hidden');
+                    document.getElementById('quiz-final-score').textContent = `${app.quiz.score} / 5`;
+                },
+
+                reset: () => {
+                    document.getElementById('quiz-end').classList.add('hidden');
+                    document.getElementById('quiz-start').classList.remove('hidden');
+                    document.getElementById('quiz-start').innerHTML = `
+                        <div class="w-20 h-20 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">🧠</div>
+                        <h2 class="text-2xl font-bold font-serif mb-2 text-gray-800 dark:text-white">Défi de Sagesse</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mb-8">Prêt pour une nouvelle manche ?</p>
+                        <button onclick="app.quiz.startLocal()" class="w-full py-3 mb-3 bg-kabyle-primary text-white rounded-xl font-bold hover:bg-kabyle-secondary transition-transform transform active:scale-95">Quiz Classique</button>
+                        <button onclick="app.quiz.startAI()" class="w-full py-3 bg-kabyle-accent text-white rounded-xl font-bold hover:bg-yellow-600 transition-transform transform active:scale-95 flex items-center justify-center gap-2"><span>✨ Quiz Généré par IA</span></button>
+                    `;
+                }
+            },
+
+            // --- UI HELPERS ---
+            ui: {
+                cardTemplate: (p, isDaily = false) => {
+                    const isFav = app.state.favorites.has(p.id);
+                    const highlight = (txt) => {
+                        if(!app.state.searchQuery || isDaily) return txt;
+                        return txt.replace(new RegExp(`(${app.state.searchQuery})`, 'gi'), '<mark>$1</mark>');
+                    };
+                    return `
+                        <div class="flex-grow">
+                            <p class="font-serif ${isDaily ? 'text-2xl md:text-3xl' : 'text-xl'} font-bold text-kabyle-primary dark:text-white mb-3 italic leading-relaxed">« ${highlight(p.kabyle)} »</p>
+                            <p class="text-gray-600 dark:text-gray-300 ${isDaily ? 'text-lg' : 'text-sm'} leading-relaxed">${highlight(p.francais)}</p>
+                            ${p.theme ? `<span class="inline-block mt-3 px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-[10px] uppercase tracking-wider text-gray-500 font-bold">${p.theme.split(',')[0]}</span>` : ''}
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                            <button class="text-xs font-bold text-kabyle-secondary hover:underline uppercase tracking-wide" onclick='app.ui.openModal(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Explication</button>
+                            <div class="flex gap-2">
+                                <button onclick="app.utils.copy('« ${p.kabyle} »')" class="p-2 text-gray-400 hover:text-kabyle-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors" title="Copier">
+                                    ${app.ui.icons.copy}
+                                </button>
+                                <button class="fav-btn p-2 rounded-full transition-all hover:scale-110 ${isFav ? 'text-red-500' : 'text-gray-300 hover:text-red-400'}" data-id="${p.id}" onclick="app.favorites.toggle(${p.id}, this)">
+                                    ${app.ui.icons.heart(isFav)}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                openModal: (p) => {
+                    const modal = document.getElementById('modal-content');
+                    const overlay = document.getElementById('modal-overlay');
+                    document.getElementById('modal-body').innerHTML = `
+                        <div class="text-center mb-6">
+                            <p class="font-serif text-2xl font-bold text-kabyle-primary dark:text-white mb-2">« ${p.kabyle} »</p>
+                            <p class="text-gray-600 dark:text-gray-300 italic">${p.francais}</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-700/30 p-5 rounded-xl border border-gray-100 dark:border-gray-700">
+                            <h4 class="font-bold text-xs text-gray-400 uppercase mb-2">Signification</h4>
+                            <p class="text-gray-800 dark:text-gray-200 leading-relaxed text-sm">${p.explication || "Pas d'explication détaillée disponible."}</p>
+                        </div>
+                        <button onclick="app.utils.share('« ${p.kabyle} »')" class="w-full mt-4 py-3 bg-kabyle-primary text-white rounded-xl font-bold shadow-md hover:bg-kabyle-secondary transition-colors">Partager</button>
+                    `;
+                    overlay.classList.remove('hidden');
+                    modal.classList.remove('hidden');
+                    setTimeout(() => {
+                        overlay.classList.remove('opacity-0');
+                        modal.classList.remove('opacity-0', 'scale-95');
+                    }, 10);
+                },
+
+                closeModal: () => {
+                    const modal = document.getElementById('modal-content');
+                    const overlay = document.getElementById('modal-overlay');
+                    overlay.classList.add('opacity-0');
+                    modal.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        modal.classList.add('hidden');
+                    }, 300);
+                },
+
+                loadTheme: () => {
+                    const saved = localStorage.getItem('theme') || 'light';
+                    if (saved === 'dark') document.documentElement.classList.add('dark');
+                },
+
+                toast: (msg, type = 'success') => {
+                    const t = document.getElementById('toast');
+                    document.getElementById('toast-msg').textContent = msg;
+                    document.getElementById('toast-icon').textContent = type === 'info' ? 'ℹ️' : '✅';
+                    t.className = `fixed top-20 right-4 px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 z-[100] transition-transform duration-300 max-w-xs ${type === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-800 dark:bg-white text-white dark:text-gray-900'}`;
+                    t.classList.remove('translate-x-[150%]');
+                    setTimeout(() => t.classList.add('translate-x-[150%]'), 3000);
+                },
+
+                icons: {
+                    heart: (fill) => `<svg class="w-5 h-5" fill="${fill ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+                    copy: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>`
+                }
+            },
+
+            utils: {
+                normalize: (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ǧ/g,'g').replace(/č/g,'c').replace(/ɣ/g,'gh').replace(/ɛ/g,'aa'),
+                debounce: (func, wait) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => func(...args), wait); }; },
+                copy: (txt) => navigator.clipboard.writeText(txt).then(() => app.ui.toast('Copié !')),
+                share: (txt) => {
+                    if (navigator.share) navigator.share({title: 'Inzan', text: txt, url: window.location.href});
+                    else app.utils.copy(txt);
+                }
+            },
+
+            events: {
+                setup: () => {
+                    // Scroll Infini
+                    const sentinel = document.getElementById('load-more-sentinel');
+                    const observer = new IntersectionObserver((entries) => {
+                        if(entries[0].isIntersecting && !app.state.isLoading) {
+                            app.state.isLoading = true;
+                            app.explore.loadChunk();
+                        }
+                    }, { rootMargin: '200px' });
+                    observer.observe(sentinel);
+
+                    // Recherche
+                    document.getElementById('search-input').addEventListener('input', app.utils.debounce((e) => {
+                        app.state.searchQuery = app.utils.normalize(e.target.value);
+                        app.state.currentPage = 1;
+                        app.explore.runFilter();
+                        document.getElementById('clear-search').classList.toggle('hidden', !e.target.value);
+                    }, 300));
+
+                    document.getElementById('clear-search').addEventListener('click', () => {
+                        app.explore.reset();
+                        document.getElementById('clear-search').classList.add('hidden');
+                    });
+
+                    // Theme
+                    document.getElementById('theme-btn').addEventListener('click', () => {
+                        document.documentElement.classList.toggle('dark');
+                        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                    });
+
+                    // AI Send
+                    document.getElementById('ai-send-btn').addEventListener('click', app.ai.ask);
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', app.init);
+    </script>
 </body>
 </html>
 
