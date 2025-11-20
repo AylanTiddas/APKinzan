@@ -2,937 +2,984 @@
 <html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="Inzan n Teqbaylit : Une collection interactive de proverbes kabyles avec traduction, explications et intelligence artificielle.">
-    <meta name="theme-color" content="#F9F7F3">
-
-    <!-- PWA & Social Meta -->
-    <meta property="og:title" content="Inzan n Teqbaylit - Sagesse Kabyle">
-    <meta property="og:description" content="Découvrez la richesse des proverbes kabyles assistée par IA.">
-    <meta property="og:type" content="website">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiSW56YW4gbiBUZXFiYXlsaXQiLCJzaG9ydF9uYW1lIjoiSW56YW4iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0Y5RjdFMyIsInRoZW1lX2NvbG9yIjoiIzNBNUY0MCIsImljb25zIjpbeyJzcmMiOiJodHRwczovL3ZpYS5wbGFjZWhvbGRlci5jb20vMTkyeDE5Mi5wbmc/dGV4dD0lRTIlOUMlQTciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn0seyJzcmMiOiJodHRwczovL3ZpYS5wbGFjZWhvbGRlci5jb20vNTEyeDUxMi5wbmc/dGV4dD0lRTIlOUMlQTciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dfQ==">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie.">
     
-    <title>Inzan | Sagesse Kabyle</title>
+    <meta name="theme-color" content="#F9F7F3">
+    <meta property="og:title" content="Inzan n Teqbaylit">
+    <meta property="og:description" content="Trésors de la Sagesse Kabyle avec IA et explications.">
+    <meta property="og:type" content="website">
 
-    <!-- Tailwind CSS -->
+    <link rel="manifest" href="data:application/json,{
+        &quot;name&quot;: &quot;Inzan n Teqbaylit&quot;,
+        &quot;short_name&quot;: &quot;Inzan&quot;,
+        &quot;start_url&quot;: &quot;.&quot;,
+        &quot;display&quot;: &quot;standalone&quot;,
+        &quot;background_color&quot;: &quot;#F9F7F3&quot;,
+        &quot;theme_color&quot;: &quot;#4A7C59&quot;,
+        &quot;icons&quot;: [
+            { &quot;src&quot;: &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F9F7F3'%3E%3C/rect%3E%3Ctext y='.9em' font-size='90' fill='%234A7C59'%3E%E2%9C%A7%3C/text%3E%3C/svg%3E&quot;, &quot;sizes&quot;: &quot;192x192&quot;, &quot;type&quot;: &quot;image/svg+xml&quot; }
+        ]
+    }">
+
+    <title>Inzan n Teqbaylit - Trésors de la Sagesse Kabyle</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Configuration Tailwind (Design System) -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        kabyle: {
-                            base: '#F9F7F3',     // Fond clair (Laine naturelle)
-                            dark: '#121212',     // Fond sombre
-                            card: '#FFFFFF',
-                            'card-dark': '#1E1E1E',
-                            primary: '#3A5F40',  // Vert Olivier (Identité)
-                            secondary: '#C07A50',// Terre Cuite (Tradition)
-                            accent: '#D4AF37',   // Or (Bijoux)
-                            surface: '#F0FDF4',  // Vert très pâle
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['Tinos', 'serif'],   // Pour le Kabyle
-                        sans: ['Raleway', 'sans-serif'], // Pour le Français
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
-                        'slide-up': 'slideUp 0.4s ease-out forwards',
-                    },
-                    keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Favicon SVG -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%233A5F40'>ⵣ</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22 fill=%22%234A7C59%22%3E%E2%9C%A7%3C/text%3E%3C/svg%3E">
 
     <style>
-        /* Styles Globaux & Glassmorphism */
-        body {
-            background-color: #F9F7F3;
-            background-image: radial-gradient(#3A5F40 0.5px, transparent 0.5px);
-            background-size: 24px 24px;
-            /* Empêche le rebond élastique sur iOS */
-            overscroll-behavior-y: none; 
-        }
-        .dark body {
-            background-color: #121212;
-            background-image: radial-gradient(#3A5F40 0.5px, transparent 0.5px);
+        :root {
+            --color-bg: #F9F7F3;
+            --color-bg-card: #FFFFFF;
+            --color-bg-alt: #F0EFEA;
+            --color-text: #2D3748;
+            --color-text-light: #718096;
+            --color-heading: #1A202C;
+            --color-primary: #4A7C59;
+            --color-primary-light: #E6F2ED;
+            --color-secondary: #2F855A;
+            --color-accent: #D69E2E;
+            --color-border: #E2E8F0;
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --font-serif: 'Merriweather', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Effet de verre (Glassmorphism) */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
+        html.dark {
+            --color-bg: #111827;
+            --color-bg-card: #1F2937;
+            --color-bg-alt: #374151;
+            --color-text: #E5E7EB;
+            --color-text-light: #9CA3AF;
+            --color-heading: #F9FAFB;
+            --color-primary: #68D391;
+            --color-primary-light: #064E3B;
+            --color-secondary: #48BB78;
+            --color-accent: #F6E05E;
+            --color-border: #374151;
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        body {
+            background-color: var(--color-bg);
+            font-family: var(--font-sans);
+            color: var(--color-text);
+            /* Motif subtil de fond */
+            background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+            background-size: 40px 40px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Classes Utilitaires Personnalisées */
+        .glass-panel {
+            background: rgba(var(--color-bg-card-rgb), 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--color-border);
         }
-        .dark .glass {
-            background: rgba(30, 30, 30, 0.7);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        
+        .card-hover {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
         }
 
-        /* Scrollbar cachée mais fonctionnelle */
+        .kabyle-text {
+            font-family: var(--font-serif);
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-in {
+            animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        /* Scrollbar masquée mais fonctionnelle */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Loader */
-        .spinner {
-            width: 24px; height: 24px;
-            border: 3px solid currentColor;
+        /* Loader Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--color-bg-alt) 25%, var(--color-border) 50%, var(--color-bg-alt) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Navigation */
+        .nav-item.active {
+            color: var(--color-primary);
+            background-color: var(--color-primary-light);
+            font-weight: 600;
+        }
+        html.dark .nav-item.active {
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Loader Spinner */
+        .loader {
+            width: 20px; height: 20px;
+            border: 2px solid var(--color-primary);
             border-bottom-color: transparent;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: rotation 1s linear infinite;
             display: inline-block;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Transitions de vues */
-        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
-        .view-section.active { display: block; opacity: 1; }
+        /* Toast & Modal */
+        #toast { transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        
+        /* Splash Screen */
+        #splash-screen { transition: opacity 0.6s ease-out, visibility 0.6s; }
+        
+        .theme-gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        }
 
-        /* Highlight recherche */
-        mark { background-color: rgba(212, 175, 55, 0.4); color: inherit; border-radius: 2px; padding: 0 2px; }
-
-        /* Padding safe area pour mobile (encoche iPhone) */
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-        .pt-safe { padding-top: env(safe-area-inset-top); }
+        /* Custom Selection */
+        ::selection { background: var(--color-primary); color: white; }
     </style>
 </head>
-<body class="text-gray-800 dark:text-gray-200 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
+<body class="pb-24 sm:pb-12 min-h-screen flex flex-col">
 
-    <!-- Splash Screen -->
-    <div id="splash" class="fixed inset-0 z-[100] bg-kabyle-base dark:bg-kabyle-dark flex flex-col items-center justify-center transition-opacity duration-700">
-        <div class="relative w-24 h-24 mb-4 animate-float">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-kabyle-primary fill-current drop-shadow-xl">
-                <text x="50" y="80" font-size="80" text-anchor="middle" font-weight="bold">ⵣ</text>
+    <div id="splash-screen" class="fixed inset-0 bg-[var(--color-bg)] z-[200] flex flex-col items-center justify-center">
+        <div class="relative mb-4">
+            <div class="absolute inset-0 bg-[var(--color-primary)] blur-2xl opacity-20 rounded-full"></div>
+            <svg width="80" height="80" viewBox="0 0 100 100" class="relative text-[var(--color-primary)] animate-bounce">
+                <text x="50" y="80" font-size="80" text-anchor="middle" fill="currentColor" font-weight="bold">ⵣ</text>
             </svg>
         </div>
-        <h1 class="text-4xl font-serif font-bold text-kabyle-primary tracking-widest uppercase">Inzan</h1>
-        <p class="text-sm font-medium text-gray-500 mt-2 uppercase tracking-widest">Sagesse Kabyle</p>
-        <div id="splash-loader" class="mt-6 spinner text-kabyle-secondary"></div>
-        <div id="splash-error" class="hidden mt-4 text-red-500 text-center px-4">
-            <p>Erreur de chargement.</p>
-            <button onclick="window.location.reload()" class="mt-2 text-sm underline">Réessayer</button>
-        </div>
+        <h1 class="text-3xl font-serif font-bold text-[var(--color-heading)] tracking-wide">Inzan</h1>
+        <p class="text-[var(--color-text-light)] mt-2 animate-pulse">Chargement de la sagesse...</p>
     </div>
 
-    <!-- Header Desktop & Mobile -->
-    <header class="fixed top-0 w-full z-40 glass transition-all duration-300 pt-safe">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center gap-2 cursor-pointer" onclick="app.nav.go('home')">
-                <span class="text-2xl text-kabyle-secondary font-bold">ⵣ</span>
-                <h1 class="font-serif font-bold text-xl text-kabyle-primary dark:text-white hidden sm:block">Inzan n Teqbaylit</h1>
-            </div>
-
-            <!-- Nav Desktop -->
-            <nav class="hidden md:flex items-center gap-1 bg-gray-100/50 dark:bg-gray-800/50 p-1.5 rounded-full border border-gray-200 dark:border-gray-700">
-                <button data-target="home" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('home')">Accueil</button>
-                <button data-target="explore" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('explore')">Explorer</button>
-                <button data-target="favorites" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('favorites')">Favoris</button>
-                <button data-target="ai" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary flex items-center gap-1" onclick="app.nav.go('ai')">
-                    <span>Sage AI</span>
+    <nav class="hidden sm:block sticky top-4 z-40 max-w-2xl mx-auto">
+        <div class="mx-4 bg-[var(--color-bg-card)]/90 backdrop-blur-md border border-[var(--color-border)] rounded-full shadow-lg px-2 py-2 flex justify-between items-center">
+            <div class="flex space-x-1 w-full">
+                <button data-tab="accueil-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Accueil
                 </button>
-                <button data-target="quiz" class="nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all hover:text-kabyle-primary" onclick="app.nav.go('quiz')">Quiz</button>
-            </nav>
-
-            <!-- Theme Toggle -->
-            <button id="theme-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-kabyle-primary dark:text-kabyle-accent transition-colors">
-                <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
+                <button data-tab="explorer-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    Explorer
+                </button>
+                <button data-tab="ai-sage-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Sage AI
+                </button>
+                <button data-tab="favoris-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    Favoris
+                </button>
+                <button data-tab="quiz-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    Quiz
+                </button>
+            </div>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-grow pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto w-full">
-        
-        <!-- VIEW: HOME -->
-        <section id="view-home" class="view-section active animate-fade-in">
-            <div class="text-center mb-10">
-                <span class="inline-block py-1 px-3 rounded-full bg-kabyle-primary/10 text-kabyle-primary text-xs font-bold uppercase tracking-wide mb-3 border border-kabyle-primary/20">Héritage Culturel</span>
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-kabyle-primary dark:text-white mb-4">Trésors de la Sagesse</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                    <span id="proverb-count" class="font-bold text-kabyle-secondary">...</span> proverbes préservés numériquement.
-                </p>
-            </div>
-
-            <!-- Daily Card -->
-            <div class="max-w-3xl mx-auto mb-12 group relative">
-                <div class="absolute -inset-1 bg-gradient-to-r from-kabyle-primary to-kabyle-secondary rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
-                <div class="relative bg-white dark:bg-kabyle-card-dark rounded-xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xs font-bold text-kabyle-secondary uppercase tracking-widest flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-kabyle-secondary animate-pulse"></span>
-                            Proverbe du Jour
-                        </h3>
-                        <span id="daily-date" class="text-xs text-gray-400 font-mono"></span>
-                    </div>
-                    <div id="daily-content" class="text-center py-4">
-                        <div class="spinner text-kabyle-primary"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-                <div onclick="app.nav.go('explore')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-primary transition-all group hover:-translate-y-1 shadow-sm">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <h4 class="font-bold text-lg mb-1">Rechercher</h4>
-                    <p class="text-sm text-gray-500">Par mot-clé ou thématique.</p>
-                </div>
-                <div onclick="app.nav.go('ai')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-secondary transition-all group hover:-translate-y-1 shadow-sm">
-                    <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h4 class="font-bold text-lg mb-1">Le Sage AI</h4>
-                    <p class="text-sm text-gray-500">Conseils contextuels intelligents.</p>
-                </div>
-                <div onclick="app.nav.go('quiz')" class="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-kabyle-accent transition-all group hover:-translate-y-1 shadow-sm">
-                    <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                    </div>
-                    <h4 class="font-bold text-lg mb-1">Quiz</h4>
-                    <p class="text-sm text-gray-500">Testez vos connaissances.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: EXPLORE -->
-        <section id="view-explore" class="view-section">
-            <div class="sticky top-20 z-30 bg-kabyle-base/95 dark:bg-kabyle-dark/95 backdrop-blur-md py-4 mb-6 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-gray-200 dark:border-gray-800">
-                <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
-                    <!-- Search -->
-                    <div class="relative flex-grow">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </div>
-                        <input type="text" id="search-input" class="block w-full pl-10 pr-10 py-3 border-0 bg-white dark:bg-gray-800 shadow-sm rounded-xl focus:ring-2 focus:ring-kabyle-primary placeholder-gray-400 transition-all" placeholder="Rechercher (ex: thamourth, patience)...">
-                        <button id="clear-search" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 hidden">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
-                    <button onclick="app.explore.random()" class="flex items-center justify-center gap-2 px-6 py-3 bg-kabyle-secondary text-white rounded-xl font-bold shadow-sm hover:bg-kabyle-primary transition-colors active:scale-95">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                        <span>Aléatoire</span>
-                    </button>
-                </div>
-                <!-- Themes -->
-                <div class="mt-4 overflow-x-auto no-scrollbar max-w-4xl mx-auto">
-                    <div id="theme-filters" class="flex gap-2 min-w-max pb-2">
-                        <!-- Injected JS -->
-                    </div>
-                </div>
-            </div>
-
-            <div id="results-stats" class="text-sm text-gray-500 mb-4 h-5 max-w-4xl mx-auto"></div>
-            <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Injected JS -->
-            </div>
-            <div id="load-more-sentinel" class="h-20 flex items-center justify-center mt-8 opacity-0">
-                <div class="spinner text-kabyle-primary"></div>
-            </div>
-            
-            <div id="no-results" class="hidden flex flex-col items-center justify-center py-12 text-gray-500">
-                <span class="text-4xl mb-2">😕</span>
-                <p>Aucun résultat trouvé.</p>
-                <button onclick="app.explore.reset()" class="mt-2 text-kabyle-primary underline">Réinitialiser</button>
-            </div>
-        </section>
-
-        <!-- VIEW: FAVORITES -->
-        <section id="view-favorites" class="view-section">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-serif font-bold text-kabyle-primary dark:text-white">Vos Favoris</h2>
-            </div>
-            <div id="fav-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-            <div id="no-favs" class="hidden text-center py-20 opacity-70">
-                <div class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </div>
-                <p class="text-lg text-gray-500">Vous n'avez pas encore de favoris.</p>
-                <button onclick="app.nav.go('explore')" class="mt-4 text-kabyle-primary hover:underline">Commencer à explorer</button>
-            </div>
-        </section>
-
-        <!-- VIEW: AI SAGE -->
-        <section id="view-ai" class="view-section max-w-2xl mx-auto">
-            <div class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
-                <div class="bg-kabyle-primary p-6 text-white flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl backdrop-blur-sm">🧙‍♂️</div>
-                    <div>
-                        <h2 class="text-xl font-bold font-serif">Amusnaw (Le Sage)</h2>
-                        <p class="text-white/80 text-sm">Décrivez une situation, je trouverai le proverbe.</p>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="relative mb-4">
-                        <textarea id="ai-input" rows="3" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 focus:border-kabyle-primary focus:ring-0 resize-none transition-colors" placeholder="Exemple: Mon frère parle beaucoup mais ne fait rien..."></textarea>
-                        <button id="ai-send-btn" class="absolute bottom-3 right-3 bg-kabyle-primary text-white p-2 rounded-lg hover:bg-kabyle-secondary transition-colors shadow-md disabled:opacity-50">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
-                    <div id="ai-feedback" class="text-xs text-center text-gray-400 mb-4 min-h-[1.5em]"></div>
-                    <div id="ai-results" class="space-y-4 min-h-[100px]"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: QUIZ -->
-        <section id="view-quiz" class="view-section max-w-2xl mx-auto">
-            <div id="quiz-container" class="bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden p-8 relative min-h-[400px] flex flex-col justify-center">
-                <!-- Start Screen -->
-                <div id="quiz-start" class="text-center">
-                    <div class="w-20 h-20 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">🧠</div>
-                    <h2 class="text-2xl font-bold font-serif mb-2 text-gray-800 dark:text-white">Défi de Sagesse</h2>
-                    <p class="text-gray-500 dark:text-gray-400 mb-8">Testez vos connaissances sur 5 proverbes aléatoires ou laissez l'IA générer un défi.</p>
-                    <button onclick="app.quiz.startLocal()" class="w-full py-3 mb-3 bg-kabyle-primary text-white rounded-xl font-bold hover:bg-kabyle-secondary transition-transform transform active:scale-95">Quiz Classique</button>
-                    <button onclick="app.quiz.startAI()" class="w-full py-3 bg-kabyle-accent text-white rounded-xl font-bold hover:bg-yellow-600 transition-transform transform active:scale-95 flex items-center justify-center gap-2">
-                        <span>✨ Quiz Généré par IA</span>
-                    </button>
-                </div>
-
-                <!-- Game Screen -->
-                <div id="quiz-game" class="hidden w-full">
-                    <div class="flex justify-between items-center mb-2 text-xs font-bold uppercase tracking-widest text-gray-400">
-                        <span id="quiz-progress-text">Question 1/5</span>
-                        <span class="text-kabyle-primary">Score: <span id="quiz-score">0</span></span>
-                    </div>
-                    <div class="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full mb-8 overflow-hidden">
-                        <div id="quiz-progress-bar" class="h-full bg-kabyle-secondary transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                    <div class="mb-8 text-center">
-                        <h3 id="quiz-question" class="text-xl font-serif font-bold text-gray-800 dark:text-white leading-relaxed">...</h3>
-                    </div>
-                    <div id="quiz-options" class="space-y-3"></div>
-                    <div id="quiz-feedback" class="mt-4 text-center font-medium min-h-[1.5em]"></div>
-                </div>
-
-                <!-- End Screen -->
-                <div id="quiz-end" class="hidden text-center">
-                    <div class="text-6xl mb-4">🏆</div>
-                    <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Terminé !</h3>
-                    <p class="text-4xl font-bold text-kabyle-primary mb-4"><span id="quiz-final-score">0</span></p>
-                    <button onclick="app.quiz.reset()" class="px-8 py-3 bg-kabyle-primary text-white rounded-xl font-bold shadow-lg hover:bg-kabyle-secondary transition-colors">Rejouer</button>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Mobile Bottom Nav -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-[#121212]/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center pb-safe z-50">
-        <button data-target="home" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('home')">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span class="text-[10px] font-medium">Accueil</span>
-        </button>
-        <button data-target="explore" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('explore')">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            <span class="text-[10px] font-medium">Explorer</span>
-        </button>
-        <div class="relative -top-5">
-            <button onclick="app.nav.go('ai')" class="w-14 h-14 bg-kabyle-secondary text-white rounded-full shadow-lg flex items-center justify-center border-4 border-kabyle-base dark:border-kabyle-dark active:scale-90 transition-transform">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            </button>
-        </div>
-        <button data-target="favorites" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('favorites')">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            <span class="text-[10px] font-medium">Favoris</span>
-        </button>
-        <button data-target="quiz" class="mobile-item flex-1 py-3 flex flex-col items-center gap-1 text-gray-400" onclick="app.nav.go('quiz')">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-            <span class="text-[10px] font-medium">Quiz</span>
-        </button>
     </nav>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-20 right-4 bg-gray-800 dark:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 z-[100] translate-x-[150%] transition-transform duration-300 max-w-xs">
-        <span id="toast-icon">✅</span>
-        <p id="toast-msg" class="text-sm font-bold">Action effectuée</p>
+    <div class="max-w-5xl mx-auto w-full px-4 pt-8 sm:pt-8">
+        
+        <header class="text-center mb-10 relative">
+            <button id="theme-toggle" class="absolute top-0 right-0 p-3 rounded-full bg-[var(--color-bg-card)] shadow-sm hover:shadow-md transition-all text-[var(--color-text)]" aria-label="Changer de thème">
+                <svg id="icon-sun" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </button>
+            
+            <div class="inline-flex items-center justify-center gap-3 mb-2">
+                <span class="text-4xl animate-bounce">ⵣ</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-[var(--color-heading)] mb-2">
+                Inzan <span class="theme-gradient-text">n Teqbaylit</span>
+            </h1>
+            <p class="text-[var(--color-text-light)] text-lg">L'héritage de la parole, guidé par l'intelligence.</p>
+        </header>
+
+        <main id="main-content" class="min-h-[60vh]">
+            
+            <section id="accueil-tab" class="tab-content animate-in">
+                <div class="relative overflow-hidden rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-soft mb-8 group hover:shadow-lg transition-all duration-300">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)]"></div>
+                    <div class="absolute -right-10 -top-10 text-[var(--color-bg-alt)] opacity-50 transform rotate-12">
+                        <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M10 3.066c.823-.447 1.867.04 2.058.958.775 3.717 4.02 6.476 7.942 6.476v2c-4.803 0-8.885-3.308-9.916-7.925C9.87 3.55 8.94 3.622 8.94 3.622c-1.29 5.717-6.287 10.878-9.94 10.878v-2c2.893 0 6.73-3.716 8.204-8.358.387-1.217 1.47-1.457 2.8-.976z"/></svg>
+                    </div>
+                    
+                    <div class="p-6 sm:p-10 relative z-10 text-center">
+                        <div class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-[var(--color-accent)] uppercase bg-[var(--color-accent)]/10 rounded-full">
+                            Proverbe du Jour
+                        </div>
+                        <div id="proverb-of-the-day-card" class="flex flex-col items-center">
+                            <div class="skeleton h-8 w-3/4 mb-4 rounded"></div>
+                            <div class="skeleton h-4 w-1/2 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/10 rounded-xl p-6 flex items-start gap-4">
+                        <div class="bg-[var(--color-primary)]/20 p-3 rounded-lg text-[var(--color-primary)]">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-[var(--color-heading)]">Collection Riche</h3>
+                            <p class="text-sm text-[var(--color-text-light)] mt-1">Une base de données de <strong id="proverb-count" class="text-[var(--color-primary)]">...</strong> proverbes, numérisés pour la préservation de notre langue.</p>
+                        </div>
+                    </div>
+                    <div class="bg-[var(--color-accent)]/5 border border-[var(--color-accent)]/10 rounded-xl p-6 flex items-start gap-4">
+                        <div class="bg-[var(--color-accent)]/20 p-3 rounded-lg text-[var(--color-accent)]">
+                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-[var(--color-heading)]">Intelligence Artificielle</h3>
+                            <p class="text-sm text-[var(--color-text-light)] mt-1">Utilisez notre "Sage Artificiel" pour trouver le proverbe parfait pour chaque situation ou générer des quiz.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="explorer-tab" class="tab-content hidden">
+                <div class="sticky top-4 z-30 mb-6">
+                    <div class="bg-[var(--color-bg-card)]/90 backdrop-blur-lg border border-[var(--color-border)] rounded-xl shadow-lg p-2 sm:p-3">
+                        <div class="flex gap-2 mb-3">
+                            <div class="relative flex-grow group">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--color-text-light)] group-focus-within:text-[var(--color-primary)] transition-colors">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                </div>
+                                <input type="text" id="search-input" placeholder="Chercher un mot, un thème..." class="block w-full pl-10 pr-10 py-3 bg-[var(--color-bg-alt)] border-none rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:bg-[var(--color-bg-card)] transition-all placeholder-gray-400 text-[var(--color-text)] font-medium">
+                                <button class="clear-search-btn absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 opacity-0 transition-opacity">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                                </button>
+                            </div>
+                            <button id="random-btn" class="bg-[var(--color-accent)] hover:bg-yellow-500 text-white px-4 sm:px-6 rounded-lg font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center" aria-label="Aléatoire">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            </button>
+                        </div>
+                        
+                        <div class="relative">
+                            <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[var(--color-bg-card)] to-transparent z-10 pointer-events-none"></div>
+                            <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[var(--color-bg-card)] to-transparent z-10 pointer-events-none"></div>
+                            <div id="theme-list-container" class="flex overflow-x-auto gap-2 py-1 px-2 no-scrollbar scroll-smooth">
+                                <div class="skeleton h-8 w-20 rounded-full flex-shrink-0"></div>
+                                <div class="skeleton h-8 w-24 rounded-full flex-shrink-0"></div>
+                                <div class="skeleton h-8 w-16 rounded-full flex-shrink-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results-feedback" class="h-6 mb-4 text-center text-sm text-[var(--color-text-light)] font-medium"></div>
+
+                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-10">
+                    <div id="initial-load-message" class="col-span-1 md:col-span-2 flex flex-col items-center justify-center py-20 text-[var(--color-text-light)] opacity-60">
+                        <svg class="w-16 h-16 mb-4 text-[var(--color-border)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <p class="text-lg">Commencez à taper ou choisissez un thème.</p>
+                    </div>
+                </div>
+
+                <div id="infinite-scroll-loader" class="hidden py-8 text-center">
+                     <div class="loader"></div>
+                </div>
+
+                <div id="no-results" class="hidden text-center py-12">
+                    <div class="bg-[var(--color-bg-card)] rounded-full p-4 inline-block mb-4 shadow-sm">
+                        <span class="text-4xl">🤔</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-[var(--color-heading)]">Aucun résultat</h3>
+                    <p class="text-[var(--color-text-light)] mt-2">Essayez un autre mot-clé ou retirez les filtres.</p>
+                </div>
+            </section>
+
+            <section id="ai-sage-tab" class="tab-content hidden">
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-lg overflow-hidden">
+                        <div class="p-6 bg-gradient-to-br from-[var(--color-primary)]/10 to-transparent border-b border-[var(--color-border)]">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-[var(--color-primary)] text-white p-2 rounded-lg shadow-md">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-bold text-[var(--color-heading)]">Le Sage Artificiel</h2>
+                                    <p class="text-xs text-[var(--color-text-light)]">Propulsé par Gemini AI</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="mb-6 relative">
+                                <label for="ai-context-input" class="block text-sm font-semibold text-[var(--color-text)] mb-2">Quelle est votre situation ?</label>
+                                <textarea id="ai-context-input" rows="3" class="w-full p-4 bg-[var(--color-bg-alt)] border border-transparent rounded-xl focus:bg-[var(--color-bg-card)] focus:ring-2 focus:ring-[var(--color-primary)] transition-all resize-none text-base" placeholder="Ex: Mon ami me promet des choses mais ne les fait jamais..."></textarea>
+                            </div>
+
+                            <button id="ai-suggest-btn" class="w-full py-3 px-6 bg-[var(--color-heading)] text-[var(--color-bg)] font-bold rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                                <span>✨ Demander conseil au Sage</span>
+                            </button>
+
+                            <div id="ai-step-feedback" class="mt-4 text-center text-xs text-[var(--color-primary)] font-mono min-h-[20px] transition-all"></div>
+                        </div>
+                    </div>
+
+                    <div id="ai-result-feedback" class="mt-8 space-y-4 animate-in"></div>
+                </div>
+            </section>
+
+            <section id="favoris-tab" class="tab-content hidden">
+                <h2 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-6 px-2 border-l-4 border-[var(--color-primary)] pl-4">Vos proverbes gardés</h2>
+                <div id="favorites-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+                <div id="no-favorites" class="hidden text-center py-16 bg-[var(--color-bg-card)] rounded-2xl border border-dashed border-[var(--color-border)]">
+                    <p class="text-[var(--color-text-light)] mb-4">Votre collection est vide pour le moment.</p>
+                    <button id="go-to-explorer-btn" class="text-[var(--color-primary)] font-bold hover:underline">Explorer la bibliothèque</button>
+                </div>
+            </section>
+
+            <section id="quiz-tab" class="tab-content hidden">
+                <div id="quiz-container" class="max-w-2xl mx-auto bg-[var(--color-bg-card)] rounded-2xl shadow-lg border border-[var(--color-border)] p-6 sm:p-8 min-h-[400px] flex flex-col justify-center">
+                     <div class="text-center">
+                        <div class="loader text-[var(--color-text-light)]"></div>
+                        <p class="mt-4 text-sm text-[var(--color-text-light)]">Préparation du défi...</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="mt-16 text-center text-sm text-[var(--color-text-light)] border-t border-[var(--color-border)] pt-8 pb-20 sm:pb-8">
+            <p>© 2025 Inzan n Teqbaylit. Développé avec ❤️ par TAMAZIRT Boussad.</p>
+            <button id="about-btn" class="mt-2 text-[var(--color-primary)] hover:underline text-xs">À propos de la source</button>
+        </footer>
     </div>
 
-    <!-- Modal -->
-    <div id="modal-overlay" class="fixed inset-0 bg-black/60 z-[150] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="app.ui.closeModal()"></div>
-    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-white dark:bg-kabyle-card-dark rounded-2xl shadow-2xl z-[151] hidden opacity-0 scale-95 transition-all duration-300 flex flex-col max-h-[80vh]">
-        <div class="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-            <h3 id="modal-title" class="text-lg font-bold text-gray-500 uppercase tracking-wider">Détails</h3>
-            <button onclick="app.ui.closeModal()" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full text-gray-500">✕</button>
+    <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-card)]/95 backdrop-blur-xl border-t border-[var(--color-border)] pb-safe">
+        <div class="flex justify-around items-center h-16 px-2">
+            <button data-tab="accueil-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <span class="text-[10px] font-medium">Accueil</span>
+            </button>
+            <button data-tab="explorer-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <span class="text-[10px] font-medium">Explorer</span>
+            </button>
+            <button data-tab="ai-sage-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
+                <div class="bg-[var(--color-heading)] text-[var(--color-bg)] rounded-xl p-1 mb-1 shadow-md transform -translate-y-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+            </button>
+            <button data-tab="favoris-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <span class="text-[10px] font-medium">Favoris</span>
+            </button>
+            <button data-tab="quiz-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                <span class="text-[10px] font-medium">Quiz</span>
+            </button>
         </div>
-        <div id="modal-body" class="p-6 overflow-y-auto prose dark:prose-invert"></div>
+    </nav>
+
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-gray-900 text-white py-3 px-6 rounded-full shadow-xl opacity-0 pointer-events-none z-[60] flex items-center gap-3 min-w-[200px] justify-center">
+        <p class="text-sm font-medium">Notification</p>
+    </div>
+
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-2xl max-h-[80vh] bg-[var(--color-bg-card)] rounded-2xl shadow-2xl z-[101] opacity-0 scale-95 pointer-events-none transition-all duration-300 flex flex-col border border-[var(--color-border)]">
+        <header class="flex justify-between items-center p-5 border-b border-[var(--color-border)]">
+            <h2 id="modal-title" class="text-xl font-bold font-serif text-[var(--color-heading)]">Titre</h2>
+            <button id="modal-close-btn" class="p-2 rounded-full hover:bg-[var(--color-bg-alt)] text-[var(--color-text-light)]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </header>
+        <div id="modal-body" class="p-6 overflow-y-auto text-[var(--color-text)] leading-relaxed"></div>
     </div>
 
     <script>
-        // Service Worker inline pour PWA (Gère le cache et le hors-ligne)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {
-                // Fallback si sw.js n'existe pas (pour démo simple fichier)
-                console.log('SW non enregistré (mode démo single-file)');
-            });
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIGURATION & VARIABLES ---
+            const CONFIG = {
+                GEMINI_API_KEY: "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4", // Note: À sécuriser coté serveur en prod idéalement
+                PROVERBS_PER_PAGE: 40,
+                ANIMATION_DELAY: 30
+            };
 
-        const CONFIG = {
-            PROVERBS_URL: 'proverbs.json',
-            GEMINI_KEY: 'AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4', // ⚠️ En prod: Utiliser un backend
-            ITEMS_PER_PAGE: 24
-        };
+            const dom = {
+                html: document.documentElement,
+                splashScreen: document.getElementById('splash-screen'),
+                navButtons: document.querySelectorAll('.nav-item'),
+                tabContents: document.querySelectorAll('.tab-content'),
+                searchInput: document.getElementById('search-input'),
+                clearSearchBtn: document.querySelector('.clear-search-btn'),
+                resultsContainer: document.getElementById('results-container'),
+                themeListContainer: document.getElementById('theme-list-container'),
+                loaderContainer: document.getElementById('infinite-scroll-loader'),
+                proverbOfTheDayCard: document.getElementById('proverb-of-the-day-card'),
+                modal: {
+                    backdrop: document.getElementById('modal-backdrop'),
+                    content: document.getElementById('modal-content'),
+                    title: document.getElementById('modal-title'),
+                    body: document.getElementById('modal-body'),
+                    closeBtn: document.getElementById('modal-close-btn')
+                },
+                toast: document.getElementById('toast'),
+                themeToggle: document.getElementById('theme-toggle'),
+                ai: {
+                    input: document.getElementById('ai-context-input'),
+                    btn: document.getElementById('ai-suggest-btn'),
+                    step: document.getElementById('ai-step-feedback'),
+                    result: document.getElementById('ai-result-feedback')
+                },
+                quizContainer: document.getElementById('quiz-container')
+            };
 
-        const app = {
-            state: {
+            const state = {
                 proverbs: [],
-                filtered: [],
-                favorites: new Set(),
-                themeMode: 'light',
-                currentTab: 'home',
-                currentPage: 1,
-                searchQuery: '',
-                currentTheme: 'all',
-                isLoading: false
-            },
+                filteredProverbs: [],
+                favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
+                activeTheme: localStorage.getItem('inzan_theme_filter') || 'tous',
+                currentPage: 0,
+                isLoading: false,
+                isDataLoaded: false,
+                aiQuiz: { questions: [], current: 0, score: 0, loading: false, promise: null }
+            };
 
-            init: async () => {
-                app.ui.loadTheme();
+            // --- INITIALISATION ---
+            const init = async () => {
+                applyTheme(localStorage.getItem('inzan_theme') || 'light');
+                setupEventListeners();
                 
-                // Setup des événements
-                app.events.setup();
-
                 try {
-                    const res = await fetch(CONFIG.PROVERBS_URL);
-                    if (!res.ok) throw new Error('JSON introuvable');
-                    const data = await res.json();
+                    const response = await fetch('proverbs.json');
+                    if (!response.ok) throw new Error('Erreur réseau');
+                    const data = await response.json();
                     
-                    // Normalisation & Indexation légère
-                    app.state.proverbs = data.map((p, i) => ({
+                    state.proverbs = data.map((p, i) => ({
                         ...p,
                         id: i,
-                        norm: app.utils.normalize(`${p.kabyle} ${p.francais} ${p.theme || ''}`)
+                        searchString: `${normalize(p.kabyle)} ${normalize(p.francais)} ${normalize(p.theme)}`
                     }));
-                    app.state.filtered = [...app.state.proverbs];
-
-                    // Init Favoris
-                    const savedFavs = JSON.parse(localStorage.getItem('favs') || '[]');
-                    app.state.favorites = new Set(savedFavs);
-
-                    // Init UI
-                    document.getElementById('proverb-count').textContent = app.state.proverbs.length;
-                    app.home.renderDaily();
-                    app.explore.renderThemes();
-                    app.explore.loadChunk(true);
+                    state.isDataLoaded = true;
                     
-                    // Fin du splash
+                    updateUIWithData();
+                    // Préchargement silencieux du quiz
+                    preloadQuiz();
+                    
                     setTimeout(() => {
-                        document.getElementById('splash').classList.add('opacity-0', 'pointer-events-none');
+                        dom.splashScreen.style.opacity = '0';
+                        dom.splashScreen.style.visibility = 'hidden';
                     }, 800);
 
-                } catch (e) {
-                    console.error(e);
-                    document.getElementById('splash-loader').classList.add('hidden');
-                    document.getElementById('splash-error').classList.remove('hidden');
+                } catch (err) {
+                    console.error("Erreur fatale:", err);
+                    dom.splashScreen.innerHTML = `<p class="text-red-500 font-bold">Erreur de chargement des données.</p>`;
                 }
-            },
+            };
 
-            // --- NAVIGATION ---
-            nav: {
-                go: (targetId) => {
-                    app.state.currentTab = targetId;
-                    
-                    // Switch Vues
-                    document.querySelectorAll('.view-section').forEach(el => {
-                        el.classList.remove('active');
-                        if (el.id === `view-${targetId}`) el.classList.add('active');
-                    });
-
-                    // Update Navbar Desktop
-                    document.querySelectorAll('nav .nav-item').forEach(btn => {
-                        const isActive = btn.dataset.target === targetId;
-                        btn.className = `nav-item px-5 py-1.5 rounded-full text-sm font-bold transition-all ${isActive ? 'bg-white dark:bg-gray-700 text-kabyle-primary shadow-sm' : 'hover:text-kabyle-primary'}`;
-                    });
-
-                    // Update Navbar Mobile
-                    document.querySelectorAll('.mobile-item').forEach(btn => {
-                        const isActive = btn.dataset.target === targetId;
-                        btn.classList.toggle('text-kabyle-primary', isActive);
-                        btn.classList.toggle('text-gray-400', !isActive);
-                    });
-
-                    // Actions spécifiques
-                    if (targetId === 'favorites') app.favorites.render();
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
-            },
-
-            // --- HOME ---
-            home: {
-                renderDaily: () => {
-                    if (!app.state.proverbs.length) return;
-                    // Proverbe stable basé sur la date
-                    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-                    const p = app.state.proverbs[dayOfYear % app.state.proverbs.length];
-                    
-                    document.getElementById('daily-date').textContent = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-                    document.getElementById('daily-content').innerHTML = app.ui.cardTemplate(p, true);
-                }
-            },
-
-            // --- EXPLORE ---
-            explore: {
-                renderThemes: () => {
-                    const themes = new Set();
-                    app.state.proverbs.forEach(p => { if(p.theme) p.theme.split(',').forEach(t => themes.add(t.trim())); });
-                    
-                    const container = document.getElementById('theme-filters');
-                    let html = `<button class="theme-btn active whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-kabyle-primary text-white shadow-md transition-all" data-theme="all" onclick="app.explore.filterTheme('all', this)">Tous</button>`;
-                    
-                    Array.from(themes).sort().forEach(t => {
-                        html += `<button class="theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-kabyle-primary/20 transition-all" data-theme="${t}" onclick="app.explore.filterTheme('${t}', this)">${t}</button>`;
-                    });
-                    container.innerHTML = html;
-                },
-
-                filterTheme: (theme, btn) => {
-                    app.state.currentTheme = theme;
-                    document.querySelectorAll('.theme-btn').forEach(b => {
-                        b.className = "theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-kabyle-primary/20 transition-all";
-                    });
-                    btn.className = "theme-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-kabyle-primary text-white shadow-md transition-all";
-                    app.explore.runFilter();
-                },
-
-                runFilter: () => {
-                    const { searchQuery, currentTheme, proverbs } = app.state;
-                    app.state.filtered = proverbs.filter(p => {
-                        const matchSearch = !searchQuery || p.norm.includes(searchQuery);
-                        const matchTheme = currentTheme === 'all' || (p.theme && p.theme.includes(currentTheme));
-                        return matchSearch && matchTheme;
-                    });
-                    app.explore.loadChunk(true);
-                },
-
-                loadChunk: (reset = false) => {
-                    const grid = document.getElementById('results-grid');
-                    const sentinel = document.getElementById('load-more-sentinel');
-                    const noResults = document.getElementById('no-results');
-
-                    if (reset) {
-                        grid.innerHTML = '';
-                        app.state.currentPage = 1;
-                    }
-
-                    const start = (app.state.currentPage - 1) * CONFIG.ITEMS_PER_PAGE;
-                    const end = start + CONFIG.ITEMS_PER_PAGE;
-                    const items = app.state.filtered.slice(start, end);
-
-                    document.getElementById('results-stats').textContent = `${app.state.filtered.length} résultat(s)`;
-
-                    if (items.length === 0 && reset) {
-                        noResults.classList.remove('hidden');
-                        sentinel.classList.add('opacity-0');
-                        return;
-                    }
-                    noResults.classList.add('hidden');
-
-                    const fragment = document.createDocumentFragment();
-                    items.forEach(p => {
-                        const el = document.createElement('div');
-                        el.className = 'bg-white dark:bg-kabyle-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col hover:-translate-y-1 transition-transform duration-300 animate-slide-up';
-                        el.innerHTML = app.ui.cardTemplate(p);
-                        fragment.appendChild(el);
-                    });
-                    grid.appendChild(fragment);
-
-                    if (end >= app.state.filtered.length) {
-                        sentinel.classList.add('opacity-0');
-                        app.state.isLoading = false;
-                    } else {
-                        sentinel.classList.remove('opacity-0');
-                        app.state.currentPage++;
-                        app.state.isLoading = false;
-                    }
-                },
-
-                random: () => {
-                    const r = Math.floor(Math.random() * app.state.proverbs.length);
-                    app.ui.openModal(app.state.proverbs[r]);
-                },
+            const updateUIWithData = () => {
+                document.getElementById('proverb-count').textContent = state.proverbs.length;
+                renderThemes();
+                loadDailyProverb();
                 
-                reset: () => {
-                    document.getElementById('search-input').value = '';
-                    app.state.searchQuery = '';
-                    app.explore.filterTheme('all', document.querySelector('[data-theme="all"]'));
+                // Si un thème était déjà sélectionné, charger les résultats
+                if (state.activeTheme !== 'tous') {
+                   dom.searchInput.value = ''; // Reset search if filter applies
+                   filterAndRender(true);
                 }
-            },
+            };
 
-            // --- FAVORIS ---
-            favorites: {
-                toggle: (id, btn) => {
-                    if (app.state.favorites.has(id)) {
-                        app.state.favorites.delete(id);
-                        app.ui.toast('Retiré des favoris', 'info');
-                    } else {
-                        app.state.favorites.add(id);
-                        app.ui.toast('Ajouté aux favoris');
-                        btn.classList.add('scale-125'); // Effet Pop
-                        setTimeout(() => btn.classList.remove('scale-125'), 200);
-                    }
-                    localStorage.setItem('favs', JSON.stringify([...app.state.favorites]));
-                    
-                    // Update UI globale
-                    document.querySelectorAll(`.fav-btn[data-id="${id}"]`).forEach(el => {
-                        el.innerHTML = app.ui.icons.heart(app.state.favorites.has(id));
-                        el.classList.toggle('text-red-500', app.state.favorites.has(id));
-                        el.classList.toggle('text-gray-300', !app.state.favorites.has(id));
-                    });
-
-                    if (app.state.currentTab === 'favorites') app.favorites.render();
-                },
-
-                render: () => {
-                    const grid = document.getElementById('fav-grid');
-                    const empty = document.getElementById('no-favs');
-                    
-                    if (app.state.favorites.size === 0) {
-                        grid.innerHTML = '';
-                        empty.classList.remove('hidden');
-                        return;
-                    }
-                    empty.classList.add('hidden');
-                    
-                    const favs = app.state.proverbs.filter(p => app.state.favorites.has(p.id));
-                    grid.innerHTML = favs.map(p => `
-                        <div class="bg-white dark:bg-kabyle-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col">
-                            ${app.ui.cardTemplate(p)}
-                        </div>
-                    `).join('');
-                }
-            },
-
-            // --- AI LOGIC ---
-            ai: {
-                ask: async () => {
-                    const input = document.getElementById('ai-input');
-                    const feedback = document.getElementById('ai-feedback');
-                    const results = document.getElementById('ai-results');
-                    const btn = document.getElementById('ai-send-btn');
-                    
-                    const query = input.value.trim();
-                    if (!query) return;
-
-                    btn.disabled = true;
-                    feedback.textContent = "Le sage réfléchit...";
-                    results.innerHTML = `<div class="flex justify-center py-8"><div class="spinner text-kabyle-primary"></div></div>`;
-
-                    try {
-                        // Etape 1: Extraction de mots clés pour filtrage local (RAG simple)
-                        const keywordsPrompt = `Situation: "${query}". Donne-moi 3 mots-clés français pour trouver un proverbe kabyle adapté. Format JSON: ["mot1", "mot2"]`;
-                        const keywordsJson = await app.ai.callGemini(keywordsPrompt, true); // true = JSON mode
-                        
-                        let contextProverbs = [];
-                        if (keywordsJson && Array.isArray(keywordsJson)) {
-                            const keywords = keywordsJson.map(k => app.utils.normalize(k));
-                            contextProverbs = app.state.proverbs.filter(p => keywords.some(k => p.norm.includes(k))).slice(0, 8);
-                        }
-
-                        // Si rien trouvé localement, on en prend au hasard pour inspirer l'IA
-                        if (contextProverbs.length === 0) contextProverbs = app.state.proverbs.slice(0, 5);
-
-                        // Etape 2: Génération de la réponse finale
-                        const contextStr = JSON.stringify(contextProverbs.map(p => ({k: p.kabyle, f: p.francais})));
-                        const finalPrompt = `Tu es un sage kabyle. Situation: "${query}".
-                        Voici des proverbes qui pourraient convenir (ou pas): ${contextStr}.
-                        Choisis le meilleur ou utilise tes connaissances.
-                        Réponds au format HTML simple (sans balises html/body):
-                        <div class='text-center italic text-gray-500 mb-4'>"Une phrase de sagesse courte sur la situation"</div>
-                        <div class='bg-kabyle-surface/50 p-4 rounded-lg border-l-4 border-kabyle-secondary'>
-                            <p class='font-serif text-lg font-bold text-kabyle-primary'>« Proverbe Kabyle »</p>
-                            <p class='text-gray-700'>Traduction Française</p>
-                        </div>`;
-
-                        const htmlResponse = await app.ai.callGemini(finalPrompt, false);
-                        results.innerHTML = htmlResponse;
-                        feedback.textContent = "Le sage a parlé.";
-
-                    } catch (e) {
-                        console.error(e);
-                        results.innerHTML = `<p class="text-red-500 text-center">Le sage est momentanément indisponible.</p>`;
-                    } finally {
-                        btn.disabled = false;
-                    }
-                },
-
-                callGemini: async (prompt, jsonMode = false) => {
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${CONFIG.GEMINI_KEY}`;
-                    const payload = {
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: jsonMode ? { responseMimeType: "application/json" } : {}
-                    };
-                    
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(payload)
-                    });
-                    const data = await res.json();
-                    const text = data.candidates[0].content.parts[0].text;
-                    return jsonMode ? JSON.parse(text) : text;
-                }
-            },
-
-            // --- QUIZ ---
-            quiz: {
-                questions: [],
-                score: 0,
-                current: 0,
+            // --- LOGIQUE UI ---
+            const createCardHTML = (proverb, isDaily = false) => {
+                const isFav = state.favorites.has(proverb.id);
+                const themeBadge = proverb.theme ? `<span class="inline-block px-2 py-0.5 bg-[var(--color-bg-alt)] text-[10px] font-bold text-[var(--color-text-light)] uppercase tracking-wider rounded-md mb-2">${proverb.theme}</span>` : '';
                 
-                startLocal: () => {
-                    // Génération locale
-                    const selection = [...app.state.proverbs].sort(() => 0.5 - Math.random()).slice(0, 5);
-                    app.quiz.questions = selection.map(p => {
-                        const distractors = [...app.state.proverbs].filter(x => x.id !== p.id).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.francais);
-                        return {
-                            q: p.kabyle,
-                            correct: p.francais,
-                            options: [p.francais, ...distractors].sort(() => 0.5 - Math.random()),
-                            expl: p.explication
-                        };
-                    });
-                    app.quiz.launchUI();
-                },
-
-                startAI: async () => {
-                    // Génération via IA
-                    document.getElementById('quiz-start').innerHTML = `<div class="py-10"><div class="spinner text-kabyle-primary mb-2"></div><p class="text-sm text-gray-500">L'IA prépare un défi unique...</p></div>`;
-                    
-                    try {
-                        const sample = app.state.proverbs.slice(0, 20).map(p => ({k: p.kabyle, f: p.francais}));
-                        const prompt = `Génère 5 questions de quiz JSON basées sur ces proverbes ou d'autres connus: ${JSON.stringify(sample)}.
-                        Format: [{"q": "Proverbe en Kabyle", "correct": "Traduction correcte", "options": ["Choix1", "Choix2", "Choix3", "Correct"], "expl": "Explication brève"}]`;
-                        
-                        const data = await app.ai.callGemini(prompt, true);
-                        app.quiz.questions = data;
-                        app.quiz.launchUI();
-                    } catch (e) {
-                        app.quiz.startLocal(); // Fallback
-                    }
-                },
-
-                launchUI: () => {
-                    app.quiz.current = 0;
-                    app.quiz.score = 0;
-                    document.getElementById('quiz-start').classList.add('hidden');
-                    document.getElementById('quiz-end').classList.add('hidden');
-                    document.getElementById('quiz-game').classList.remove('hidden');
-                    app.quiz.renderQuestion();
-                },
-
-                renderQuestion: () => {
-                    const q = app.quiz.questions[app.quiz.current];
-                    document.getElementById('quiz-progress-text').textContent = `Question ${app.quiz.current + 1}/5`;
-                    document.getElementById('quiz-score').textContent = app.quiz.score;
-                    document.getElementById('quiz-progress-bar').style.width = `${(app.quiz.current / 5) * 100}%`;
-                    document.getElementById('quiz-question').textContent = `« ${q.q} »`;
-                    document.getElementById('quiz-feedback').textContent = '';
-                    
-                    document.getElementById('quiz-options').innerHTML = q.options.map(opt => `
-                        <button onclick="app.quiz.check(this, '${opt.replace(/'/g, "\\'")}')" class="quiz-opt w-full text-left p-4 rounded-xl border-2 border-gray-100 dark:border-gray-700 hover:border-kabyle-primary dark:hover:border-kabyle-primary transition-all dark:text-gray-300">
-                            ${opt}
-                        </button>
-                    `).join('');
-                },
-
-                check: (btn, answer) => {
-                    const q = app.quiz.questions[app.quiz.current];
-                    const isCorrect = answer === q.correct;
-                    const allBtns = document.querySelectorAll('.quiz-opt');
-                    allBtns.forEach(b => b.disabled = true);
-
-                    if (isCorrect) {
-                        btn.classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900/30');
-                        app.quiz.score++;
-                        document.getElementById('quiz-feedback').innerHTML = `<span class="text-green-600">Correct !</span>`;
-                    } else {
-                        btn.classList.add('bg-red-100', 'border-red-500', 'dark:bg-red-900/30');
-                        // Montrer la bonne réponse
-                        allBtns.forEach(b => {
-                            if (b.textContent.trim() === q.correct) b.classList.add('bg-green-100', 'border-green-500', 'dark:bg-green-900/30');
-                        });
-                        document.getElementById('quiz-feedback').innerHTML = `<span class="text-red-600">Incorrect !</span>`;
-                    }
-
-                    setTimeout(() => {
-                        app.quiz.current++;
-                        if (app.quiz.current >= 5) app.quiz.end();
-                        else app.quiz.renderQuestion();
-                    }, 1500);
-                },
-
-                end: () => {
-                    document.getElementById('quiz-game').classList.add('hidden');
-                    document.getElementById('quiz-end').classList.remove('hidden');
-                    document.getElementById('quiz-final-score').textContent = `${app.quiz.score} / 5`;
-                },
-
-                reset: () => {
-                    document.getElementById('quiz-end').classList.add('hidden');
-                    document.getElementById('quiz-start').classList.remove('hidden');
-                    document.getElementById('quiz-start').innerHTML = `
-                        <div class="w-20 h-20 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">🧠</div>
-                        <h2 class="text-2xl font-bold font-serif mb-2 text-gray-800 dark:text-white">Défi de Sagesse</h2>
-                        <p class="text-gray-500 dark:text-gray-400 mb-8">Prêt pour une nouvelle manche ?</p>
-                        <button onclick="app.quiz.startLocal()" class="w-full py-3 mb-3 bg-kabyle-primary text-white rounded-xl font-bold hover:bg-kabyle-secondary transition-transform transform active:scale-95">Quiz Classique</button>
-                        <button onclick="app.quiz.startAI()" class="w-full py-3 bg-kabyle-accent text-white rounded-xl font-bold hover:bg-yellow-600 transition-transform transform active:scale-95 flex items-center justify-center gap-2"><span>✨ Quiz Généré par IA</span></button>
-                    `;
-                }
-            },
-
-            // --- UI HELPERS ---
-            ui: {
-                cardTemplate: (p, isDaily = false) => {
-                    const isFav = app.state.favorites.has(p.id);
-                    const highlight = (txt) => {
-                        if(!app.state.searchQuery || isDaily) return txt;
-                        return txt.replace(new RegExp(`(${app.state.searchQuery})`, 'gi'), '<mark>$1</mark>');
-                    };
+                if (isDaily) {
                     return `
-                        <div class="flex-grow">
-                            <p class="font-serif ${isDaily ? 'text-2xl md:text-3xl' : 'text-xl'} font-bold text-kabyle-primary dark:text-white mb-3 italic leading-relaxed">« ${highlight(p.kabyle)} »</p>
-                            <p class="text-gray-600 dark:text-gray-300 ${isDaily ? 'text-lg' : 'text-sm'} leading-relaxed">${highlight(p.francais)}</p>
-                            ${p.theme ? `<span class="inline-block mt-3 px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-[10px] uppercase tracking-wider text-gray-500 font-bold">${p.theme.split(',')[0]}</span>` : ''}
-                        </div>
-                        <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                            <button class="text-xs font-bold text-kabyle-secondary hover:underline uppercase tracking-wide" onclick='app.ui.openModal(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Explication</button>
-                            <div class="flex gap-2">
-                                <button onclick="app.utils.copy('« ${p.kabyle} »')" class="p-2 text-gray-400 hover:text-kabyle-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors" title="Copier">
-                                    ${app.ui.icons.copy}
-                                </button>
-                                <button class="fav-btn p-2 rounded-full transition-all hover:scale-110 ${isFav ? 'text-red-500' : 'text-gray-300 hover:text-red-400'}" data-id="${p.id}" onclick="app.favorites.toggle(${p.id}, this)">
-                                    ${app.ui.icons.heart(isFav)}
+                        <div class="text-center animate-in">
+                            <p class="text-2xl md:text-3xl kabyle-text font-bold text-[var(--color-heading)] mb-4">« ${proverb.kabyle} »</p>
+                            <p class="text-lg text-[var(--color-text)] italic font-light mb-6">"${proverb.francais}"</p>
+                            <div class="flex justify-center gap-3">
+                                <button onclick="explainProverb(${proverb.id})" class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-full text-sm font-bold shadow-md hover:scale-105 transition-transform">Décrypter le sens</button>
+                                <button onclick="toggleFavorite(${proverb.id})" class="p-2 rounded-full bg-[var(--color-bg-alt)] hover:bg-pink-50 text-${isFav ? 'pink-500' : 'gray-400'} transition-colors">
+                                    <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                                 </button>
                             </div>
                         </div>
                     `;
-                },
-
-                openModal: (p) => {
-                    const modal = document.getElementById('modal-content');
-                    const overlay = document.getElementById('modal-overlay');
-                    document.getElementById('modal-body').innerHTML = `
-                        <div class="text-center mb-6">
-                            <p class="font-serif text-2xl font-bold text-kabyle-primary dark:text-white mb-2">« ${p.kabyle} »</p>
-                            <p class="text-gray-600 dark:text-gray-300 italic">${p.francais}</p>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-700/30 p-5 rounded-xl border border-gray-100 dark:border-gray-700">
-                            <h4 class="font-bold text-xs text-gray-400 uppercase mb-2">Signification</h4>
-                            <p class="text-gray-800 dark:text-gray-200 leading-relaxed text-sm">${p.explication || "Pas d'explication détaillée disponible."}</p>
-                        </div>
-                        <button onclick="app.utils.share('« ${p.kabyle} »')" class="w-full mt-4 py-3 bg-kabyle-primary text-white rounded-xl font-bold shadow-md hover:bg-kabyle-secondary transition-colors">Partager</button>
-                    `;
-                    overlay.classList.remove('hidden');
-                    modal.classList.remove('hidden');
-                    setTimeout(() => {
-                        overlay.classList.remove('opacity-0');
-                        modal.classList.remove('opacity-0', 'scale-95');
-                    }, 10);
-                },
-
-                closeModal: () => {
-                    const modal = document.getElementById('modal-content');
-                    const overlay = document.getElementById('modal-overlay');
-                    overlay.classList.add('opacity-0');
-                    modal.classList.add('opacity-0', 'scale-95');
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                        modal.classList.add('hidden');
-                    }, 300);
-                },
-
-                loadTheme: () => {
-                    const saved = localStorage.getItem('theme') || 'light';
-                    if (saved === 'dark') document.documentElement.classList.add('dark');
-                },
-
-                toast: (msg, type = 'success') => {
-                    const t = document.getElementById('toast');
-                    document.getElementById('toast-msg').textContent = msg;
-                    document.getElementById('toast-icon').textContent = type === 'info' ? 'ℹ️' : '✅';
-                    t.className = `fixed top-20 right-4 px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 z-[100] transition-transform duration-300 max-w-xs ${type === 'info' ? 'bg-blue-600 text-white' : 'bg-gray-800 dark:bg-white text-white dark:text-gray-900'}`;
-                    t.classList.remove('translate-x-[150%]');
-                    setTimeout(() => t.classList.add('translate-x-[150%]'), 3000);
-                },
-
-                icons: {
-                    heart: (fill) => `<svg class="w-5 h-5" fill="${fill ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
-                    copy: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>`
                 }
-            },
 
-            utils: {
-                normalize: (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ǧ/g,'g').replace(/č/g,'c').replace(/ɣ/g,'gh').replace(/ɛ/g,'aa'),
-                debounce: (func, wait) => { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => func(...args), wait); }; },
-                copy: (txt) => navigator.clipboard.writeText(txt).then(() => app.ui.toast('Copié !')),
-                share: (txt) => {
-                    if (navigator.share) navigator.share({title: 'Inzan', text: txt, url: window.location.href});
-                    else app.utils.copy(txt);
+                return `
+                    <div class="card-hover bg-[var(--color-bg-card)] border border-[var(--color-border)] p-5 rounded-xl flex flex-col h-full relative group" data-id="${proverb.id}">
+                        ${themeBadge}
+                        <blockquote class="kabyle-text text-xl font-bold text-[var(--color-heading)] mb-3 flex-grow relative z-10">
+                            « ${highlight(proverb.kabyle)} »
+                        </blockquote>
+                        <p class="text-[var(--color-text-light)] text-sm mb-4 pb-4 border-b border-[var(--color-border)]">
+                            ${highlight(proverb.francais)}
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <button onclick="explainProverb(${proverb.id})" class="text-xs font-bold text-[var(--color-primary)] flex items-center gap-1 hover:underline">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Explication
+                            </button>
+                            <div class="flex gap-1">
+                                <button onclick="copyProverb(${proverb.id})" class="p-2 rounded-lg hover:bg-[var(--color-bg-alt)] text-[var(--color-text-light)]" title="Copier">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </button>
+                                <button onclick="toggleFavorite(${proverb.id}, this)" class="p-2 rounded-lg hover:bg-pink-50 text-${isFav ? 'pink-500' : 'gray-300'} transition-colors" title="Favoris">
+                                    <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const getSkeletonCards = (count = 4) => {
+                return Array(count).fill(0).map(() => `
+                    <div class="bg-[var(--color-bg-card)] border border-[var(--color-border)] p-5 rounded-xl h-40 flex flex-col justify-between">
+                        <div class="skeleton h-4 w-20 rounded mb-4"></div>
+                        <div class="skeleton h-6 w-full rounded mb-2"></div>
+                        <div class="skeleton h-6 w-2/3 rounded mb-4"></div>
+                        <div class="flex justify-between mt-auto pt-4 border-t border-[var(--color-border)]">
+                            <div class="skeleton h-4 w-20 rounded"></div>
+                            <div class="skeleton h-6 w-6 rounded-full"></div>
+                        </div>
+                    </div>
+                `).join('');
+            };
+
+            const filterAndRender = (reset = false) => {
+                if (reset) {
+                    state.currentPage = 0;
+                    state.filteredProverbs = [];
+                    dom.resultsContainer.innerHTML = getSkeletonCards(6); // Show skeleton
+                    document.getElementById('initial-load-message').classList.add('hidden');
+                    document.getElementById('no-results').classList.add('hidden');
                 }
-            },
 
-            events: {
-                setup: () => {
-                    // Scroll Infini
-                    const sentinel = document.getElementById('load-more-sentinel');
-                    const observer = new IntersectionObserver((entries) => {
-                        if(entries[0].isIntersecting && !app.state.isLoading) {
-                            app.state.isLoading = true;
-                            app.explore.loadChunk();
+                // Logique de filtrage
+                const query = normalize(dom.searchInput.value);
+                const theme = state.activeTheme;
+
+                // On ne filtre que si c'est un reset, sinon on a déjà la liste filtrée
+                if (reset) {
+                    state.filteredProverbs = state.proverbs.filter(p => {
+                        const matchesTheme = theme === 'tous' || normalize(p.theme).includes(theme);
+                        const matchesQuery = !query || p.searchString.includes(query);
+                        return matchesTheme && matchesQuery;
+                    });
+                }
+
+                const start = state.currentPage * CONFIG.PROVERBS_PER_PAGE;
+                const end = start + CONFIG.PROVERBS_PER_PAGE;
+                const chunk = state.filteredProverbs.slice(start, end);
+
+                if (reset) dom.resultsContainer.innerHTML = ''; // Clear skeleton
+
+                if (state.filteredProverbs.length === 0) {
+                    document.getElementById('no-results').classList.remove('hidden');
+                    dom.resultsContainer.innerHTML = '';
+                } else {
+                    const html = chunk.map((p, i) => {
+                        const el = createCardHTML(p);
+                        // Ajout d'un délai pour l'animation en cascade
+                        return el.replace('card-hover', `card-hover animate-in" style="animation-delay: ${i * 50}ms`);
+                    }).join('');
+                    dom.resultsContainer.insertAdjacentHTML('beforeend', html);
+                    state.currentPage++;
+                }
+
+                dom.loaderContainer.classList.toggle('hidden', end >= state.filteredProverbs.length);
+            };
+
+            // --- GESTION DES THÈMES ET UI ---
+            const renderThemes = () => {
+                const themes = [...new Set(state.proverbs.flatMap(p => p.theme ? p.theme.split(',').map(t=>t.trim()) : []))].sort();
+                let html = `<button data-theme="tous" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${state.activeTheme === 'tous' ? 'bg-[var(--color-heading)] text-[var(--color-bg)]' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-primary)]'}">Tous</button>`;
+                
+                themes.forEach(t => {
+                    const norm = normalize(t);
+                    const isActive = state.activeTheme === norm;
+                    html += `<button data-theme="${norm}" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? 'bg-[var(--color-heading)] text-[var(--color-bg)]' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-primary)]'}">${t.charAt(0).toUpperCase() + t.slice(1)}</button>`;
+                });
+                dom.themeListContainer.innerHTML = html;
+            };
+
+            // --- NAVIGATION & EVENTS ---
+            const setupEventListeners = () => {
+                // Onglets
+                dom.navButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const targetTab = btn.dataset.tab || e.currentTarget.dataset.tab;
+                        switchTab(targetTab);
+                    });
+                });
+
+                // Recherche
+                dom.searchInput.addEventListener('input', debounce(() => {
+                    dom.clearSearchBtn.style.opacity = dom.searchInput.value ? '1' : '0';
+                    filterAndRender(true);
+                }, 300));
+
+                dom.clearSearchBtn.addEventListener('click', () => {
+                    dom.searchInput.value = '';
+                    dom.clearSearchBtn.style.opacity = '0';
+                    filterAndRender(true);
+                });
+
+                // Filtres Thèmes
+                dom.themeListContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON') {
+                        state.activeTheme = e.target.dataset.theme;
+                        localStorage.setItem('inzan_theme_filter', state.activeTheme);
+                        renderThemes(); // Re-render to update active class
+                        dom.searchInput.value = ''; // Clear search text on theme switch usually implies reset
+                        switchTab('explorer-tab'); // Ensure we are on explorer
+                        filterAndRender(true);
+                    }
+                });
+                
+                // Infinite Scroll
+                const observer = new IntersectionObserver(entries => {
+                    if(entries[0].isIntersecting) filterAndRender(false);
+                }, { rootMargin: '100px' });
+                observer.observe(dom.loaderContainer);
+
+                // Bouton Aléatoire
+                document.getElementById('random-btn').addEventListener('click', () => {
+                    dom.searchInput.value = '';
+                    state.activeTheme = 'tous';
+                    renderThemes();
+                    state.filteredProverbs = state.proverbs.sort(() => 0.5 - Math.random());
+                    state.currentPage = 0;
+                    dom.resultsContainer.innerHTML = '';
+                    filterAndRender(false); // Render first chunk of shuffled
+                });
+
+                // Dark Mode
+                dom.themeToggle.addEventListener('click', () => {
+                    const isDark = dom.html.classList.toggle('dark');
+                    applyTheme(isDark ? 'dark' : 'light');
+                });
+
+                // AI & Quiz
+                dom.ai.btn.addEventListener('click', handleAIRequest);
+                
+                // Modal & Globals
+                dom.modal.closeBtn.addEventListener('click', closeModal);
+                dom.modal.backdrop.addEventListener('click', closeModal);
+                
+                // Exposer les fonctions globales pour les onclick HTML
+                window.explainProverb = getAIExplanation;
+                window.toggleFavorite = toggleFavorite;
+                window.copyProverb = copyProverb;
+            };
+
+            const switchTab = (tabId) => {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                dom.tabContents.forEach(el => el.classList.add('hidden'));
+                document.getElementById(tabId).classList.remove('hidden');
+                
+                dom.navButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabId);
+                    // Gestion icône active mobile
+                    if(btn.classList.contains('mobile')) {
+                        btn.style.color = btn.dataset.tab === tabId ? 'var(--color-primary)' : '';
+                    }
+                });
+
+                if (tabId === 'favoris-tab') renderFavorites();
+                if (tabId === 'quiz-tab') startQuizUI();
+            };
+
+            // --- FONCTIONS AI (GEMINI) ---
+            async function callGemini(prompt, isJson = false) {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: isJson ? { responseMimeType: "application/json" } : {}
+                };
+
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!res.ok) throw new Error('API Limit or Error');
+                const data = await res.json();
+                const text = data.candidates[0].content.parts[0].text;
+                return isJson ? JSON.parse(text) : text;
+            }
+
+            async function handleAIRequest() {
+                const ctx = dom.ai.input.value.trim();
+                if(!ctx) return showToast("Décrivez d'abord une situation", true);
+                
+                dom.ai.btn.disabled = true;
+                dom.ai.btn.innerHTML = '<span class="loader border-white w-4 h-4 mr-2"></span> Réflexion...';
+                dom.ai.step.textContent = "Analyse sémantique en cours...";
+
+                try {
+                    // Etape 1 : Mots clés
+                    const keywordPrompt = `Situation: "${ctx}". Donne-moi un objet JSON { "keywords": ["mot1", "mot2", "mot3"] } (français ou kabyle) pour trouver des proverbes kabyles liés.`;
+                    const { keywords } = await callGemini(keywordPrompt, true);
+                    
+                    dom.ai.step.textContent = `Recherche locale : ${keywords.join(', ')}`;
+                    
+                    // Etape 2 : Filtrage local
+                    const candidates = state.proverbs.filter(p => 
+                        keywords.some(k => p.searchString.includes(normalize(k)))
+                    ).slice(0, 20); // Top 20
+
+                    if(candidates.length === 0) throw new Error("Aucun proverbe trouvé localement.");
+
+                    // Etape 3 : Sélection finale
+                    dom.ai.step.textContent = "Le sage sélectionne le meilleur proverbe...";
+                    const selectionPrompt = `Context: "${ctx}". Liste: ${JSON.stringify(candidates.map(c => ({id:c.id, k:c.kabyle, f:c.francais})))}. Choisis le ou les meilleurs (max 2). JSON: { "response": "Phrase de sage", "matches": [{ "id": 123, "reason": "Pourquoi" }] }`;
+                    
+                    const final = await callGemini(selectionPrompt, true);
+                    
+                    let html = `<div class="bg-[var(--color-primary)]/10 p-4 rounded-lg mb-6 border-l-4 border-[var(--color-primary)]"><p class="italic text-[var(--color-heading)] font-serif">"${final.response}"</p></div>`;
+                    
+                    final.matches.forEach(m => {
+                        const p = state.proverbs.find(x => x.id === m.id);
+                        if(p) {
+                            html += createCardHTML(p).replace('bg-[var(--color-bg-card)]', 'bg-white dark:bg-gray-800 shadow-lg transform scale-100 mb-4');
+                            html += `<p class="text-sm text-[var(--color-text-light)] mt-2 mb-6 px-4">💡 ${m.reason}</p>`;
                         }
-                    }, { rootMargin: '200px' });
-                    observer.observe(sentinel);
-
-                    // Recherche
-                    document.getElementById('search-input').addEventListener('input', app.utils.debounce((e) => {
-                        app.state.searchQuery = app.utils.normalize(e.target.value);
-                        app.state.currentPage = 1;
-                        app.explore.runFilter();
-                        document.getElementById('clear-search').classList.toggle('hidden', !e.target.value);
-                    }, 300));
-
-                    document.getElementById('clear-search').addEventListener('click', () => {
-                        app.explore.reset();
-                        document.getElementById('clear-search').classList.add('hidden');
                     });
+                    
+                    dom.ai.result.innerHTML = html;
 
-                    // Theme
-                    document.getElementById('theme-btn').addEventListener('click', () => {
-                        document.documentElement.classList.toggle('dark');
-                        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-                    });
-
-                    // AI Send
-                    document.getElementById('ai-send-btn').addEventListener('click', app.ai.ask);
+                } catch (e) {
+                    dom.ai.result.innerHTML = `<p class="text-red-500 text-center">Le sage est confus. Essayez de reformuler. (${e.message})</p>`;
+                } finally {
+                    dom.ai.btn.disabled = false;
+                    dom.ai.btn.innerHTML = '✨ Demander conseil au Sage';
+                    dom.ai.step.textContent = '';
                 }
             }
-        };
 
-        document.addEventListener('DOMContentLoaded', app.init);
+            async function getAIExplanation(id) {
+                const p = state.proverbs.find(x => x.id === id);
+                openModal("Décryptage", `<div class="flex justify-center py-10"><div class="loader"></div></div>`);
+                
+                try {
+                    const explanation = await callGemini(`Explique ce proverbe kabyle de façon culturelle et concise. Utilise le format Markdown. Proverbe: "${p.kabyle}" (${p.francais})`);
+                    // Convert simple markdown to HTML
+                    const html = explanation
+                        .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold text-[var(--color-primary)] mt-4 mb-2">$1</h3>')
+                        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                        .replace(/\n/g, '<br>');
+                    
+                    document.getElementById('modal-body').innerHTML = `
+                        <div class="text-center mb-6 p-4 bg-[var(--color-bg-alt)] rounded-xl">
+                            <p class="font-serif font-bold text-xl mb-2">« ${p.kabyle} »</p>
+                            <p class="text-sm text-[var(--color-text-light)]">${p.francais}</p>
+                        </div>
+                        <div class="prose dark:prose-invert max-w-none text-sm sm:text-base">
+                            ${html}
+                        </div>
+                    `;
+                } catch (e) {
+                    document.getElementById('modal-body').innerHTML = `<p class="text-red-500">Erreur de connexion au Sage.</p>`;
+                }
+            }
+
+            // --- QUIZ LOGIC ---
+            async function preloadQuiz() {
+               if(state.aiQuiz.promise) return state.aiQuiz.promise;
+               
+               state.aiQuiz.promise = (async () => {
+                   const sample = state.proverbs.sort(()=>0.5-Math.random()).slice(0, 15).map(p=>({k:p.kabyle, f:p.francais}));
+                   const prompt = `Génère 5 questions QCM JSON basées sur ces proverbes: ${JSON.stringify(sample)}. Format: { "questions": [{ "q": "Question text", "opts": ["A", "B", "C"], "idx": 0, "exp": "Explanation" }] }`;
+                   const data = await callGemini(prompt, true);
+                   state.aiQuiz.questions = data.questions;
+               })();
+               return state.aiQuiz.promise;
+            }
+
+            async function startQuizUI() {
+                dom.quizContainer.innerHTML = `<div class="text-center"><div class="loader"></div><p class="mt-2 text-sm opacity-70">Préparation...</p></div>`;
+                try {
+                    await preloadQuiz();
+                    state.aiQuiz.current = 0;
+                    state.aiQuiz.score = 0;
+                    renderQuestion();
+                } catch(e) {
+                    dom.quizContainer.innerHTML = `<p class="text-center text-red-500">Erreur de génération du quiz.</p><button onclick="location.reload()" class="mt-4 btn-primary">Réessayer</button>`;
+                }
+            }
+
+            function renderQuestion() {
+                const q = state.aiQuiz.questions[state.aiQuiz.current];
+                if(!q) return showQuizResults();
+
+                dom.quizContainer.innerHTML = `
+                    <div class="mb-6 flex justify-between items-center">
+                        <span class="text-xs font-bold text-[var(--color-text-light)]">QUESTION ${state.aiQuiz.current + 1}/5</span>
+                        <span class="text-xs font-bold text-[var(--color-primary)]">SCORE: ${state.aiQuiz.score}</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-[var(--color-heading)] mb-6 text-center">${q.q}</h3>
+                    <div class="space-y-3">
+                        ${q.opts.map((opt, i) => `
+                            <button class="quiz-opt w-full p-4 rounded-xl border border-[var(--color-border)] text-left hover:bg-[var(--color-bg-alt)] transition-all font-medium" onclick="handleAnswer(${i})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div id="quiz-feedback" class="mt-4 hidden"></div>
+                `;
+            }
+
+            window.handleAnswer = (idx) => {
+                const q = state.aiQuiz.questions[state.aiQuiz.current];
+                const isCorrect = idx === q.idx;
+                if(isCorrect) state.aiQuiz.score++;
+                
+                const opts = document.querySelectorAll('.quiz-opt');
+                opts.forEach((btn, i) => {
+                    btn.disabled = true;
+                    if(i === q.idx) btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                    else if(i === idx && !isCorrect) btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                });
+
+                const feedback = document.getElementById('quiz-feedback');
+                feedback.classList.remove('hidden');
+                feedback.innerHTML = `
+                    <div class="p-3 rounded-lg ${isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'} mb-3 text-sm">
+                        <strong>${isCorrect ? 'Bravo !' : 'Oups...'}</strong> ${q.exp}
+                    </div>
+                    <button onclick="nextQuestion()" class="w-full py-3 bg-[var(--color-heading)] text-[var(--color-bg)] rounded-lg font-bold">Continuer</button>
+                `;
+            };
+
+            window.nextQuestion = () => {
+                state.aiQuiz.current++;
+                renderQuestion();
+            };
+
+            function showQuizResults() {
+                state.aiQuiz.promise = null; // Reset for new game
+                preloadQuiz(); // Preload next game
+                dom.quizContainer.innerHTML = `
+                    <div class="text-center py-10 animate-in">
+                        <div class="text-6xl mb-4">${state.aiQuiz.score >= 3 ? '🏆' : '📚'}</div>
+                        <h2 class="text-3xl font-bold text-[var(--color-heading)] mb-2">Score: ${state.aiQuiz.score}/5</h2>
+                        <p class="text-[var(--color-text-light)] mb-8">${state.aiQuiz.score === 5 ? 'Un vrai sage kabyle !' : 'La sagesse s\'acquiert avec le temps.'}</p>
+                        <button onclick="startQuizUI()" class="px-8 py-3 bg-[var(--color-primary)] text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform">Rejouer</button>
+                    </div>
+                `;
+            }
+
+            // --- UTILITAIRES ---
+            function normalize(str) { return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : ""; }
+            function highlight(text) {
+                const q = normalize(dom.searchInput.value).split(' ').filter(x=>x);
+                if(!q.length) return text;
+                const regex = new RegExp(`(${q.join('|')})`, 'gi');
+                return text.replace(regex, '<mark class="bg-[var(--color-accent)] text-[var(--color-heading)] rounded-sm px-0.5">$1</mark>');
+            }
+            function debounce(func, wait) { let timeout; return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); }; }
+            
+            function showToast(msg, isError=false) {
+                dom.toast.innerHTML = `<p class="${isError?'text-red-300':'text-green-300'} font-bold mr-2">${isError?'✕':'✓'}</p> <p>${msg}</p>`;
+                dom.toast.style.opacity = '1';
+                dom.toast.style.bottom = '100px';
+                setTimeout(() => { dom.toast.style.opacity = '0'; dom.toast.style.bottom = '24px'; }, 3000);
+            }
+
+            function toggleFavorite(id, btnElement) {
+                if(state.favorites.has(id)) {
+                    state.favorites.delete(id);
+                    showToast("Retiré des favoris");
+                    if(btnElement) btnElement.classList.replace('text-pink-500', 'text-gray-300');
+                } else {
+                    state.favorites.add(id);
+                    showToast("Ajouté aux favoris");
+                    if(btnElement) btnElement.classList.replace('text-gray-300', 'text-pink-500');
+                }
+                localStorage.setItem('inzan_favorites', JSON.stringify([...state.favorites]));
+                if(!document.getElementById('favoris-tab').classList.contains('hidden')) renderFavorites();
+            }
+
+            function renderFavorites() {
+                const favs = state.proverbs.filter(p => state.favorites.has(p.id));
+                const container = document.getElementById('favorites-container');
+                if(favs.length === 0) {
+                    document.getElementById('no-favorites').classList.remove('hidden');
+                    container.innerHTML = '';
+                } else {
+                    document.getElementById('no-favorites').classList.add('hidden');
+                    container.innerHTML = favs.map(p => createCardHTML(p)).join('');
+                }
+            }
+
+            function copyProverb(id) {
+                const p = state.proverbs.find(x => x.id === id);
+                navigator.clipboard.writeText(`« ${p.kabyle} »\n— ${p.francais}`);
+                showToast("Copié !");
+            }
+
+            function openModal(title, content) {
+                dom.modal.title.textContent = title;
+                dom.modal.body.innerHTML = content;
+                dom.modal.backdrop.style.opacity = '1';
+                dom.modal.backdrop.style.pointerEvents = 'auto';
+                dom.modal.content.style.opacity = '1';
+                dom.modal.content.style.transform = 'translate(-50%, -50%) scale(1)';
+                dom.modal.content.style.pointerEvents = 'auto';
+            }
+
+            function closeModal() {
+                dom.modal.backdrop.style.opacity = '0';
+                dom.modal.backdrop.style.pointerEvents = 'none';
+                dom.modal.content.style.opacity = '0';
+                dom.modal.content.style.transform = 'translate(-50%, -50%) scale(0.95)';
+                dom.modal.content.style.pointerEvents = 'none';
+            }
+
+            function loadDailyProverb() {
+                if(!state.proverbs.length) return;
+                const day = Math.floor(new Date() / 86400000);
+                const p = state.proverbs[day % state.proverbs.length];
+                dom.proverbOfTheDayCard.innerHTML = createCardHTML(p, true);
+            }
+
+            function applyTheme(theme) {
+                if(theme === 'dark') {
+                    dom.html.classList.add('dark');
+                    document.getElementById('icon-sun').classList.add('hidden');
+                    document.getElementById('icon-moon').classList.remove('hidden');
+                    document.querySelector('meta[name="theme-color"]').content = '#111827';
+                } else {
+                    dom.html.classList.remove('dark');
+                    document.getElementById('icon-sun').classList.remove('hidden');
+                    document.getElementById('icon-moon').classList.add('hidden');
+                    document.querySelector('meta[name="theme-color"]').content = '#F9F7F3';
+                }
+                localStorage.setItem('inzan_theme', theme);
+            }
+
+            init();
+        });
     </script>
 </body>
 </html>
-
-
