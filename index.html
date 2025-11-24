@@ -711,25 +711,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FONCTIONS UTILITAIRES ---
     const normalizeText = (text) => {
         if (!text) return '';
-        return text
-            .toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlève les accents
+
+        let normalized = text.toLowerCase().trim();
+
+    // 1. D'abord, gérer les caractères spécifiques berbères/kabyles
+    // qui ont une translittération particulière (plusieurs lettres).
+        normalized = normalized
             .replace(/ɣ/g, "gh")
-            .replace(/c/g, "ch")
-            .replace(/t/g, "th")
-            .replace(/ḍ/g, "dh")
-            .replace(/x/g, "kh")
-            .replace(/ǧ/g, "dj") // ou g
-            .replace(/č/g, "tch") // ou c
-            .replace(/ɛ/g, "3") // approximation phonétique courante
+            .replace(/č/g, "tch")
+            .replace(/ǧ/g, "dj")
+            .replace(/ɛ/g, "3")  // Le '3' est souvent utilisé, ou parfois 'aa'
+            .replace(/x/g, "kh");
+
+    // 2. Gérer les caractères emphatiques ou accentués spécifiques
+    // On le fait AVANT le nettoyage NFD pour être sûr de capter le bon caractère.
+        normalized = normalized
             .replace(/ṣ/g, "s")
             .replace(/ṭ/g, "t")
             .replace(/ẓ/g, "z")
-            .replace(/ḍ/g, "dh") // ou d
-            .replace(/ḥ/g, "h")
-            .replace(/[^a-z0-9\s]/g, '') // Garde seulement alphanumérique
-            .trim();
+            .replace(/ḍ/g, "d") // Correction : un seul remplacement pour ḍ
+            .replace(/ḥ/g, "h");
+
+    // 3. Gérer les lettres standards qui changent de son (Optionnel selon le besoin)
+    // Attention : cela s'appliquera aussi aux résultats des étapes précédentes si elles ont généré 'c' ou 't'.
+        normalized = normalized
+            .replace(/c/g, "ch") 
+        // .replace(/t/g, "th") // ATTENTION : Cela transformera aussi les 'ṭ' devenus 't' en 'th'. 
+                                // Décommentez si vous voulez que TOUS les 't' deviennent 'th'.
+
+    // 4. Nettoyage final des accents standards restants (é, è, à, etc.)
+        normalized = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    // 5. Garder uniquement alphanumérique
+        return normalized.replace(/[^a-z0-9\s]/g, '');
     };
+
 
     const debounce = (func, delay) => (...args) => {
         clearTimeout(state.searchTimeout);
