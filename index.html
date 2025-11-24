@@ -713,13 +713,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text) return '';
         return text
             .toLowerCase()
-            .replace(/ǧ/g, 'g')
-            .replace(/č/g, 'c')
-            .replace(/ṣ/g, 's')
-            .replace(/ṭ/g, 't')
-            .replace(/ẓ/g, 'z')
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlève les accents
+            .replace(/ɣ/g, "gh")
+            .replace(/ǧ/g, "dj") // ou g
+            .replace(/č/g, "tch") // ou c
+            .replace(/ɛ/g, "aa") // approximation phonétique courante
+            .replace(/ṣ/g, "s")
+            .replace(/ṭ/g, "t")
+            .replace(/ẓ/g, "z")
+            .replace(/ḍ/g, "dh") // ou d
+            .replace(/ḥ/g, "h")
+            .replace(/[^a-z0-9\s]/g, '') // Garde seulement alphanumérique
             .trim();
     };
 
