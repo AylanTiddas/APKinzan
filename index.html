@@ -714,42 +714,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let normalized = text.toLowerCase().trim();
 
-    // 1. D'abord, gérer les caractères spécifiques berbères/kabyles
-    // qui ont une translittération particulière (plusieurs lettres).
+    // 1. CARACTÈRES COMPLEXES & DIGRAMMES (Priorité haute)
+    // On traite d'abord ce qui "prend de la place" ou a une logique double.
         normalized = normalized
             .replace(/ɣ/g, "gh")
-            .replace(/c/g, "ch")
-            .replace(/u/g, "ou")
-            .replace(/xx/g, "kh")
-            .replace(/tt/g, "ts")
             .replace(/č/g, "tch")
             .replace(/ǧ/g, "dj")
-            .replace(/ɛ/g, "3")  // Le '3' est souvent utilisé, ou parfois 'aa'
-            .replace(/x/g, "kh");
+            .replace(/ɛ/g, "3")
+            .replace(/xx/g, "kh") // On simplifie le double x en un seul kh
+            .replace(/tt/g, "ts"); // Règle d'affrication kabyle
 
-    // 2. Gérer les caractères emphatiques ou accentués spécifiques
-    // On le fait AVANT le nettoyage NFD pour être sûr de capter le bon caractère.
+    // 2. CARACTÈRES EMPHATIQUES
+    // Avant le nettoyage NFD
         normalized = normalized
             .replace(/ṣ/g, "s")
             .replace(/ṭ/g, "t")
             .replace(/ẓ/g, "z")
-            .replace(/ḍ/g, "d") // Correction : un seul remplacement pour ḍ
+            .replace(/ḍ/g, "d")
             .replace(/ḥ/g, "h");
 
-    // 3. Gérer les lettres standards qui changent de son (Optionnel selon le besoin)
-    // Attention : cela s'appliquera aussi aux résultats des étapes précédentes si elles ont généré 'c' ou 't'.
+    // 3. LETTRES SIMPLES À RISQUE (Avec sécurité)
         normalized = normalized
-            .replace(/c/g, "ch") 
-        // .replace(/t/g, "th") // ATTENTION : Cela transformera aussi les 'ṭ' devenus 't' en 'th'. 
-                                // Décommentez si vous voulez que TOUS les 't' deviennent 'th'.
+        // Remplace 'u' par 'ou', MAIS SEULEMENT s'il n'y a pas de 'o' juste avant.
+        // Empêche "mouloud" de devenir "moouloud".
+            .replace(/(?<!o)u/g, "ou") 
+        
+        // Remplace 'c' par 'ch', MAIS SEULEMENT s'il n'y a pas de 'h' juste après.
+        // Empêche "chat" de devenir "chhat".
+            .replace(/c(?!h)/g, "ch") 
+        
+        // Remplace 'x' par 'kh', MAIS SEULEMENT s'il n'y a pas de 'k' avant (au cas où).
+            .replace(/(?<!k)x/g, "kh");
 
-    // 4. Nettoyage final des accents standards restants (é, è, à, etc.)
+    // 4. NETTOYAGE FINAL (Accents standards)
         normalized = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    // 5. Garder uniquement alphanumérique
+    // 5. FINALISATION
         return normalized.replace(/[^a-z0-9\s]/g, '');
     };
-
 
     const debounce = (func, delay) => (...args) => {
         clearTimeout(state.searchTimeout);
