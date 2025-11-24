@@ -741,7 +741,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Remplace 'c' par 'ch', MAIS SEULEMENT s'il n'y a pas de 'h' juste après.
         // Empêche "chat" de devenir "chhat".
-            .replace(/c(?!h)/g, "ch") 
+            .replace(/c(?!h)/g, "ch")
+            .replace(/t(?!h)/g, "th") 
+            .replace(/d(?!h)/g, "dh") 
         
         // Remplace 'x' par 'kh', MAIS SEULEMENT s'il n'y a pas de 'k' avant (au cas où).
             .replace(/(?<!k)x/g, "kh");
