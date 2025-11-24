@@ -715,9 +715,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .toLowerCase()
             .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlève les accents
             .replace(/ɣ/g, "gh")
+            .replace(/c/g, "ch")
+            .replace(/t/g, "th")
+            .replace(/ḍ/g, "dh")
+            .replace(/x/g, "kh")
             .replace(/ǧ/g, "dj") // ou g
             .replace(/č/g, "tch") // ou c
-            .replace(/ɛ/g, "aa") // approximation phonétique courante
+            .replace(/ɛ/g, "3") // approximation phonétique courante
             .replace(/ṣ/g, "s")
             .replace(/ṭ/g, "t")
             .replace(/ẓ/g, "z")
