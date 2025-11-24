@@ -718,6 +718,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // qui ont une translittération particulière (plusieurs lettres).
         normalized = normalized
             .replace(/ɣ/g, "gh")
+            .replace(/c/g, "ch")
+            .replace(/u/g, "ou")
+            .replace(/xx/g, "kh")
+            .replace(/tt/g, "ts")
             .replace(/č/g, "tch")
             .replace(/ǧ/g, "dj")
             .replace(/ɛ/g, "3")  // Le '3' est souvent utilisé, ou parfois 'aa'
