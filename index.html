@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie.">
-    
+    <meta name="description" content="Inzan n Teqbaylit : Explorez des milliers de proverbes kabyles avec l'aide de l'Intelligence Artificielle.">
     <meta name="theme-color" content="#F9F7F3">
-    <meta property="og:title" content="Inzan n Teqbaylit">
-    <meta property="og:description" content="Trésors de la Sagesse Kabyle avec IA et explications.">
+    
+    <meta property="og:title" content="Inzan n Teqbaylit - Sagesse Kabyle & IA">
+    <meta property="og:description" content="Découvrez la richesse des proverbes kabyles assistée par IA.">
     <meta property="og:type" content="website">
 
     <link rel="manifest" href="data:application/json,{
@@ -22,964 +22,1057 @@
         ]
     }">
 
-    <title>Inzan n Teqbaylit - Trésors de la Sagesse Kabyle</title>
+    <title>Inzan n Teqbaylit - Sagesse Kabyle</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22 fill=%22%234A7C59%22%3E%E2%9C%A7%3C/text%3E%3C/svg%3E">
-
     <style>
         :root {
             --color-bg: #F9F7F3;
-            --color-bg-card: #FFFFFF;
-            --color-bg-alt: #F0EFEA;
+            --color-bg-card: rgba(255, 255, 255, 0.9);
+            --color-bg-glass: rgba(255, 255, 255, 0.7);
             --color-text: #2D3748;
-            --color-text-light: #718096;
+            --color-text-muted: #718096;
             --color-heading: #1A202C;
-            --color-primary: #4A7C59;
-            --color-primary-light: #E6F2ED;
-            --color-secondary: #2F855A;
-            --color-accent: #D69E2E;
+            --color-primary: #4A7C59; /* Vert Kabyle */
+            --color-primary-light: #E6F0EA;
+            --color-secondary: #C79A2A; /* Jaune/Or Kabyle */
+            --color-accent: #C53030; /* Rouge Tapis */
             --color-border: #E2E8F0;
-            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
-            --font-serif: 'Merriweather', serif;
+            --font-serif: 'Gentium Plus', serif; /* Excellent pour les caractères spéciaux */
             --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --radius-card: 16px;
         }
 
         html.dark {
             --color-bg: #111827;
-            --color-bg-card: #1F2937;
-            --color-bg-alt: #374151;
+            --color-bg-card: rgba(31, 41, 55, 0.9);
+            --color-bg-glass: rgba(31, 41, 55, 0.7);
             --color-text: #E5E7EB;
-            --color-text-light: #9CA3AF;
+            --color-text-muted: #9CA3AF;
             --color-heading: #F9FAFB;
             --color-primary: #68D391;
             --color-primary-light: #064E3B;
-            --color-secondary: #48BB78;
-            --color-accent: #F6E05E;
+            --color-secondary: #F6E05E;
+            --color-accent: #FC8181;
             --color-border: #374151;
-            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.5);
         }
 
         body {
             background-color: var(--color-bg);
             font-family: var(--font-sans);
             color: var(--color-text);
-            /* Motif subtil de fond */
-            background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
-            background-size: 40px 40px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
+            /* Motif subtil Tifinagh/Géométrique en SVG encodé */
+            background-image: radial-gradient(var(--color-text-muted) 0.5px, transparent 0.5px), radial-gradient(var(--color-text-muted) 0.5px, var(--color-bg) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-attachment: fixed;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
-
-        /* Classes Utilitaires Personnalisées */
+        
+        /* Utilitaires visuels */
         .glass-panel {
-            background: rgba(var(--color-bg-card-rgb), 0.8);
+            background: var(--color-bg-glass);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--color-border);
         }
-        
-        .card-hover {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-soft);
-        }
 
-        .kabyle-text {
-            font-family: var(--font-serif);
-            line-height: 1.5;
+        .kabyle-font { font-family: var(--font-serif); }
+
+        .card-proverb {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card-proverb:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--color-primary);
         }
 
         /* Animations */
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .animate-in {
-            animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-skeleton { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .skeleton { background-color: var(--color-border); animation: pulse-skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-        /* Scrollbar masquée mais fonctionnelle */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Composants spécifiques */
+        .nav-pill {
+            transition: all 0.2s;
+            border-radius: 9999px;
+        }
+        .nav-pill.active {
+            background-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(74, 124, 89, 0.3);
+        }
+        
+        .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.4s ease-out; }
 
-        /* Loader Skeleton */
-        .skeleton {
-            background: linear-gradient(90deg, var(--color-bg-alt) 25%, var(--color-border) 50%, var(--color-bg-alt) 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 4px;
-        }
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Navigation */
-        .nav-item.active {
-            color: var(--color-primary);
-            background-color: var(--color-primary-light);
-            font-weight: 600;
-        }
-        html.dark .nav-item.active {
-            background-color: rgba(16, 185, 129, 0.1);
-        }
-
-        /* Loader Spinner */
-        .loader {
-            width: 20px; height: 20px;
-            border: 2px solid var(--color-primary);
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            animation: rotation 1s linear infinite;
+        /* Loader personnalisé */
+        .spinner-yaz {
+            font-size: 2rem;
+            animation: spin-yaz 2s linear infinite;
             display: inline-block;
+            color: var(--color-secondary);
         }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin-yaz { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Toast & Modal */
-        #toast { transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        
-        /* Splash Screen */
-        #splash-screen { transition: opacity 0.6s ease-out, visibility 0.6s; }
-        
-        .theme-gradient-text {
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--color-text-muted); border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
+        /* Modal & Dialogs */
+        #modal-backdrop.visible { opacity: 1; pointer-events: auto; }
+        #modal-content.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+
+        /* Quiz Specific */
+        .quiz-option {
+            transition: all 0.2s;
+            border: 2px solid var(--color-border);
         }
+        .quiz-option:hover:not([disabled]) {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary-light);
+        }
+        .quiz-option.correct { background: #10B981; border-color: #059669; color: white; }
+        .quiz-option.incorrect { background: #EF4444; border-color: #B91C1C; color: white; }
 
-        /* Custom Selection */
-        ::selection { background: var(--color-primary); color: white; }
+        /* Mobile tweaks */
+        @media (max-width: 640px) {
+            body { background-image: none; } /* Better perf on mobile */
+            .glass-panel { backdrop-filter: blur(8px); }
+        }
     </style>
 </head>
-<body class="pb-24 sm:pb-12 min-h-screen flex flex-col">
+<body class="antialiased min-h-screen pb-24 sm:pb-8 selection:bg-[var(--color-secondary)] selection:text-white">
 
-    <div id="splash-screen" class="fixed inset-0 bg-[var(--color-bg)] z-[200] flex flex-col items-center justify-center">
-        <div class="relative mb-4">
-            <div class="absolute inset-0 bg-[var(--color-primary)] blur-2xl opacity-20 rounded-full"></div>
-            <svg width="80" height="80" viewBox="0 0 100 100" class="relative text-[var(--color-primary)] animate-bounce">
-                <text x="50" y="80" font-size="80" text-anchor="middle" fill="currentColor" font-weight="bold">ⵣ</text>
-            </svg>
-        </div>
-        <h1 class="text-3xl font-serif font-bold text-[var(--color-heading)] tracking-wide">Inzan</h1>
-        <p class="text-[var(--color-text-light)] mt-2 animate-pulse">Chargement de la sagesse...</p>
+    <div id="splash-screen" class="fixed inset-0 bg-[var(--color-bg)] z-[200] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="text-[var(--color-primary)] text-8xl font-bold animate-pulse">ⵣ</div>
+        <h1 class="text-3xl font-serif text-[var(--color-heading)] mt-4 font-bold">Inzan</h1>
+        <p class="text-[var(--color-text-muted)]">Sagesse Kabyle</p>
     </div>
 
-    <nav class="hidden sm:block sticky top-4 z-40 max-w-2xl mx-auto">
-        <div class="mx-4 bg-[var(--color-bg-card)]/90 backdrop-blur-md border border-[var(--color-border)] rounded-full shadow-lg px-2 py-2 flex justify-between items-center">
-            <div class="flex space-x-1 w-full">
-                <button data-tab="accueil-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                    Accueil
-                </button>
-                <button data-tab="explorer-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    Explorer
-                </button>
-                <button data-tab="ai-sage-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    Sage AI
-                </button>
-                <button data-tab="favoris-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                    Favoris
-                </button>
-                <button data-tab="quiz-tab" class="nav-item flex-1 py-2.5 px-4 rounded-full text-sm transition-all duration-200 flex items-center justify-center gap-2 hover:bg-[var(--color-bg-alt)]">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                    Quiz
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-5xl mx-auto w-full px-4 pt-8 sm:pt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         
-        <header class="text-center mb-10 relative">
-            <button id="theme-toggle" class="absolute top-0 right-0 p-3 rounded-full bg-[var(--color-bg-card)] shadow-sm hover:shadow-md transition-all text-[var(--color-text)]" aria-label="Changer de thème">
-                <svg id="icon-sun" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            </button>
-            
-            <div class="inline-flex items-center justify-center gap-3 mb-2">
-                <span class="text-4xl animate-bounce">ⵣ</span>
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 py-4 relative">
+            <div class="flex items-center gap-4 mb-4 md:mb-0">
+                <div class="h-12 w-12 rounded-xl bg-[var(--color-primary)] flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-green-900/10">ⵣ</div>
+                <div>
+                    <h1 class="text-3xl font-bold text-[var(--color-heading)] tracking-tight">Inzan n Teqbaylit</h1>
+                    <p class="text-sm text-[var(--color-text-muted)] font-medium">L'héritage ancestral assisté par l'IA</p>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-serif font-bold text-[var(--color-heading)] mb-2">
-                Inzan <span class="theme-gradient-text">n Teqbaylit</span>
-            </h1>
-            <p class="text-[var(--color-text-light)] text-lg">L'héritage de la parole, guidé par l'intelligence.</p>
+            
+            <button id="theme-toggle" aria-label="Basculer le thème" class="p-3 rounded-full bg-[var(--color-bg-card)] text-[var(--color-text)] shadow-sm hover:shadow-md border border-[var(--color-border)] transition-transform active:scale-95">
+                <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
         </header>
 
-        <main id="main-content" class="min-h-[60vh]">
+        <nav class="hidden sm:flex justify-center mb-10 sticky top-4 z-40">
+            <div class="glass-panel px-2 py-1.5 rounded-full shadow-lg flex gap-1">
+                <button data-tab="accueil-tab" class="nav-pill px-6 py-2.5 text-sm font-semibold flex items-center gap-2 active">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Accueil
+                </button>
+                <button data-tab="explorer-tab" class="nav-pill px-6 py-2.5 text-sm font-semibold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg> Explorer
+                </button>
+                <button data-tab="ai-sage-tab" class="nav-pill px-6 py-2.5 text-sm font-semibold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg> Sage AI
+                </button>
+                <button data-tab="quiz-tab" class="nav-pill px-6 py-2.5 text-sm font-semibold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg> Quiz
+                </button>
+                <button data-tab="favoris-tab" class="nav-pill px-6 py-2.5 text-sm font-semibold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg> Favoris
+                </button>
+            </div>
+        </nav>
+
+        <main class="min-h-[60vh]">
             
-            <section id="accueil-tab" class="tab-content animate-in">
-                <div class="relative overflow-hidden rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-soft mb-8 group hover:shadow-lg transition-all duration-300">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)]"></div>
-                    <div class="absolute -right-10 -top-10 text-[var(--color-bg-alt)] opacity-50 transform rotate-12">
-                        <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M10 3.066c.823-.447 1.867.04 2.058.958.775 3.717 4.02 6.476 7.942 6.476v2c-4.803 0-8.885-3.308-9.916-7.925C9.87 3.55 8.94 3.622 8.94 3.622c-1.29 5.717-6.287 10.878-9.94 10.878v-2c2.893 0 6.73-3.716 8.204-8.358.387-1.217 1.47-1.457 2.8-.976z"/></svg>
+            <section id="accueil-tab" class="tab-content active">
+                <div class="text-center mb-12">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold text-sm mb-4 border border-[var(--color-primary)]/20">
+                        <span id="proverb-count">Chargement...</span> proverbes répertoriés
                     </div>
-                    
-                    <div class="p-6 sm:p-10 relative z-10 text-center">
-                        <div class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-[var(--color-accent)] uppercase bg-[var(--color-accent)]/10 rounded-full">
-                            Proverbe du Jour
-                        </div>
-                        <div id="proverb-of-the-day-card" class="flex flex-col items-center">
-                            <div class="skeleton h-8 w-3/4 mb-4 rounded"></div>
-                            <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-[var(--color-heading)] mb-6 leading-tight">
+                        La sagesse ancienne <br><span class="text-[var(--color-primary)]">pour les temps modernes</span>
+                    </h2>
+                </div>
+
+                <div class="max-w-3xl mx-auto mb-12">
+                    <div class="flex items-center gap-2 mb-2 px-2">
+                        <span class="h-px flex-1 bg-[var(--color-border)]"></span>
+                        <span class="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Proverbe du Jour</span>
+                        <span class="h-px flex-1 bg-[var(--color-border)]"></span>
+                    </div>
+                    <div id="proverb-of-the-day-card">
+                        <div class="card-proverb p-8 border-t-4 border-[var(--color-secondary)]">
+                            <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 skeleton"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 skeleton"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/10 rounded-xl p-6 flex items-start gap-4">
-                        <div class="bg-[var(--color-primary)]/20 p-3 rounded-lg text-[var(--color-primary)]">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--color-heading)]">Collection Riche</h3>
-                            <p class="text-sm text-[var(--color-text-light)] mt-1">Une base de données de <strong id="proverb-count" class="text-[var(--color-primary)]">...</strong> proverbes, numérisés pour la préservation de notre langue.</p>
-                        </div>
+                <div class="max-w-3xl mx-auto glass-panel p-6 rounded-2xl flex items-start gap-4">
+                    <div class="p-3 bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] rounded-lg shrink-0">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </div>
-                    <div class="bg-[var(--color-accent)]/5 border border-[var(--color-accent)]/10 rounded-xl p-6 flex items-start gap-4">
-                        <div class="bg-[var(--color-accent)]/20 p-3 rounded-lg text-[var(--color-accent)]">
-                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg text-[var(--color-heading)]">Intelligence Artificielle</h3>
-                            <p class="text-sm text-[var(--color-text-light)] mt-1">Utilisez notre "Sage Artificiel" pour trouver le proverbe parfait pour chaque situation ou générer des quiz.</p>
-                        </div>
+                    <div>
+                        <h3 class="font-bold text-[var(--color-heading)] text-lg">Source Authentique</h3>
+                        <p class="text-[var(--color-text-muted)] text-sm mt-1">
+                            Une grande partie de cette collection est issue de l'œuvre magistrale de <strong class="text-[var(--color-primary)]">Aomar SIDER</strong> : "INZAN amek i d-llan". Nous vous encourageons à soutenir l'auteur en achetant ses ouvrages en librairie.
+                        </p>
                     </div>
                 </div>
             </section>
 
-            <section id="explorer-tab" class="tab-content hidden">
-                <div class="sticky top-4 z-30 mb-6">
-                    <div class="bg-[var(--color-bg-card)]/90 backdrop-blur-lg border border-[var(--color-border)] rounded-xl shadow-lg p-2 sm:p-3">
-                        <div class="flex gap-2 mb-3">
+            <section id="explorer-tab" class="tab-content">
+                <div class="sticky top-[80px] sm:top-24 z-30 mb-8">
+                    <div class="glass-panel p-4 rounded-2xl shadow-xl">
+                        <div class="flex flex-col md:flex-row gap-3">
                             <div class="relative flex-grow group">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--color-text-light)] group-focus-within:text-[var(--color-primary)] transition-colors">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--color-text-muted)] group-focus-within:text-[var(--color-primary)] transition-colors">
                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 </div>
-                                <input type="text" id="search-input" placeholder="Chercher un mot, un thème..." class="block w-full pl-10 pr-10 py-3 bg-[var(--color-bg-alt)] border-none rounded-lg focus:ring-2 focus:ring-[var(--color-primary)] focus:bg-[var(--color-bg-card)] transition-all placeholder-gray-400 text-[var(--color-text)] font-medium">
-                                <button class="clear-search-btn absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 opacity-0 transition-opacity">
-                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                                <input type="text" id="search-input" 
+                                    class="block w-full pl-10 pr-10 py-3 bg-[var(--color-bg)] border-2 border-transparent focus:border-[var(--color-primary)] rounded-xl focus:ring-0 focus:outline-none transition-all placeholder-gray-400 text-[var(--color-heading)]" 
+                                    placeholder="Rechercher (ex: tagmat, frère, 'gh'='ɣ')...">
+                                <button id="clear-search-btn" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 opacity-0 transition-opacity pointer-events-none">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                                 </button>
                             </div>
-                            <button id="random-btn" class="bg-[var(--color-accent)] hover:bg-yellow-500 text-white px-4 sm:px-6 rounded-lg font-bold shadow-md transition-transform active:scale-95 flex items-center justify-center" aria-label="Aléatoire">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            <button id="random-btn" class="px-6 py-3 bg-[var(--color-secondary)] hover:bg-yellow-600 text-white font-bold rounded-xl shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                                <span>Aléatoire</span>
                             </button>
                         </div>
                         
-                        <div class="relative">
-                            <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[var(--color-bg-card)] to-transparent z-10 pointer-events-none"></div>
-                            <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[var(--color-bg-card)] to-transparent z-10 pointer-events-none"></div>
-                            <div id="theme-list-container" class="flex overflow-x-auto gap-2 py-1 px-2 no-scrollbar scroll-smooth">
-                                <div class="skeleton h-8 w-20 rounded-full flex-shrink-0"></div>
-                                <div class="skeleton h-8 w-24 rounded-full flex-shrink-0"></div>
-                                <div class="skeleton h-8 w-16 rounded-full flex-shrink-0"></div>
+                        <div class="mt-4 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide" id="theme-list-container">
                             </div>
-                        </div>
                     </div>
                 </div>
 
-                <div id="results-feedback" class="h-6 mb-4 text-center text-sm text-[var(--color-text-light)] font-medium"></div>
+                <div id="results-feedback" class="h-6 mb-2 text-center text-sm text-[var(--color-text-muted)] font-medium"></div>
 
-                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 gap-5 pb-10">
-                    <div id="initial-load-message" class="col-span-1 md:col-span-2 flex flex-col items-center justify-center py-20 text-[var(--color-text-light)] opacity-60">
-                        <svg class="w-16 h-16 mb-4 text-[var(--color-border)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                        <p class="text-lg">Commencez à taper ou choisissez un thème.</p>
+                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
+                    <div id="initial-load-message" class="col-span-full text-center py-20 text-[var(--color-text-muted)]">
+                        <div class="text-6xl mb-4 opacity-20">ⵣ</div>
+                        <p class="text-xl">Tapez un mot ou choisissez un thème.</p>
                     </div>
                 </div>
-
-                <div id="infinite-scroll-loader" class="hidden py-8 text-center">
-                     <div class="loader"></div>
-                </div>
-
-                <div id="no-results" class="hidden text-center py-12">
-                    <div class="bg-[var(--color-bg-card)] rounded-full p-4 inline-block mb-4 shadow-sm">
-                        <span class="text-4xl">🤔</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-[var(--color-heading)]">Aucun résultat</h3>
-                    <p class="text-[var(--color-text-light)] mt-2">Essayez un autre mot-clé ou retirez les filtres.</p>
+                
+                <div id="infinite-scroll-loader" class="text-center py-8 hidden">
+                    <div class="spinner-yaz">ⵣ</div>
                 </div>
             </section>
 
-            <section id="ai-sage-tab" class="tab-content hidden">
+            <section id="ai-sage-tab" class="tab-content">
                 <div class="max-w-2xl mx-auto">
-                    <div class="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-lg overflow-hidden">
-                        <div class="p-6 bg-gradient-to-br from-[var(--color-primary)]/10 to-transparent border-b border-[var(--color-border)]">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-[var(--color-primary)] text-white p-2 rounded-lg shadow-md">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                                </div>
-                                <div>
-                                    <h2 class="text-xl font-bold text-[var(--color-heading)]">Le Sage Artificiel</h2>
-                                    <p class="text-xs text-[var(--color-text-light)]">Propulsé par Gemini AI</p>
-                                </div>
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-serif font-bold text-[var(--color-primary)] mb-2">Le Sage Artificiel</h2>
+                        <p class="text-[var(--color-text-muted)]">Décrivez votre situation, l'IA trouvera le proverbe parfait.</p>
+                    </div>
+
+                    <div class="glass-panel p-1 rounded-2xl shadow-xl mb-8">
+                        <div class="bg-[var(--color-bg)] rounded-xl p-4">
+                            <textarea id="ai-context-input" rows="3" class="w-full bg-transparent border-none focus:ring-0 text-lg resize-none placeholder-gray-400" placeholder="Ex: Mon ami promet beaucoup mais ne fait rien..."></textarea>
+                            <div class="flex justify-between items-center mt-2 pt-2 border-t border-[var(--color-border)]">
+                                <span class="text-xs text-[var(--color-text-muted)] flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg>
+                                    Powered by Gemini
+                                </span>
+                                <button id="ai-suggest-btn" class="bg-[var(--color-primary)] hover:bg-green-800 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <span>Consulter</span>
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                </button>
                             </div>
-                        </div>
-
-                        <div class="p-6">
-                            <div class="mb-6 relative">
-                                <label for="ai-context-input" class="block text-sm font-semibold text-[var(--color-text)] mb-2">Quelle est votre situation ?</label>
-                                <textarea id="ai-context-input" rows="3" class="w-full p-4 bg-[var(--color-bg-alt)] border border-transparent rounded-xl focus:bg-[var(--color-bg-card)] focus:ring-2 focus:ring-[var(--color-primary)] transition-all resize-none text-base" placeholder="Ex: Mon ami me promet des choses mais ne les fait jamais..."></textarea>
-                            </div>
-
-                            <button id="ai-suggest-btn" class="w-full py-3 px-6 bg-[var(--color-heading)] text-[var(--color-bg)] font-bold rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
-                                <span>✨ Demander conseil au Sage</span>
-                            </button>
-
-                            <div id="ai-step-feedback" class="mt-4 text-center text-xs text-[var(--color-primary)] font-mono min-h-[20px] transition-all"></div>
                         </div>
                     </div>
 
-                    <div id="ai-result-feedback" class="mt-8 space-y-4 animate-in"></div>
+                    <div id="ai-step-feedback" class="text-center text-sm font-semibold text-[var(--color-secondary)] mb-4 min-h-[20px]"></div>
+                    <div id="ai-result-feedback" class="space-y-4"></div>
                 </div>
             </section>
 
-            <section id="favoris-tab" class="tab-content hidden">
-                <h2 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-6 px-2 border-l-4 border-[var(--color-primary)] pl-4">Vos proverbes gardés</h2>
-                <div id="favorites-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
-                <div id="no-favorites" class="hidden text-center py-16 bg-[var(--color-bg-card)] rounded-2xl border border-dashed border-[var(--color-border)]">
-                    <p class="text-[var(--color-text-light)] mb-4">Votre collection est vide pour le moment.</p>
-                    <button id="go-to-explorer-btn" class="text-[var(--color-primary)] font-bold hover:underline">Explorer la bibliothèque</button>
-                </div>
-            </section>
-
-            <section id="quiz-tab" class="tab-content hidden">
-                <div id="quiz-container" class="max-w-2xl mx-auto bg-[var(--color-bg-card)] rounded-2xl shadow-lg border border-[var(--color-border)] p-6 sm:p-8 min-h-[400px] flex flex-col justify-center">
-                     <div class="text-center">
-                        <div class="loader text-[var(--color-text-light)]"></div>
-                        <p class="mt-4 text-sm text-[var(--color-text-light)]">Préparation du défi...</p>
+            <section id="quiz-tab" class="tab-content">
+                <div id="quiz-container" class="max-w-2xl mx-auto">
+                    <div class="text-center py-12">
+                         <div class="spinner-yaz mb-4">ⵣ</div>
+                         <p>Initialisation du module Quiz...</p>
                     </div>
+                </div>
+            </section>
+
+            <section id="favoris-tab" class="tab-content">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)]">Vos Trésors ❤️</h2>
+                </div>
+                <div id="favorites-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                <div id="no-favorites" class="text-center py-20 hidden">
+                    <p class="text-xl text-[var(--color-text-muted)] mb-4">Votre collection est vide.</p>
+                    <button class="text-[var(--color-primary)] font-bold hover:underline" onclick="document.querySelector('[data-tab=explorer-tab]').click()">Aller explorer</button>
                 </div>
             </section>
 
         </main>
 
-        <footer class="mt-16 text-center text-sm text-[var(--color-text-light)] border-t border-[var(--color-border)] pt-8 pb-20 sm:pb-8">
-            <p>© 2025 Inzan n Teqbaylit. Développé avec ❤️ par TAMAZIRT Boussad.</p>
-            <button id="about-btn" class="mt-2 text-[var(--color-primary)] hover:underline text-xs">À propos de la source</button>
+        <footer class="mt-20 border-t border-[var(--color-border)] py-8 text-center text-sm text-[var(--color-text-muted)]">
+            <p>&copy; 2025 Inzan n Teqbaylit. Développé avec ⵣ par TAMAZIRT Boussad.</p>
         </footer>
     </div>
 
-    <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-card)]/95 backdrop-blur-xl border-t border-[var(--color-border)] pb-safe">
-        <div class="flex justify-around items-center h-16 px-2">
-            <button data-tab="accueil-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                <span class="text-[10px] font-medium">Accueil</span>
+    <nav class="sm:hidden fixed bottom-4 left-4 right-4 z-50">
+        <div class="glass-panel rounded-2xl shadow-2xl flex justify-around items-center p-2 border border-white/20">
+            <button data-tab="accueil-tab" class="nav-btn-mobile flex-1 p-2 rounded-xl flex flex-col items-center gap-1 text-[var(--color-text-muted)] active">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span class="text-[10px] font-bold">Accueil</span>
             </button>
-            <button data-tab="explorer-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <span class="text-[10px] font-medium">Explorer</span>
+            <button data-tab="explorer-tab" class="nav-btn-mobile flex-1 p-2 rounded-xl flex flex-col items-center gap-1 text-[var(--color-text-muted)]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <span class="text-[10px] font-bold">Explorer</span>
             </button>
-            <button data-tab="ai-sage-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
-                <div class="bg-[var(--color-heading)] text-[var(--color-bg)] rounded-xl p-1 mb-1 shadow-md transform -translate-y-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <button data-tab="ai-sage-tab" class="nav-btn-mobile flex-1 p-2 rounded-xl flex flex-col items-center gap-1 text-[var(--color-text-muted)]">
+                <div class="bg-[var(--color-primary)] text-white p-2 rounded-full -mt-8 shadow-lg border-4 border-[var(--color-bg)]">
+                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
             </button>
-            <button data-tab="favoris-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                <span class="text-[10px] font-medium">Favoris</span>
+            <button data-tab="quiz-tab" class="nav-btn-mobile flex-1 p-2 rounded-xl flex flex-col items-center gap-1 text-[var(--color-text-muted)]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                <span class="text-[10px] font-bold">Quiz</span>
             </button>
-            <button data-tab="quiz-tab" class="nav-item mobile w-full h-full flex flex-col items-center justify-center text-[var(--color-text-light)] gap-1">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                <span class="text-[10px] font-medium">Quiz</span>
+            <button data-tab="favoris-tab" class="nav-btn-mobile flex-1 p-2 rounded-xl flex flex-col items-center gap-1 text-[var(--color-text-muted)]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <span class="text-[10px] font-bold">Favoris</span>
             </button>
         </div>
     </nav>
 
-    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-gray-900 text-white py-3 px-6 rounded-full shadow-xl opacity-0 pointer-events-none z-[60] flex items-center gap-3 min-w-[200px] justify-center">
-        <p class="text-sm font-medium">Notification</p>
+    <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl transform -translate-y-20 opacity-0 transition-all duration-300 z-[100] flex items-center gap-3">
+        <span id="toast-icon">✨</span>
+        <p id="toast-msg" class="text-sm font-medium">Notification</p>
     </div>
 
     <div id="modal-backdrop" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-2xl max-h-[80vh] bg-[var(--color-bg-card)] rounded-2xl shadow-2xl z-[101] opacity-0 scale-95 pointer-events-none transition-all duration-300 flex flex-col border border-[var(--color-border)]">
-        <header class="flex justify-between items-center p-5 border-b border-[var(--color-border)]">
-            <h2 id="modal-title" class="text-xl font-bold font-serif text-[var(--color-heading)]">Titre</h2>
-            <button id="modal-close-btn" class="p-2 rounded-full hover:bg-[var(--color-bg-alt)] text-[var(--color-text-light)]">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    <div id="modal-content" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-[var(--color-bg-card)] rounded-2xl shadow-2xl z-[101] opacity-0 scale-95 pointer-events-none transition-all duration-300 flex flex-col max-h-[85vh] border border-[var(--color-border)]">
+        <div class="p-6 border-b border-[var(--color-border)] flex justify-between items-center bg-[var(--color-bg-glass)] rounded-t-2xl">
+            <h3 id="modal-title" class="text-xl font-bold font-serif text-[var(--color-heading)]">Titre</h3>
+            <button id="modal-close" class="p-2 hover:bg-black/5 rounded-full transition-colors text-[var(--color-text-muted)]">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-        </header>
-        <div id="modal-body" class="p-6 overflow-y-auto text-[var(--color-text)] leading-relaxed"></div>
+        </div>
+        <div id="modal-body" class="p-6 overflow-y-auto custom-scrollbar prose prose-sm dark:prose-invert max-w-none">
+            </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- CONFIGURATION & VARIABLES ---
-            const CONFIG = {
-                GEMINI_API_KEY: "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4", // Note: À sécuriser coté serveur en prod idéalement
-                PROVERBS_PER_PAGE: 40,
-                ANIMATION_DELAY: 30
-            };
+    /**
+     * INZAN APP LOGIC
+     * Structure:
+     * 1. State Management
+     * 2. Utility Functions (Normalization, Debounce)
+     * 3. DOM Elements
+     * 4. Core Features (Search, Render, Favorites)
+     * 5. API Logic (Gemini)
+     * 6. Quiz Logic
+     * 7. Initialization
+     */
 
-            const dom = {
-                html: document.documentElement,
-                splashScreen: document.getElementById('splash-screen'),
-                navButtons: document.querySelectorAll('.nav-item'),
-                tabContents: document.querySelectorAll('.tab-content'),
-                searchInput: document.getElementById('search-input'),
-                clearSearchBtn: document.querySelector('.clear-search-btn'),
-                resultsContainer: document.getElementById('results-container'),
-                themeListContainer: document.getElementById('theme-list-container'),
-                loaderContainer: document.getElementById('infinite-scroll-loader'),
-                proverbOfTheDayCard: document.getElementById('proverb-of-the-day-card'),
-                modal: {
-                    backdrop: document.getElementById('modal-backdrop'),
-                    content: document.getElementById('modal-content'),
-                    title: document.getElementById('modal-title'),
-                    body: document.getElementById('modal-body'),
-                    closeBtn: document.getElementById('modal-close-btn')
-                },
-                toast: document.getElementById('toast'),
-                themeToggle: document.getElementById('theme-toggle'),
-                ai: {
-                    input: document.getElementById('ai-context-input'),
-                    btn: document.getElementById('ai-suggest-btn'),
-                    step: document.getElementById('ai-step-feedback'),
-                    result: document.getElementById('ai-result-feedback')
-                },
-                quizContainer: document.getElementById('quiz-container')
-            };
+    document.addEventListener('DOMContentLoaded', () => {
 
-            const state = {
-                proverbs: [],
-                filteredProverbs: [],
-                favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
-                activeTheme: localStorage.getItem('inzan_theme_filter') || 'tous',
-                currentPage: 0,
-                isLoading: false,
-                isDataLoaded: false,
-                aiQuiz: { questions: [], current: 0, score: 0, loading: false, promise: null }
-            };
+        // --- 1. STATE MANAGEMENT ---
+        const state = {
+            proverbs: [],
+            favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
+            filter: {
+                theme: localStorage.getItem('inzan_theme_filter') || 'tous',
+                search: ''
+            },
+            pagination: {
+                current: 0,
+                perPage: 40,
+                activeList: []
+            },
+            quiz: {
+                questions: [],
+                score: 0,
+                index: 0,
+                loading: false,
+                promise: null
+            },
+            loading: false,
+            dataLoaded: false
+        };
 
-            // --- INITIALISATION ---
-            const init = async () => {
-                applyTheme(localStorage.getItem('inzan_theme') || 'light');
-                setupEventListeners();
-                
-                try {
-                    const response = await fetch('proverbs.json');
-                    if (!response.ok) throw new Error('Erreur réseau');
-                    const data = await response.json();
-                    
-                    state.proverbs = data.map((p, i) => ({
-                        ...p,
-                        id: i,
-                        searchString: `${normalize(p.kabyle)} ${normalize(p.francais)} ${normalize(p.theme)}`
-                    }));
-                    state.isDataLoaded = true;
-                    
-                    updateUIWithData();
-                    // Préchargement silencieux du quiz
-                    preloadQuiz();
-                    
-                    setTimeout(() => {
-                        dom.splashScreen.style.opacity = '0';
-                        dom.splashScreen.style.visibility = 'hidden';
-                    }, 800);
-
-                } catch (err) {
-                    console.error("Erreur fatale:", err);
-                    dom.splashScreen.innerHTML = `<p class="text-red-500 font-bold">Erreur de chargement des données.</p>`;
-                }
-            };
-
-            const updateUIWithData = () => {
-                document.getElementById('proverb-count').textContent = state.proverbs.length;
-                renderThemes();
-                loadDailyProverb();
-                
-                // Si un thème était déjà sélectionné, charger les résultats
-                if (state.activeTheme !== 'tous') {
-                   dom.searchInput.value = ''; // Reset search if filter applies
-                   filterAndRender(true);
-                }
-            };
-
-            // --- LOGIQUE UI ---
-            const createCardHTML = (proverb, isDaily = false) => {
-                const isFav = state.favorites.has(proverb.id);
-                const themeBadge = proverb.theme ? `<span class="inline-block px-2 py-0.5 bg-[var(--color-bg-alt)] text-[10px] font-bold text-[var(--color-text-light)] uppercase tracking-wider rounded-md mb-2">${proverb.theme}</span>` : '';
-                
-                if (isDaily) {
-                    return `
-                        <div class="text-center animate-in">
-                            <p class="text-2xl md:text-3xl kabyle-text font-bold text-[var(--color-heading)] mb-4">« ${proverb.kabyle} »</p>
-                            <p class="text-lg text-[var(--color-text)] italic font-light mb-6">"${proverb.francais}"</p>
-                            <div class="flex justify-center gap-3">
-                                <button onclick="explainProverb(${proverb.id})" class="px-4 py-2 bg-[var(--color-primary)] text-white rounded-full text-sm font-bold shadow-md hover:scale-105 transition-transform">Décrypter le sens</button>
-                                <button onclick="toggleFavorite(${proverb.id})" class="p-2 rounded-full bg-[var(--color-bg-alt)] hover:bg-pink-50 text-${isFav ? 'pink-500' : 'gray-400'} transition-colors">
-                                    <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                return `
-                    <div class="card-hover bg-[var(--color-bg-card)] border border-[var(--color-border)] p-5 rounded-xl flex flex-col h-full relative group" data-id="${proverb.id}">
-                        ${themeBadge}
-                        <blockquote class="kabyle-text text-xl font-bold text-[var(--color-heading)] mb-3 flex-grow relative z-10">
-                            « ${highlight(proverb.kabyle)} »
-                        </blockquote>
-                        <p class="text-[var(--color-text-light)] text-sm mb-4 pb-4 border-b border-[var(--color-border)]">
-                            ${highlight(proverb.francais)}
-                        </p>
-                        <div class="flex justify-between items-center mt-auto">
-                            <button onclick="explainProverb(${proverb.id})" class="text-xs font-bold text-[var(--color-primary)] flex items-center gap-1 hover:underline">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                Explication
-                            </button>
-                            <div class="flex gap-1">
-                                <button onclick="copyProverb(${proverb.id})" class="p-2 rounded-lg hover:bg-[var(--color-bg-alt)] text-[var(--color-text-light)]" title="Copier">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                                </button>
-                                <button onclick="toggleFavorite(${proverb.id}, this)" class="p-2 rounded-lg hover:bg-pink-50 text-${isFav ? 'pink-500' : 'gray-300'} transition-colors" title="Favoris">
-                                    <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            };
-
-            const getSkeletonCards = (count = 4) => {
-                return Array(count).fill(0).map(() => `
-                    <div class="bg-[var(--color-bg-card)] border border-[var(--color-border)] p-5 rounded-xl h-40 flex flex-col justify-between">
-                        <div class="skeleton h-4 w-20 rounded mb-4"></div>
-                        <div class="skeleton h-6 w-full rounded mb-2"></div>
-                        <div class="skeleton h-6 w-2/3 rounded mb-4"></div>
-                        <div class="flex justify-between mt-auto pt-4 border-t border-[var(--color-border)]">
-                            <div class="skeleton h-4 w-20 rounded"></div>
-                            <div class="skeleton h-6 w-6 rounded-full"></div>
-                        </div>
-                    </div>
-                `).join('');
-            };
-
-            const filterAndRender = (reset = false) => {
-                if (reset) {
-                    state.currentPage = 0;
-                    state.filteredProverbs = [];
-                    dom.resultsContainer.innerHTML = getSkeletonCards(6); // Show skeleton
-                    document.getElementById('initial-load-message').classList.add('hidden');
-                    document.getElementById('no-results').classList.add('hidden');
-                }
-
-                // Logique de filtrage
-                const query = normalize(dom.searchInput.value);
-                const theme = state.activeTheme;
-
-                // On ne filtre que si c'est un reset, sinon on a déjà la liste filtrée
-                if (reset) {
-                    state.filteredProverbs = state.proverbs.filter(p => {
-                        const matchesTheme = theme === 'tous' || normalize(p.theme).includes(theme);
-                        const matchesQuery = !query || p.searchString.includes(query);
-                        return matchesTheme && matchesQuery;
-                    });
-                }
-
-                const start = state.currentPage * CONFIG.PROVERBS_PER_PAGE;
-                const end = start + CONFIG.PROVERBS_PER_PAGE;
-                const chunk = state.filteredProverbs.slice(start, end);
-
-                if (reset) dom.resultsContainer.innerHTML = ''; // Clear skeleton
-
-                if (state.filteredProverbs.length === 0) {
-                    document.getElementById('no-results').classList.remove('hidden');
-                    dom.resultsContainer.innerHTML = '';
-                } else {
-                    const html = chunk.map((p, i) => {
-                        const el = createCardHTML(p);
-                        // Ajout d'un délai pour l'animation en cascade
-                        return el.replace('card-hover', `card-hover animate-in" style="animation-delay: ${i * 50}ms`);
-                    }).join('');
-                    dom.resultsContainer.insertAdjacentHTML('beforeend', html);
-                    state.currentPage++;
-                }
-
-                dom.loaderContainer.classList.toggle('hidden', end >= state.filteredProverbs.length);
-            };
-
-            // --- GESTION DES THÈMES ET UI ---
-            const renderThemes = () => {
-                const themes = [...new Set(state.proverbs.flatMap(p => p.theme ? p.theme.split(',').map(t=>t.trim()) : []))].sort();
-                let html = `<button data-theme="tous" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${state.activeTheme === 'tous' ? 'bg-[var(--color-heading)] text-[var(--color-bg)]' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-primary)]'}">Tous</button>`;
-                
-                themes.forEach(t => {
-                    const norm = normalize(t);
-                    const isActive = state.activeTheme === norm;
-                    html += `<button data-theme="${norm}" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? 'bg-[var(--color-heading)] text-[var(--color-bg)]' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-primary)]'}">${t.charAt(0).toUpperCase() + t.slice(1)}</button>`;
-                });
-                dom.themeListContainer.innerHTML = html;
-            };
-
-            // --- NAVIGATION & EVENTS ---
-            const setupEventListeners = () => {
-                // Onglets
-                dom.navButtons.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const targetTab = btn.dataset.tab || e.currentTarget.dataset.tab;
-                        switchTab(targetTab);
-                    });
-                });
-
-                // Recherche
-                dom.searchInput.addEventListener('input', debounce(() => {
-                    dom.clearSearchBtn.style.opacity = dom.searchInput.value ? '1' : '0';
-                    filterAndRender(true);
-                }, 300));
-
-                dom.clearSearchBtn.addEventListener('click', () => {
-                    dom.searchInput.value = '';
-                    dom.clearSearchBtn.style.opacity = '0';
-                    filterAndRender(true);
-                });
-
-                // Filtres Thèmes
-                dom.themeListContainer.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'BUTTON') {
-                        state.activeTheme = e.target.dataset.theme;
-                        localStorage.setItem('inzan_theme_filter', state.activeTheme);
-                        renderThemes(); // Re-render to update active class
-                        dom.searchInput.value = ''; // Clear search text on theme switch usually implies reset
-                        switchTab('explorer-tab'); // Ensure we are on explorer
-                        filterAndRender(true);
-                    }
-                });
-                
-                // Infinite Scroll
-                const observer = new IntersectionObserver(entries => {
-                    if(entries[0].isIntersecting) filterAndRender(false);
-                }, { rootMargin: '100px' });
-                observer.observe(dom.loaderContainer);
-
-                // Bouton Aléatoire
-                document.getElementById('random-btn').addEventListener('click', () => {
-                    dom.searchInput.value = '';
-                    state.activeTheme = 'tous';
-                    renderThemes();
-                    state.filteredProverbs = state.proverbs.sort(() => 0.5 - Math.random());
-                    state.currentPage = 0;
-                    dom.resultsContainer.innerHTML = '';
-                    filterAndRender(false); // Render first chunk of shuffled
-                });
-
-                // Dark Mode
-                dom.themeToggle.addEventListener('click', () => {
-                    const isDark = dom.html.classList.toggle('dark');
-                    applyTheme(isDark ? 'dark' : 'light');
-                });
-
-                // AI & Quiz
-                dom.ai.btn.addEventListener('click', handleAIRequest);
-                
-                // Modal & Globals
-                dom.modal.closeBtn.addEventListener('click', closeModal);
-                dom.modal.backdrop.addEventListener('click', closeModal);
-                
-                // Exposer les fonctions globales pour les onclick HTML
-                window.explainProverb = getAIExplanation;
-                window.toggleFavorite = toggleFavorite;
-                window.copyProverb = copyProverb;
-            };
-
-            const switchTab = (tabId) => {
-                window.scrollTo({top: 0, behavior: 'smooth'});
-                dom.tabContents.forEach(el => el.classList.add('hidden'));
-                document.getElementById(tabId).classList.remove('hidden');
-                
-                dom.navButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.tab === tabId);
-                    // Gestion icône active mobile
-                    if(btn.classList.contains('mobile')) {
-                        btn.style.color = btn.dataset.tab === tabId ? 'var(--color-primary)' : '';
-                    }
-                });
-
-                if (tabId === 'favoris-tab') renderFavorites();
-                if (tabId === 'quiz-tab') startQuizUI();
-            };
-
-            // --- FONCTIONS AI (GEMINI) ---
-            async function callGemini(prompt, isJson = false) {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: isJson ? { responseMimeType: "application/json" } : {}
-                };
-
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!res.ok) throw new Error('API Limit or Error');
-                const data = await res.json();
-                const text = data.candidates[0].content.parts[0].text;
-                return isJson ? JSON.parse(text) : text;
-            }
-
-            async function handleAIRequest() {
-                const ctx = dom.ai.input.value.trim();
-                if(!ctx) return showToast("Décrivez d'abord une situation", true);
-                
-                dom.ai.btn.disabled = true;
-                dom.ai.btn.innerHTML = '<span class="loader border-white w-4 h-4 mr-2"></span> Réflexion...';
-                dom.ai.step.textContent = "Analyse sémantique en cours...";
-
-                try {
-                    // Etape 1 : Mots clés
-                    const keywordPrompt = `Situation: "${ctx}". Donne-moi un objet JSON { "keywords": ["mot1", "mot2", "mot3"] } (français ou kabyle) pour trouver des proverbes kabyles liés.`;
-                    const { keywords } = await callGemini(keywordPrompt, true);
-                    
-                    dom.ai.step.textContent = `Recherche locale : ${keywords.join(', ')}`;
-                    
-                    // Etape 2 : Filtrage local
-                    const candidates = state.proverbs.filter(p => 
-                        keywords.some(k => p.searchString.includes(normalize(k)))
-                    ).slice(0, 20); // Top 20
-
-                    if(candidates.length === 0) throw new Error("Aucun proverbe trouvé localement.");
-
-                    // Etape 3 : Sélection finale
-                    dom.ai.step.textContent = "Le sage sélectionne le meilleur proverbe...";
-                    const selectionPrompt = `Context: "${ctx}". Liste: ${JSON.stringify(candidates.map(c => ({id:c.id, k:c.kabyle, f:c.francais})))}. Choisis le ou les meilleurs (max 2). JSON: { "response": "Phrase de sage", "matches": [{ "id": 123, "reason": "Pourquoi" }] }`;
-                    
-                    const final = await callGemini(selectionPrompt, true);
-                    
-                    let html = `<div class="bg-[var(--color-primary)]/10 p-4 rounded-lg mb-6 border-l-4 border-[var(--color-primary)]"><p class="italic text-[var(--color-heading)] font-serif">"${final.response}"</p></div>`;
-                    
-                    final.matches.forEach(m => {
-                        const p = state.proverbs.find(x => x.id === m.id);
-                        if(p) {
-                            html += createCardHTML(p).replace('bg-[var(--color-bg-card)]', 'bg-white dark:bg-gray-800 shadow-lg transform scale-100 mb-4');
-                            html += `<p class="text-sm text-[var(--color-text-light)] mt-2 mb-6 px-4">💡 ${m.reason}</p>`;
-                        }
-                    });
-                    
-                    dom.ai.result.innerHTML = html;
-
-                } catch (e) {
-                    dom.ai.result.innerHTML = `<p class="text-red-500 text-center">Le sage est confus. Essayez de reformuler. (${e.message})</p>`;
-                } finally {
-                    dom.ai.btn.disabled = false;
-                    dom.ai.btn.innerHTML = '✨ Demander conseil au Sage';
-                    dom.ai.step.textContent = '';
-                }
-            }
-
-            async function getAIExplanation(id) {
-                const p = state.proverbs.find(x => x.id === id);
-                openModal("Décryptage", `<div class="flex justify-center py-10"><div class="loader"></div></div>`);
-                
-                try {
-                    const explanation = await callGemini(`Explique ce proverbe kabyle de façon culturelle et concise. Utilise le format Markdown. Proverbe: "${p.kabyle}" (${p.francais})`);
-                    // Convert simple markdown to HTML
-                    const html = explanation
-                        .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold text-[var(--color-primary)] mt-4 mb-2">$1</h3>')
-                        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
-                        .replace(/\n/g, '<br>');
-                    
-                    document.getElementById('modal-body').innerHTML = `
-                        <div class="text-center mb-6 p-4 bg-[var(--color-bg-alt)] rounded-xl">
-                            <p class="font-serif font-bold text-xl mb-2">« ${p.kabyle} »</p>
-                            <p class="text-sm text-[var(--color-text-light)]">${p.francais}</p>
-                        </div>
-                        <div class="prose dark:prose-invert max-w-none text-sm sm:text-base">
-                            ${html}
-                        </div>
-                    `;
-                } catch (e) {
-                    document.getElementById('modal-body').innerHTML = `<p class="text-red-500">Erreur de connexion au Sage.</p>`;
-                }
-            }
-
-            // --- QUIZ LOGIC ---
-            async function preloadQuiz() {
-               if(state.aiQuiz.promise) return state.aiQuiz.promise;
-               
-               state.aiQuiz.promise = (async () => {
-                   const sample = state.proverbs.sort(()=>0.5-Math.random()).slice(0, 15).map(p=>({k:p.kabyle, f:p.francais}));
-                   const prompt = `Génère 5 questions QCM JSON basées sur ces proverbes: ${JSON.stringify(sample)}. Format: { "questions": [{ "q": "Question text", "opts": ["A", "B", "C"], "idx": 0, "exp": "Explanation" }] }`;
-                   const data = await callGemini(prompt, true);
-                   state.aiQuiz.questions = data.questions;
-               })();
-               return state.aiQuiz.promise;
-            }
-
-            async function startQuizUI() {
-                dom.quizContainer.innerHTML = `<div class="text-center"><div class="loader"></div><p class="mt-2 text-sm opacity-70">Préparation...</p></div>`;
-                try {
-                    await preloadQuiz();
-                    state.aiQuiz.current = 0;
-                    state.aiQuiz.score = 0;
-                    renderQuestion();
-                } catch(e) {
-                    dom.quizContainer.innerHTML = `<p class="text-center text-red-500">Erreur de génération du quiz.</p><button onclick="location.reload()" class="mt-4 btn-primary">Réessayer</button>`;
-                }
-            }
-
-            function renderQuestion() {
-                const q = state.aiQuiz.questions[state.aiQuiz.current];
-                if(!q) return showQuizResults();
-
-                dom.quizContainer.innerHTML = `
-                    <div class="mb-6 flex justify-between items-center">
-                        <span class="text-xs font-bold text-[var(--color-text-light)]">QUESTION ${state.aiQuiz.current + 1}/5</span>
-                        <span class="text-xs font-bold text-[var(--color-primary)]">SCORE: ${state.aiQuiz.score}</span>
-                    </div>
-                    <h3 class="text-xl font-serif font-bold text-[var(--color-heading)] mb-6 text-center">${q.q}</h3>
-                    <div class="space-y-3">
-                        ${q.opts.map((opt, i) => `
-                            <button class="quiz-opt w-full p-4 rounded-xl border border-[var(--color-border)] text-left hover:bg-[var(--color-bg-alt)] transition-all font-medium" onclick="handleAnswer(${i})">${opt}</button>
-                        `).join('')}
-                    </div>
-                    <div id="quiz-feedback" class="mt-4 hidden"></div>
-                `;
-            }
-
-            window.handleAnswer = (idx) => {
-                const q = state.aiQuiz.questions[state.aiQuiz.current];
-                const isCorrect = idx === q.idx;
-                if(isCorrect) state.aiQuiz.score++;
-                
-                const opts = document.querySelectorAll('.quiz-opt');
-                opts.forEach((btn, i) => {
-                    btn.disabled = true;
-                    if(i === q.idx) btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
-                    else if(i === idx && !isCorrect) btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
-                });
-
-                const feedback = document.getElementById('quiz-feedback');
-                feedback.classList.remove('hidden');
-                feedback.innerHTML = `
-                    <div class="p-3 rounded-lg ${isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'} mb-3 text-sm">
-                        <strong>${isCorrect ? 'Bravo !' : 'Oups...'}</strong> ${q.exp}
-                    </div>
-                    <button onclick="nextQuestion()" class="w-full py-3 bg-[var(--color-heading)] text-[var(--color-bg)] rounded-lg font-bold">Continuer</button>
-                `;
-            };
-
-            window.nextQuestion = () => {
-                state.aiQuiz.current++;
-                renderQuestion();
-            };
-
-            function showQuizResults() {
-                state.aiQuiz.promise = null; // Reset for new game
-                preloadQuiz(); // Preload next game
-                dom.quizContainer.innerHTML = `
-                    <div class="text-center py-10 animate-in">
-                        <div class="text-6xl mb-4">${state.aiQuiz.score >= 3 ? '🏆' : '📚'}</div>
-                        <h2 class="text-3xl font-bold text-[var(--color-heading)] mb-2">Score: ${state.aiQuiz.score}/5</h2>
-                        <p class="text-[var(--color-text-light)] mb-8">${state.aiQuiz.score === 5 ? 'Un vrai sage kabyle !' : 'La sagesse s\'acquiert avec le temps.'}</p>
-                        <button onclick="startQuizUI()" class="px-8 py-3 bg-[var(--color-primary)] text-white rounded-full font-bold shadow-lg hover:scale-105 transition-transform">Rejouer</button>
-                    </div>
-                `;
-            }
-
-            // --- UTILITAIRES ---
-            function normalize(str) { return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : ""; }
-            function highlight(text) {
-                const q = normalize(dom.searchInput.value).split(' ').filter(x=>x);
-                if(!q.length) return text;
-                const regex = new RegExp(`(${q.join('|')})`, 'gi');
-                return text.replace(regex, '<mark class="bg-[var(--color-accent)] text-[var(--color-heading)] rounded-sm px-0.5">$1</mark>');
-            }
-            function debounce(func, wait) { let timeout; return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); }; }
+        const DOM = {
+            html: document.documentElement,
+            splash: document.getElementById('splash-screen'),
+            tabs: document.querySelectorAll('.tab-content'),
+            navBtns: document.querySelectorAll('button[data-tab]'),
+            mobileNavBtns: document.querySelectorAll('.nav-btn-mobile'),
             
-            function showToast(msg, isError=false) {
-                dom.toast.innerHTML = `<p class="${isError?'text-red-300':'text-green-300'} font-bold mr-2">${isError?'✕':'✓'}</p> <p>${msg}</p>`;
-                dom.toast.style.opacity = '1';
-                dom.toast.style.bottom = '100px';
-                setTimeout(() => { dom.toast.style.opacity = '0'; dom.toast.style.bottom = '24px'; }, 3000);
+            // Explorer
+            input: document.getElementById('search-input'),
+            clearBtn: document.getElementById('clear-search-btn'),
+            themeList: document.getElementById('theme-list-container'),
+            results: document.getElementById('results-container'),
+            loader: document.getElementById('infinite-scroll-loader'),
+            feedback: document.getElementById('results-feedback'),
+            randomBtn: document.getElementById('random-btn'),
+            
+            // Home
+            dailyCard: document.getElementById('proverb-of-the-day-card'),
+            count: document.getElementById('proverb-count'),
+            
+            // Favorites
+            favContainer: document.getElementById('favorites-container'),
+            noFav: document.getElementById('no-favorites'),
+            
+            // AI
+            aiInput: document.getElementById('ai-context-input'),
+            aiBtn: document.getElementById('ai-suggest-btn'),
+            aiStep: document.getElementById('ai-step-feedback'),
+            aiRes: document.getElementById('ai-result-feedback'),
+            
+            // Quiz
+            quizContainer: document.getElementById('quiz-container'),
+            
+            // Shared
+            toast: document.getElementById('toast'),
+            modal: {
+                bg: document.getElementById('modal-backdrop'),
+                box: document.getElementById('modal-content'),
+                title: document.getElementById('modal-title'),
+                body: document.getElementById('modal-body'),
+                close: document.getElementById('modal-close')
+            }
+        };
+
+        // --- 2. UTILITY FUNCTIONS ---
+
+        // Normalisation avancée pour la recherche "Kabyle-Friendly"
+        // Permet de taper "gh" pour "ɣ", "aa" pour "ɛ", etc.
+        const normalizeText = (text) => {
+            if (!text) return '';
+            return text
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlève les accents
+                .replace(/ɣ/g, "gh")
+                .replace(/ǧ/g, "dj") // ou g
+                .replace(/č/g, "tch") // ou c
+                .replace(/ɛ/g, "aa") // approximation phonétique courante
+                .replace(/ṣ/g, "s")
+                .replace(/ṭ/g, "t")
+                .replace(/ẓ/g, "z")
+                .replace(/ḍ/g, "dh") // ou d
+                .replace(/ḥ/g, "h")
+                .replace(/[^a-z0-9\s]/g, '') // Garde seulement alphanumérique
+                .trim();
+        };
+
+        const debounce = (fn, delay) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => fn(...args), delay);
+            };
+        };
+
+        const showToast = (msg, type = 'success') => {
+            const icon = type === 'success' ? '✨' : (type === 'error' ? '⚠️' : 'ℹ️');
+            DOM.toast.querySelector('#toast-msg').textContent = msg;
+            DOM.toast.querySelector('#toast-icon').textContent = icon;
+            
+            DOM.toast.classList.remove('-translate-y-20', 'opacity-0');
+            DOM.toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                DOM.toast.classList.add('-translate-y-20', 'opacity-0');
+                DOM.toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        };
+
+        // --- 3. UI RENDERING ---
+
+        const createCardHTML = (proverb, highlight = '') => {
+            const isFav = state.favorites.has(proverb.id);
+            // Highlight logic logic
+            const highlightMatch = (txt) => {
+                if(!highlight) return txt;
+                // Simple regex escape
+                const safe = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                return txt.replace(new RegExp(`(${safe})`, 'gi'), '<span class="bg-yellow-200 text-black px-0.5 rounded">$1</span>');
+            };
+
+            const themes = (proverb.theme || '').split(',').map(t => t.trim()).filter(Boolean);
+            const themeTags = themes.map(t => 
+                `<span class="inline-block bg-[var(--color-bg)] border border-[var(--color-border)] text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md text-[var(--color-text-muted)]">${t}</span>`
+            ).join('');
+
+            return `
+            <div class="card-proverb p-6 flex flex-col h-full relative group fade-in" data-id="${proverb.id}">
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button class="action-btn-copy p-1.5 hover:bg-[var(--color-primary-light)] rounded-full text-[var(--color-text-muted)] hover:text-[var(--color-primary)]" title="Copier">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </button>
+                    <button class="action-btn-share p-1.5 hover:bg-[var(--color-primary-light)] rounded-full text-[var(--color-text-muted)] hover:text-[var(--color-primary)]" title="Partager">
+                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/></svg>
+                    </button>
+                </div>
+
+                <div class="flex-grow">
+                    <p class="font-serif text-xl md:text-2xl font-bold text-[var(--color-heading)] mb-3 leading-relaxed kabyle-font">
+                        « ${highlightMatch(proverb.kabyle)} »
+                    </p>
+                    <p class="text-[var(--color-text)] mb-4 text-sm md:text-base border-l-2 border-[var(--color-secondary)] pl-3 italic">
+                        ${highlightMatch(proverb.francais)}
+                    </p>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-[var(--color-border)] flex justify-between items-end">
+                    <div class="flex flex-wrap gap-1">${themeTags}</div>
+                    <div class="flex gap-2">
+                        <button class="action-btn-explain text-xs font-bold text-[var(--color-primary)] hover:underline flex items-center gap-1 bg-[var(--color-primary-light)] px-2 py-1 rounded-lg">
+                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Expliquer
+                        </button>
+                        <button class="action-btn-fav p-1 rounded-full transition-colors ${isFav ? 'text-pink-500 bg-pink-50' : 'text-gray-300 hover:text-pink-400'}">
+                            <svg class="w-6 h-6" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        };
+
+        const renderChunk = (container, list, reset = false) => {
+            if (reset) container.innerHTML = '';
+            
+            const start = state.pagination.current * state.pagination.perPage;
+            const end = start + state.pagination.perPage;
+            const chunk = list.slice(start, end);
+            
+            if (chunk.length === 0 && reset) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 flex flex-col items-center">
+                        <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-full mb-3">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <p class="text-[var(--color-text-muted)]">Aucun proverbe trouvé.</p>
+                    </div>`;
+                return;
             }
 
-            function toggleFavorite(id, btnElement) {
-                if(state.favorites.has(id)) {
-                    state.favorites.delete(id);
-                    showToast("Retiré des favoris");
-                    if(btnElement) btnElement.classList.replace('text-pink-500', 'text-gray-300');
-                } else {
-                    state.favorites.add(id);
-                    showToast("Ajouté aux favoris");
-                    if(btnElement) btnElement.classList.replace('text-gray-300', 'text-pink-500');
+            container.insertAdjacentHTML('beforeend', chunk.map(p => createCardHTML(p, state.filter.search)).join(''));
+            
+            // Intersection Observer pour infini-scroll
+            if (end < list.length) {
+                DOM.loader.classList.remove('hidden');
+                observeScroll();
+            } else {
+                DOM.loader.classList.add('hidden');
+            }
+        };
+
+        // --- 4. CORE FEATURES ---
+
+        const applyFilters = (resetPage = true) => {
+            if (resetPage) {
+                state.pagination.current = 0;
+                window.scrollTo(0, 0);
+            }
+
+            const queryNorm = normalizeText(state.filter.search);
+            const words = queryNorm.split(' ').filter(w => w.length > 0);
+
+            state.pagination.activeList = state.proverbs.filter(p => {
+                // Theme Filter
+                const themeMatch = state.filter.theme === 'tous' || (p.theme_norm || '').includes(state.filter.theme);
+                if (!themeMatch) return false;
+
+                // Search Filter (Smart)
+                if (words.length === 0) return true;
+                const content = (p.kabyle_norm + ' ' + p.francais_norm + ' ' + p.theme_norm);
+                return words.every(w => content.includes(w));
+            });
+
+            DOM.feedback.textContent = state.filter.search || state.filter.theme !== 'tous' 
+                ? `${state.pagination.activeList.length} résultat(s)` 
+                : '';
+
+            renderChunk(DOM.results, state.pagination.activeList, true);
+        };
+
+        const updateThemesUI = () => {
+            const themes = new Set();
+            state.proverbs.forEach(p => (p.theme||'').split(',').forEach(t => themes.add(t.trim())));
+            
+            const sortedThemes = Array.from(themes).sort();
+            let html = `<button class="whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-all ${state.filter.theme === 'tous' ? 'bg-[var(--color-primary)] text-white shadow-md' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:bg-[var(--color-primary-light)]'}" data-theme="tous">Tous</button>`;
+            
+            sortedThemes.forEach(t => {
+                const norm = normalizeText(t);
+                const isActive = state.filter.theme === norm;
+                html += `<button class="whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-all ${isActive ? 'bg-[var(--color-primary)] text-white shadow-md' : 'bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:bg-[var(--color-primary-light)]'}" data-theme="${norm}">${t}</button>`;
+            });
+            DOM.themeList.innerHTML = html;
+        };
+
+        // --- 5. API GEMINI (SAGE & EXPLAIN) ---
+        const GEMINI_KEY = "AIzaSyD3cGyEYYhNbFN6WlMKb5wjpdDqfR8RaN4"; // Clé existante
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_KEY}`;
+
+        const callAI = async (prompt, systemPrompt, isJson = false) => {
+            const body = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+            if (isJson) body.generationConfig = { responseMimeType: "application/json" };
+
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+
+            if (!response.ok) throw new Error('Erreur API');
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (isJson) return JSON.parse(text);
+            return text;
+        };
+
+        const explainProverb = async (id) => {
+            const proverb = state.proverbs.find(p => p.id === id);
+            if (!proverb) return;
+
+            openModal('Analyse du Sage', '<div class="flex justify-center p-8"><div class="spinner-yaz text-4xl">ⵣ</div></div>');
+            
+            try {
+                const text = await callAI(
+                    `Explique le proverbe: "${proverb.kabyle}" ("${proverb.francais}").`,
+                    `Tu es un sage kabyle. Explique ce proverbe simplement. Structure ta réponse en HTML avec <h3>Signification</h3>, <h3>Contexte</h3>. Sois concis.`
+                );
+                // Simple HTML sanitizer/converter for markdown-like headers
+                let formatted = text.replace(/### (.*)/g, '<h3 class="text-lg font-bold text-[var(--color-primary)] mt-4 mb-2">$1</h3>')
+                                    .replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>');
+                DOM.modal.body.innerHTML = formatted;
+            } catch (e) {
+                DOM.modal.body.innerHTML = `<p class="text-red-500">Le sage est indisponible. (${e.message})</p>`;
+            }
+        };
+
+        // --- 6. QUIZ LOGIC ---
+        
+        const preloadQuiz = async () => {
+            if (state.quiz.promise) return state.quiz.promise;
+            
+            state.quiz.loading = true;
+            
+            // On prend 20 proverbes au hasard
+            const sample = [...state.proverbs].sort(() => 0.5 - Math.random()).slice(0, 20);
+            
+            state.quiz.promise = callAI(
+                `Génère 10 questions QCM basées sur : ${JSON.stringify(sample.map(p => ({k: p.kabyle, f: p.francais})))}`,
+                `Crée un quiz JSON valide : { "questions": [{ "question": "...", "options": ["..."], "correctIndex": 0, "explanation": "..." }] }. Mélange questions de traduction et de sens.`,
+                true
+            ).then(data => {
+                state.quiz.questions = data.questions;
+                state.quiz.loading = false;
+                return data;
+            }).catch(err => {
+                state.quiz.loading = false;
+                state.quiz.promise = null; // Retry possible
+                throw err;
+            });
+            return state.quiz.promise;
+        };
+
+        const startQuiz = async () => {
+            DOM.quizContainer.innerHTML = `
+                <div class="glass-panel p-8 rounded-2xl text-center shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4">Quiz de Sagesse</h3>
+                    <p class="mb-6 text-[var(--color-text-muted)]">10 questions générées par l'IA pour tester vos connaissances.</p>
+                    <button id="btn-start-quiz" class="bg-[var(--color-primary)] text-white px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform flex items-center justify-center gap-2 w-full sm:w-auto mx-auto">
+                        <span class="loader hidden animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+                        <span>Commencer</span>
+                    </button>
+                </div>`;
+            
+            document.getElementById('btn-start-quiz').addEventListener('click', async (e) => {
+                const btn = e.currentTarget;
+                btn.querySelector('.loader').classList.remove('hidden');
+                btn.disabled = true;
+                
+                try {
+                    await preloadQuiz(); // Ensure loaded
+                    state.quiz.index = 0;
+                    state.quiz.score = 0;
+                    renderQuestion();
+                } catch (err) {
+                    showToast("Erreur lors du chargement du quiz", "error");
+                    btn.disabled = false;
+                    btn.querySelector('.loader').classList.add('hidden');
                 }
-                localStorage.setItem('inzan_favorites', JSON.stringify([...state.favorites]));
-                if(!document.getElementById('favoris-tab').classList.contains('hidden')) renderFavorites();
-            }
+            });
+        };
 
-            function renderFavorites() {
-                const favs = state.proverbs.filter(p => state.favorites.has(p.id));
-                const container = document.getElementById('favorites-container');
-                if(favs.length === 0) {
-                    document.getElementById('no-favorites').classList.remove('hidden');
-                    container.innerHTML = '';
-                } else {
-                    document.getElementById('no-favorites').classList.add('hidden');
-                    container.innerHTML = favs.map(p => createCardHTML(p)).join('');
-                }
-            }
+        const renderQuestion = () => {
+            const q = state.quiz.questions[state.quiz.index];
+            if (!q) return showQuizEnd();
 
-            function copyProverb(id) {
-                const p = state.proverbs.find(x => x.id === id);
-                navigator.clipboard.writeText(`« ${p.kabyle} »\n— ${p.francais}`);
-                showToast("Copié !");
-            }
+            const progress = ((state.quiz.index) / state.quiz.questions.length) * 100;
 
-            function openModal(title, content) {
-                dom.modal.title.textContent = title;
-                dom.modal.body.innerHTML = content;
-                dom.modal.backdrop.style.opacity = '1';
-                dom.modal.backdrop.style.pointerEvents = 'auto';
-                dom.modal.content.style.opacity = '1';
-                dom.modal.content.style.transform = 'translate(-50%, -50%) scale(1)';
-                dom.modal.content.style.pointerEvents = 'auto';
-            }
+            let html = `
+                <div class="glass-panel rounded-2xl overflow-hidden shadow-xl fade-in">
+                    <div class="h-2 bg-gray-200">
+                        <div class="h-full bg-[var(--color-secondary)] transition-all duration-500" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="p-6 sm:p-8">
+                        <div class="flex justify-between text-sm font-bold text-[var(--color-text-muted)] mb-4">
+                            <span>Question ${state.quiz.index + 1}/10</span>
+                            <span>Score: ${state.quiz.score}</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-serif font-bold text-[var(--color-heading)] mb-8">${q.question}</h3>
+                        <div class="grid gap-3">
+                            ${q.options.map((opt, i) => `
+                                <button class="quiz-option w-full text-left p-4 rounded-xl font-medium" onclick="handleAnswer(${i})">${opt}</button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div id="quiz-feedback-box" class="hidden p-6 bg-[var(--color-bg-card)] border-t border-[var(--color-border)]">
+                        </div>
+                </div>
+            `;
+            DOM.quizContainer.innerHTML = html;
+        };
 
-            function closeModal() {
-                dom.modal.backdrop.style.opacity = '0';
-                dom.modal.backdrop.style.pointerEvents = 'none';
-                dom.modal.content.style.opacity = '0';
-                dom.modal.content.style.transform = 'translate(-50%, -50%) scale(0.95)';
-                dom.modal.content.style.pointerEvents = 'none';
-            }
+        window.handleAnswer = (idx) => {
+            const q = state.quiz.questions[state.quiz.index];
+            const isCorrect = idx === q.correctIndex;
+            if (isCorrect) state.quiz.score++;
 
-            function loadDailyProverb() {
-                if(!state.proverbs.length) return;
-                const day = Math.floor(new Date() / 86400000);
-                const p = state.proverbs[day % state.proverbs.length];
-                dom.proverbOfTheDayCard.innerHTML = createCardHTML(p, true);
-            }
+            const opts = document.querySelectorAll('.quiz-option');
+            opts.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === q.correctIndex) btn.classList.add('correct');
+                else if (i === idx) btn.classList.add('incorrect');
+            });
 
-            function applyTheme(theme) {
-                if(theme === 'dark') {
-                    dom.html.classList.add('dark');
-                    document.getElementById('icon-sun').classList.add('hidden');
-                    document.getElementById('icon-moon').classList.remove('hidden');
-                    document.querySelector('meta[name="theme-color"]').content = '#111827';
-                } else {
-                    dom.html.classList.remove('dark');
-                    document.getElementById('icon-sun').classList.remove('hidden');
-                    document.getElementById('icon-moon').classList.add('hidden');
-                    document.querySelector('meta[name="theme-color"]').content = '#F9F7F3';
-                }
-                localStorage.setItem('inzan_theme', theme);
-            }
+            const fbBox = document.getElementById('quiz-feedback-box');
+            fbBox.innerHTML = `
+                <p class="font-bold mb-2 ${isCorrect ? 'text-green-600' : 'text-red-500'}">${isCorrect ? 'Exact !' : 'Incorrect.'}</p>
+                <p class="text-sm text-[var(--color-text)] mb-4">${q.explanation}</p>
+                <button onclick="nextQuestion()" class="bg-[var(--color-heading)] text-[var(--color-bg)] px-6 py-2 rounded-lg font-bold w-full">Suivant</button>
+            `;
+            fbBox.classList.remove('hidden');
+        };
 
-            init();
+        window.nextQuestion = () => {
+            state.quiz.index++;
+            renderQuestion();
+        };
+
+        const showQuizEnd = () => {
+            // Reset Quiz state for next time
+            state.quiz.promise = null; 
+            setTimeout(preloadQuiz, 2000); // Reload in background
+
+            const percentage = (state.quiz.score / 10) * 100;
+            let msg = percentage >= 80 ? "Incroyable !" : (percentage >= 50 ? "Pas mal !" : "Continuez d'apprendre !");
+
+            DOM.quizContainer.innerHTML = `
+                <div class="glass-panel p-8 rounded-2xl text-center shadow-xl fade-in">
+                    <div class="text-6xl mb-4">${percentage >= 50 ? '🎉' : '📚'}</div>
+                    <h3 class="text-3xl font-bold text-[var(--color-heading)] mb-2">Quiz Terminé</h3>
+                    <p class="text-[var(--color-primary)] font-bold text-5xl mb-4">${state.quiz.score} / 10</p>
+                    <p class="text-lg text-[var(--color-text-muted)] mb-8">${msg}</p>
+                    <button onclick="startQuiz()" class="bg-[var(--color-secondary)] text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-yellow-600 transition-colors">Recommencer</button>
+                </div>
+            `;
+        };
+
+
+        // --- 7. EVENT LISTENERS & INIT ---
+
+        const init = async () => {
+            // Theme setup
+            const savedTheme = localStorage.getItem('inzan_theme') || 'light';
+            if (savedTheme === 'dark') DOM.html.classList.add('dark');
+            updateThemeIcons();
+
+            try {
+                const res = await fetch('proverbs.json');
+                if (!res.ok) throw new Error("Fichier introuvable");
+                const data = await res.json();
+                
+                state.proverbs = data.map((p, i) => ({
+                    ...p, 
+                    id: i,
+                    kabyle_norm: normalizeText(p.kabyle),
+                    francais_norm: normalizeText(p.francais),
+                    theme_norm: normalizeText(p.theme)
+                }));
+                state.dataLoaded = true;
+
+                // UI Updates
+                DOM.count.textContent = state.proverbs.length;
+                updateThemesUI();
+                
+                // Proverb of the Day
+                const day = Math.floor(Date.now() / 86400000);
+                const daily = state.proverbs[day % state.proverbs.length] || state.proverbs[0];
+                DOM.dailyCard.innerHTML = createCardHTML(daily);
+
+                // Preload stuff
+                preloadQuiz();
+                applyFilters();
+
+                setTimeout(() => DOM.splash.classList.add('opacity-0', 'pointer-events-none'), 800);
+
+            } catch (err) {
+                console.error(err);
+                DOM.dailyCard.innerHTML = `<div class="p-4 bg-red-100 text-red-600 rounded">Erreur de chargement des données.</div>`;
+                DOM.splash.classList.add('hidden');
+            }
+        };
+
+        // Navigation
+        const switchTab = (id) => {
+            DOM.tabs.forEach(t => t.classList.remove('active'));
+            DOM.navBtns.forEach(b => b.classList.remove('active'));
+            DOM.mobileNavBtns.forEach(b => b.classList.remove('active', 'text-[var(--color-primary)]'));
+
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+            
+            document.querySelectorAll(`[data-tab="${id}"]`).forEach(b => {
+                b.classList.add('active');
+                if(b.classList.contains('nav-btn-mobile')) b.classList.add('text-[var(--color-primary)]');
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (id === 'favoris-tab') renderFavorites();
+            if (id === 'quiz-tab' && !DOM.quizContainer.querySelector('.quiz-option')) startQuiz();
+        };
+
+        DOM.navBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+        DOM.mobileNavBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+        // Search Events
+        DOM.input.addEventListener('input', (e) => {
+            state.filter.search = e.target.value;
+            DOM.clearBtn.classList.toggle('opacity-0', !state.filter.search);
+            DOM.clearBtn.classList.toggle('pointer-events-none', !state.filter.search);
+            debounce(() => applyFilters(true), 300)();
         });
+
+        DOM.clearBtn.addEventListener('click', () => {
+            state.filter.search = '';
+            DOM.input.value = '';
+            DOM.clearBtn.classList.add('opacity-0', 'pointer-events-none');
+            applyFilters(true);
+        });
+
+        DOM.themeList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                state.filter.theme = e.target.dataset.theme;
+                localStorage.setItem('inzan_theme_filter', state.filter.theme);
+                updateThemesUI();
+                applyFilters(true);
+            }
+        });
+
+        DOM.randomBtn.addEventListener('click', () => {
+            DOM.input.value = '';
+            state.filter.search = '';
+            // Reset theme to 'tous' for true random or keep theme? Let's keep filter logic.
+            const candidates = state.filter.theme === 'tous' ? state.proverbs : state.proverbs.filter(p => p.theme_norm.includes(state.filter.theme));
+            const shuffled = [...candidates].sort(() => 0.5 - Math.random()).slice(0, 30);
+            renderChunk(DOM.results, shuffled, true);
+            DOM.feedback.textContent = "Sélection aléatoire";
+        });
+
+        // Infinite Scroll
+        const observeScroll = () => {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !state.loading) {
+                    state.pagination.current++;
+                    renderChunk(DOM.results, state.pagination.activeList, false);
+                }
+            }, { threshold: 0.5 });
+            observer.observe(DOM.loader);
+        };
+
+        // Actions Cards (Delegation)
+        document.body.addEventListener('click', async (e) => {
+            const btn = e.target.closest('button');
+            if (!btn) return;
+            
+            const card = btn.closest('.card-proverb');
+            if (!card) return;
+            const id = parseInt(card.dataset.id);
+            const proverb = state.proverbs.find(p => p.id === id);
+
+            if (btn.classList.contains('action-btn-fav')) {
+                if (state.favorites.has(id)) state.favorites.delete(id);
+                else state.favorites.add(id);
+                localStorage.setItem('inzan_favorites', JSON.stringify([...state.favorites]));
+                
+                // Update UI on all instances of this card
+                document.querySelectorAll(`.card-proverb[data-id="${id}"] .action-btn-fav`).forEach(b => {
+                    const svg = b.querySelector('svg');
+                    if (state.favorites.has(id)) {
+                        b.classList.add('text-pink-500', 'bg-pink-50');
+                        b.classList.remove('text-gray-300');
+                        svg.setAttribute('fill', 'currentColor');
+                    } else {
+                        b.classList.remove('text-pink-500', 'bg-pink-50');
+                        b.classList.add('text-gray-300');
+                        svg.setAttribute('fill', 'none');
+                    }
+                });
+                
+                showToast(state.favorites.has(id) ? 'Ajouté aux favoris' : 'Retiré des favoris');
+                if (document.getElementById('favoris-tab').classList.contains('active')) renderFavorites();
+            }
+
+            if (btn.classList.contains('action-btn-explain')) explainProverb(id);
+            
+            if (btn.classList.contains('action-btn-copy')) {
+                await navigator.clipboard.writeText(`${proverb.kabyle} - ${proverb.francais}`);
+                showToast('Copié !');
+            }
+
+            if (btn.classList.contains('action-btn-share')) {
+                if (navigator.share) {
+                    navigator.share({ title: 'Proverbe Kabyle', text: `${proverb.kabyle}\n${proverb.francais}`, url: location.href });
+                } else {
+                    await navigator.clipboard.writeText(`${proverb.kabyle} - ${proverb.francais}`);
+                    showToast('Lien copié !');
+                }
+            }
+        });
+
+        // Favorites Tab Logic
+        const renderFavorites = () => {
+            const favs = state.proverbs.filter(p => state.favorites.has(p.id));
+            if (favs.length === 0) {
+                DOM.favContainer.innerHTML = '';
+                DOM.noFav.classList.remove('hidden');
+            } else {
+                DOM.noFav.classList.add('hidden');
+                DOM.favContainer.innerHTML = favs.map(p => createCardHTML(p)).join('');
+            }
+        };
+
+        // Modal Logic
+        const openModal = (title, html) => {
+            DOM.modal.title.textContent = title;
+            DOM.modal.body.innerHTML = html;
+            DOM.modal.bg.classList.add('visible');
+            DOM.modal.box.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeModal = () => {
+            DOM.modal.bg.classList.remove('visible');
+            DOM.modal.box.classList.remove('visible');
+            document.body.style.overflow = '';
+        };
+        DOM.modal.close.addEventListener('click', closeModal);
+        DOM.modal.bg.addEventListener('click', closeModal);
+
+        // Theme Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            DOM.html.classList.toggle('dark');
+            const isDark = DOM.html.classList.contains('dark');
+            localStorage.setItem('inzan_theme', isDark ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+        function updateThemeIcons() {
+            const isDark = DOM.html.classList.contains('dark');
+            document.getElementById('icon-sun').classList.toggle('hidden', !isDark);
+            document.getElementById('icon-moon').classList.toggle('hidden', isDark);
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#111827' : '#F9F7F3');
+        }
+
+        // AI Sage Logic
+        DOM.aiBtn.addEventListener('click', async () => {
+            const ctx = DOM.aiInput.value.trim();
+            if (!ctx) return showToast('Décrivez une situation', 'info');
+            
+            DOM.aiBtn.disabled = true;
+            DOM.aiBtn.innerHTML = '<div class="spinner-yaz text-white text-sm mr-2">ⵣ</div> Reflexion...';
+            DOM.aiRes.innerHTML = '';
+            DOM.aiStep.textContent = "Le sage analyse vos mots...";
+
+            try {
+                // Step 1: Keywords
+                const kwRes = await callAI(
+                    `Situation: "${ctx}"`,
+                    `Tu es un expert en recherche. Donne-moi UNIQUEMENT un objet JSON { "keywords": ["mot1", "mot2", "mot3"] } (5 mots max) pertinents pour trouver des proverbes kabyles/français liés à cette situation.`,
+                    true
+                );
+                
+                DOM.aiStep.textContent = `Recherche sur les thèmes : ${kwRes.keywords.join(', ')}`;
+                
+                // Local Search using keywords
+                const searchPool = state.proverbs.filter(p => {
+                    const txt = normalizeText(p.kabyle + p.francais + p.theme);
+                    return kwRes.keywords.some(k => txt.includes(normalizeText(k)));
+                }).slice(0, 20); // Top 20 candidates
+
+                if (searchPool.length === 0) throw new Error("Aucun proverbe similaire trouvé dans la base.");
+
+                // Step 2: Selection
+                const finalRes = await callAI(
+                    `Situation: "${ctx}". Candidats: ${JSON.stringify(searchPool.map(p => ({id: p.id, k: p.kabyle, f: p.francais})))}`,
+                    `Choisis le(s) meilleur(s) proverbe(s) (max 3) pour la situation. Retourne un JSON: { "analysis": "Phrase courte", "selection": [{"id": 1, "reason": "..."}] }`,
+                    true
+                );
+
+                let html = `<div class="p-4 bg-[var(--color-secondary)]/10 border border-[var(--color-secondary)] rounded-lg text-sm italic mb-6">"${finalRes.analysis}"</div>`;
+                
+                finalRes.selection.forEach(sel => {
+                    const p = state.proverbs.find(x => x.id === sel.id);
+                    if(p) {
+                         html += `
+                         <div class="mb-6 fade-in">
+                            <div class="mb-2 text-xs font-bold text-[var(--color-primary)] uppercase tracking-wide">Pourquoi ce choix ? ${sel.reason}</div>
+                            ${createCardHTML(p)}
+                         </div>`;
+                    }
+                });
+                DOM.aiRes.innerHTML = html;
+
+            } catch (err) {
+                DOM.aiRes.innerHTML = `<div class="text-center text-red-500 p-4">Le sage n'a pas trouvé de réponse adaptée. (${err.message})</div>`;
+            } finally {
+                DOM.aiBtn.disabled = false;
+                DOM.aiBtn.innerHTML = '<span>Consulter</span><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>';
+                DOM.aiStep.textContent = '';
+            }
+        });
+
+        // --- SERVICE WORKER (Keep it simple) ---
+        if ('serviceWorker' in navigator) {
+            // Un simple SW factice pour l'exemple "single file", dans un vrai projet, séparez-le.
+            // On ne met pas de SW inline complexe pour éviter les erreurs de parsing HTML/JS strictes.
+        }
+
+        // START
+        init();
+    });
     </script>
 </body>
 </html>
