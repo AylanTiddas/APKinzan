@@ -782,7 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateInterfaceLanguage = () => {
         const langData = translations[state.currentLang];
         document.documentElement.lang = state.currentLang;
-        dom.currentLangText.textContent = state.currentLang === 'fr' ? 'ⵝ' : 'FR';
+        dom.currentLangText.textContent = state.currentLang === 'fr' ? 'tamⵣ' : 'FR';
         
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
