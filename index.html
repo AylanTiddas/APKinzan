@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- GEMINI & QUIZ (INCHANGÉES) ---
     // (J'ai conservé toute votre logique complexe API et Quiz ici sans modification, pour la concision de cette réponse je ne la répète pas mais elle est incluse dans le fichier final)
     const callGeminiAPI = async (payload, expectJson = false) => {
-        const GEMINI_API_KEY = ""; // À REMPLIR
+        const GEMINI_API_KEY = "AIzaSyCWWRjzRHJGKjOeCrrKw71jSZSxF8sUV0o"; // À REMPLIR
         if (!GEMINI_API_KEY) throw new Error("La clé API n'est pas configurée.");
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
