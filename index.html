@@ -1044,7 +1044,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- API GEMINI ---
     const callGeminiAPI = async (payload, expectJson = false) => {
-        const KEY = "AIzaSyAcecICGxnzvrFRD9ZgWaozzFaey3YoZVY"; // Clé existante
+        const KEY = "AIzaSyDUpRj7a0bcaJX0Tf5vIS9UeoQzHbsLuGM"; // Clé existante
         const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${KEY}`;
         
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
