@@ -1081,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!GEMINI_API_KEY) throw new Error("La clé API n'est pas configurée dans le code source.");
 
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`;
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-11-2025:generateContent?key=${GEMINI_API_KEY}`;
         
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
 
