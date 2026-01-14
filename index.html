@@ -1137,68 +1137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const callGeminiAPI = async (payload, expectJson = false) => {
-        const GEMINI_API_KEY = "AIzaSyC3VbAvFTQFrfAJwS1zQCx8yYjo2c_kisM";
+        const GEMINI_API_KEY = "AIzaSyC3VbAvFTQFrfAJwS1zQCx8yYjo2c_kisM"; // Placeholder intact
+        if (!GEMINI_API_KEY || GEMINI_API_KEY.includes("localement")) throw new Error("Clé API manquante");
         
-        if (!GEMINI_API_KEY) throw new Error("La clé API n'est pas configurée dans le code source.");
-
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
-        
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
-
-        const MAX_RETRIES = 5;
-        let delay = 1000; 
-
-        for (let i = 0; i < MAX_RETRIES; i++) {
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-
-                    if (result.promptFeedback && result.promptFeedback.blockReason) {
-                        console.warn('API call blocked:', result.promptFeedback);
-                        throw new Error(`La requête a été bloquée : ${result.promptFeedback.blockReason}`);
-                    }
-                    
-                    const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!textResponse) throw new Error("Réponse de l'API malformée ou vide.");
-                    
-                    if (expectJson) {
-                        try {
-                            return JSON.parse(textResponse);
-                        } catch (e) {
-                            console.error("Erreur de parsing JSON de l'API:", textResponse);
-                            throw new Error("L'API a retourné un JSON malformé.");
-                        }
-                    }
-                    return textResponse; 
-                }
-
-                if (response.status === 429 || response.status === 503 || response.status === 500) {
-                    console.warn(`API Error ${response.status}. Retrying in ${delay}ms...`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2; 
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData?.error?.message || `Erreur HTTP ${response.status}`);
-                }
-
-            } catch (error) {
-                if (i < MAX_RETRIES - 1) {
-                    console.warn(`Network error. Retrying in ${delay}ms...`, error.message);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
-                } else {
-                    console.error("Échec de l'API après plusieurs tentatives.", error);
-                    throw new Error("Erreur de connexion avec le Sage Artificiel.");
-                }
-            }
-        }
-        throw new Error("Le modèle est surchargé. Veuillez réessayer plus tard.");
+        
+        const response = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+        if (!response.ok) throw new Error("Erreur API");
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        return expectJson ? JSON.parse(text) : text;
     };
 
     const getProverbExplanation = async (proverb) => {
