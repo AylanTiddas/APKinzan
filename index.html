@@ -97,6 +97,26 @@
                         border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .char-btn {
+            flex-shrink: 0;
+            background-color: var(--color-bg-card);
+            color: var(--color-heading);
+            border: 1.5px solid var(--color-border);
+            font-family: var(--font-serif);
+            font-weight: 700;
+            min-width: 2.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.15s, border-color 0.2s;
+        }
+        .char-btn:hover {
+            background-color: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            transform: translateY(-2px) scale(1.1);
+        }
+        .char-btn:active {
+            transform: translateY(0) scale(0.95);
+        }
         .theme-pill-button.active {
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
@@ -300,6 +320,7 @@
         #splash-screen.hidden {
             opacity: 0;
             pointer-events: none;
+            visibility: hidden;
         }
         #splash-logo {
             animation: zoomIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -363,9 +384,9 @@
                 <div class="max-w-4xl mx-auto mb-10 text-center p-6 bg-[var(--color-bg-card)]/70 rounded-xl shadow-inner border border-[var(--color-border)]">
                     <p class="text-lg text-[var(--color-secondary)] italic font-light">
                         Une Banque de <strong class="text-[var(--color-primary)] font-semibold" id="proverb-count">...</strong>
-                        <p class="text-[var(--color-text-light)] font-medium">Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et une recherche assistée par IA.</p>
-                        <span class="block mt-2 font-medium text-[var(--color-primary)]">"Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem."</span>
                     </p>
+                    <p class="text-[var(--color-text-light)] font-medium mt-2">Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et une recherche assistée par IA.</p>
+                    <span class="block mt-2 font-medium text-[var(--color-primary)]">"Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem."</span>
                 </div>
 
                 <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Proverbe du Jour 💡</h2>
@@ -387,7 +408,7 @@
                                 Une partie de cette banque de proverbes est extraite des 4 tomes de l'œuvre magistrale de Monsieur Aomar SIDER : <strong class="text-[var(--color-primary)] font-semibold">"INZAN amek i d-llan"</strong> ("Origines des proverbes et expressions kabyles").
                             </p>
                             <p class="text-sm text-[var(--color-text-light)]">
-                                </strong>Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en 4 tomes dans les librairies.</strong>
+                                <strong>Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en 4 tomes dans les librairies.</strong>
                             </p>
                         </div>
                     </div>
@@ -521,7 +542,7 @@
         <p>Message</p>
     </div>
 
-    <button id="back-to-top" title="Retour en haut" aria-label="Retourner en haut de la page" class="fixed bottom-[100px] sm:bottom-10 right-5 p-3 bg-[var(--color-secondary)] text-white rounded-full shadow-xl hover:bg-[var(--color-primary)] focus:outline-none transition-all opacity-0 visibility-hidden transform-gpu translate-y-5 z-50">
+    <button id="back-to-top" title="Retour en haut" aria-label="Retourner en haut de la page" class="fixed bottom-[100px] sm:bottom-10 right-5 p-3 bg-[var(--color-secondary)] text-white rounded-full shadow-xl hover:bg-[var(--color-primary)] focus:outline-none transition-all opacity-0 invisible transform-gpu translate-y-5 z-50">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
     </button>
     
@@ -667,7 +688,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const state = {
         activeTheme: 'tous',
-        searchTimeout: null,
         proverbs: [],
         favorites: new Set(JSON.parse(localStorage.getItem('inzan_favorites')) || []),
         trapFocusHandler: null,
@@ -688,32 +708,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const normalizeText = (text) => {
         if (!text) return '';
         let normalized = text.toLowerCase().trim();
+        // Kabyle special characters → ASCII phonetic equivalents
         normalized = normalized
             .replace(/ɣ/g, "gh")
-            .replace(/č/g, "tch")
+            .replace(/č/g, "ch")
             .replace(/ǧ/g, "dj")
-            .replace(/ɛ/g, "3")
-            .replace(/xx/g, "kh")
-            .replace(/tt/g, "ts");
+            .replace(/ɛ/g, "3");
+        // Kabyle diacritic variants → base letter
         normalized = normalized
             .replace(/ṣ/g, "s")
             .replace(/ṭ/g, "t")
             .replace(/ẓ/g, "z")
             .replace(/ḍ/g, "d")
-            .replace(/ḥ/g, "h");
-        normalized = normalized
-            .replace(/(?<!o)u/g, "ou") 
-            .replace(/c(?!h)/g, "ch")
-            .replace(/t(?!h)/g, "th") 
-            .replace(/d(?!h)/g, "dh") 
-            .replace(/(?<!k)x/g, "kh");
+            .replace(/ḥ/g, "h")
+            .replace(/ṛ/g, "r");
+        // Strip all remaining accents (NFD decomposition)
         normalized = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         return normalized.replace(/[^a-z0-9\s]/g, '');
     };
 
-    const debounce = (func, delay) => (...args) => {
-        clearTimeout(state.searchTimeout);
-        state.searchTimeout = setTimeout(() => func(...args), delay);
+    const debounce = (func, delay) => {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => func(...args), delay);
+        };
     };
 
     const renderMarkdown = (text) => {
@@ -721,10 +740,15 @@ document.addEventListener('DOMContentLoaded', () => {
         html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
         html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
-        html = html.replace(/^\* (.*$)/gim, '<li>$1</li>').replace(/(\<\/li\>)?\n<li>/gim, '</li><li>').replace(/^(<li>.*<\/li>)$/gim, '<ul>$1</ul>');
-        return html.split('\n\n').map(p => {
-            if (p.startsWith('<ul>') || p.startsWith('<h3>')) return p;
-            return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+        // Build paragraphs/lists block by block
+        return html.split(/\n{2,}/).map(block => {
+            const lines = block.split('\n');
+            const listItems = lines.filter(l => /^\*\s/.test(l));
+            if (listItems.length === lines.length && lines.length > 0) {
+                return '<ul>' + listItems.map(l => `<li>${l.replace(/^\*\s/, '')}</li>`).join('') + '</ul>';
+            }
+            if (block.startsWith('<h3>') || block.startsWith('<ul>')) return block;
+            return `<p>${block.replace(/\n/g, '<br>')}</p>`;
         }).join('');
     };
     
@@ -738,13 +762,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const highlightText = (text, query) => {
-        if (!text) return text;
-        if (!query) return text;
+        if (!text || !query) return text;
+        // Try to highlight using original query words first (handles accented/special chars)
+        const rawKeywords = query.trim().split(/\s+/).filter(k => k.length > 0);
+        const escapedRaw = rawKeywords.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+        // Also use normalized keywords as fallback for phonetic search terms
         const normalizedQuery = normalizeText(query);
-        if (!normalizedQuery) return text;
-        const keywords = normalizedQuery.split(' ').filter(k => k.length > 0);
-        if (keywords.length === 0) return text;
-        const regex = new RegExp(`(${keywords.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')).join('|')})`, 'gi');
+        const normKeywords = normalizedQuery.split(' ').filter(k => k.length > 0);
+        const allPatterns = [...new Set([...escapedRaw, ...normKeywords.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))])];
+        if (allPatterns.length === 0) return text;
+        const regex = new RegExp(`(${allPatterns.join('|')})`, 'gi');
         return text.replace(regex, `<span class="search-highlight">$1</span>`);
     };
 
@@ -897,10 +924,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = '#888';
         ctx.fillText("Trésors de la Sagesse Kabyle", 540, 995);
 
-        // 3. Préparer le téléchargement
-        const link = document.getElementById('download-link');
-        link.download = `proverbe-kabyle-HD-${proverb.id}.png`;
-        link.href = canvas.toDataURL('image/png', 1.0); // Qualité maximale
+        // 3. Préparer le téléchargement (après que le navigateur ait peint le canvas)
+        requestAnimationFrame(() => {
+            const link = document.getElementById('download-link');
+            if (link) {
+                link.download = `proverbe-kabyle-HD-${proverb.id}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+            }
+        });
     };
 
     const createProverbCardHTML = (proverb, isDaily = false, query = '') => {
@@ -969,7 +1000,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const uniqueNormalizedThemes = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
         uniqueNormalizedThemes.sort((a, b) => a[1].localeCompare(b[1]));
         
-        state.activeTheme = localStorage.getItem('inzan_theme_filter') || 'tous';
+        // Preserve in-session activeTheme; only read localStorage on first call
+        // state.activeTheme is already set from session or defaults to 'tous'
         
         dom.themeListContainer.innerHTML =
             `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="tous">Tous</button>` +
@@ -982,24 +1014,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filterProverbs = (keywords = []) => {
         if (!state.isCoreDataLoaded) return [];
-        if (keywords.length === 0) {
+
+        let useOrLogic = false;
+
+        // When called with explicit keyword list (from AI suggestion), use OR logic
+        if (keywords.length > 0) {
+            useOrLogic = true;
+        } else {
+            // Derive from search bar - use AND logic (all words must match)
             const query = dom.searchInput.value;
             const normalizedQuery = normalizeText(query);
             keywords = normalizedQuery.split(' ').filter(k => k.length > 0);
-
-            return state.proverbs.filter(p => {
-                const themeMatch = state.activeTheme === 'tous' || (p.theme_norm || '').includes(state.activeTheme);
-                if (!themeMatch) return false;
-                const queryMatch = keywords.length === 0 || keywords.every(keyword => 
-                    `${p.kabyle_norm || ''} ${p.francais_norm || ''} ${p.theme_norm || ''}`.includes(keyword)
-                );
-                return queryMatch;
-            });
+            useOrLogic = false;
         }
-        const normalizedKeywords = keywords.map(normalizeText);
+
         return state.proverbs.filter(p => {
+            const themeMatch = state.activeTheme === 'tous' || (p.theme_norm || '').includes(state.activeTheme);
+            if (!themeMatch) return false;
+            if (keywords.length === 0) return true;
             const proverbText = `${p.kabyle_norm || ''} ${p.francais_norm || ''} ${p.theme_norm || ''}`;
-            return normalizedKeywords.some(keyword => proverbText.includes(keyword));
+            const normalizedKeywords = keywords.map(normalizeText);
+            return useOrLogic
+                ? normalizedKeywords.some(k => proverbText.includes(k))
+                : normalizedKeywords.every(k => proverbText.includes(k));
         });
     };
 
@@ -1010,7 +1047,10 @@ document.addEventListener('DOMContentLoaded', () => {
             state.currentPage = 0;
             state.displayedProverbs = [];
             dom.resultsContainer.innerHTML = '';
-            window.scrollTo(0, 0);
+            // Only scroll to top when the explorer tab is active
+            if (document.getElementById('explorer-tab').classList.contains('active')) {
+                window.scrollTo(0, 0);
+            }
         }
         if (!isSearching && reset) {
             dom.initialLoadMessage.classList.remove('hidden');
@@ -1137,17 +1177,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const callGeminiAPI = async (payload, expectJson = false) => {
-        const GEMINI_API_KEY = "AIzaSyCt2T6J-by5-r9-DXCVah9dURU1-Utmui4"; // Placeholder intact
+        const GEMINI_API_KEY = "AIzaSyCidi365tQ8Pix_YCfy9ijJUsA7ugddX9g"; // Placeholder intact
         if (!GEMINI_API_KEY || GEMINI_API_KEY.includes("localement")) throw new Error("Clé API manquante");
         
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
         
         const response = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-        if (!response.ok) throw new Error("Erreur API");
+        if (!response.ok) {
+            const errBody = await response.text().catch(() => '');
+            throw new Error(`Erreur API (${response.status}): ${errBody.slice(0, 200)}`);
+        }
         const data = await response.json();
         const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        return expectJson ? JSON.parse(text) : text;
+        if (!text) throw new Error("L'API n'a retourné aucun contenu.");
+        if (expectJson) {
+            // Strip potential markdown code fences before parsing
+            const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+            try {
+                return JSON.parse(clean);
+            } catch (e) {
+                throw new Error(`Réponse JSON invalide de l'IA : ${clean.slice(0, 150)}`);
+            }
+        }
+        return text;
     };
 
     const getProverbExplanation = async (proverb) => {
@@ -1252,7 +1305,9 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
 
     const resetAIButton = () => {
         dom.ai.suggestBtn.disabled = false;
-        dom.ai.suggestBtn.innerHTML = `✨ Demander conseil`;
+        dom.ai.suggestBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span>✨ Demander conseil</span>`;
         dom.ai.stepFeedback.textContent = "";
     };
 
@@ -1472,11 +1527,16 @@ Génère 10 questions de quiz basées EXCLUSIVEMENT sur cette liste, en suivant 
         
         setTimeout(preloadQuizQuestions, 1000); 
 
+        const scoreMsg = state.aiQuiz.score >= 9 ? "Résultat exceptionnel !" 
+                        : state.aiQuiz.score >= 7 ? "Très bon résultat !" 
+                        : state.aiQuiz.score >= 5 ? "Pas mal, continuez !"
+                        : state.aiQuiz.score >= 3 ? "Il y a de la marge, réessayez !"
+                        : "Les proverbes n'ont pas encore livré tous leurs secrets...";
         gameScreen.innerHTML = `
             <div class="text-center">
                 <h3 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-4">Quiz Terminé !</h3>
                 <p class="text-4xl font-bold text-[var(--color-primary)] mb-2">${state.aiQuiz.score} / 10</p>
-                <p class="text-lg text-[var(--color-text-light)] mb-8">Un excellent score !</p>
+                <p class="text-lg text-[var(--color-text-light)] mb-8">${scoreMsg}</p>
                 <button id="restart-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--color-secondary)] transition-all">
                     Recommencer un quiz
                 </button>
@@ -1594,7 +1654,7 @@ Génère 10 questions de quiz basées EXCLUSIVEMENT sur cette liste, en suivant 
         dom.modal.backdrop.addEventListener('click', closeModal);
 
         dom.aboutBtn.addEventListener('click', () => openModal("À propos de l'Œuvre", 
-            `<p>Cette collection numérique est un hommage à la richesse de la sagesse populaire kabyle. Elle est basée sur une partie des données patiemment récoltées par Monsieur <strong>Remḍan At Menṣur</strong> dans son </strong>Dictionnaire</strong> de proverbes Kabyles, dont le travail a permis de préserver et de partager ces trésors culturels.</p><p>Ce site a pour vocation de rendre ces proverbes accessibles à tous, de manière interactive et moderne. Il a été conçu comme un outil d'apprentissage et de découverte, enrichi par des technologies contemporaines pour explorer et comprendre l'esprit de la tradition kabyle.</p>`));
+            `<p>Cette collection numérique est un hommage à la richesse de la sagesse populaire kabyle. Elle est basée sur une partie des données patiemment récoltées par Monsieur <strong>Remḍan At Menṣur</strong> dans son <strong>Dictionnaire</strong> de proverbes Kabyles, dont le travail a permis de préserver et de partager ces trésors culturels.</p><p>Ce site a pour vocation de rendre ces proverbes accessibles à tous, de manière interactive et moderne. Il a été conçu comme un outil d'apprentissage et de découverte, enrichi par des technologies contemporaines pour explorer et comprendre l'esprit de la tradition kabyle.</p>`));
         
         dom.themeToggle.addEventListener('click', () => {
             const isDark = dom.html.classList.toggle('dark');
