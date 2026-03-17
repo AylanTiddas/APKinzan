@@ -485,9 +485,10 @@
             </section>
 
             <section id="ai-sage-tab" class="tab-content" aria-labelledby="ai-sage-title">
-                <h2 id="ai-sage-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Le Sage Artificiel 🤖</h2>
+                <h2 id="ai-sage-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Le Sage Artificiel ✨</h2>
                 <div class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
-                    <p class="text-center text-[var(--color-text-light)] mb-4">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
+                    <p class="text-center text-[var(--color-text-light)] mb-1">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
+                    <p class="text-center text-xs text-[var(--color-text-light)] mb-4 opacity-70">Propulsé par <strong>Llama 3.3 70B</strong> via Groq</p>
                     <textarea id="ai-context-input" class="w-full p-3 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4 bg-[var(--color-bg)]" rows="3" placeholder="Exemple : Mon ami parle beaucoup mais n'agit jamais..."></textarea>
                     <button id="ai-suggest-btn" class="w-full px-5 py-3 bg-[var(--color-secondary)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
@@ -1176,81 +1177,138 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    const callGeminiAPI = async (payload, expectJson = false) => {
-        const GEMINI_API_KEY = "AIzaSyCidi365tQ8Pix_YCfy9ijJUsA7ugddX9g"; // Placeholder intact
-        if (!GEMINI_API_KEY || GEMINI_API_KEY.includes("localement")) throw new Error("Clé API manquante");
-        
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
-        if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
-        
-        const response = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+    // =========================================================================
+    // COUCHE IA — Groq (llama-3.3-70b-versatile) — API compatible OpenAI
+    // Clé gratuite sur : https://console.groq.com
+    // =========================================================================
+    const AI_CONFIG = {
+        apiKey: "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",          // ← remplacer par votre clé Groq
+        model:  "llama-3.3-70b-versatile",
+        endpoint: "https://api.groq.com/openai/v1/chat/completions"
+    };
+
+    /**
+     * Appel générique à l'IA.
+     * @param {string} systemPrompt  – instructions système
+     * @param {string} userPrompt    – message utilisateur
+     * @param {boolean} expectJson   – si true, force la sortie JSON et parse la réponse
+     * @returns {string|Object}
+     */
+    const callAI = async (systemPrompt, userPrompt, expectJson = false) => {
+        if (!AI_CONFIG.apiKey || AI_CONFIG.apiKey.includes("VOTRE_CLE")) {
+            throw new Error("Clé API Groq manquante. Ajoutez-la dans AI_CONFIG.apiKey (console.groq.com — gratuit).");
+        }
+
+        const body = {
+            model: AI_CONFIG.model,
+            temperature: 0.5,
+            max_tokens: 2048,
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user",   content: userPrompt   }
+            ]
+        };
+
+        // Groq supporte le mode JSON natif (OpenAI-compatible)
+        if (expectJson) {
+            body.response_format = { type: "json_object" };
+        }
+
+        const response = await fetch(AI_CONFIG.endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${AI_CONFIG.apiKey}`
+            },
+            body: JSON.stringify(body)
+        });
+
         if (!response.ok) {
             const errBody = await response.text().catch(() => '');
-            throw new Error(`Erreur API (${response.status}): ${errBody.slice(0, 200)}`);
+            let detail = '';
+            try { detail = JSON.parse(errBody)?.error?.message || errBody; } catch { detail = errBody; }
+            throw new Error(`Erreur API Groq (${response.status}) : ${detail.slice(0, 300)}`);
         }
+
         const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        const text = data.choices?.[0]?.message?.content;
         if (!text) throw new Error("L'API n'a retourné aucun contenu.");
+
         if (expectJson) {
-            // Strip potential markdown code fences before parsing
+            // Nettoyer les éventuelles balises markdown même en mode json_object
             const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
             try {
                 return JSON.parse(clean);
             } catch (e) {
-                throw new Error(`Réponse JSON invalide de l'IA : ${clean.slice(0, 150)}`);
+                throw new Error(`Réponse JSON invalide : ${clean.slice(0, 200)}`);
             }
         }
         return text;
     };
 
+    // =========================================================================
+    // FONCTIONS IA MÉTIER
+    // =========================================================================
+
     const getProverbExplanation = async (proverb) => {
         openModal("Explication du Proverbe", `<div class="flex justify-center p-8"><span class="loader loader-dark"></span></div>`);
-        const systemPrompt = `Vous êtes un expert de la culture kabyle. Expliquez le proverbe suivant de manière claire.
-Structurez votre réponse en Markdown avec les titres: '### Signification littérale', '### Signification imagée', et '### Exemple d'utilisation'.
-Soyez concis et direct.`;
+
+        const systemPrompt =
+`Vous êtes un expert de la culture et de la langue kabyle (tamazight).
+Expliquez le proverbe fourni de manière claire et pédagogique.
+Structurez votre réponse en Markdown avec exactement ces trois titres :
+### Signification littérale
+### Signification imagée
+### Exemple d'utilisation
+Soyez concis, précis, et restez fidèle à la culture kabyle.`;
+
+        const userPrompt =
+`Explique ce proverbe kabyle : "${proverb.kabyle}"
+Traduction française : "${proverb.francais}"
+${proverb.theme ? `Thème : ${proverb.theme}` : ''}`;
+
         try {
-            const explanation = await callGeminiAPI({
-                contents: [{ parts: [{ text: `Explique ce proverbe kabyle : "${proverb.kabyle}" (qui se traduit par "${proverb.francais}")` }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            });
+            const explanation = await callAI(systemPrompt, userPrompt, false);
             dom.modal.body.innerHTML = renderMarkdown(explanation);
         } catch (error) {
-            dom.modal.body.innerHTML = `<p class="text-red-500">Désolé, une erreur est survenue lors de la communication avec le Sage Artificiel.<br><strong>Détail :</strong> ${error.message}</p>`;
+            dom.modal.body.innerHTML =
+                `<p class="text-red-500 font-semibold">Le Sage Artificiel ne peut pas répondre pour l'instant.</p>
+                 <p class="text-red-400 text-sm mt-2"><strong>Détail :</strong> ${error.message}</p>`;
         }
     };
-    
+
     const getAISuggestion_Stage1_GetKeywords = async (context) => {
         dom.ai.stepFeedback.textContent = "Étape 1/2 : Analyse de la situation...";
-        const systemPrompt = `Vous êtes un expert en recherche sémantique spécialisé dans la culture kabyle.
-Analysez la situation de l'utilisateur. Votre unique tâche est de générer 5 mots-clés (en français ou kabyle) pertinents pour trouver un proverbe.
-Répondez UNIQUEMENT avec un objet JSON au format: { "keywords": ["mot1", "mot2", "mot3", "mot4", "mot5"] }`;
-        
-        return callGeminiAPI({
-            contents: [{ parts: [{ text: `Situation utilisateur: "${context}"` }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-        }, true);
+
+        const systemPrompt =
+`Vous êtes un expert en recherche sémantique spécialisé dans la culture kabyle.
+Analysez la situation décrite par l'utilisateur et générez 5 mots-clés pertinents (en français ou en kabyle) pour trouver un proverbe adapté.
+Répondez UNIQUEMENT avec un objet JSON valide : { "keywords": ["mot1", "mot2", "mot3", "mot4", "mot5"] }`;
+
+        const userPrompt = `Situation de l'utilisateur : "${context}"`;
+
+        return callAI(systemPrompt, userPrompt, true);
     };
 
     const getAISuggestion_Stage2_GetFinalSelection = async (context, candidateProverbs) => {
         dom.ai.stepFeedback.textContent = "Étape 2/2 : Sélection des meilleurs proverbes...";
-        const systemPrompt = `Vous êtes un sage kabyle expert en proverbes.
-Analysez la situation de l'utilisateur. On vous fournit une LISTE PRÉ-FILTRÉE de proverbes potentiellement pertinents.
-Votre tâche est de choisir le ou les meilleurs proverbes de cette liste et de justifier brièvement pourquoi chacun est adapté.
-Le nombre n'est pas fixe ; choisissez-en 1, 2, 3, ou plus, tant qu'ils sont hautement pertinents. S'il n'y en a qu'un seul de vraiment bon, n'en choisissez qu'un, répondez rapidement.
-Répondez OBLIGATOIREMENT avec un objet JSON au format:
-{ "reasoning": "Votre analyse générale de la situation en une phrase.", "proverbs": [ { "id": <id_du_proverbe_1>, "justification": "Pourquoi ce proverbe est pertinent." } ] }`;
 
-        const userPrompt = `Situation de l'utilisateur: "${context}"
+        const systemPrompt =
+`Vous êtes un sage kabyle expert en proverbes.
+On vous donne une situation réelle et une liste de proverbes pré-filtrés.
+Choisissez le ou les proverbes les plus pertinents (1 à 3 maximum) et justifiez brièvement chaque choix.
+Répondez UNIQUEMENT avec un objet JSON valide :
+{ "reasoning": "Analyse de la situation en une phrase.", "proverbs": [ { "id": <entier>, "justification": "Explication courte." } ] }`;
 
-Liste des proverbes pré-filtrés pertinents:
-${JSON.stringify(candidateProverbs)}
+        const userPrompt =
+`Situation : "${context}"
 
-Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et répondez UNIQUEMENT avec l'objet JSON demandé.`;
+Proverbes candidats :
+${JSON.stringify(candidateProverbs, null, 0)}
 
-        return callGeminiAPI({
-            contents: [{ parts: [{ text: userPrompt }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-        }, true);
+Choisissez le ou les plus pertinents et répondez avec le JSON demandé.`;
+
+        return callAI(systemPrompt, userPrompt, true);
     };
 
     const getAISuggestion = async (context) => {
@@ -1317,7 +1375,7 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
                 <p class="text-lg text-[var(--color-text-light)] mb-6">Prêt à tester vos connaissances sur les proverbes de notre collection ?</p>
                 <button id="start-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-lg hover:bg-[var(--color-secondary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                    <span>Lancer le Quiz IA (10 Questions)</span>
+                    <span>Lancer le Quiz (10 Questions)</span>
                 </button>
             </div>
             <div id="quiz-game-screen" class="hidden"></div>
@@ -1397,42 +1455,41 @@ Choisissez le ou les proverbes les plus pertinents (le nombre n'est pas fixe) et
     const fetchAndGenerateAiQuiz = async () => {
         const shuffled = [...state.proverbs].sort(() => 0.5 - Math.random());
         const proverbSample = shuffled.slice(0, 30).map(p => ({
+            id: p.id,
             kabyle: p.kabyle,
             francais: p.francais,
             theme: p.theme
         }));
-        const proverbListJSON = JSON.stringify(proverbSample);
 
-        const systemPrompt = `Vous êtes un expert de la culture kabyle. Générez un quiz à choix multiples de 10 questions.
-IMPORTANT : Vous DEVEZ baser TOUTES vos questions UNIQUEMENT sur la LISTE de proverbes fournie par l'utilisateur.
-Ne créez pas de questions sur des proverbes qui ne sont pas dans cette liste.
+        const systemPrompt =
+`Vous êtes un expert de la culture kabyle. Générez un quiz à choix multiples de 10 questions.
+RÈGLE ABSOLUE : basez TOUTES les questions uniquement sur la liste de proverbes fournie. N'inventez rien.
 Variez les types de questions :
-1.  Donner un proverbe en kabyle, demander sa signification en français.
-2.  Donner un proverbe en français, demander l'original en kabyle.
-3.  Donner un proverbe français, demander l'équivalent en kabyle.
-4.  Donner le début d'un proverbe, demander de le compléter.
-5.  Donner une situation (basée sur le thème), demander quel proverbe de la liste s'applique.
+1. Proverbe kabyle → demander sa traduction française.
+2. Traduction française → retrouver le proverbe kabyle original.
+3. Début de proverbe → compléter la fin.
+4. Description d'une situation → quel proverbe s'applique ?
+5. Thème donné → quel proverbe appartient à ce thème ?
 
-Répondez OBLIGATOIREMENT avec un objet JSON au format suivant (assurez-vous que le JSON est valide) :
+Répondez UNIQUEMENT avec un objet JSON valide, sans aucun texte avant ou après :
 {
   "questions": [
     {
-      "question": "Question ici...",
-      "options": [ "Option A", "Option B", "Option C", "Option D" ],
+      "question": "Texte de la question",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
       "correctAnswerIndex": 0,
-      "explanation": "Brève explication de la bonne réponse (peut inclure le proverbe complet)."
+      "explanation": "Explication concise de la bonne réponse."
     }
   ]
 }`;
-        const userPrompt = `Voici la liste des proverbes à utiliser OBLIGATOIREMENT :
-${proverbListJSON}
 
-Génère 10 questions de quiz basées EXCLUSIVEMENT sur cette liste, en suivant le format JSON demandé.`;
-        
-        return callGeminiAPI({
-            contents: [{ parts: [{ text: userPrompt }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-        }, true); 
+        const userPrompt =
+`Voici les 30 proverbes à utiliser exclusivement :
+${JSON.stringify(proverbSample, null, 0)}
+
+Génère 10 questions de quiz basées sur cette liste uniquement.`;
+
+        return callAI(systemPrompt, userPrompt, true);
     };
 
     const displayAiQuizQuestion = () => {
