@@ -1180,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const GEMINI_API_KEY = "AIzaSyCidi365tQ8Pix_YCfy9ijJUsA7ugddX9g"; // Placeholder intact
         if (!GEMINI_API_KEY || GEMINI_API_KEY.includes("localement")) throw new Error("Clé API manquante");
         
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
         if (expectJson) payload.generationConfig = { responseMimeType: "application/json" };
         
         const response = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
