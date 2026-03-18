@@ -10,25 +10,33 @@
     <meta property="og:title" content="Inzan n Teqbaylit - Trésors de la Sagesse Kabyle">
     <meta property="og:description" content="Explorez des milliers de proverbes kabyles (Inzan) avec explications et suggestions par IA.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://votre-url-ici.com">
+    <meta property="og:url" content="https://inzan.kabyle.app">
+    <meta property="og:image" content="https://inzan.kabyle.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Inzan n Teqbaylit - Trésors de la Sagesse Kabyle">
     <meta name="twitter:description" content="Explorez des milliers de proverbes kabyles (Inzan) avec explications et suggestions par IA.">
+    <meta name="twitter:image" content="https://inzan.kabyle.app/og-image.png">
 
-    <link rel="manifest" href="data:application/json,{
-        &quot;name&quot;: &quot;Inzan n Teqbaylit&quot;,
-        &quot;short_name&quot;: &quot;Inzan&quot;,
-        &quot;start_url&quot;: &quot;.&quot;,
-        &quot;display&quot;: &quot;standalone&quot;,
-        &quot;background_color&quot;: &quot;#F9F7F3&quot;,
-        &quot;theme_color&quot;: &quot;#4A7C59&quot;,
-        &quot;description&quot;: &quot;Trésors de la Sagesse Kabyle&quot;,
-        &quot;icons&quot;: [
-            { &quot;src&quot;: &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F9F7F3'%3E%3C/rect%3E%3Ctext y='.9em' font-size='90' fill='%234A7C59'%3E%E2%9C%A7%3C/text%3E%3C/svg%3E&quot;, &quot;sizes&quot;: &quot;192x192&quot;, &quot;type&quot;: &quot;image/svg+xml&quot; },
-            { &quot;src&quot;: &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F9F7F3'%3E%3C/rect%3E%3Ctext y='.9em' font-size='90' fill='%234A7C59'%3E%E2%9C%A7%3C/text%3E%3C/svg%3E&quot;, &quot;sizes&quot;: &quot;512x512&quot;, &quot;type&quot;: &quot;image/svg+xml&quot; }
-        ]
-    }">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Inzan n Teqbaylit",
+      "description": "Collection interactive de proverbes kabyles (Inzan) — Sagesse populaire de Kabylie",
+      "url": "https://inzan.kabyle.app",
+      "inLanguage": ["fr", "kab"],
+      "about": {
+        "@type": "Thing",
+        "name": "Proverbes kabyles",
+        "description": "Proverbes et sagesse populaire de Kabylie (Tamazight)"
+      }
+    }
+    </script>
+
+    <link rel="manifest" id="pwa-manifest" href="">
 
     <title>Inzan n Teqbaylit - Trésors de la Sagesse Kabyle</title>
     
@@ -325,6 +333,186 @@
         #splash-logo {
             animation: zoomIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+
+        /* ── FLASHCARD OVERLAY ── */
+        #flashcard-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #flashcard-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #flashcard-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+        .flashcard {
+            width: 100%;
+            max-width: 520px;
+            min-height: 340px;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            touch-action: pan-y;
+        }
+        .flashcard-inner {
+            width: 100%;
+            height: 100%;
+            min-height: 340px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1.25rem;
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--color-bg-card);
+            border: 2px solid var(--color-border);
+            box-shadow: var(--shadow-lg);
+        }
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 8%, var(--color-bg-card)), var(--color-bg-card));
+        }
+        .fc-swipe-hint {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            font-size: 0.875rem;
+            color: var(--color-text-light);
+        }
+        .fc-progress {
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+        }
+        @keyframes swipeLeft {
+            from { transform: translateX(0) rotate(0deg); opacity: 1; }
+            to { transform: translateX(-120%) rotate(-10deg); opacity: 0; }
+        }
+        @keyframes swipeRight {
+            from { transform: translateX(0) rotate(0deg); opacity: 1; }
+            to { transform: translateX(120%) rotate(10deg); opacity: 0; }
+        }
+        .fc-swipe-left { animation: swipeLeft 0.35s ease forwards; }
+        .fc-swipe-right { animation: swipeRight 0.35s ease forwards; }
+
+        /* ── STATS DASHBOARD ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+        .stat-chip {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 0.875rem 0.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-chip .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            font-family: var(--font-serif);
+            line-height: 1;
+        }
+        .stat-chip .stat-label {
+            font-size: 0.65rem;
+            color: var(--color-text-light);
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── HISTORY ── */
+        #history-list {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .history-chip {
+            flex-shrink: 0;
+            background: var(--color-bg-card);
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.78rem;
+            color: var(--color-text);
+            cursor: pointer;
+            max-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .history-chip:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* ── DAILY PROVERB NAV ── */
+        .daily-nav-btn {
+            background: var(--color-bg-card);
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            color: var(--color-text-light);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .daily-nav-btn:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* ── REPORT ERROR BTN ── */
+        .report-btn {
+            font-size: 0.7rem;
+            color: var(--color-text-light);
+            opacity: 0.6;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            text-decoration: underline;
+            transition: opacity 0.2s, color 0.2s;
+        }
+        .report-btn:hover {
+            opacity: 1;
+            color: #EF4444;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8 pb-32 sm:pb-8">
@@ -389,7 +577,44 @@
                     <span class="block mt-2 font-medium text-[var(--color-primary)]">"Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem."</span>
                 </div>
 
-                <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Proverbe du Jour 💡</h2>
+                <!-- Mini Tableau de Bord Stats -->
+                <div class="max-w-3xl mx-auto mb-8 fade-in">
+                    <h2 class="text-xl font-serif text-[var(--color-heading)] mb-3 font-semibold flex items-center gap-2">
+                        <span>📊</span> Mon Tableau de Bord
+                    </h2>
+                    <div class="stats-grid">
+                        <div class="stat-chip">
+                            <div class="stat-value" id="stat-viewed">0</div>
+                            <div class="stat-label">Consultés</div>
+                        </div>
+                        <div class="stat-chip">
+                            <div class="stat-value" id="stat-favorites">0</div>
+                            <div class="stat-label">Favoris</div>
+                        </div>
+                        <div class="stat-chip">
+                            <div class="stat-value" id="stat-quiz">—</div>
+                            <div class="stat-label">Meilleur Quiz</div>
+                        </div>
+                    </div>
+                    <div id="stat-top-theme" class="mt-2 text-center text-xs text-[var(--color-text-light)]"></div>
+                </div>
+
+                <!-- Historique de navigation -->
+                <div class="max-w-3xl mx-auto mb-8 fade-in" id="history-section" style="display:none">
+                    <h2 class="text-xl font-serif text-[var(--color-heading)] mb-3 font-semibold flex items-center gap-2">
+                        <span>🕐</span> Récemment consultés
+                    </h2>
+                    <div id="history-list" class="custom-scrollbar"></div>
+                </div>
+
+                <!-- Proverbe du Jour -->
+                <div class="flex items-center justify-between max-w-3xl mx-auto mb-3">
+                    <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] font-semibold flex items-center gap-2">Proverbe du Jour 💡</h2>
+                    <div class="flex gap-2">
+                        <button id="daily-prev-btn" class="daily-nav-btn" title="Proverbe précédent" aria-label="Proverbe précédent">◀</button>
+                        <button id="daily-next-btn" class="daily-nav-btn" title="Proverbe suivant" aria-label="Proverbe suivant">▶</button>
+                    </div>
+                </div>
                 <div id="proverb-of-the-day-card" class="max-w-3xl mx-auto fade-in">
                     <div class="bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)] flex flex-col justify-center items-center h-40">
                         <span class="loader loader-dark"></span> 
@@ -397,7 +622,15 @@
                     </div>
                 </div>
 
-                <div class="max-w-3xl mx-auto mt-12 fade-in">
+                <!-- Bouton Mode Flashcards -->
+                <div class="max-w-3xl mx-auto mt-8 fade-in">
+                    <button id="open-flashcards-btn" class="w-full px-5 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:scale-[1.02]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16"/></svg>
+                        <span>🃏 Mode Flashcards — Apprendre par l'immersion</span>
+                    </button>
+                </div>
+
+                <div class="max-w-3xl mx-auto mt-8 fade-in">
                     <div class="bg-gradient-to-br from-yellow-50/50 to-amber-100/50 dark:from-gray-700/50 dark:to-gray-800/50 border-t-4 border-[var(--color-accent)] rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 shadow-lg">
                         <div class="flex-shrink-0 text-[var(--color-accent)]">
                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -434,7 +667,7 @@
 
                         <div class="flex flex-col sm:flex-row gap-4 items-stretch">
                             <div class="search-wrapper flex-grow">
-                                <input type="text" id="search-input" placeholder="Rechercher par mot-clé ou thème..." aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
+                                <input type="text" id="search-input" placeholder="Rechercher… (ex: travail patience — tous les mots requis)" aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
                                 <button class="clear-search-btn" aria-label="Vider la recherche">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
@@ -788,39 +1021,96 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- TTS (Synthèse Vocale) ---
+    // Kabyle est en alphabet latin mais les sons spéciaux (ɣ, ɛ, ṭ…) sont mieux
+    // approchés par une voix arabe (phonétiquement plus proche) que par fr-FR.
+    const _ttsVoiceCache = { voice: null, resolved: false };
+    const getBestKabyleVoice = () => {
+        if (_ttsVoiceCache.resolved) return _ttsVoiceCache.voice;
+        const voices = window.speechSynthesis.getVoices();
+        // Preference order: ar-MA > ar-DZ > ar-TN > ar (any) > fr-FR > first available
+        const pref = ['ar-MA','ar-DZ','ar-TN','ar','fr-FR'];
+        for (const lang of pref) {
+            const v = voices.find(v => v.lang.startsWith(lang));
+            if (v) { _ttsVoiceCache.voice = v; break; }
+        }
+        _ttsVoiceCache.resolved = true;
+        return _ttsVoiceCache.voice;
+    };
+    // Transliteration hint for special kabyle chars shown in toast
+    const kabyleTranslitHint = (text) => {
+        return text
+            .replace(/ɣ/g,'gh').replace(/ɛ/g,"'a")
+            .replace(/ṭ/g,'t̃').replace(/ṣ/g,'s̃')
+            .replace(/ẓ/g,'z̃').replace(/ḍ/g,'d̃')
+            .replace(/ḥ/g,'h̃').replace(/ṛ/g,'r̃')
+            .replace(/č/g,'tch').replace(/ǧ/g,'dj');
+    };
     const speakProverb = (text) => {
         if (!('speechSynthesis' in window)) {
             showToast("Votre navigateur ne supporte pas la lecture audio.", true);
             return;
         }
-        window.speechSynthesis.cancel(); 
+        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        
-        // Tentative de détection d'une voix appropriée, sinon fallback FR
-        // Le Kabyle n'est pas standard, on utilise FR pour la phonétique latine
-        utterance.lang = 'fr-FR'; 
-        utterance.rate = 0.85; // Débit légèrement ralenti
-        utterance.pitch = 1.0;
-        
-        // Visuel pendant la lecture
-        showToast("📢 Lecture en cours...");
-        window.speechSynthesis.speak(utterance);
+        // Ensure voices are loaded (async on some browsers)
+        const doSpeak = () => {
+            const voice = getBestKabyleVoice();
+            if (voice) {
+                utterance.voice = voice;
+                utterance.lang = voice.lang;
+            } else {
+                utterance.lang = 'fr-FR';
+            }
+            utterance.rate = 0.8;
+            utterance.pitch = 1.0;
+            const hint = kabyleTranslitHint(text);
+            const voiceName = utterance.voice ? utterance.voice.lang : 'fr-FR';
+            showToast(`📢 Lecture (${voiceName})…`);
+            window.speechSynthesis.speak(utterance);
+        };
+        if (window.speechSynthesis.getVoices().length === 0) {
+            window.speechSynthesis.addEventListener('voiceschanged', doSpeak, { once: true });
+        } else {
+            doSpeak();
+        }
     };
 
     // --- GÉNÉRATEUR D'IMAGE SOCIALE HD ---
-    const generateSocialImage = (proverb) => {
+    const _socialFontsLoaded = { done: false };
+    const loadSocialFonts = async () => {
+        if (_socialFontsLoaded.done) return;
+        try {
+            const tinosB = new FontFace('TinosSocial', "url('https://fonts.gstatic.com/s/tinos/v26/buE4poGnedXvwgX8fWs.woff2')");
+            const tinosI = new FontFace('TinosSocialI', "url('https://fonts.gstatic.com/s/tinos/v26/buE1poGnedXvwjX-TmjJ-GY.woff2')", { style: 'italic', weight: '700' });
+            const raleway = new FontFace('RalewaySocial', "url('https://fonts.gstatic.com/s/raleway/v28/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCFPrE.woff2')");
+            await Promise.allSettled([tinosB.load(), tinosI.load(), raleway.load()].map(async p => {
+                const f = await p; document.fonts.add(f);
+            }));
+        } catch(e) { console.warn('Social fonts preload partial fail:', e); }
+        _socialFontsLoaded.done = true;
+    };
+
+    const generateSocialImage = async (proverb) => {
         openModal("Aperçu de la carte HD", `
             <div class="flex flex-col items-center">
-                <canvas id="share-canvas" width="1080" height="1080" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1rem;"></canvas>
-                <a id="download-link" href="#" class="px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-lg shadow-md hover:scale-105 transition-transform flex items-center gap-2">
+                <div class="flex items-center gap-2 mb-3"><span class="loader loader-dark"></span><span class="text-sm text-[var(--color-text-light)]">Chargement des polices…</span></div>
+                <canvas id="share-canvas" width="1080" height="1080" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1rem; display:none"></canvas>
+                <a id="download-link" href="#" class="px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-lg shadow-md hover:scale-105 transition-transform flex items-center gap-2 opacity-0 pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     Télécharger l'image HD
                 </a>
             </div>
         `);
 
+        await loadSocialFonts();
+
         const canvas = document.getElementById('share-canvas');
+        if (!canvas) return;
+        canvas.style.display = '';
         const ctx = canvas.getContext('2d');
+
+        const SERIF = '"TinosSocialI", "Tinos", "Times New Roman", serif';
+        const SANS  = '"RalewaySocial", "Raleway", "Arial", sans-serif';
 
         // 1. Fond Artistique HD
         const gradient = ctx.createLinearGradient(0, 0, 1080, 1080);
@@ -873,8 +1163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Configuration police Kabyle
         ctx.fillStyle = '#2F4F4F';
-        // Utilisation d'une police serif élégante disponible standard
-        ctx.font = 'italic bold 64px "Times New Roman", serif';
+        ctx.font = `italic bold 64px ${SERIF}`;
         
         const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
             const words = text.split(' ');
@@ -913,25 +1202,29 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
 
         // Texte Français (Moyen)
-        ctx.font = 'normal 42px "Arial", sans-serif';
+        ctx.font = `normal 42px ${SANS}`;
         ctx.fillStyle = '#4B5563';
         wrapText(ctx, proverb.francais, 540, sepY + 80, maxWidth, 60);
 
         // Footer / Branding
-        ctx.font = 'bold 28px "Arial", sans-serif';
+        ctx.font = `bold 28px ${SANS}`;
         ctx.fillStyle = '#4A7C59';
         ctx.fillText("Inzan n Teqbaylit", 540, 960);
-        ctx.font = 'italic 22px "Arial", sans-serif';
+        ctx.font = `italic 22px ${SANS}`;
         ctx.fillStyle = '#888';
         ctx.fillText("Trésors de la Sagesse Kabyle", 540, 995);
 
-        // 3. Préparer le téléchargement (après que le navigateur ait peint le canvas)
+        // 3. Préparer le téléchargement
         requestAnimationFrame(() => {
             const link = document.getElementById('download-link');
             if (link) {
                 link.download = `proverbe-kabyle-HD-${proverb.id}.png`;
                 link.href = canvas.toDataURL('image/png', 1.0);
+                link.classList.remove('opacity-0','pointer-events-none');
             }
+            // Hide loader
+            const loaderDiv = dom.modal.body.querySelector('.flex.items-center.gap-2');
+            if (loaderDiv) loaderDiv.style.display = 'none';
         });
     };
 
@@ -955,7 +1248,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex flex-wrap gap-2 items-center min-h-[30px]">${themesHtml}</div>
             </div>
             <div class="mt-4 pt-3 border-t border-[var(--color-border)] flex justify-between items-center gap-2">
-                <button class="explain-btn text-xs font-semibold text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition-colors">Expliquer ✨</button>
+                <div class="flex items-center gap-3">
+                    <button class="explain-btn text-xs font-semibold text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition-colors">Expliquer ✨</button>
+                    <button class="report-btn" data-id="${proverb.id}" data-kabyle="${proverb.kabyle.replace(/"/g,'&quot;')}">Signaler ⚑</button>
+                </div>
                 <div class="flex items-center gap-1 text-[var(--color-text-light)]">
                     <button class="action-btn tts-btn p-1 hover:text-[var(--color-primary)]" aria-label="Écouter le proverbe" title="Écouter">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
@@ -963,14 +1259,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="action-btn image-btn p-1 hover:text-[var(--color-primary)]" aria-label="Créer une image HD" title="Créer une image">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     </button>
-                    
                     <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''} p-1 hover:text-pink-500" aria-label="Ajouter aux favoris" title="Favoris">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                     </button>
                     <button class="action-btn copy-btn p-1 hover:text-[var(--color-primary)]" aria-label="Copier le proverbe" title="Copier">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     </button>
-                    <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager le lien" title="Partager">
+                    <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager ce proverbe" title="Partager">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
                     </button>
                 </div>
@@ -981,11 +1276,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderChunk = (container, proverbs, query, append = true) => {
         const chunkHtml = proverbs.map((p, i) => {
             const cardHTML = createProverbCardHTML(p, false, query);
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = cardHTML;
-            const cardElement = wrapper.firstElementChild;
-            cardElement.style.animationDelay = `${i * 50}ms`;
-            return cardElement.outerHTML;
+            // Inject animation delay via a wrapper placeholder, replaced inline
+            return cardHTML.replace(
+                /class="(stagger-in [^"]+)"/,
+                `class="$1" style="animation-delay:${i * 50}ms"`
+            );
         }).join('');
         if (append) {
             container.insertAdjacentHTML('beforeend', chunkHtml);
@@ -994,19 +1289,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    const updateAvailableThemes = (proverbsList) => {
-        if (!state.isCoreDataLoaded) return;
-        const source = proverbsList || state.proverbs;
-        const allThemesRaw = source.flatMap(p => (p.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean));
-        const uniqueNormalizedThemes = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
-        uniqueNormalizedThemes.sort((a, b) => a[1].localeCompare(b[1]));
-        
-        // Preserve in-session activeTheme; only read localStorage on first call
-        // state.activeTheme is already set from session or defaults to 'tous'
-        
+    // Themes cache — computed once at data load, not on every search
+    let _cachedThemes = null;
+
+    const buildThemesCache = (proverbsList) => {
+        const allThemesRaw = proverbsList.flatMap(p => (p.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean));
+        const unique = [...new Map(allThemesRaw.map(t => [normalizeText(t), t.charAt(0).toUpperCase() + t.slice(1).toLowerCase()])).entries()];
+        unique.sort((a, b) => a[1].localeCompare(b[1]));
+        _cachedThemes = unique;
+    };
+
+    const updateAvailableThemes = () => {
+        if (!state.isCoreDataLoaded || !_cachedThemes) return;
         dom.themeListContainer.innerHTML =
             `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="tous">Tous</button>` +
-            uniqueNormalizedThemes.map(([norm, disp]) =>
+            _cachedThemes.map(([norm, disp]) =>
                 `<button class="theme-pill-button flex-shrink-0 px-4 py-2 rounded-full bg-[var(--color-bg-alt)] shadow-sm cursor-pointer font-medium text-sm text-[var(--color-text)] hover:bg-[var(--color-primary)]/20" data-theme="${norm}">${disp}</button>`
             ).join('');
         const activeThemeButton = dom.themeListContainer.querySelector(`[data-theme="${state.activeTheme}"]`);
@@ -1067,14 +1364,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         state.isLoading = true;
         dom.loaderContainer.classList.remove('hidden');
-        
-        const filteredProverbs = filterProverbs(); 
+
+        // Single filterProverbs() call — result reused for both count and slice
+        const filteredProverbs = filterProverbs();
         if (reset) {
             state.totalFilteredCount = filteredProverbs.length;
         }
         const startIndex = state.currentPage * PROVERBS_PER_PAGE;
-        const endIndex = startIndex + PROVERBS_PER_PAGE;
-        const chunkToLoad = filteredProverbs.slice(startIndex, endIndex);
+        const chunkToLoad = filteredProverbs.slice(startIndex, startIndex + PROVERBS_PER_PAGE);
 
         if (chunkToLoad.length === 0 && reset) {
             dom.noResults.classList.remove('hidden');
@@ -1086,9 +1383,8 @@ document.addEventListener('DOMContentLoaded', () => {
             state.currentPage++;
             dom.resultsFeedback.textContent = `Affichage de ${state.displayedProverbs.length} sur ${state.totalFilteredCount} proverbes`;
         }
-        if (reset) updateAvailableThemes(filteredProverbs);
         if (state.displayedProverbs.length >= state.totalFilteredCount) {
-             dom.loaderContainer.classList.add('hidden');
+            dom.loaderContainer.classList.add('hidden');
         }
         state.isLoading = false;
     };
@@ -1111,11 +1407,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
         dom.navButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
         if (tabId === 'favoris-tab') renderFavorites();
-        
         if (tabId === 'quiz-tab' && state.isCoreDataLoaded && !dom.quizContainer.querySelector('#quiz-game-screen')) {
             showQuizStartScreen();
         }
-        
+        // Update URL hash without scroll jump
+        history.replaceState(null, '', `#${tabId}`);
         if (document.body.clientWidth < 640) window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -1135,6 +1431,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('favoris-tab').classList.contains('active')) {
             renderFavorites();
         }
+        // Refresh stats chip
+        const statFav = document.getElementById('stat-favorites');
+        if (statFav) statFav.textContent = state.favorites.size;
     };
 
     const openModal = (title, bodyContent) => {
@@ -1578,6 +1877,12 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
         const gameScreen = dom.quizContainer.querySelector('#quiz-game-screen');
         if (!gameScreen) return;
         
+        // Sauvegarder le meilleur score
+        const best = parseInt(localStorage.getItem('inzan_stat_best_quiz') || '0');
+        if (state.aiQuiz.score > best) {
+            localStorage.setItem('inzan_stat_best_quiz', state.aiQuiz.score);
+        }
+
         state.aiQuiz.questions = [];
         state.aiQuiz.isLoading = false; 
         state.aiQuiz.preloadPromise = null; 
@@ -1645,7 +1950,7 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
             state.totalFilteredCount = randomSelection.length;
             state.currentPage = 1;
             state.displayedProverbs = randomSelection;
-            updateAvailableThemes(randomSelection);
+            updateAvailableThemes();
             dom.resultsFeedback.textContent = `Affichage d'une sélection aléatoire de ${count} sur ${matchingProverbs.length} proverbes correspondants.`;
         });
         
@@ -1672,13 +1977,17 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
             if (!proverb) return;
 
             // Gestionnaires pour les nouveaux boutons
-            if (e.target.closest('.explain-btn')) getProverbExplanation(proverb);
+            if (e.target.closest('.explain-btn')) {
+                getProverbExplanation(proverb);
+                if (state.trackView) state.trackView(proverbId);
+            }
             if (e.target.closest('.favorite-btn')) toggleFavorite(proverbId);
             if (e.target.closest('.copy-btn')) navigator.clipboard.writeText(`« ${proverb.kabyle} »\n— ${proverb.francais}`).then(() => showToast("✅ Proverbe copié !"));
             
             // TTS
             if (e.target.closest('.tts-btn')) {
                 speakProverb(proverb.kabyle);
+                if (state.trackView) state.trackView(proverbId);
             }
             
             // Image HD
@@ -1686,13 +1995,28 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
                 generateSocialImage(proverb);
             }
 
+            // Deep-link share
             if (e.target.closest('.share-btn')) {
-                if (navigator.share) navigator.share({
-                    title: 'Proverbe Kabyle',
-                    text: `Découvrez ce proverbe kabyle : « ${proverb.kabyle} »\n— ${proverb.francais}`,
-                    url: window.location.href
-                }).catch(console.error);
-                else showToast("Le partage n'est pas supporté sur ce navigateur.", true);
+                const deepUrl = `${location.origin}${location.pathname}#proverbe-${proverb.id}`;
+                const shareData = {
+                    title: 'Proverbe Kabyle — Inzan n Teqbaylit',
+                    text: `« ${proverb.kabyle} »\n— ${proverb.francais}`,
+                    url: deepUrl
+                };
+                if (navigator.share) {
+                    navigator.share(shareData).catch(console.error);
+                } else {
+                    navigator.clipboard.writeText(deepUrl).then(() => showToast("🔗 Lien copié !")).catch(() => showToast("Le partage n'est pas supporté.", true));
+                }
+            }
+
+            // Signaler une erreur
+            if (e.target.closest('.report-btn')) {
+                const btn = e.target.closest('.report-btn');
+                const kabyle = btn.dataset.kabyle || proverb.kabyle;
+                const subject = encodeURIComponent(`[Inzan] Erreur proverbe #${proverbId}`);
+                const body = encodeURIComponent(`Proverbe : « ${kabyle} »\n\nDescription de l'erreur :\n`);
+                window.open(`mailto:contact@kabyle.app?subject=${subject}&body=${body}`);
             }
             if (e.target.closest('.card-theme-badge')) {
                  e.stopPropagation();
@@ -1729,6 +2053,27 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
     };
 
     const main = () => {
+        // ── PWA Manifest via Blob URL (works on iOS Safari unlike data: URI) ──
+        const manifestJson = JSON.stringify({
+            name: "Inzan n Teqbaylit",
+            short_name: "Inzan",
+            start_url: "./",
+            display: "standalone",
+            background_color: "#F9F7F3",
+            theme_color: "#4A7C59",
+            description: "Trésors de la Sagesse Kabyle",
+            icons: [
+                { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F9F7F3'/%3E%3Ctext y='.9em' font-size='90' fill='%234A7C59'%3Eⵣ%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
+                { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F9F7F3'/%3E%3Ctext y='.9em' font-size='90' fill='%234A7C59'%3Eⵣ%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
+            ]
+        });
+        try {
+            const manifestBlob = new Blob([manifestJson], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            document.getElementById('pwa-manifest').setAttribute('href', manifestURL);
+        } catch(e) { console.warn('Manifest Blob URL failed:', e); }
+
+        // ── Theme (dark/light) ──
         const savedTheme = localStorage.getItem('inzan_theme') || 'light';
         dom.html.classList.toggle('dark', savedTheme === 'dark');
         dom.themeIcons.light.classList.toggle('hidden', savedTheme === 'dark');
@@ -1736,11 +2081,96 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
         document.querySelector('meta[name="theme-color"]').setAttribute('content', savedTheme === 'dark' ? '#101418' : '#F9F7F3');
 
         registerServiceWorker();
-
         setupEventListeners();
         setupInfiniteScroll();
-        setActiveTab('accueil-tab');
-        
+
+        // ── Hash-based tab routing ──
+        const hashTab = window.location.hash.replace('#', '');
+        const validTabs = ['accueil-tab','explorer-tab','favoris-tab','ai-sage-tab','quiz-tab'];
+        setActiveTab(validTabs.includes(hashTab) ? hashTab : 'accueil-tab');
+
+        // ── Stats dashboard ──
+        const refreshStats = () => {
+            const viewed = parseInt(localStorage.getItem('inzan_stat_viewed') || '0');
+            const bestQuiz = localStorage.getItem('inzan_stat_best_quiz');
+            document.getElementById('stat-viewed').textContent = viewed;
+            document.getElementById('stat-favorites').textContent = state.favorites.size;
+            document.getElementById('stat-quiz').textContent = bestQuiz !== null ? `${bestQuiz}/10` : '—';
+            // Top theme
+            const themeMap = {};
+            state.favorites.forEach(id => {
+                const p = state.proverbs.find(x => x.id === id);
+                if (p && p.theme) {
+                    const t = p.theme.split(/[,/]/)[0].trim();
+                    themeMap[t] = (themeMap[t] || 0) + 1;
+                }
+            });
+            const topTheme = Object.entries(themeMap).sort((a,b) => b[1]-a[1])[0];
+            const el = document.getElementById('stat-top-theme');
+            if (el) el.textContent = topTheme ? `❤️ Thème favori : ${topTheme[0]} (${topTheme[1]} proverbe${topTheme[1]>1?'s':''})` : '';
+        };
+
+        // ── History ──
+        const addToHistory = (proverb) => {
+            let hist = JSON.parse(localStorage.getItem('inzan_history') || '[]');
+            hist = hist.filter(h => h.id !== proverb.id);
+            hist.unshift({ id: proverb.id, kabyle: proverb.kabyle.slice(0, 60) });
+            if (hist.length > 10) hist = hist.slice(0, 10);
+            localStorage.setItem('inzan_history', JSON.stringify(hist));
+            renderHistory();
+        };
+        const renderHistory = () => {
+            const hist = JSON.parse(localStorage.getItem('inzan_history') || '[]');
+            const section = document.getElementById('history-section');
+            const list = document.getElementById('history-list');
+            if (!section || !list) return;
+            if (hist.length === 0) { section.style.display = 'none'; return; }
+            section.style.display = '';
+            list.innerHTML = hist.map(h =>
+                `<button class="history-chip" data-id="${h.id}" title="${h.kabyle}">« ${h.kabyle}… »</button>`
+            ).join('');
+            list.querySelectorAll('.history-chip').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const p = state.proverbs.find(x => x.id === parseInt(btn.dataset.id));
+                    if (p) {
+                        setActiveTab('explorer-tab');
+                        setTimeout(() => {
+                            dom.searchInput.value = p.kabyle.split(' ').slice(0,2).join(' ');
+                            loadNextChunk(true);
+                        }, 100);
+                    }
+                });
+            });
+        };
+
+        // ── Track viewed count (called from body click handler) ──
+        state.trackView = (proverbId) => {
+            let viewed = parseInt(localStorage.getItem('inzan_stat_viewed') || '0');
+            localStorage.setItem('inzan_stat_viewed', viewed + 1);
+            const p = state.proverbs.find(x => x.id === proverbId);
+            if (p) addToHistory(p);
+            refreshStats();
+        };
+
+        // ── Daily proverb navigation offset ──
+        state.dailyOffset = parseInt(localStorage.getItem('inzan_daily_offset') || '0');
+        const renderDailyProverb = () => {
+            if (!state.proverbs.length) return;
+            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+            const idx = ((dayOfYear + state.dailyOffset) % state.proverbs.length + state.proverbs.length) % state.proverbs.length;
+            dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(state.proverbs[idx], true);
+        };
+        document.getElementById('daily-prev-btn')?.addEventListener('click', () => {
+            state.dailyOffset--;
+            localStorage.setItem('inzan_daily_offset', state.dailyOffset);
+            renderDailyProverb();
+        });
+        document.getElementById('daily-next-btn')?.addEventListener('click', () => {
+            state.dailyOffset++;
+            localStorage.setItem('inzan_daily_offset', state.dailyOffset);
+            renderDailyProverb();
+        });
+
         fetch('proverbs.json')
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -1750,45 +2180,43 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
                 if (!Array.isArray(data)) {
                     throw new Error("Le fichier proverbs.json n'est pas un tableau (Array) valide.");
                 }
-                state.proverbs = data.map((p, index) => ({ 
-                    ...p, 
-                    id: index,
-                    kabyle_norm: normalizeText(p.kabyle),
-                    francais_norm: normalizeText(p.francais),
-                    theme_norm: normalizeText(p.theme)
-                }));
+                // IDs: use existing `id` field from JSON if present, else stable hash from kabyle text
+                state.proverbs = data.map((p, index) => {
+                    const stableId = p.id !== undefined ? p.id : index;
+                    return {
+                        ...p,
+                        id: stableId,
+                        kabyle_norm: normalizeText(p.kabyle),
+                        francais_norm: normalizeText(p.francais),
+                        theme_norm: normalizeText(p.theme)
+                    };
+                });
                 state.isCoreDataLoaded = true;
-                
+
                 dom.proverbCount.textContent = `plus de ${state.proverbs.length} proverbes`;
 
-                if (state.proverbs.length > 0) {
-                    try {
-                        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-                        const dailyProverb = state.proverbs[dayOfYear % state.proverbs.length];
-                        dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(dailyProverb, true);
-                    } catch (e) {
-                        console.error("Failed to load daily proverb (fallback):", e);
-                        const randomProverb = state.proverbs[Math.floor(Math.random() * state.proverbs.length)];
-                        dom.proverbOfTheDayCard.innerHTML = createProverbCardHTML(randomProverb, true);
-                    }
-                } else {
-                    dom.proverbOfTheDayCard.innerHTML = `<p class="text-center text-[var(--color-text-light)] p-4">Aucun proverbe n'a été trouvé.</p>`;
-                }
-                
-                updateAvailableThemes(state.proverbs);
-                
+                // Build themes cache once
+                buildThemesCache(state.proverbs);
+                updateAvailableThemes();
+
+                // Daily proverb
+                renderDailyProverb();
+
+                // History + Stats
+                renderHistory();
+                refreshStats();
+
                 const savedActiveTheme = localStorage.getItem('inzan_theme_filter');
                 if (savedActiveTheme && savedActiveTheme !== 'tous') {
                     state.activeTheme = savedActiveTheme;
                     loadNextChunk(true);
                 }
-                
-                if (dom.quizContainer.offsetParent) { 
-                     showQuizStartScreen();
+
+                if (dom.quizContainer.offsetParent) {
+                    showQuizStartScreen();
                 }
 
                 setTimeout(preloadQuizQuestions, 1000);
-
                 setTimeout(() => dom.splashScreen.classList.add('hidden'), 500);
             })
             .catch(error => {
@@ -1796,7 +2224,7 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
                 const errorMessage = `<div class="text-center p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
                     <h1 class="text-2xl font-bold text-red-600 dark:text-red-400">Erreur de chargement</h1>
                     <p class="text-red-500 dark:text-red-300 mt-2">Impossible de charger la banque de proverbes (proverbs.json).</p>
-                    <p class="mt-4 text-[var(--color-text-light)] text-sm">Veuillez vérifier que le fichier est bien présent à la racine du site et que son contenu est un JSON valide. L'erreur la plus probable est un chemin de fichier incorrect ou un fichier corrompu.</p>
+                    <p class="mt-4 text-[var(--color-text-light)] text-sm">Veuillez vérifier que le fichier est bien présent à la racine du site et que son contenu est un JSON valide.</p>
                     <p class="font-mono bg-red-100 dark:bg-red-900/30 text-xs p-2 mt-3 rounded">Détail : ${error.message}</p>
                 </div>`;
                 dom.resultsContainer.innerHTML = `<div class="md:col-span-2 xl:col-span-3">${errorMessage}</div>`;
@@ -1808,8 +2236,152 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
             });
     };
 
+    // =========================================================================
+    // FLASHCARDS
+    // =========================================================================
+    const flashcardState = { deck: [], index: 0 };
+
+    const openFlashcards = () => {
+        if (!state.isCoreDataLoaded || state.proverbs.length === 0) {
+            showToast("Les proverbes ne sont pas encore chargés.", true);
+            return;
+        }
+        // Shuffle a deck of 50 (or all if fewer)
+        flashcardState.deck = [...state.proverbs].sort(() => Math.random() - 0.5).slice(0, 50);
+        flashcardState.index = 0;
+        renderFlashcard();
+        document.getElementById('flashcard-overlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeFlashcards = () => {
+        document.getElementById('flashcard-overlay').classList.remove('active');
+        document.body.style.overflow = '';
+        const card = document.getElementById('main-flashcard');
+        if (card) card.classList.remove('flipped');
+    };
+
+    const renderFlashcard = () => {
+        const { deck, index } = flashcardState;
+        if (index >= deck.length) {
+            const container = document.getElementById('flashcard-container');
+            container.innerHTML = `<div class="text-center p-8">
+                <p class="text-4xl mb-4">🎉</p>
+                <h3 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-2">Série terminée !</h3>
+                <p class="text-[var(--color-text-light)] mb-6">${deck.length} proverbes parcourus</p>
+                <button id="fc-restart" class="px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-xl shadow-md hover:scale-105 transition-transform">Recommencer</button>
+            </div>`;
+            document.getElementById('fc-restart')?.addEventListener('click', openFlashcards);
+            return;
+        }
+        const p = deck[index];
+        const card = document.getElementById('main-flashcard');
+        if (!card) return;
+        card.classList.remove('flipped');
+        document.getElementById('fc-kabyle').textContent = `« ${p.kabyle} »`;
+        document.getElementById('fc-francais').textContent = `— ${p.francais}`;
+        document.getElementById('fc-theme').textContent = p.theme ? `📌 ${p.theme}` : '';
+        document.getElementById('fc-index').textContent = index + 1;
+        document.getElementById('fc-total').textContent = deck.length;
+    };
+
+    const advanceFlashcard = (save) => {
+        const card = document.getElementById('main-flashcard');
+        if (!card) return;
+        const cls = save ? 'fc-swipe-right' : 'fc-swipe-left';
+        card.classList.add(cls);
+        if (save) {
+            const p = flashcardState.deck[flashcardState.index];
+            if (p && !state.favorites.has(p.id)) {
+                toggleFavorite(p.id);
+            }
+        }
+        setTimeout(() => {
+            card.classList.remove(cls);
+            flashcardState.index++;
+            renderFlashcard();
+        }, 370);
+    };
+
+    // Touch swipe handling
+    const setupFlashcardSwipe = () => {
+        const overlay = document.getElementById('flashcard-overlay');
+        let startX = 0, startY = 0;
+        overlay.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+        overlay.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - startX;
+            const dy = Math.abs(e.changedTouches[0].clientY - startY);
+            if (Math.abs(dx) > 60 && dy < 80) {
+                advanceFlashcard(dx > 0); // right = save, left = skip
+            }
+        }, { passive: true });
+    };
+
+    // Wire up flashcard controls
+    document.getElementById('open-flashcards-btn')?.addEventListener('click', openFlashcards);
+    document.getElementById('close-flashcards-btn')?.addEventListener('click', closeFlashcards);
+    document.getElementById('fc-skip-btn')?.addEventListener('click', () => advanceFlashcard(false));
+    document.getElementById('fc-save-btn')?.addEventListener('click', () => advanceFlashcard(true));
+    document.getElementById('main-flashcard')?.addEventListener('click', () => {
+        document.getElementById('main-flashcard').classList.toggle('flipped');
+    });
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+        const overlay = document.getElementById('flashcard-overlay');
+        if (!overlay.classList.contains('active')) return;
+        if (e.key === 'Escape') closeFlashcards();
+        if (e.key === 'ArrowRight') advanceFlashcard(true);
+        if (e.key === 'ArrowLeft') advanceFlashcard(false);
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('main-flashcard')?.classList.toggle('flipped');
+        }
+    });
+    setupFlashcardSwipe();
+
     main();
 });
 </script>
+    <!-- ── FLASHCARD OVERLAY ── -->
+    <div id="flashcard-overlay" role="dialog" aria-modal="true" aria-label="Mode Flashcards">
+        <header class="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg-card)]/80 backdrop-blur-md">
+            <div>
+                <h2 class="text-lg font-serif font-bold text-[var(--color-heading)]">🃏 Mode Flashcards</h2>
+                <p class="text-xs text-[var(--color-text-light)]">Tapez pour révéler · Swipe ← ignorer · Swipe → sauvegarder</p>
+            </div>
+            <button id="close-flashcards-btn" aria-label="Fermer les flashcards" class="p-2 rounded-full bg-[var(--color-bg-alt)] hover:bg-[var(--color-primary)] hover:text-white transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </header>
+        <div class="fc-progress"><span id="fc-index">1</span> / <span id="fc-total">?</span></div>
+        <div id="flashcard-container">
+            <div class="flashcard" id="main-flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <p class="text-xs uppercase tracking-widest text-[var(--color-text-light)] mb-4">Kabyle</p>
+                        <p id="fc-kabyle" class="text-2xl font-serif font-bold text-[var(--color-heading)] text-center italic leading-snug"></p>
+                        <p class="text-xs text-[var(--color-text-light)] mt-6 opacity-70">Tapez pour voir la traduction</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <p class="text-xs uppercase tracking-widest text-[var(--color-text-light)] mb-4">Traduction française</p>
+                        <p id="fc-francais" class="text-xl text-[var(--color-text)] text-center leading-relaxed"></p>
+                        <div id="fc-theme" class="mt-4 text-xs text-[var(--color-primary)] font-semibold"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-swipe-hint">
+            <span class="flex items-center gap-1">👈 <span class="text-red-400 font-semibold">Ignorer</span></span>
+            <span class="flex items-center gap-1"><span class="text-green-500 font-semibold">Sauvegarder</span> 👉</span>
+        </div>
+        <div class="flex justify-center gap-4 px-4 pb-6">
+            <button id="fc-skip-btn" class="flex-1 max-w-[160px] py-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-500 font-bold border-2 border-red-200 dark:border-red-800 hover:bg-red-100 transition-all text-lg">← Ignorer</button>
+            <button id="fc-save-btn" class="flex-1 max-w-[160px] py-3 rounded-xl bg-green-50 dark:bg-green-900/20 text-green-600 font-bold border-2 border-green-200 dark:border-green-800 hover:bg-green-100 transition-all text-lg">Sauvegarder →</button>
+        </div>
+    </div>
+
 </body>
 </html>
