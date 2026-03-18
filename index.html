@@ -260,42 +260,164 @@
             transform: scale(1.1);
         }
         
+        /* ── QUIZ OPTIONS ── */
         .quiz-option {
             border: 2px solid var(--color-border);
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
+            padding: 0.85rem 1rem 0.85rem 1.1rem;
+            border-radius: 0.625rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.97rem;
+            background: var(--color-bg-card);
+            position: relative;
+            overflow: hidden;
         }
-        .quiz-option:hover {
+        .quiz-option::before {
+            content: attr(data-key);
+            flex-shrink: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            border-radius: 50%;
+            background: var(--color-bg-alt);
+            border: 1.5px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--color-text-light);
+            transition: all 0.18s;
+        }
+        .quiz-option:hover:not([disabled]) {
             border-color: var(--color-primary);
-            background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+            background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg-card));
+            transform: translateX(4px);
+        }
+        .quiz-option:hover:not([disabled])::before {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
         }
         .quiz-option.correct {
             border-color: #10B981;
             background-color: #D1FAE5;
             color: #064E3B;
-            font-weight: bold;
-            transform: scale(1.02);
+            font-weight: 600;
         }
-        html.dark .quiz-option.correct {
-            background-color: #064E3B;
-            color: #D1FAE5;
+        .quiz-option.correct::before {
+            background: #10B981;
+            border-color: #10B981;
+            color: white;
+            content: '✓';
         }
+        html.dark .quiz-option.correct { background-color: #064E3B50; color: #6EE7B7; }
         .quiz-option.incorrect {
             border-color: #EF4444;
             background-color: #FEE2E2;
             color: #991B1B;
-            font-weight: bold;
+            font-weight: 600;
         }
-        html.dark .quiz-option.incorrect {
-            background-color: #991B1B;
-            color: #FEE2E2;
+        .quiz-option.incorrect::before {
+            background: #EF4444;
+            border-color: #EF4444;
+            color: white;
+            content: '✗';
         }
-        .quiz-option[disabled] {
-            cursor: not-allowed;
-            opacity: 0.7;
+        html.dark .quiz-option.incorrect { background-color: #99151550; color: #FCA5A5; }
+        .quiz-option[disabled] { cursor: not-allowed; }
+
+        /* ── QUIZ PROGRESS BAR ── */
+        #quiz-progress-bar {
+            height: 6px;
+            background: var(--color-bg-alt);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
         }
+        #quiz-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* ── QUIZ TIMER ── */
+        #quiz-timer-ring {
+            transform: rotate(-90deg);
+        }
+        #quiz-timer-circle {
+            transition: stroke-dashoffset 1s linear;
+            stroke-linecap: round;
+        }
+        @keyframes timerPulse {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .timer-urgent { animation: timerPulse 0.6s ease-in-out infinite; }
+        .timer-urgent #quiz-timer-circle { stroke: #EF4444 !important; }
+        .timer-urgent #quiz-timer-text { fill: #EF4444 !important; }
+
+        /* ── QUIZ STREAK ── */
+        #quiz-streak {
+            transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .streak-bump { animation: streakPop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+        @keyframes streakPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* ── QUIZ MODE CARDS ── */
+        .quiz-mode-card {
+            border: 2px solid var(--color-border);
+            border-radius: 0.875rem;
+            padding: 1.1rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            background: var(--color-bg-card);
+            text-align: center;
+        }
+        .quiz-mode-card:hover, .quiz-mode-card.selected {
+            border-color: var(--color-primary);
+            background: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg-card));
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .quiz-mode-card.selected { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent); }
+        .quiz-diff-btn {
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 0.45rem 1rem;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            background: var(--color-bg-card);
+            color: var(--color-text-light);
+            transition: all 0.15s;
+        }
+        .quiz-diff-btn.selected { background: var(--color-primary); border-color: var(--color-primary); color: white; }
+
+        /* ── QUIZ RESULTS ── */
+        @keyframes scorePop {
+            0% { transform: scale(0.4); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .score-pop { animation: scorePop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+        .quiz-history-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.82rem;
+            color: var(--color-text-light);
+        }
+        .quiz-history-row:last-child { border-bottom: none; }
         
         .search-wrapper {
             position: relative;
@@ -593,7 +715,7 @@
                         </div>
                         <div class="stat-chip">
                             <div class="stat-value" id="stat-quiz">—</div>
-                            <div class="stat-label">Meilleur Quiz</div>
+                            <div class="stat-label">Meilleur quiz</div>
                         </div>
                     </div>
                     <div id="stat-top-theme" class="mt-2 text-center text-xs text-[var(--color-text-light)]"></div>
@@ -1668,195 +1790,433 @@ Choisissez le ou les plus pertinents et répondez avec le JSON demandé.`;
         dom.ai.stepFeedback.textContent = "";
     };
 
+    // =========================================================================
+    // QUIZ — v2 : modes, difficulté, timer, streak, historique, résultats
+    // =========================================================================
+
+    // ── Configuration quiz ──
+    const QUIZ_MODES = {
+        rapide:   { label: 'Éclair ⚡',  questions: 5,  sample: 20, icon: '⚡', desc: '5 questions, vite fait' },
+        standard: { label: 'Standard 🧠', questions: 10, sample: 30, icon: '🧠', desc: '10 questions équilibrées' },
+        marathon: { label: 'Marathon 🏆', questions: 20, sample: 50, icon: '🏆', desc: '20 questions pour les sages' },
+    };
+    const QUIZ_DIFF = {
+        debutant:      { label: 'Débutant',     timer: 40, icon: '🌱', sysHint: 'Formulez des questions simples et directes. Utilisez des distracteurs clairement différents.' },
+        intermediaire: { label: 'Intermédiaire', timer: 25, icon: '🌿', sysHint: 'Mélangez questions directes et situations. Distracteurs plausibles.' },
+        expert:        { label: 'Expert',        timer: 15, icon: '🌳', sysHint: 'Questions subtiles sur les nuances. Distracteurs très proches sémantiquement. Incluez des questions sur la structure linguistique kabyle.' },
+    };
+
+    // ── State quiz étendu ──
+    Object.assign(state.aiQuiz, {
+        mode: 'standard',
+        difficulty: 'intermediaire',
+        themeFilter: 'tous',
+        streak: 0,
+        maxStreak: 0,
+        timerInterval: null,
+        timeLeft: 0,
+        totalTime: 0,
+        timePerQuestion: [],
+        answeredCorrectly: [],
+        questionStartTime: 0,
+    });
+
+    // ── Sauvegarde historique des parties ──
+    const saveQuizSession = (score, total, mode, difficulty, maxStreak) => {
+        const sessions = JSON.parse(localStorage.getItem('inzan_quiz_history') || '[]');
+        sessions.unshift({
+            date: new Date().toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit' }),
+            score, total, mode, difficulty, maxStreak
+        });
+        localStorage.setItem('inzan_quiz_history', JSON.stringify(sessions.slice(0, 10)));
+        // Meilleur score global
+        const prevBest = parseInt(localStorage.getItem('inzan_stat_best_quiz') || '0');
+        const pct = Math.round(score / total * 100);
+        if (pct > prevBest) localStorage.setItem('inzan_stat_best_quiz', pct);
+    };
+    const getQuizHistory = () => JSON.parse(localStorage.getItem('inzan_quiz_history') || '[]');
+
+    // ── Écran de démarrage enrichi ──
     const showQuizStartScreen = () => {
+        const history = getQuizHistory();
+        const histHtml = history.length ? `
+            <div class="mt-5 border-t border-[var(--color-border)] pt-4">
+                <p class="text-xs font-bold text-[var(--color-text-light)] uppercase tracking-widest mb-2">Parties récentes</p>
+                ${history.slice(0,5).map(h => `
+                    <div class="quiz-history-row">
+                        <span>${h.date} · ${QUIZ_MODES[h.mode]?.icon||'🧠'} ${QUIZ_DIFF[h.difficulty]?.icon||''}</span>
+                        <span class="font-bold ${h.score/h.total >= 0.8 ? 'text-green-500' : h.score/h.total >= 0.5 ? 'text-[var(--color-accent)]' : 'text-red-400'}">${h.score}/${h.total}</span>
+                        <span title="Meilleure série">🔥${h.maxStreak||0}</span>
+                    </div>`).join('')}
+            </div>` : '';
+
         dom.quizContainer.innerHTML = `
-            <div id="quiz-start-screen" class="text-center">
-                <p class="text-lg text-[var(--color-text-light)] mb-6">Prêt à tester vos connaissances sur les proverbes de notre collection ?</p>
-                <button id="start-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-lg hover:bg-[var(--color-secondary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                    <span>Lancer le Quiz (10 Questions)</span>
+            <div id="quiz-start-screen">
+                <div class="text-center mb-6">
+                    <p class="text-[var(--color-text-light)]">Testez votre connaissance des proverbes kabyles — chaque partie est unique, générée par IA.</p>
+                </div>
+
+                <p class="text-xs font-bold text-[var(--color-text-light)] uppercase tracking-widest mb-2">Mode</p>
+                <div class="grid grid-cols-3 gap-2 mb-5" id="quiz-mode-selector">
+                    ${Object.entries(QUIZ_MODES).map(([k,v]) => `
+                        <div class="quiz-mode-card ${k === state.aiQuiz.mode ? 'selected' : ''}" data-mode="${k}">
+                            <div class="text-2xl mb-1">${v.icon}</div>
+                            <div class="text-xs font-bold text-[var(--color-heading)]">${v.questions}q</div>
+                            <div class="text-[0.68rem] text-[var(--color-text-light)] mt-0.5">${v.desc}</div>
+                        </div>`).join('')}
+                </div>
+
+                <p class="text-xs font-bold text-[var(--color-text-light)] uppercase tracking-widest mb-2">Difficulté</p>
+                <div class="flex gap-2 mb-5" id="quiz-diff-selector">
+                    ${Object.entries(QUIZ_DIFF).map(([k,v]) => `
+                        <button class="quiz-diff-btn flex-1 ${k === state.aiQuiz.difficulty ? 'selected' : ''}" data-diff="${k}">
+                            ${v.icon} ${v.label}
+                        </button>`).join('')}
+                </div>
+
+                <p class="text-xs font-bold text-[var(--color-text-light)] uppercase tracking-widest mb-2">Thème <span class="font-normal normal-case">(optionnel)</span></p>
+                <select id="quiz-theme-select" class="w-full p-2 mb-5 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-bg-card)] text-[var(--color-text)] focus:border-[var(--color-primary)] transition">
+                    <option value="tous">Tous les thèmes</option>
+                    ${(_cachedThemes||[]).map(([norm,disp]) => `<option value="${norm}" ${state.aiQuiz.themeFilter===norm?'selected':''}>${disp}</option>`).join('')}
+                </select>
+
+                <button id="start-ai-quiz-btn" class="w-full px-6 py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-xl hover:bg-[var(--color-secondary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:scale-[1.02]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Lancer le Quiz
                 </button>
+
+                ${histHtml}
             </div>
             <div id="quiz-game-screen" class="hidden"></div>
         `;
+
+        // Sélecteurs mode
+        document.getElementById('quiz-mode-selector').addEventListener('click', e => {
+            const card = e.target.closest('.quiz-mode-card');
+            if (!card) return;
+            document.querySelectorAll('.quiz-mode-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            state.aiQuiz.mode = card.dataset.mode;
+        });
+        // Sélecteurs difficulté
+        document.getElementById('quiz-diff-selector').addEventListener('click', e => {
+            const btn = e.target.closest('.quiz-diff-btn');
+            if (!btn) return;
+            document.querySelectorAll('.quiz-diff-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            state.aiQuiz.difficulty = btn.dataset.diff;
+            // Reset preload quand difficulté change
+            state.aiQuiz.preloadPromise = null;
+            state.aiQuiz.questions = [];
+        });
+        // Thème
+        document.getElementById('quiz-theme-select').addEventListener('change', e => {
+            state.aiQuiz.themeFilter = e.target.value;
+            state.aiQuiz.preloadPromise = null;
+            state.aiQuiz.questions = [];
+        });
+
         document.getElementById('start-ai-quiz-btn').addEventListener('click', handleStartAiQuiz);
     };
 
-    const preloadQuizQuestions = async () => {
-        if (state.aiQuiz.preloadPromise) {
-            return state.aiQuiz.preloadPromise; 
-        }
-        state.aiQuiz.isLoading = true;
-        console.log("Lancement du pré-chargement du quiz en arrière-plan...");
+    // ── Génération IA améliorée ──
+    const fetchAndGenerateAiQuiz = async () => {
+        const mode = QUIZ_MODES[state.aiQuiz.mode] || QUIZ_MODES.standard;
+        const diff = QUIZ_DIFF[state.aiQuiz.difficulty] || QUIZ_DIFF.intermediaire;
+        const nQ = mode.questions;
+        const nSample = mode.sample;
 
+        // Filtrer par thème si sélectionné
+        let pool = state.aiQuiz.themeFilter !== 'tous'
+            ? state.proverbs.filter(p => (p.theme_norm||'').includes(state.aiQuiz.themeFilter))
+            : state.proverbs;
+        if (pool.length < 10) pool = state.proverbs; // fallback si thème trop petit
+
+        const shuffled = [...pool].sort(() => 0.5 - Math.random());
+        const proverbSample = shuffled.slice(0, nSample).map(p => ({
+            id: p.id, kabyle: p.kabyle, francais: p.francais, theme: p.theme
+        }));
+
+        const systemPrompt =
+`Tu es un expert de la culture et de la langue kabyle (tamazight). Génère exactement ${nQ} questions de quiz à choix multiples.
+
+RÈGLES ABSOLUES :
+- Base-toi UNIQUEMENT sur la liste de proverbes fournie. N'invente rien.
+- Chaque question doit utiliser un proverbe différent.
+- ${diff.sysHint}
+
+TYPES DE QUESTIONS (varies impérativement) :
+1. Traduction : "Que signifie ce proverbe kabyle : [kabyle] ?"
+2. Identification kabyle : "Quelle est la version kabyle de : [français] ?"
+3. Complétion : "Complétez ce proverbe : [début]… ?"
+4. Situation : "Quelle sagesse kabyle correspond à cette situation : [description] ?"
+5. Thème : "Quel proverbe appartient au thème [thème] ?"
+6. Intrus : "Lequel de ces proverbes N'appartient PAS au thème [thème] ?"
+
+FORMAT DE RÉPONSE — JSON strict, aucun texte avant ou après :
+{
+  "questions": [
+    {
+      "type": "traduction|identification|completion|situation|theme|intrus",
+      "question": "Texte complet de la question",
+      "options": ["A", "B", "C", "D"],
+      "correctAnswerIndex": 0,
+      "explanation": "Explication pédagogique concise (1-2 phrases).",
+      "proverbId": <id entier du proverbe concerné>
+    }
+  ]
+}`;
+
+        const userPrompt =
+`Proverbes disponibles (${proverbSample.length}) :
+${JSON.stringify(proverbSample, null, 0)}
+
+Génère exactement ${nQ} questions, une par proverbe différent, en variant les types.`;
+
+        return callAI(systemPrompt, userPrompt, true);
+    };
+
+    // ── Préchargement ──
+    const preloadQuizQuestions = async () => {
+        if (state.aiQuiz.preloadPromise) return state.aiQuiz.preloadPromise;
+        state.aiQuiz.isLoading = true;
         state.aiQuiz.preloadPromise = (async () => {
             try {
-                const quizData = await fetchAndGenerateAiQuiz(); 
-                if (quizData && quizData.questions && quizData.questions.length > 0) {
+                const quizData = await fetchAndGenerateAiQuiz();
+                if (quizData?.questions?.length > 0) {
                     state.aiQuiz.questions = quizData.questions;
-                    console.log("Quiz pré-chargé avec succès.");
                 } else {
                     throw new Error("L'IA n'a pas pu générer de questions valides.");
                 }
             } catch (error) {
-                console.warn("Échec du pré-chargement du quiz:", error.message);
-                state.aiQuiz.questions = []; 
-                state.aiQuiz.preloadPromise = null; 
-                throw error; 
+                state.aiQuiz.questions = [];
+                state.aiQuiz.preloadPromise = null;
+                throw error;
             } finally {
                 state.aiQuiz.isLoading = false;
             }
         })();
-        
         return state.aiQuiz.preloadPromise;
     };
 
+    // ── Démarrage ──
     const handleStartAiQuiz = async () => {
         if (state.aiQuiz.questions.length > 0 && !state.aiQuiz.isLoading) {
-            console.log("Démarrage du quiz avec les questions pré-chargées.");
-            startQuizUI(); 
-            return;
+            startQuizUI(); return;
         }
-
-         dom.quizContainer.innerHTML = `
-            <div class="text-center p-8">
+        dom.quizContainer.innerHTML = `
+            <div class="text-center p-10">
                 <span class="loader loader-dark"></span>
-                <p class="mt-4 text-sm text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions...</p>
-                <p class="text-xs text-[var(--color-text-light)]">(${state.aiQuiz.isLoading ? 'Pré-chargement en cours...' : 'Lancement...'})</p>
+                <p class="mt-4 text-[var(--color-text-light)]">Le Sage Artificiel prépare vos questions…</p>
+                <p class="text-xs text-[var(--color-text-light)] mt-1">Mode ${QUIZ_MODES[state.aiQuiz.mode]?.label} · ${QUIZ_DIFF[state.aiQuiz.difficulty]?.label}</p>
             </div>`;
-
         try {
-            await preloadQuizQuestions(); 
+            await preloadQuizQuestions();
             startQuizUI();
-
         } catch (error) {
-            console.error("Échec du chargement du quiz:", error);
             dom.quizContainer.innerHTML = `
-                <div class="text-center text-red-500">
-                    <p><strong>Erreur lors de la génération du quiz.</strong></p>
-                    <p class="text-sm mt-2">${error.message}</p>
-                    <button id="retry-ai-quiz-btn" class="mt-4 px-5 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-[1.02] transition-transform">Réessayer</button>
+                <div class="text-center p-6">
+                    <p class="text-red-500 font-bold mb-2">Erreur lors de la génération du quiz</p>
+                    <p class="text-sm text-red-400 mb-4">${error.message}</p>
+                    <button id="retry-ai-quiz-btn" class="px-5 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg">Réessayer</button>
                 </div>`;
             document.getElementById('retry-ai-quiz-btn').addEventListener('click', showQuizStartScreen);
-            state.aiQuiz.preloadPromise = null; 
+            state.aiQuiz.preloadPromise = null;
         }
     };
 
     const startQuizUI = () => {
         state.aiQuiz.currentQuestionIndex = 0;
         state.aiQuiz.score = 0;
-        if (!dom.quizContainer.querySelector('#quiz-game-screen') || dom.quizContainer.querySelector('#quiz-start-screen')) {
-             dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`;
-        }
+        state.aiQuiz.streak = 0;
+        state.aiQuiz.maxStreak = 0;
+        state.aiQuiz.timePerQuestion = [];
+        state.aiQuiz.answeredCorrectly = [];
+        if (state.aiQuiz.timerInterval) clearInterval(state.aiQuiz.timerInterval);
+        dom.quizContainer.innerHTML = `<div id="quiz-game-screen"></div>`;
         displayAiQuizQuestion();
     };
 
-    const fetchAndGenerateAiQuiz = async () => {
-        const shuffled = [...state.proverbs].sort(() => 0.5 - Math.random());
-        const proverbSample = shuffled.slice(0, 30).map(p => ({
-            id: p.id,
-            kabyle: p.kabyle,
-            francais: p.francais,
-            theme: p.theme
-        }));
-
-        const systemPrompt =
-`Vous êtes un expert de la culture kabyle. Générez un quiz à choix multiples de 10 questions.
-RÈGLE ABSOLUE : basez TOUTES les questions uniquement sur la liste de proverbes fournie. N'inventez rien.
-Variez les types de questions :
-1. Proverbe kabyle → demander sa traduction française.
-2. Traduction française → retrouver le proverbe kabyle original.
-3. Début de proverbe → compléter la fin.
-4. Description d'une situation → quel proverbe s'applique ?
-5. Thème donné → quel proverbe appartient à ce thème ?
-
-Répondez UNIQUEMENT avec un objet JSON valide, sans aucun texte avant ou après :
-{
-  "questions": [
-    {
-      "question": "Texte de la question",
-      "options": ["Option A", "Option B", "Option C", "Option D"],
-      "correctAnswerIndex": 0,
-      "explanation": "Explication concise de la bonne réponse."
-    }
-  ]
-}`;
-
-        const userPrompt =
-`Voici les 30 proverbes à utiliser exclusivement :
-${JSON.stringify(proverbSample, null, 0)}
-
-Génère 10 questions de quiz basées sur cette liste uniquement.`;
-
-        return callAI(systemPrompt, userPrompt, true);
-    };
-
+    // ── Affichage question ──
     const displayAiQuizQuestion = () => {
         const gameScreen = dom.quizContainer.querySelector('#quiz-game-screen');
-        if (!gameScreen) return; 
+        if (!gameScreen) return;
+        if (state.aiQuiz.timerInterval) clearInterval(state.aiQuiz.timerInterval);
 
-        const q = state.aiQuiz.questions[state.aiQuiz.currentQuestionIndex];
-        if (!q) {
-            showAiQuizResults();
-            return;
-        }
+        const idx = state.aiQuiz.currentQuestionIndex;
+        const q = state.aiQuiz.questions[idx];
+        if (!q) { showAiQuizResults(); return; }
 
-        const optionsHtml = q.options.map((option, index) =>
-            `<div class="quiz-option" data-index="${index}" tabindex="0">${option}</div>`
+        const total = state.aiQuiz.questions.length;
+        const pct = Math.round((idx / total) * 100);
+        const diff = QUIZ_DIFF[state.aiQuiz.difficulty] || QUIZ_DIFF.intermediaire;
+        const timerMax = diff.timer;
+        const CIRCUM = 2 * Math.PI * 22; // r=22
+
+        const typeLabels = {
+            traduction:'Traduction', identification:'Identification',
+            completion:'Complétion', situation:'Situation',
+            theme:'Thème', intrus:'Intrus'
+        };
+        const typeLabel = typeLabels[q.type] || 'Question';
+
+        const optionsHtml = q.options.map((opt, i) =>
+            `<div class="quiz-option" data-index="${i}" data-key="${['A','B','C','D'][i]}" tabindex="0">${opt}</div>`
         ).join('');
 
         gameScreen.innerHTML = `
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-bold text-[var(--color-primary)]">Question ${state.aiQuiz.currentQuestionIndex + 1} / ${state.aiQuiz.questions.length}</span>
-                <span class="text-sm font-bold text-[var(--color-heading)]">Score: ${state.aiQuiz.score}</span>
+            <div class="flex items-center justify-between mb-1 gap-3">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-xs font-bold text-[var(--color-primary)] flex-shrink-0">Q${idx+1}/${total}</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold flex-shrink-0">${typeLabel}</span>
+                </div>
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <span id="quiz-streak" class="text-sm font-bold text-[var(--color-accent)]" title="Série en cours">🔥 ${state.aiQuiz.streak}</span>
+                    <span class="text-sm font-bold text-[var(--color-heading)]">✅ ${state.aiQuiz.score}</span>
+                    <!-- Timer SVG -->
+                    <div id="quiz-timer-wrap" class="relative w-12 h-12 flex-shrink-0">
+                        <svg width="48" height="48" id="quiz-timer-ring" viewBox="0 0 48 48">
+                            <circle cx="24" cy="24" r="22" fill="none" stroke="var(--color-border)" stroke-width="3"/>
+                            <circle id="quiz-timer-circle" cx="24" cy="24" r="22" fill="none"
+                                stroke="var(--color-primary)" stroke-width="3.5"
+                                stroke-dasharray="${CIRCUM}" stroke-dashoffset="0"/>
+                            <text id="quiz-timer-text" x="24" y="29" text-anchor="middle"
+                                font-size="13" font-weight="700" fill="var(--color-heading)"
+                                font-family="var(--font-sans)">${timerMax}</text>
+                        </svg>
+                    </div>
+                </div>
             </div>
-            <p class="text-xl font-serif text-center font-bold text-[var(--color-heading)] mb-6 p-4 bg-[var(--color-bg-alt)] rounded-lg">${q.question}</p>
-            <div id="quiz-options" class="space-y-3">
-                ${optionsHtml}
-            </div>
-            <div id="quiz-feedback-ai" class="mt-6 text-center"></div>
+
+            <div id="quiz-progress-bar"><div id="quiz-progress-fill" style="width:${pct}%"></div></div>
+
+            <p class="text-lg font-serif font-bold text-[var(--color-heading)] mb-5 p-4 bg-[var(--color-bg-alt)] rounded-xl leading-snug">${q.question}</p>
+
+            <div id="quiz-options" class="space-y-2.5">${optionsHtml}</div>
+
+            <div id="quiz-feedback-ai" class="mt-5"></div>
+            <p class="text-center text-[0.68rem] text-[var(--color-text-light)] mt-3 opacity-60">Raccourcis : 1 2 3 4 · Entrée pour valider</p>
         `;
 
-        const optionsContainer = gameScreen.querySelector('#quiz-options');
-        const handleSelection = (target) => {
-            const selectedOption = target.closest('.quiz-option');
-            if (selectedOption && !selectedOption.hasAttribute('disabled')) {
-                handleAiQuizAnswer(parseInt(selectedOption.dataset.index));
+        // Timer
+        state.aiQuiz.timeLeft = timerMax;
+        state.aiQuiz.questionStartTime = Date.now();
+        const circle = gameScreen.querySelector('#quiz-timer-circle');
+        const timerText = gameScreen.querySelector('#quiz-timer-text');
+        const timerWrap = gameScreen.querySelector('#quiz-timer-wrap');
+
+        const updateTimer = () => {
+            if (!circle) return;
+            const offset = CIRCUM * (1 - state.aiQuiz.timeLeft / timerMax);
+            circle.style.strokeDashoffset = offset;
+            timerText.textContent = state.aiQuiz.timeLeft;
+            if (state.aiQuiz.timeLeft <= 5) {
+                timerWrap.classList.add('timer-urgent');
+                circle.style.stroke = '#EF4444';
             }
         };
-        optionsContainer.addEventListener('click', (e) => handleSelection(e.target));
-        optionsContainer.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleSelection(e.target);
+        updateTimer();
+        state.aiQuiz.timerInterval = setInterval(() => {
+            state.aiQuiz.timeLeft--;
+            updateTimer();
+            if (state.aiQuiz.timeLeft <= 0) {
+                clearInterval(state.aiQuiz.timerInterval);
+                // Temps écoulé → réponse automatique incorrecte
+                handleAiQuizAnswer(-1, true);
             }
+        }, 1000);
+
+        // Event listeners options
+        const optionsCont = gameScreen.querySelector('#quiz-options');
+        let answered = false;
+        const handleSelection = (target) => {
+            if (answered) return;
+            const opt = target.closest('.quiz-option');
+            if (opt && !opt.hasAttribute('disabled')) {
+                answered = true;
+                handleAiQuizAnswer(parseInt(opt.dataset.index));
+            }
+        };
+        optionsCont.addEventListener('click', e => handleSelection(e.target));
+        optionsCont.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSelection(e.target); }
         });
+
+        // Raccourcis clavier 1-4
+        const keyHandler = (e) => {
+            if (answered) return;
+            const n = parseInt(e.key);
+            if (n >= 1 && n <= 4) {
+                answered = true;
+                const opt = optionsCont.querySelectorAll('.quiz-option')[n - 1];
+                if (opt) handleAiQuizAnswer(parseInt(opt.dataset.index));
+                document.removeEventListener('keydown', keyHandler);
+            }
+        };
+        document.addEventListener('keydown', keyHandler);
+        // Store to remove on next question
+        state.aiQuiz._keyHandler = keyHandler;
+
+        // Focus first option
+        gameScreen.querySelector('.quiz-option')?.focus();
     };
 
-    const handleAiQuizAnswer = (selectedIndex) => {
-        const q = state.aiQuiz.questions[state.aiQuiz.currentQuestionIndex];
-        const isCorrect = selectedIndex === q.correctAnswerIndex;
-        if (isCorrect) {
-            state.aiQuiz.score++;
+    // ── Traitement réponse ──
+    const handleAiQuizAnswer = (selectedIndex, timeout = false) => {
+        if (state.aiQuiz.timerInterval) clearInterval(state.aiQuiz.timerInterval);
+        if (state.aiQuiz._keyHandler) {
+            document.removeEventListener('keydown', state.aiQuiz._keyHandler);
+            state.aiQuiz._keyHandler = null;
         }
 
-        document.querySelectorAll('.quiz-option').forEach((el, index) => {
+        const q = state.aiQuiz.questions[state.aiQuiz.currentQuestionIndex];
+        const isCorrect = !timeout && selectedIndex === q.correctAnswerIndex;
+        const elapsed = Math.round((Date.now() - state.aiQuiz.questionStartTime) / 1000);
+        state.aiQuiz.timePerQuestion.push(elapsed);
+        state.aiQuiz.answeredCorrectly.push(isCorrect);
+
+        if (isCorrect) {
+            state.aiQuiz.score++;
+            state.aiQuiz.streak++;
+            if (state.aiQuiz.streak > state.aiQuiz.maxStreak) state.aiQuiz.maxStreak = state.aiQuiz.streak;
+            // Animate streak
+            const streakEl = dom.quizContainer.querySelector('#quiz-streak');
+            if (streakEl) { streakEl.classList.remove('streak-bump'); void streakEl.offsetWidth; streakEl.classList.add('streak-bump'); }
+        } else {
+            state.aiQuiz.streak = 0;
+        }
+
+        // Update streak display
+        const streakEl2 = dom.quizContainer.querySelector('#quiz-streak');
+        if (streakEl2) streakEl2.textContent = `🔥 ${state.aiQuiz.streak}`;
+
+        // Color options
+        document.querySelectorAll('.quiz-option').forEach((el, i) => {
             el.setAttribute('disabled', true);
-            if (index === q.correctAnswerIndex) {
-                el.classList.add('correct');
-            } else if (index === selectedIndex) {
-                el.classList.add('incorrect');
-            }
+            if (i === q.correctAnswerIndex) el.classList.add('correct');
+            else if (i === selectedIndex) el.classList.add('incorrect');
         });
 
         const feedback = dom.quizContainer.querySelector('#quiz-feedback-ai');
+        const totalQ = state.aiQuiz.questions.length;
+        const isLast = state.aiQuiz.currentQuestionIndex === totalQ - 1;
+
+        let feedbackMsg;
+        if (timeout) feedbackMsg = `⏰ Temps écoulé !`;
+        else if (isCorrect) {
+            const praise = ['Excellent !','Bravo !','Parfait !','Très bien !','ⵓⵀⵓ !'][Math.floor(Math.random()*5)];
+            feedbackMsg = praise + (state.aiQuiz.streak > 2 ? ` 🔥 Série de ${state.aiQuiz.streak} !` : '');
+        } else {
+            feedbackMsg = 'Dommage…';
+        }
+
         feedback.innerHTML = `
-            <div class="p-4 rounded-lg ${isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}">
-                <p class="text-xl font-bold ${isCorrect ? 'text-green-600' : 'text-red-600'}">${isCorrect ? 'Bravo !' : 'Dommage !'}</p>
-                <p class="mt-2 text-[var(--color-text)]">${q.explanation}</p>
+            <div class="p-4 rounded-xl ${isCorrect ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}">
+                <p class="font-bold text-base ${isCorrect ? 'text-green-600' : 'text-red-500'} mb-1">${feedbackMsg}</p>
+                <p class="text-sm text-[var(--color-text)] leading-relaxed">${q.explanation}</p>
             </div>
-            <button id="next-ai-quiz-btn" class="mt-4 w-full px-6 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:scale-105 transition-transform">
-                ${state.aiQuiz.currentQuestionIndex === state.aiQuiz.questions.length - 1 ? 'Voir les résultats' : 'Question suivante'}
+            <button id="next-ai-quiz-btn" class="mt-3 w-full px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded-xl shadow-md hover:bg-[var(--color-secondary)] transition-all">
+                ${isLast ? '🏁 Voir mes résultats' : 'Question suivante →'}
             </button>
         `;
         const nextBtn = document.getElementById('next-ai-quiz-btn');
@@ -1873,38 +2233,91 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
         }
     };
 
+    // ── Écran de résultats enrichi ──
     const showAiQuizResults = () => {
         const gameScreen = dom.quizContainer.querySelector('#quiz-game-screen');
         if (!gameScreen) return;
-        
-        // Sauvegarder le meilleur score
-        const best = parseInt(localStorage.getItem('inzan_stat_best_quiz') || '0');
-        if (state.aiQuiz.score > best) {
-            localStorage.setItem('inzan_stat_best_quiz', state.aiQuiz.score);
-        }
+
+        const { score, maxStreak, timePerQuestion, answeredCorrectly, mode, difficulty } = state.aiQuiz;
+        const total = state.aiQuiz.questions.length;
+        const pct = Math.round(score / total * 100);
+        const avgTime = timePerQuestion.length
+            ? Math.round(timePerQuestion.reduce((a,b)=>a+b,0) / timePerQuestion.length)
+            : 0;
+
+        // Médaille
+        const medal = pct >= 90 ? '🥇' : pct >= 70 ? '🥈' : pct >= 50 ? '🥉' : '📜';
+        const scoreMsg = pct >= 90 ? 'Résultat exceptionnel !'
+            : pct >= 70 ? 'Très bon résultat !'
+            : pct >= 50 ? 'Pas mal, continuez !'
+            : pct >= 30 ? 'De la marge, réessayez !'
+            : 'Les proverbes n\'ont pas encore livré leurs secrets…';
+
+        // Sauvegarder
+        saveQuizSession(score, total, mode, difficulty, maxStreak);
+
+        // Historique pour les résultats
+        const history = getQuizHistory();
+        const prevBest = history.length > 1 ? history[1] : null;
+        const isNewBest = prevBest ? (score / total) > (prevBest.score / prevBest.total) : history.length === 1;
+
+        // Détail par question
+        const detailHtml = answeredCorrectly.map((ok, i) =>
+            `<span title="Q${i+1}" class="inline-block w-6 h-6 rounded-full text-xs flex items-center justify-center font-bold ${ok ? 'bg-green-100 text-green-600 dark:bg-green-900/40' : 'bg-red-100 text-red-500 dark:bg-red-900/40'}">${ok?'✓':'✗'}</span>`
+        ).join('');
 
         state.aiQuiz.questions = [];
-        state.aiQuiz.isLoading = false; 
-        state.aiQuiz.preloadPromise = null; 
-        
-        setTimeout(preloadQuizQuestions, 1000); 
+        state.aiQuiz.isLoading = false;
+        state.aiQuiz.preloadPromise = null;
+        setTimeout(preloadQuizQuestions, 1500);
 
-        const scoreMsg = state.aiQuiz.score >= 9 ? "Résultat exceptionnel !" 
-                        : state.aiQuiz.score >= 7 ? "Très bon résultat !" 
-                        : state.aiQuiz.score >= 5 ? "Pas mal, continuez !"
-                        : state.aiQuiz.score >= 3 ? "Il y a de la marge, réessayez !"
-                        : "Les proverbes n'ont pas encore livré tous leurs secrets...";
         gameScreen.innerHTML = `
             <div class="text-center">
-                <h3 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-4">Quiz Terminé !</h3>
-                <p class="text-4xl font-bold text-[var(--color-primary)] mb-2">${state.aiQuiz.score} / 10</p>
-                <p class="text-lg text-[var(--color-text-light)] mb-8">${scoreMsg}</p>
-                <button id="restart-ai-quiz-btn" class="w-full px-6 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-lg shadow-md hover:bg-[var(--color-secondary)] transition-all">
-                    Recommencer un quiz
-                </button>
+                <div class="text-6xl score-pop mb-2">${medal}</div>
+                <h3 class="text-2xl font-serif font-bold text-[var(--color-heading)] mb-1">Quiz Terminé !</h3>
+                <p class="text-[var(--color-text-light)] text-sm mb-4">${QUIZ_MODES[mode]?.label||''} · ${QUIZ_DIFF[difficulty]?.label||''}</p>
+
+                <div class="text-5xl font-bold text-[var(--color-primary)] mb-1 score-pop" style="animation-delay:0.15s">${score}<span class="text-2xl text-[var(--color-text-light)]">/${total}</span></div>
+                <p class="text-lg text-[var(--color-text-light)] mb-1">${scoreMsg}</p>
+                ${isNewBest ? '<p class="text-sm font-bold text-[var(--color-accent)] mb-1">🎉 Nouveau record personnel !</p>' : ''}
+
+                <div class="flex justify-center gap-6 mt-4 mb-5">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-[var(--color-heading)]">🔥 ${maxStreak}</div>
+                        <div class="text-xs text-[var(--color-text-light)]">Meilleure série</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-[var(--color-heading)]">⏱ ${avgTime}s</div>
+                        <div class="text-xs text-[var(--color-text-light)]">Temps moyen</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-[var(--color-heading)]">${pct}%</div>
+                        <div class="text-xs text-[var(--color-text-light)]">Réussite</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-1.5 mb-5">${detailHtml}</div>
+
+                <div class="flex gap-3">
+                    <button id="restart-ai-quiz-btn" class="flex-1 px-4 py-3 bg-[var(--color-primary)] text-white font-bold rounded-xl shadow-md hover:bg-[var(--color-secondary)] transition-all">
+                        🔄 Rejouer
+                    </button>
+                    <button id="share-quiz-score-btn" class="flex-1 px-4 py-3 bg-[var(--color-bg-alt)] text-[var(--color-heading)] font-bold rounded-xl border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all">
+                        📤 Partager
+                    </button>
+                </div>
             </div>
         `;
         document.getElementById('restart-ai-quiz-btn').addEventListener('click', showQuizStartScreen);
+        document.getElementById('share-quiz-score-btn').addEventListener('click', () => {
+            const text = `J'ai scoré ${score}/${total} (${pct}%) au Quiz des proverbes kabyles ${medal} — Série max : ${maxStreak}🔥\nInzan n Teqbaylit — https://inzan.kabyle.app`;
+            if (navigator.share) navigator.share({ title: 'Mon score Quiz Inzan', text }).catch(()=>{});
+            else navigator.clipboard.writeText(text).then(() => showToast('📋 Score copié !'));
+        });
+
+        // Refresh stats tableau de bord
+        const statEl = document.getElementById('stat-quiz');
+        if (statEl) { const b = localStorage.getItem('inzan_stat_best_quiz'); statEl.textContent = b ? `${b}%` : '—'; }
     };
 
     const setupInfiniteScroll = () => {
@@ -2095,7 +2508,7 @@ Génère 10 questions de quiz basées sur cette liste uniquement.`;
             const bestQuiz = localStorage.getItem('inzan_stat_best_quiz');
             document.getElementById('stat-viewed').textContent = viewed;
             document.getElementById('stat-favorites').textContent = state.favorites.size;
-            document.getElementById('stat-quiz').textContent = bestQuiz !== null ? `${bestQuiz}/10` : '—';
+            document.getElementById('stat-quiz').textContent = bestQuiz !== null ? `${bestQuiz}%` : '—';
             // Top theme
             const themeMap = {};
             state.favorites.forEach(id => {
