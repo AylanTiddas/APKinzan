@@ -105,6 +105,27 @@
                         border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* ── NAV EXPLORER mis en valeur ── */
+        .nav-btn.explorer-accent {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white !important;
+            border-color: transparent !important;
+            box-shadow: 0 2px 12px color-mix(in srgb, var(--color-primary) 40%, transparent);
+        }
+        .nav-btn.explorer-accent:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 18px color-mix(in srgb, var(--color-primary) 55%, transparent);
+        }
+        .nav-btn.desktop.explorer-accent.active {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            color: white !important;
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 35%, transparent),
+                        0 4px 18px color-mix(in srgb, var(--color-primary) 40%, transparent);
+            border-color: transparent !important;
+        }
+
+        /* ── CLAVIER TIFINAGH ── */
         .char-btn {
             flex-shrink: 0;
             background-color: var(--color-bg-card);
@@ -112,36 +133,346 @@
             border: 1.5px solid var(--color-border);
             font-family: var(--font-serif);
             font-weight: 700;
-            min-width: 2.5rem;
+            min-width: 2.6rem;
+            height: 2.6rem;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.15s, border-color 0.2s;
+            border-radius: 0.5rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: background-color 0.18s, transform 0.12s, border-color 0.18s, box-shadow 0.18s;
         }
         .char-btn:hover {
             background-color: var(--color-primary);
             color: #fff;
             border-color: var(--color-primary);
-            transform: translateY(-2px) scale(1.1);
+            transform: translateY(-3px) scale(1.12);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 40%, transparent);
         }
-        .char-btn:active {
-            transform: translateY(0) scale(0.95);
+        .char-btn:active { transform: translateY(0) scale(0.95); }
+        @keyframes charPop {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.3); background-color: var(--color-accent); border-color: var(--color-accent); color: white; }
+            100% { transform: scale(1); }
         }
+        .char-btn.just-inserted { animation: charPop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+
+        /* ── SEARCH BAR ── */
+        .search-mode-toggle {
+            display: flex;
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .search-mode-btn {
+            padding: 0.45rem 0.7rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--color-bg-card);
+            color: var(--color-text-light);
+            border: none;
+            transition: background 0.15s, color 0.15s;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .search-mode-btn.active { background: var(--color-primary); color: white; }
+
+        /* ── VUE TOGGLE ── */
+        .view-toggle-btn {
+            padding: 0.45rem 0.6rem;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-bg-card);
+            color: var(--color-text-light);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .view-toggle-btn:first-child { border-radius: 0.5rem 0 0 0.5rem; }
+        .view-toggle-btn:last-child  { border-radius: 0 0.5rem 0.5rem 0; border-left: none; }
+        .view-toggle-btn.active { background: var(--color-primary); border-color: var(--color-primary); color: white; }
+
+        /* ── SORT ── */
+        #sort-select {
+            padding: 0.45rem 0.7rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.5rem;
+            background: var(--color-bg-card);
+            color: var(--color-text-light);
+            cursor: pointer;
+        }
+        #sort-select:focus { border-color: var(--color-primary); outline: none; }
+
+        /* ── THEME PILLS ── */
         .theme-pill-button.active {
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
             background-color: var(--color-primary);
             color: white !important;
         }
-        .card-theme-badge:hover {
-            background-color: var(--color-accent);
-            color: var(--color-secondary);
-            transform: scale(1.05);
+
+        /* ── ACTIVE FILTER CHIPS ── */
+        #active-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 0; }
+        .filter-chip {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.25rem 0.65rem;
+            background: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg-card));
+            border: 1.5px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+            border-radius: 999px;
+            font-size: 0.75rem; font-weight: 600;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: background 0.15s;
         }
+        .filter-chip:hover { background: color-mix(in srgb, var(--color-primary) 18%, var(--color-bg-card)); }
+        .filter-chip .chip-x { font-size: 0.65rem; opacity: 0.65; }
+
+        /* ── PROVERB CARDS ── */
+        .proverb-card {
+            background: var(--color-bg-card);
+            border-radius: 0.875rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-primary);
+            padding: 1.25rem;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+            transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+                        box-shadow 0.22s, border-color 0.22s;
+        }
+        .proverb-card::before {
+            content: '«';
+            position: absolute; top: -0.4rem; right: 0.75rem;
+            font-size: 5rem; font-family: var(--font-serif);
+            color: var(--color-primary); opacity: 0.04; line-height: 1;
+            pointer-events: none;
+            transition: opacity 0.22s, transform 0.22s;
+        }
+        .proverb-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .proverb-card:hover::before { opacity: 0.09; transform: scale(1.08); }
+        /* Accents thématiques */
+        .proverb-card[data-tcol="0"] { border-left-color: #4A7C59; }
+        .proverb-card[data-tcol="1"] { border-left-color: #C79A2A; }
+        .proverb-card[data-tcol="2"] { border-left-color: #7C4A6E; }
+        .proverb-card[data-tcol="3"] { border-left-color: #3A7C7C; }
+        .proverb-card[data-tcol="4"] { border-left-color: #9B5E3A; }
+
+        /* Vue liste */
+        #results-container.view-list { grid-template-columns: 1fr !important; gap: 0.6rem !important; }
+        #results-container.view-list .proverb-card { flex-direction: row; align-items: center; gap: 1rem; padding: 0.9rem 1.1rem; border-radius: 0.65rem; }
+        #results-container.view-list .card-body { flex: 1; min-width: 0; }
+        #results-container.view-list .card-text-fr { display: none !important; }
+        #results-container.view-list .card-themes { display: none !important; }
+        #results-container.view-list .proverb-card::before { display: none; }
+        /* Vue compacte */
+        #results-container.view-compact { grid-template-columns: 1fr !important; gap: 0.3rem !important; }
+        #results-container.view-compact .proverb-card { flex-direction: row; align-items: center; padding: 0.55rem 0.9rem; border-radius: 0.5rem; gap: 0.75rem; }
+        #results-container.view-compact .card-body { flex: 1; min-width: 0; }
+        #results-container.view-compact .card-kabyle { font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0 !important; font-style: normal !important; }
+        #results-container.view-compact .card-text-fr,
+        #results-container.view-compact .card-themes,
+        #results-container.view-compact .card-footer-left,
+        #results-container.view-compact .proverb-card::before { display: none !important; }
+        #results-container.view-compact .card-actions { gap: 0.2rem; }
+
+        /* ── CARD THEME BADGE ── */
+        .card-theme-badge:hover { background-color: var(--color-accent); color: #fff; transform: scale(1.06); }
+
+        /* ── SEARCH HIGHLIGHT ── */
         .search-highlight {
-            background-color: var(--color-accent);
-            padding: 1px 4px;
+            background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+            border-bottom: 2px solid var(--color-accent);
+            padding: 0 2px; border-radius: 2px;
+            color: inherit; font-weight: 700;
+        }
+
+        /* ── EXPLORER HERO ── */
+        #explorer-hero {
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--color-primary) 7%, var(--color-bg-card)),
+                color-mix(in srgb, var(--color-accent) 5%, var(--color-bg-card)));
+            border: 1px solid color-mix(in srgb, var(--color-primary) 20%, var(--color-border));
+            border-radius: 1rem; padding: 0.9rem 1.25rem; margin-bottom: 1.1rem;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat-val { font-size: 1.35rem; font-weight: 700; font-family: var(--font-serif); color: var(--color-primary); line-height: 1; }
+        .hero-stat-lbl { font-size: 0.62rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.15rem; }
+
+        /* ── INITIAL STATE ── */
+        #initial-load-message {
+            background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 4%, var(--color-bg-card)), var(--color-bg-card));
+            border: 2px dashed color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
+            border-radius: 1rem;
+        }
+        .quick-pill {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            padding: 0.3rem 0.7rem;
+            background: var(--color-bg-alt); border: 1.5px solid var(--color-border);
+            border-radius: 999px; font-size: 0.75rem; font-weight: 600;
+            color: var(--color-text-light); cursor: pointer; transition: all 0.18s;
+        }
+        .quick-pill:hover { border-color: var(--color-primary); color: var(--color-primary); transform: translateY(-2px); }
+
+        /* ── ACTION BUTTONS carte ── */
+        .action-btn { border-radius: 0.4rem; }
+        .action-btn:hover { background: color-mix(in srgb, var(--color-primary) 10%, transparent); }
+        #results-feedback { font-size: 0.82rem; }
+
+        /* ── SKELETON CARDS ── */
+        @keyframes shimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+        .skeleton-card {
+            background: var(--color-bg-card);
+            border-radius: 0.875rem;
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-border);
+            padding: 1.25rem; min-height: 155px;
+        }
+        .skeleton-line {
             border-radius: 4px;
-            color: var(--color-bg-card);
+            background: linear-gradient(90deg,
+                var(--color-bg-alt) 25%,
+                color-mix(in srgb, var(--color-bg-alt) 55%, var(--color-bg-card)) 50%,
+                var(--color-bg-alt) 75%);
+            background-size: 600px 100%;
+            animation: shimmer 1.4s infinite linear;
+        }
+
+        /* ── MOBILE FAB EXPLORER ── */
+        /* La nav passe de rounded-full à rounded-2xl pour laisser sortir le FAB */
+        #mobile-nav {
+            overflow: visible;
+            padding-bottom: 0.25rem;
+        }
+
+        /* Encoche sous le FAB : petit arc blanc dans la barre */
+        #mobile-nav::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 72px;
+            height: 28px;
+            background: var(--color-bg-card);
+            opacity: 0.9;
+            border-radius: 0 0 40px 40px;
+            z-index: 0;
+        }
+
+        /* Bouton FAB Explorer */
+        .nav-btn.explorer-fab {
+            position: relative;
+            top: -22px;
+            z-index: 2;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 0;
+            flex: 1.15;
+        }
+        .explorer-fab-circle {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(140deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 4px 18px color-mix(in srgb, var(--color-primary) 50%, transparent),
+                0 0 0 4px var(--color-bg-card);
+            transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1),
+                        box-shadow 0.2s ease;
+            margin-bottom: 3px;
+        }
+        .nav-btn.explorer-fab:hover .explorer-fab-circle {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow:
+                0 8px 24px color-mix(in srgb, var(--color-primary) 60%, transparent),
+                0 0 0 4px var(--color-bg-card);
+        }
+        .nav-btn.explorer-fab:active .explorer-fab-circle {
+            transform: scale(0.94);
+        }
+        .nav-btn.explorer-fab.active .explorer-fab-circle {
+            background: linear-gradient(140deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+            box-shadow:
+                0 6px 28px color-mix(in srgb, var(--color-primary) 70%, transparent),
+                0 0 0 4px var(--color-bg-card),
+                0 0 0 6px color-mix(in srgb, var(--color-primary) 20%, transparent);
+        }
+        /* Animation pulse quand Explorer est actif */
+        @keyframes fabPulse {
+            0%   { box-shadow: 0 6px 28px color-mix(in srgb, var(--color-primary) 70%, transparent), 0 0 0 4px var(--color-bg-card), 0 0 0 6px color-mix(in srgb, var(--color-primary) 20%, transparent); }
+            50%  { box-shadow: 0 6px 28px color-mix(in srgb, var(--color-primary) 55%, transparent), 0 0 0 4px var(--color-bg-card), 0 0 0 10px color-mix(in srgb, var(--color-primary) 8%, transparent); }
+            100% { box-shadow: 0 6px 28px color-mix(in srgb, var(--color-primary) 70%, transparent), 0 0 0 4px var(--color-bg-card), 0 0 0 6px color-mix(in srgb, var(--color-primary) 20%, transparent); }
+        }
+        .nav-btn.explorer-fab.active .explorer-fab-circle {
+            animation: fabPulse 2.5s ease-in-out infinite;
+        }
+        .explorer-fab-label {
+            font-size: 0.65rem;
             font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 0.02em;
+            margin-top: 1px;
+        }
+        .nav-btn.explorer-fab:not(.active) .explorer-fab-label {
+            color: var(--color-text-light);
+        }
+
+        /* ── EXPORT BUTTON ── */
+        #export-btn {
+            font-size: 0.72rem; font-weight: 600;
+            padding: 0.3rem 0.65rem;
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.45rem;
+            background: var(--color-bg-card);
+            color: var(--color-text-light);
+            cursor: pointer; transition: all 0.15s;
+            display: none;
+        }
+        #export-btn.visible { display: inline-flex; align-items: center; gap: 0.3rem; }
+        #export-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        /* ── SEARCH SLASH HINT ── */
+        #search-slash-hint {
+            position: absolute; right: 2.6rem; top: 50%; transform: translateY(-50%);
+            font-size: 0.62rem; font-weight: 700;
+            color: var(--color-text-light);
+            background: var(--color-bg-alt); border: 1px solid var(--color-border);
+            border-radius: 4px; padding: 1px 5px;
+            pointer-events: none; opacity: 0.7; transition: opacity 0.2s;
+        }
+        #search-input:focus ~ #search-slash-hint { opacity: 0; }
+        .search-wrapper input:not(:placeholder-shown) ~ #search-slash-hint { opacity: 0; }
+
+        /* ── RÉSULTATS BAR ── */
+        #results-count-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 0.75rem; margin-bottom: 0.75rem; min-height: 28px;
+        }
+        #results-count-bar.hidden { display: none; }
+
+        /* ── EXPLORER SCROLL TOP ── */
+        #explorer-scroll-top {
+            position: fixed; bottom: 5.5rem; right: 1.25rem;
+            width: 2.5rem; height: 2.5rem;
+            background: var(--color-primary); color: white; border: none;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-md); cursor: pointer;
+            opacity: 0; transform: translateY(8px); pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s; z-index: 49;
+        }
+        #explorer-scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        /* ── CARD : accent focus ── */
+        .proverb-card:focus-within {
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent), var(--shadow-md);
         }
 
         @keyframes fadeIn {
@@ -670,9 +1001,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     <span class="font-semibold">Accueil</span>
                 </button>
-                <button data-tab="explorer-tab" class="nav-btn desktop flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <span class="font-semibold">Explorer</span>
+                <button data-tab="explorer-tab" class="nav-btn explorer-accent desktop flex items-center gap-2 px-5 py-2.5 text-white rounded-lg border-2 border-transparent font-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span>Explorer</span>
+                    <span class="text-[0.6rem] bg-white/20 rounded-full px-1.5 py-0.5 font-bold" id="nav-proverb-count-badge">…</span>
                 </button>
                 <button data-tab="favoris-tab" class="nav-btn desktop flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
@@ -771,63 +1103,131 @@
             </section>
 
             <section id="explorer-tab" class="tab-content" aria-labelledby="explorer-title">
-                 <div class="sticky top-4 z-20 bg-[var(--color-bg-card)]/80 backdrop-blur-md rounded-xl shadow-lg border border-[var(--color-border)] mb-6">
-                    <div class="p-4 space-y-4">
-                        
-                        <div id="tamazight-keyboard" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar justify-start sm:justify-center">
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ɛ')">ɛ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ɣ')">ɣ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ḥ')">ḥ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ḍ')">ḍ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ṛ')">ṛ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ṣ')">ṣ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ṭ')">ṭ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ẓ')">ẓ</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('č')">č</button>
-                            <button class="char-btn px-3 py-1.5 rounded shadow-sm text-lg" onclick="insertChar('ǧ')">ǧ</button>
-                        </div>
 
-                        <div class="flex flex-col sm:flex-row gap-4 items-stretch">
-                            <div class="search-wrapper flex-grow">
-                                <input type="text" id="search-input" placeholder="Rechercher… (ex: travail patience — tous les mots requis)" aria-label="Champ de recherche de proverbe" class="w-full p-3 pr-10 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner bg-[var(--color-bg-card)]">
-                                <button class="clear-search-btn" aria-label="Vider la recherche">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                </button>
-                            </div>
-                            <button id="random-btn" aria-label="Afficher un proverbe aléatoire" class="w-full sm:w-auto px-5 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg>
-                                <span data-i18n="randomBtn">Aléatoire</span>
-                            </button>
+                <!-- HERO -->
+                <div id="explorer-hero" class="flex items-center justify-between gap-4 flex-wrap mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-[var(--color-primary)] flex items-center justify-center shadow-md flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                         </div>
-                        <nav id="theme-filter-nav" aria-label="Filtres de thèmes Kabyles">
-                            <div class="flex items-center gap-3">
-                                <h3 class="text-sm font-bold text-[var(--color-heading)] flex-shrink-0" data-i18n="themesLabel">Thèmes:</h3>
-                                <div class="flex-grow overflow-x-auto custom-scrollbar">
-                                    <div id="theme-list-container" class="flex gap-2 py-1">
-                                        </div>
-                                </div>
-                            </div>
-                        </nav>
+                        <div>
+                            <h2 id="explorer-title" class="text-xl font-serif font-bold text-[var(--color-heading)] leading-tight">Explorer les Proverbes</h2>
+                            <p class="text-xs text-[var(--color-text-light)]">Recherche · Filtre · Tri · Vues multiples</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5">
+                        <div class="hero-stat"><div class="hero-stat-val" id="hero-total">—</div><div class="hero-stat-lbl">Proverbes</div></div>
+                        <div class="hero-stat"><div class="hero-stat-val" id="hero-themes">—</div><div class="hero-stat-lbl">Thèmes</div></div>
+                        <div class="hero-stat"><div class="hero-stat-val" id="hero-results">—</div><div class="hero-stat-lbl">Résultats</div></div>
                     </div>
                 </div>
 
-                <div id="results-feedback" class="mb-4 text-center text-[var(--color-text-light)] font-semibold min-h-[24px]"></div>
+                <!-- CONTRÔLES STICKY -->
+                <div class="sticky top-4 z-20 bg-[var(--color-bg-card)]/90 backdrop-blur-xl rounded-xl shadow-xl border border-[var(--color-border)] mb-5">
+                    <div class="p-3.5 space-y-3">
+                        <!-- Clavier Tamazight -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[0.6rem] font-bold text-[var(--color-text-light)] uppercase tracking-widest flex-shrink-0 hidden sm:block select-none">ⵜⴰⵎⴰⵣⵉⵖⵜ</span>
+                            <div id="tamazight-keyboard" class="flex gap-1.5 overflow-x-auto pb-1 custom-scrollbar flex-1">
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ɛ')">ɛ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ɣ')">ɣ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ḥ')">ḥ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ḍ')">ḍ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ṛ')">ṛ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ṣ')">ṣ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ṭ')">ṭ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ẓ')">ẓ</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'č')">č</button>
+                                <button class="char-btn text-lg" onclick="insertCharAnimated(this,'ǧ')">ǧ</button>
+                            </div>
+                        </div>
+                        <!-- Recherche -->
+                        <div class="flex gap-2 items-stretch">
+                            <div class="search-wrapper flex-grow relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--color-text-light)] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                <input type="text" id="search-input" placeholder="Rechercher un proverbe, un mot, un thème…" aria-label="Champ de recherche" class="w-full py-2.5 pl-10 pr-10 border-2 border-[var(--color-border)] rounded-xl focus:border-[var(--color-primary)] transition duration-200 text-base bg-[var(--color-bg-card)]">
+                                <button class="clear-search-btn absolute right-3 top-1/2 -translate-y-1/2" aria-label="Vider la recherche">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                                <kbd id="search-slash-hint">/</kbd>
+                            </div>
+                            <div class="search-mode-toggle" title="Mode multi-mots">
+                                <button class="search-mode-btn active" id="mode-et">ET</button>
+                                <button class="search-mode-btn" id="mode-ou">OU</button>
+                            </div>
+                            <button id="random-btn" aria-label="Proverbe aléatoire" title="Sélection aléatoire" class="px-3.5 py-2 bg-[var(--color-accent)] text-white font-bold rounded-xl hover:bg-[var(--color-primary)] transition-all shadow-sm hover:scale-105 flex items-center gap-1.5 flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg>
+                                <span class="hidden sm:inline text-sm">Aléatoire</span>
+                            </button>
+                        </div>
+                        <!-- Thèmes + contrôles -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex-grow overflow-x-auto custom-scrollbar min-w-0">
+                                <div id="theme-list-container" class="flex gap-1.5 py-0.5 whitespace-nowrap"></div>
+                            </div>
+                            <div class="flex items-center gap-1.5 flex-shrink-0">
+                                <select id="sort-select" aria-label="Trier">
+                                    <option value="default">↕ Défaut</option>
+                                    <option value="alpha-asc">A → Z</option>
+                                    <option value="alpha-desc">Z → A</option>
+                                    <option value="theme">Par thème</option>
+                                </select>
+                                <div class="flex flex-shrink-0" role="group" aria-label="Vue">
+                                    <button class="view-toggle-btn active" id="view-grid" title="Grille">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                                    </button>
+                                    <button class="view-toggle-btn" id="view-list" title="Liste">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                    </button>
+                                    <button class="view-toggle-btn" id="view-compact" title="Compact">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="5" x2="21" y2="5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="13" x2="21" y2="13"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[400px]">
-                     <div id="initial-load-message" class="md:col-span-2 xl:col-span-3 text-center p-8 bg-[var(--color-bg-card)] rounded-lg shadow-inner flex flex-col items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-[var(--color-text-light)] opacity-70"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-                        <p class="mt-4 text-lg text-[var(--color-text-light)]" data-i18n="startSearch">Commencez votre recherche pour trouver un proverbe.</p>
-                        <p class="text-md text-[var(--color-text-light)]" data-i18n="orClickRandom">Ou cliquez sur "Aléatoire" pour une découverte.</p>
+                <div id="active-filters" class="mb-3"></div>
+
+                <!-- Barre résultats -->
+                <div id="results-count-bar" class="hidden">
+                    <span id="results-feedback" class="text-[var(--color-text-light)] font-semibold min-h-[20px]"></span>
+                    <div class="flex items-center gap-2">
+                        <button id="export-btn" title="Exporter la liste filtrée en texte">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Exporter
+                        </button>
+                    </div>
+                </div>
+
+                <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 min-h-[400px]">
+                    <div id="initial-load-message" class="md:col-span-2 xl:col-span-3 p-10 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-[var(--color-primary)]"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        </div>
+                        <p class="text-xl font-serif font-semibold text-[var(--color-heading)] mb-1">Que souhaitez-vous explorer ?</p>
+                        <p class="text-sm text-[var(--color-text-light)] mb-5">Tapez un mot en kabyle ou en français, ou choisissez un thème ci-dessus.</p>
+                        <div class="flex flex-wrap justify-center gap-2" id="quick-searches">
+                            <button class="quick-pill" data-q="travail">💼 Travail</button>
+                            <button class="quick-pill" data-q="femme">🌸 Femme</button>
+                            <button class="quick-pill" data-q="ami">🤝 Amitié</button>
+                            <button class="quick-pill" data-q="sagesse">🧠 Sagesse</button>
+                            <button class="quick-pill" data-q="patience">⏳ Patience</button>
+                            <button class="quick-pill" data-q="eau">💧 Eau</button>
+                        </div>
                     </div>
                 </div>
 
                 <div id="infinite-scroll-loader" role="status" class="text-center mt-8 p-4 hidden">
-                    <span class="loader loader-dark" aria-label="Chargement de plus de proverbes"></span>
+                    <span class="loader loader-dark" aria-label="Chargement…"></span>
                 </div>
-                <p id="no-results" class="text-center text-2xl text-[var(--color-text-light)] mt-12 hidden font-serif p-4 border border-dashed rounded-lg">
-                    😔 Aucun proverbe ne correspond à votre recherche.<br>
-                    <span class="text-lg font-sans">Essayez de modifier vos mots-clés.</span>
-                </p>
+                <div id="no-results" class="text-center mt-12 hidden p-8 bg-[var(--color-bg-card)] rounded-xl border border-[var(--color-border)]">
+                    <div class="text-4xl mb-3">🔍</div>
+                    <p class="text-xl font-serif text-[var(--color-heading)] mb-1">Aucun proverbe trouvé</p>
+                    <p class="text-[var(--color-text-light)] text-sm mb-4">Essayez de modifier vos mots-clés, ou passez en mode <strong>OU</strong>.</p>
+                    <button id="clear-all-filters-btn" class="px-4 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-lg text-sm hover:scale-105 transition-transform">Effacer tous les filtres</button>
+                </div>
             </section>
 
             <section id="favoris-tab" class="tab-content" aria-labelledby="favoris-title">
@@ -871,26 +1271,33 @@
         </footer>
     </div>
 
-    <nav id="mobile-nav" class="sm:hidden fixed bottom-4 left-4 right-4 bg-[var(--color-bg-card)]/80 backdrop-blur-lg border border-[var(--color-border)] flex justify-around shadow-2xl z-50 rounded-full p-1">
-        <button data-tab="accueil-tab" class="nav-btn mobile flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span class="text-xs font-semibold">Accueil</span>
+    <nav id="mobile-nav" class="sm:hidden fixed bottom-4 left-4 right-4 bg-[var(--color-bg-card)]/85 backdrop-blur-xl border border-[var(--color-border)] flex justify-around items-end shadow-2xl z-50 rounded-2xl px-1 pb-1 pt-2" style="position:fixed">
+        <button data-tab="accueil-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="text-[0.65rem] font-semibold mt-0.5">Accueil</span>
         </button>
-        <button data-tab="explorer-tab" class="nav-btn mobile flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <span class="text-xs font-semibold">Explorer</span>
+
+        <button data-tab="favoris-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+            <span class="text-[0.65rem] font-semibold mt-0.5">Favoris</span>
         </button>
-        <button data-tab="favoris-tab" class="nav-btn mobile flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-            <span class="text-xs font-semibold">Favoris</span>
+
+        <!-- FAB Explorer central -->
+        <button data-tab="explorer-tab" class="nav-btn explorer-fab flex-1 flex flex-col items-center" aria-label="Explorer les proverbes">
+            <div class="explorer-fab-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <span class="explorer-fab-label">Explorer</span>
         </button>
-        <button data-tab="ai-sage-tab" class="nav-btn mobile flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            <span class="text-xs font-semibold">Sage AI</span>
+
+        <button data-tab="ai-sage-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span class="text-[0.65rem] font-semibold mt-0.5">Sage AI</span>
         </button>
-        <button data-tab="quiz-tab" class="nav-btn mobile flex-1 flex flex-col items-center p-2 text-[var(--color-text)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-            <span class="text-xs font-semibold">Quiz</span>
+
+        <button data-tab="quiz-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            <span class="text-[0.65rem] font-semibold mt-0.5">Quiz</span>
         </button>
     </nav>
     
@@ -1006,6 +1413,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clearSearchBtn: document.querySelector('.clear-search-btn'),
         resultsContainer: document.getElementById('results-container'),
         resultsFeedback: document.getElementById('results-feedback'),
+        resultsCountBar: document.getElementById('results-count-bar'),
+        exportBtn: document.getElementById('export-btn'),
         initialLoadMessage: document.getElementById('initial-load-message'),
         loaderContainer: document.getElementById('infinite-scroll-loader'),
         favoritesContainer: document.getElementById('favorites-container'),
@@ -1131,15 +1540,67 @@ document.addEventListener('DOMContentLoaded', () => {
         return text.replace(regex, `<span class="search-highlight">$1</span>`);
     };
 
+    // ── État Explorer ──
+    const explorerUI = {
+        searchMode: 'ET',   // 'ET' | 'OU'
+        sortMode: 'default', // 'default'|'alpha-asc'|'alpha-desc'|'theme'
+        viewMode: 'grid',    // 'grid'|'list'|'compact'
+    };
+
+    window.insertCharAnimated = (btn, char) => {
+        window.insertChar(char);
+        btn.classList.remove('just-inserted');
+        void btn.offsetWidth; // reflow
+        btn.classList.add('just-inserted');
+    };
+
     window.insertChar = (char) => {
         const input = dom.searchInput;
         const start = input.selectionStart;
         const end = input.selectionEnd;
-        const text = input.value;
-        input.value = text.substring(0, start) + char + text.substring(end);
+        input.value = input.value.substring(0, start) + char + input.value.substring(end);
         input.selectionStart = input.selectionEnd = start + char.length;
         input.focus();
-        loadNextChunk(true); 
+        loadNextChunk(true);
+    };
+
+    const updateActiveFiltersChips = () => {
+        const container = document.getElementById('active-filters');
+        if (!container) return;
+        const chips = [];
+        const q = dom.searchInput.value.trim();
+        if (q) chips.push(`<span class="filter-chip" id="chip-search">🔍 ${q} <span class="chip-x">✕</span></span>`);
+        if (state.activeTheme !== 'tous') {
+            const label = (_cachedThemes||[]).find(([n])=>n===state.activeTheme)?.[1] || state.activeTheme;
+            chips.push(`<span class="filter-chip" id="chip-theme">📌 ${label} <span class="chip-x">✕</span></span>`);
+        }
+        if (explorerUI.sortMode !== 'default') {
+            const labels = {'alpha-asc':'A→Z','alpha-desc':'Z→A','theme':'Thème'};
+            chips.push(`<span class="filter-chip" id="chip-sort">↕ ${labels[explorerUI.sortMode]} <span class="chip-x">✕</span></span>`);
+        }
+        if (explorerUI.searchMode === 'OU') chips.push(`<span class="filter-chip" id="chip-mode">OU <span class="chip-x">✕</span></span>`);
+        container.innerHTML = chips.join('');
+        // Chip click handlers
+        container.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                if (chip.id === 'chip-search') { dom.searchInput.value = ''; loadNextChunk(true); }
+                if (chip.id === 'chip-theme') { state.activeTheme = 'tous'; localStorage.setItem('inzan_theme_filter','tous'); dom.themeListContainer.querySelector('.active')?.classList.remove('active'); dom.themeListContainer.querySelector('[data-theme="tous"]')?.classList.add('active'); loadNextChunk(true); }
+                if (chip.id === 'chip-sort') { explorerUI.sortMode = 'default'; const sel = document.getElementById('sort-select'); if(sel) sel.value = 'default'; loadNextChunk(true); }
+                if (chip.id === 'chip-mode') { explorerUI.searchMode = 'ET'; document.getElementById('mode-et')?.classList.add('active'); document.getElementById('mode-ou')?.classList.remove('active'); loadNextChunk(true); }
+            });
+        });
+    };
+
+    const updateHeroStats = (resultCount) => {
+        const heroTotal = document.getElementById('hero-total');
+        const heroThemes = document.getElementById('hero-themes');
+        const heroResults = document.getElementById('hero-results');
+        if (heroTotal) heroTotal.textContent = state.proverbs.length.toLocaleString('fr-FR');
+        if (heroThemes) heroThemes.textContent = (_cachedThemes||[]).length;
+        if (heroResults !== null && resultCount !== undefined) heroResults.textContent = resultCount.toLocaleString('fr-FR');
+        // Badge nav
+        const badge = document.getElementById('nav-proverb-count-badge');
+        if (badge && state.proverbs.length > 0) badge.textContent = state.proverbs.length.toLocaleString('fr-FR');
     };
 
     // --- TTS (Synthèse Vocale) ---
@@ -1350,46 +1811,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const THEME_COLORS = ['0','1','2','3','4'];
     const createProverbCardHTML = (proverb, isDaily = false, query = '') => {
         if (!proverb) return '';
         const themes = (proverb.theme || '').split(/[,/]/).map(t => t.trim().replace(/[()]/g, '')).filter(Boolean);
         const themesHtml = themes.map(theme =>
-            `<button class="card-theme-badge px-2 py-1 rounded-full text-xs font-semibold bg-[var(--color-primary)]/10 text-[var(--color-primary)]" data-theme="${normalizeText(theme)}">${theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()}</button>`
+            `<button class="card-theme-badge px-2 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-primary)]/10 text-[var(--color-primary)]" data-theme="${normalizeText(theme)}">${theme.charAt(0).toUpperCase() + theme.slice(1).toLowerCase()}</button>`
         ).join('');
-        const cardClasses = isDaily 
-            ? `bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)]`
-            : `stagger-in bg-[var(--color-bg-card)] p-5 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col border-l-4 border-[var(--color-primary)]`;
+        const themeColor = THEME_COLORS[proverb.id % 5];
         const isFavorited = state.favorites.has(proverb.id);
-        
-        // AJOUT : Boutons TTS et Image HD dans la barre d'actions
-        return `
-        <div class="${cardClasses}" id="proverb-${proverb.id}" data-id="${proverb.id}">
-            <div class="flex-grow">
-                <p class="text-xl font-serif font-bold text-[var(--color-heading)] mb-2 italic">« ${highlightText(proverb.kabyle, query)} »</p>
-                <p class="text-[var(--color-text)] text-lg mb-4 border-b border-[var(--color-border)] pb-3 font-light">— ${highlightText(proverb.francais, query)}</p>
-                <div class="flex flex-wrap gap-2 items-center min-h-[30px]">${themesHtml}</div>
-            </div>
-            <div class="mt-4 pt-3 border-t border-[var(--color-border)] flex justify-between items-center gap-2">
-                <div class="flex items-center gap-3">
-                    <button class="explain-btn text-xs font-semibold text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition-colors">Expliquer ✨</button>
-                    <button class="report-btn" data-id="${proverb.id}" data-kabyle="${proverb.kabyle.replace(/"/g,'&quot;')}">Signaler ⚑</button>
+
+        if (isDaily) {
+            return `
+            <div class="proverb-card bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)]" id="proverb-${proverb.id}" data-id="${proverb.id}" data-tcol="${themeColor}">
+                <div class="card-body flex-grow">
+                    <p class="card-kabyle text-xl font-serif font-bold text-[var(--color-heading)] mb-2 italic">« ${highlightText(proverb.kabyle, query)} »</p>
+                    <p class="card-text-fr text-[var(--color-text)] text-lg mb-3 border-b border-[var(--color-border)] pb-3 font-light">— ${highlightText(proverb.francais, query)}</p>
+                    <div class="card-themes flex flex-wrap gap-1.5 items-center min-h-[26px]">${themesHtml}</div>
                 </div>
-                <div class="flex items-center gap-1 text-[var(--color-text-light)]">
-                    <button class="action-btn tts-btn p-1 hover:text-[var(--color-primary)]" aria-label="Écouter le proverbe" title="Écouter">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
-                    </button>
-                    <button class="action-btn image-btn p-1 hover:text-[var(--color-primary)]" aria-label="Créer une image HD" title="Créer une image">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    </button>
-                    <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''} p-1 hover:text-pink-500" aria-label="Ajouter aux favoris" title="Favoris">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                    </button>
-                    <button class="action-btn copy-btn p-1 hover:text-[var(--color-primary)]" aria-label="Copier le proverbe" title="Copier">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    </button>
-                    <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager ce proverbe" title="Partager">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg>
-                    </button>
+                <div class="mt-4 pt-3 border-t border-[var(--color-border)] flex justify-between items-center gap-2">
+                    <div class="card-footer-left flex items-center gap-3">
+                        <button class="explain-btn text-xs font-semibold text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition-colors">Expliquer ✨</button>
+                        <button class="report-btn" data-id="${proverb.id}" data-kabyle="${proverb.kabyle.replace(/"/g,'&quot;')}">Signaler ⚑</button>
+                    </div>
+                    <div class="card-actions flex items-center gap-1 text-[var(--color-text-light)]">
+                        <button class="action-btn tts-btn p-1 hover:text-[var(--color-primary)]" aria-label="Écouter" title="Écouter"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg></button>
+                        <button class="action-btn image-btn p-1 hover:text-[var(--color-primary)]" aria-label="Image HD" title="Image"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+                        <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''} p-1 hover:text-pink-500" aria-label="Favoris" title="Favoris"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+                        <button class="action-btn copy-btn p-1 hover:text-[var(--color-primary)]" aria-label="Copier" title="Copier"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                        <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager" title="Partager"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/></svg></button>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        return `
+        <div class="stagger-in proverb-card" id="proverb-${proverb.id}" data-id="${proverb.id}" data-tcol="${themeColor}">
+            <div class="card-body flex-grow">
+                <p class="card-kabyle text-[1.05rem] font-serif font-bold text-[var(--color-heading)] mb-1.5 italic leading-snug">« ${highlightText(proverb.kabyle, query)} »</p>
+                <p class="card-text-fr text-[var(--color-text)] text-sm mb-3 border-b border-[var(--color-border)] pb-2.5 font-light leading-relaxed">— ${highlightText(proverb.francais, query)}</p>
+                <div class="card-themes flex flex-wrap gap-1 items-center min-h-[22px]">${themesHtml}</div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-[var(--color-border)] flex justify-between items-center gap-1">
+                <div class="card-footer-left flex items-center gap-2">
+                    <button class="explain-btn text-[0.72rem] font-bold text-[var(--color-text-light)] hover:text-[var(--color-primary)] transition-colors px-1.5 py-0.5 rounded hover:bg-[var(--color-primary)]/10">✨ Expliquer</button>
+                    <button class="report-btn" data-id="${proverb.id}" data-kabyle="${proverb.kabyle.replace(/"/g,'&quot;')}">⚑</button>
+                </div>
+                <div class="card-actions flex items-center gap-0.5 text-[var(--color-text-light)]">
+                    <button class="action-btn tts-btn p-1 hover:text-[var(--color-primary)]" aria-label="Écouter" title="Écouter"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg></button>
+                    <button class="action-btn image-btn p-1 hover:text-[var(--color-primary)]" aria-label="Image HD" title="Image"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+                    <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''} p-1 hover:text-pink-500" aria-label="Favoris" title="Favoris"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+                    <button class="action-btn copy-btn p-1 hover:text-[var(--color-primary)]" aria-label="Copier" title="Copier"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                    <button class="action-btn share-btn p-1 hover:text-[var(--color-primary)]" aria-label="Partager" title="Partager"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.367a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/></svg></button>
                 </div>
             </div>
         </div>`;
@@ -1434,30 +1907,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filterProverbs = (keywords = []) => {
         if (!state.isCoreDataLoaded) return [];
-
         let useOrLogic = false;
-
-        // When called with explicit keyword list (from AI suggestion), use OR logic
         if (keywords.length > 0) {
             useOrLogic = true;
         } else {
-            // Derive from search bar - use AND logic (all words must match)
             const query = dom.searchInput.value;
             const normalizedQuery = normalizeText(query);
             keywords = normalizedQuery.split(' ').filter(k => k.length > 0);
-            useOrLogic = false;
+            useOrLogic = (explorerUI.searchMode === 'OU');
         }
-
         return state.proverbs.filter(p => {
             const themeMatch = state.activeTheme === 'tous' || (p.theme_norm || '').includes(state.activeTheme);
             if (!themeMatch) return false;
             if (keywords.length === 0) return true;
-            const proverbText = `${p.kabyle_norm || ''} ${p.francais_norm || ''} ${p.theme_norm || ''}`;
+            const proverbText = `${p.kabyle_norm||''} ${p.francais_norm||''} ${p.theme_norm||''}`;
             const normalizedKeywords = keywords.map(normalizeText);
             return useOrLogic
                 ? normalizedKeywords.some(k => proverbText.includes(k))
                 : normalizedKeywords.every(k => proverbText.includes(k));
         });
+    };
+
+    const applySort = (arr) => {
+        if (explorerUI.sortMode === 'default') return arr;
+        const copy = [...arr];
+        if (explorerUI.sortMode === 'alpha-asc')  return copy.sort((a,b) => (a.kabyle||'').localeCompare(b.kabyle||'', 'fr'));
+        if (explorerUI.sortMode === 'alpha-desc') return copy.sort((a,b) => (b.kabyle||'').localeCompare(a.kabyle||'', 'fr'));
+        if (explorerUI.sortMode === 'theme')      return copy.sort((a,b) => (a.theme||'').localeCompare(b.theme||'', 'fr'));
+        return arr;
     };
 
     const loadNextChunk = (reset = false) => {
@@ -1476,7 +1953,11 @@ document.addEventListener('DOMContentLoaded', () => {
             dom.initialLoadMessage.classList.remove('hidden');
             dom.noResults.classList.add('hidden');
             dom.resultsFeedback.textContent = '';
+            if (dom.resultsCountBar) dom.resultsCountBar.classList.add('hidden');
+            if (dom.exportBtn) dom.exportBtn.classList.remove('visible');
             dom.loaderContainer.classList.add('hidden');
+            updateHeroStats(0);
+            updateActiveFiltersChips();
             return;
         }
         dom.initialLoadMessage.classList.add('hidden');
@@ -1488,9 +1969,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.loaderContainer.classList.remove('hidden');
 
         // Single filterProverbs() call — result reused for both count and slice
-        const filteredProverbs = filterProverbs();
+        const filtered = filterProverbs();
+        const filteredProverbs = applySort(filtered);
         if (reset) {
             state.totalFilteredCount = filteredProverbs.length;
+            updateHeroStats(filteredProverbs.length);
+            updateActiveFiltersChips();
         }
         const startIndex = state.currentPage * PROVERBS_PER_PAGE;
         const chunkToLoad = filteredProverbs.slice(startIndex, startIndex + PROVERBS_PER_PAGE);
@@ -1498,12 +1982,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (chunkToLoad.length === 0 && reset) {
             dom.noResults.classList.remove('hidden');
             dom.resultsFeedback.textContent = '';
+            if (dom.resultsCountBar) dom.resultsCountBar.classList.add('hidden');
+            if (dom.exportBtn) dom.exportBtn.classList.remove('visible');
         } else {
             dom.noResults.classList.add('hidden');
             renderChunk(dom.resultsContainer, chunkToLoad, dom.searchInput.value, true);
             state.displayedProverbs.push(...chunkToLoad);
             state.currentPage++;
-            dom.resultsFeedback.textContent = `Affichage de ${state.displayedProverbs.length} sur ${state.totalFilteredCount} proverbes`;
+            const txt = `${state.displayedProverbs.length.toLocaleString('fr-FR')} / ${state.totalFilteredCount.toLocaleString('fr-FR')} proverbes`;
+            dom.resultsFeedback.textContent = txt;
+            if (dom.resultsCountBar) dom.resultsCountBar.classList.remove('hidden');
+            if (dom.exportBtn && state.totalFilteredCount > 0) dom.exportBtn.classList.add('visible');
         }
         if (state.displayedProverbs.length >= state.totalFilteredCount) {
             dom.loaderContainer.classList.add('hidden');
@@ -1527,12 +2016,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         dom.tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
-        dom.navButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+        dom.navButtons.forEach(button => {
+            const isActive = button.dataset.tab === tabId;
+            button.classList.toggle('active', isActive);
+        });
         if (tabId === 'favoris-tab') renderFavorites();
         if (tabId === 'quiz-tab' && state.isCoreDataLoaded && !dom.quizContainer.querySelector('#quiz-game-screen')) {
             showQuizStartScreen();
         }
-        // Update URL hash without scroll jump
         history.replaceState(null, '', `#${tabId}`);
         if (document.body.clientWidth < 640) window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -2338,7 +2829,97 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
             dom.searchInput.focus();
         });
 
-        dom.goToExplorerBtn.addEventListener('click', () => setActiveTab('explorer-tab'));
+        // ── ET / OU toggle ──
+        document.getElementById('mode-et')?.addEventListener('click', () => {
+            explorerUI.searchMode = 'ET';
+            document.getElementById('mode-et').classList.add('active');
+            document.getElementById('mode-ou').classList.remove('active');
+            if (dom.searchInput.value.trim()) loadNextChunk(true);
+        });
+        document.getElementById('mode-ou')?.addEventListener('click', () => {
+            explorerUI.searchMode = 'OU';
+            document.getElementById('mode-ou').classList.add('active');
+            document.getElementById('mode-et').classList.remove('active');
+            if (dom.searchInput.value.trim()) loadNextChunk(true);
+        });
+
+        // ── Tri ──
+        document.getElementById('sort-select')?.addEventListener('change', e => {
+            explorerUI.sortMode = e.target.value;
+            localStorage.setItem('inzan_sort_mode', e.target.value);
+            loadNextChunk(true);
+        });
+
+        // ── Vues ──
+        ['grid','list','compact'].forEach(v => {
+            document.getElementById(`view-${v}`)?.addEventListener('click', () => {
+                explorerUI.viewMode = v;
+                document.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById(`view-${v}`).classList.add('active');
+                dom.resultsContainer.classList.remove('view-grid','view-list','view-compact');
+                if (v !== 'grid') dom.resultsContainer.classList.add(`view-${v}`);
+                localStorage.setItem('inzan_view_mode', v);
+            });
+        });
+
+        // ── Recherches rapides (état vide) ──
+        document.getElementById('quick-searches')?.addEventListener('click', e => {
+            const pill = e.target.closest('.quick-pill');
+            if (!pill) return;
+            dom.searchInput.value = pill.dataset.q;
+            setActiveTab('explorer-tab');
+            loadNextChunk(true);
+            dom.searchInput.focus();
+        });
+
+        // ── Effacer tous les filtres (no-results) ──
+        document.getElementById('clear-all-filters-btn')?.addEventListener('click', () => {
+            dom.searchInput.value = '';
+            state.activeTheme = 'tous';
+            explorerUI.sortMode = 'default';
+            explorerUI.searchMode = 'ET';
+            const sel = document.getElementById('sort-select'); if(sel) sel.value='default';
+            document.getElementById('mode-et')?.classList.add('active');
+            document.getElementById('mode-ou')?.classList.remove('active');
+            dom.themeListContainer.querySelector('.active')?.classList.remove('active');
+            dom.themeListContainer.querySelector('[data-theme="tous"]')?.classList.add('active');
+            loadNextChunk(true);
+        });
+
+        // ── Raccourci clavier "/" → focus recherche ──
+        document.addEventListener('keydown', e => {
+            const tag = document.activeElement?.tagName;
+            if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+                e.preventDefault();
+                setActiveTab('explorer-tab');
+                setTimeout(() => dom.searchInput.focus(), 60);
+            }
+            if (e.key === 'Escape' && document.activeElement === dom.searchInput) {
+                dom.searchInput.blur();
+            }
+        });
+
+        // ── Export résultats filtrés ──
+        dom.exportBtn?.addEventListener('click', () => {
+            if (state.displayedProverbs.length === 0) return;
+            const lines = state.displayedProverbs.map((p, i) =>
+                `${i+1}. « ${p.kabyle} »\n   — ${p.francais}${p.theme ? `\n   (${p.theme})` : ''}`
+            ).join('\n\n');
+            const blob = new Blob([`Inzan n Teqbaylit — Proverbes kabyles\n${'='.repeat(40)}\n\n${lines}\n`], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url;
+            a.download = `inzan-proverbes-${Date.now()}.txt`;
+            a.click(); URL.revokeObjectURL(url);
+            showToast(`📄 ${state.displayedProverbs.length} proverbes exportés`);
+        });
+
+        // ── Explorer scroll-top ──
+        const explorerScrollTopBtn = document.getElementById('explorer-scroll-top');
+        window.addEventListener('scroll', () => {
+            const inExplorer = document.getElementById('explorer-tab').classList.contains('active');
+            explorerScrollTopBtn?.classList.toggle('visible', inExplorer && window.scrollY > 400);
+        });
+        explorerScrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         
         dom.randomBtn.addEventListener('click', () => {
             if (!state.isCoreDataLoaded) {
@@ -2429,7 +3010,7 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
                 const kabyle = btn.dataset.kabyle || proverb.kabyle;
                 const subject = encodeURIComponent(`[Inzan] Erreur proverbe #${proverbId}`);
                 const body = encodeURIComponent(`Proverbe : « ${kabyle} »\n\nDescription de l'erreur :\n`);
-                window.open(`mailto:contact@kabyle.app?subject=${subject}&body=${body}`);
+                window.open(`mailto:tamazirtvoussad@gmail.com?subject=${subject}&body=${body}`);
             }
             if (e.target.closest('.card-theme-badge')) {
                  e.stopPropagation();
@@ -2496,6 +3077,19 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
         registerServiceWorker();
         setupEventListeners();
         setupInfiniteScroll();
+
+        // ── Restore Explorer preferences ──
+        const savedView = localStorage.getItem('inzan_view_mode') || 'grid';
+        explorerUI.viewMode = savedView;
+        document.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`view-${savedView}`)?.classList.add('active');
+        dom.resultsContainer.classList.remove('view-grid','view-list','view-compact');
+        if (savedView !== 'grid') dom.resultsContainer.classList.add(`view-${savedView}`);
+
+        const savedSort = localStorage.getItem('inzan_sort_mode') || 'default';
+        explorerUI.sortMode = savedSort;
+        const sortEl = document.getElementById('sort-select');
+        if (sortEl) sortEl.value = savedSort;
 
         // ── Hash-based tab routing ──
         const hashTab = window.location.hash.replace('#', '');
@@ -2611,6 +3205,11 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
                 // Build themes cache once
                 buildThemesCache(state.proverbs);
                 updateAvailableThemes();
+                // Init hero stats (themes count, total)
+                updateHeroStats(undefined);
+                // Update nav badge
+                const badge = document.getElementById('nav-proverb-count-badge');
+                if (badge) badge.textContent = state.proverbs.length.toLocaleString('fr-FR');
 
                 // Daily proverb
                 renderDailyProverb();
@@ -2758,6 +3357,11 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
     main();
 });
 </script>
+    <!-- ── EXPLORER SCROLL TOP ── -->
+    <button id="explorer-scroll-top" title="Retour en haut de l'Explorer" aria-label="Retour en haut">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+
     <!-- ── FLASHCARD OVERLAY ── -->
     <div id="flashcard-overlay" role="dialog" aria-modal="true" aria-label="Mode Flashcards">
         <header class="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg-card)]/80 backdrop-blur-md">
