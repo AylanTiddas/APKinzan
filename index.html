@@ -41,6 +41,7 @@
     <title>Inzan n Teqbaylit - Trésors de la Sagesse Kabyle</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -975,6 +976,523 @@
             letter-spacing: 0.04em;
         }
 
+        /* ══════════════════════════════════════════
+           ── ACCUEIL HERO ──
+        ══════════════════════════════════════════ */
+        .accueil-hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--color-primary) 12%, var(--color-bg-card)),
+                color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-card)));
+            border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
+            border-radius: 1.25rem;
+            padding: 2.5rem 2rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md),
+                inset 0 1px 0 color-mix(in srgb, white 60%, transparent);
+        }
+        .accueil-hero-pattern {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 340px;
+            height: 340px;
+            color: var(--color-primary);
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        .accueil-hero-body {
+            position: relative;
+            z-index: 1;
+        }
+        .accueil-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: color-mix(in srgb, var(--color-accent) 15%, var(--color-bg-card));
+            border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+            color: var(--color-accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+        .accueil-hero-title {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--color-heading);
+            line-height: 1.15;
+            margin-bottom: 0.65rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .accueil-hero-tifinagh {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            letter-spacing: 0.08em;
+            display: block;
+        }
+        .accueil-hero-sub {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            font-weight: 400;
+            max-width: 36rem;
+            margin: 0 auto 1.25rem;
+            line-height: 1.6;
+        }
+        .accueil-hero-quote {
+            display: inline-block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.92rem;
+            color: var(--color-secondary);
+            background: color-mix(in srgb, var(--color-primary) 6%, var(--color-bg-card));
+            border-left: 3px solid var(--color-primary);
+            border-right: 3px solid var(--color-primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 0.5rem;
+            max-width: 30rem;
+        }
+        .accueil-hero-quote-mark {
+            color: var(--color-primary);
+            font-size: 1.2em;
+            line-height: 0;
+            vertical-align: -0.15em;
+        }
+        @media (max-width: 480px) {
+            .accueil-hero { padding: 2rem 1.25rem 1.5rem; }
+            .accueil-hero-title { font-size: 1.7rem; }
+            .accueil-hero-pattern { width: 220px; height: 220px; }
+        }
+
+        /* ── ACCUEIL SECTION TITLES ── */
+        .accueil-section-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-heading);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .accueil-section-title svg { color: var(--color-primary); flex-shrink: 0; }
+
+        /* ── STAT CHIPS ENRICHIS ── */
+        .stat-chip-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 50%;
+            margin: 0 auto 0.4rem;
+        }
+        .stat-chip--eye   { border-top: 3px solid var(--color-primary); }
+        .stat-chip--heart { border-top: 3px solid #EC4899; }
+        .stat-chip--quiz  { border-top: 3px solid var(--color-accent); }
+        .stat-chip--eye   .stat-chip-icon { background: color-mix(in srgb, var(--color-primary) 12%, transparent); color: var(--color-primary); }
+        .stat-chip--heart .stat-chip-icon { background: color-mix(in srgb, #EC4899 12%, transparent); color: #EC4899; }
+        .stat-chip--quiz  .stat-chip-icon { background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent); }
+        .stat-chip--heart .stat-value { color: #EC4899; }
+        .stat-chip--quiz  .stat-value  { color: var(--color-accent); }
+        .stat-chip { transition: transform 0.2s, box-shadow 0.2s; }
+        .stat-chip:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+        /* ── PROVERBE DU JOUR LOADING ── */
+        .daily-card-loading {
+            background: var(--color-bg-card);
+            border-radius: 0.875rem;
+            border-top: 6px solid var(--color-accent);
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 10rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ── CTA FLASHCARDS ── */
+        .accueil-cta-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 1rem 1.4rem;
+            background: linear-gradient(135deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 75%, var(--color-primary)));
+            color: white;
+            font-family: var(--font-sans);
+            border: none;
+            border-radius: 0.875rem;
+            cursor: pointer;
+            box-shadow: 0 4px 18px color-mix(in srgb, var(--color-accent) 35%, transparent);
+            transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+                        box-shadow 0.22s, filter 0.22s;
+        }
+        .accueil-cta-btn:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 28px color-mix(in srgb, var(--color-accent) 45%, transparent);
+            filter: brightness(1.06);
+        }
+        .accueil-cta-btn:active { transform: scale(0.98); }
+        .accueil-cta-icon {
+            flex-shrink: 0;
+            width: 2.6rem; height: 2.6rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 0.55rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ── BOOK CARD ── */
+        .accueil-book-card {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-accent);
+            border-radius: 0.875rem;
+            padding: 1.25rem 1.4rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .accueil-book-icon {
+            flex-shrink: 0;
+            width: 3rem; height: 3rem;
+            background: color-mix(in srgb, var(--color-accent) 12%, var(--color-bg-alt));
+            border-radius: 0.6rem;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--color-accent);
+        }
+        .accueil-book-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--color-accent);
+            margin-bottom: 0.2rem;
+        }
+        .accueil-book-title {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.4rem;
+        }
+        .accueil-book-desc {
+            font-size: 0.88rem;
+            color: var(--color-text);
+            line-height: 1.55;
+            margin-bottom: 0.4rem;
+        }
+        .accueil-book-note {
+            font-size: 0.78rem;
+            color: var(--color-text-light);
+        }
+        @media (max-width: 480px) {
+            .accueil-book-card { flex-direction: column; align-items: center; text-align: center; }
+        }
+
+        /* ══════════════════════════════════════════
+           ── SAGE AI ──
+        ══════════════════════════════════════════ */
+        .sage-header {
+            text-align: center;
+            padding: 2rem 1rem 1.5rem;
+            position: relative;
+            max-width: 42rem;
+            margin: 0 auto 0.5rem;
+        }
+        .sage-aura {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 0.75rem;
+            color: var(--color-primary);
+            filter: drop-shadow(0 0 18px color-mix(in srgb, var(--color-primary) 30%, transparent));
+            animation: sageRotate 40s linear infinite;
+        }
+        @keyframes sageRotate {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        .sage-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+        .sage-subtitle {
+            color: var(--color-text-light);
+            font-size: 0.93rem;
+            line-height: 1.6;
+            max-width: 30rem;
+            margin: 0 auto 0.75rem;
+        }
+        .sage-powered {
+            font-size: 0.7rem;
+            color: var(--color-text-light);
+            opacity: 0.65;
+        }
+
+        /* ── SAGE PANEL ── */
+        .sage-panel {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        .sage-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                color-mix(in srgb, var(--color-primary) 4%, transparent),
+                transparent 60%);
+            pointer-events: none;
+        }
+
+        /* ── SAGE EXAMPLES ── */
+        .sage-examples-label {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--color-text-light);
+            margin-bottom: 0.6rem;
+        }
+        .sage-examples-label svg { color: var(--color-accent); }
+        .sage-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .sage-example-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--color-bg-alt);
+            border: 1.5px solid var(--color-border);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            cursor: pointer;
+            transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+            font-family: var(--font-sans);
+        }
+        .sage-example-pill:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: color-mix(in srgb, var(--color-primary) 7%, var(--color-bg-card));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .sage-example-pill:active { transform: scale(0.95); }
+
+        /* ── SAGE TEXTAREA ── */
+        .sage-textarea-wrap {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+        .sage-textarea-corner {
+            position: absolute;
+            width: 12px; height: 12px;
+            border-color: var(--color-primary);
+            border-style: solid;
+            z-index: 1;
+            opacity: 0.4;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .sage-textarea-wrap:focus-within .sage-textarea-corner { opacity: 1; }
+        .sage-textarea-corner--tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; border-radius: 3px 0 0 0; }
+        .sage-textarea-corner--tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; border-radius: 0 3px 0 0; }
+        .sage-textarea-corner--bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; border-radius: 0 0 0 3px; }
+        .sage-textarea-corner--br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; border-radius: 0 0 3px 0; }
+        .sage-textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1.5px solid var(--color-border);
+            border-radius: 0.75rem;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-size: 0.97rem;
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .sage-textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+        }
+        .sage-textarea::placeholder { color: var(--color-text-light); opacity: 0.7; }
+
+        /* ── SAGE BOUTON ── */
+        .sage-ask-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--color-primary) 40%, transparent),
+                        inset 0 1px 0 rgba(255,255,255,0.15);
+            letter-spacing: 0.02em;
+            transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1),
+                        box-shadow 0.22s, filter 0.22s;
+        }
+        .sage-ask-btn:hover {
+            transform: translateY(-2px) scale(1.015);
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--color-primary) 50%, transparent),
+                        inset 0 1px 0 rgba(255,255,255,0.15);
+            filter: brightness(1.07);
+        }
+        .sage-ask-btn:active { transform: scale(0.97); }
+        .sage-ask-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── SAGE STEP FEEDBACK ── */
+        .sage-step-feedback {
+            min-height: 1.5rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--color-text-light);
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* ── SAGE DIVIDER ── */
+        .sage-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .sage-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-border));
+        }
+        .sage-divider:last-child .sage-divider-line {
+            background: linear-gradient(90deg, var(--color-border), transparent);
+        }
+        .sage-divider-symbol {
+            color: var(--color-accent);
+            font-size: 0.85rem;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+
+        /* ── SAGE RESULTS ── */
+        .sage-results { position: relative; }
+
+        .sage-reasoning {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            background: color-mix(in srgb, var(--color-primary) 7%, var(--color-bg-card));
+            border: 1px solid color-mix(in srgb, var(--color-primary) 20%, var(--color-border));
+            border-radius: 0.75rem;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1.25rem;
+            font-style: italic;
+            font-size: 0.92rem;
+            color: var(--color-text);
+            line-height: 1.55;
+        }
+        .sage-reasoning svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--color-primary); }
+
+        .sage-result-block {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 0;
+        }
+        .sage-result-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6rem; height: 1.6rem;
+            background: var(--color-primary);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 800;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent);
+        }
+        .sage-justification {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.82rem;
+            font-style: italic;
+            color: var(--color-text-light);
+            background: var(--color-bg-alt);
+            border-left: 3px solid var(--color-secondary);
+            border-radius: 0 0.4rem 0.4rem 0;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.65rem;
+            line-height: 1.5;
+        }
+        .sage-justification svg { flex-shrink: 0; margin-top: 0.1rem; color: var(--color-secondary); }
+
+        .sage-empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .sage-empty-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+
+        .sage-error {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: color-mix(in srgb, #EF4444 8%, var(--color-bg-card));
+            border: 1px solid color-mix(in srgb, #EF4444 25%, transparent);
+            border-radius: 0.75rem;
+            padding: 1rem 1.1rem;
+            color: #991B1B;
+            font-size: 0.88rem;
+        }
+        html.dark .sage-error { color: #FCA5A5; }
+        .sage-error > span { font-size: 1.25rem; flex-shrink: 0; }
+
         /* ── HISTORY ── */
         #history-list {
             display: flex;
@@ -1035,6 +1553,115 @@
             opacity: 1;
             color: #EF4444;
         }
+
+        /* ── SALON CSS ── */
+        .salon-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; color: white;
+            flex-shrink: 0;
+        }
+        .salon-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            transition: box-shadow 0.2s;
+        }
+        .salon-card:hover { box-shadow: var(--shadow-md); }
+        .salon-comment-card {
+            background: var(--color-bg-alt);
+            border-radius: 0.75rem;
+            padding: 0.6rem 0.9rem;
+            border: 1px solid var(--color-border);
+        }
+        .salon-like-btn {
+            display: flex; align-items: center; gap: 0.3rem;
+            padding: 0.3rem 0.7rem; border-radius: 999px;
+            border: 1px solid var(--color-border);
+            background: transparent;
+            color: var(--color-text-light);
+            font-size: 0.8rem; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .salon-like-btn:hover, .salon-like-btn.liked {
+            background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        .salon-input {
+            width: 100%;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            resize: none;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .salon-input:focus { border-color: var(--color-primary); }
+        .salon-submit-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.6rem 1.4rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .salon-submit-btn:hover { background: var(--color-secondary); }
+        .salon-submit-btn:active { transform: scale(0.97); }
+        .salon-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .salon-toggle-comments {
+            background: none; border: none; cursor: pointer;
+            color: var(--color-text-light); font-size: 0.8rem;
+            font-family: var(--font-sans);
+            display: flex; align-items: center; gap: 0.3rem;
+            padding: 0.2rem 0.4rem; border-radius: 0.4rem;
+            transition: color 0.2s, background 0.2s;
+        }
+        .salon-toggle-comments:hover { color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 8%, transparent); }
+        .salon-stars { display: flex; gap: 0.2rem; }
+        .salon-star {
+            background: none; border: none; cursor: pointer;
+            font-size: 1.4rem; color: var(--color-border);
+            transition: color 0.15s, transform 0.1s;
+            line-height: 1;
+        }
+        .salon-star:hover, .salon-star.active { color: var(--color-accent); transform: scale(1.15); }
+        .salon-badge {
+            display: inline-block; padding: 0.15rem 0.55rem;
+            border-radius: 999px; font-size: 0.7rem; font-weight: 600;
+            background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+            color: var(--color-accent);
+        }
+        #salon-loading { display: flex; justify-content: center; align-items: center; gap: 0.5rem; padding: 2rem; color: var(--color-text-light); }
+        .salon-spinner {
+            width: 20px; height: 20px; border: 2px solid var(--color-border);
+            border-top-color: var(--color-primary); border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .salon-empty { text-align: center; padding: 3rem 1rem; color: var(--color-text-light); }
+        .salon-empty-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        .salon-name-pill {
+            background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+            color: var(--color-primary);
+            border-radius: 999px; padding: 0.2rem 0.7rem;
+            font-size: 0.75rem; font-weight: 600; display: inline-block;
+        }
+        .salon-header-strip {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 1.2rem; padding: 1.5rem 1.5rem 1.2rem;
+            color: white; margin-bottom: 1.5rem;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8 pb-32 sm:pb-8">
@@ -1087,34 +1714,78 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
                     <span class="font-semibold">Quiz</span>
                 </button>
+                <button data-tab="salon-tab" class="nav-btn desktop flex items-center gap-2 px-4 py-2 text-[var(--color-text)] rounded-lg border-2 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586"/><path d="M15 2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4l4-4h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+                    <span class="font-semibold">Salon</span>
+                </button>
             </div>
         </nav>
 
         <main>
             <section id="accueil-tab" class="tab-content" aria-labelledby="proverb-of-the-day-title">
-                <div class="max-w-4xl mx-auto mb-10 text-center p-6 bg-[var(--color-bg-card)]/70 rounded-xl shadow-inner border border-[var(--color-border)]">
-                    <p class="text-lg text-[var(--color-secondary)] italic font-light">
-                        Une Banque de <strong class="text-[var(--color-primary)] font-semibold" id="proverb-count">...</strong>
-                    </p>
-                    <p class="text-[var(--color-text-light)] font-medium mt-2">Découvrez et explorez des milliers de proverbes kabyles (Inzan). Une collection interactive de la sagesse populaire de Kabylie avec des explications, des favoris et une recherche assistée par IA.</p>
-                    <span class="block mt-2 font-medium text-[var(--color-primary)]">"Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem."</span>
+
+                <!-- ── HERO BANNER AMAZIGH ── -->
+                <div class="accueil-hero max-w-4xl mx-auto mb-8 fade-in" aria-hidden="false">
+                    <!-- Motif géométrique Tifinagh en SVG décoratif -->
+                    <svg class="accueil-hero-pattern" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <!-- losanges Amazighs -->
+                        <polygon points="100,10 140,50 100,90 60,50" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+                        <polygon points="100,30 128,54 100,78 72,54" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        <line x1="60" y1="50" x2="140" y2="50" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        <line x1="100" y1="10" x2="100" y2="90" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        <!-- croix du bas -->
+                        <line x1="100" y1="110" x2="100" y2="190" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+                        <line x1="60" y1="150" x2="140" y2="150" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+                        <circle cx="100" cy="150" r="22" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        <!-- petits losanges coins -->
+                        <polygon points="18,18 30,28 18,38 6,28" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+                        <polygon points="182,18 194,28 182,38 170,28" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+                        <polygon points="18,162 30,172 18,182 6,172" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+                        <polygon points="182,162 194,172 182,182 170,172" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+                    </svg>
+
+                    <div class="accueil-hero-body">
+                        <div class="accueil-hero-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.09 8.26L2 9.27l5 4.87l-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87l-7.09-1.01z"/></svg>
+                            <span id="proverb-count">...</span> proverbes kabyles
+                        </div>
+                        <h1 class="accueil-hero-title">
+                            <span class="accueil-hero-tifinagh">ⵉⵏⵣⴰⵏ</span>
+                        </h1>
+                        <p class="accueil-hero-sub">La sagesse ancestrale de Kabylie — explorée, partagée, vivante.</p>
+                        <blockquote class="accueil-hero-quote">
+                            <span class="accueil-hero-quote-mark">"</span>
+                            Anzi am ddwa, ilaq ad t-yesseqdec umdan akken iwulem.
+                            <span class="accueil-hero-quote-mark">"</span>
+                        </blockquote>
+                    </div>
                 </div>
 
-                <!-- Mini Tableau de Bord Stats -->
+                <!-- ── TABLEAU DE BORD ── -->
                 <div class="max-w-3xl mx-auto mb-8 fade-in">
-                    <h2 class="text-xl font-serif text-[var(--color-heading)] mb-3 font-semibold flex items-center gap-2">
-                        <span>📊</span> Mon Tableau de Bord
+                    <h2 class="accueil-section-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        Mon Tableau de Bord
                     </h2>
                     <div class="stats-grid">
-                        <div class="stat-chip">
+                        <div class="stat-chip stat-chip--eye">
+                            <div class="stat-chip-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </div>
                             <div class="stat-value" id="stat-viewed">0</div>
                             <div class="stat-label">Consultés</div>
                         </div>
-                        <div class="stat-chip">
+                        <div class="stat-chip stat-chip--heart">
+                            <div class="stat-chip-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            </div>
                             <div class="stat-value" id="stat-favorites">0</div>
                             <div class="stat-label">Favoris</div>
                         </div>
-                        <div class="stat-chip">
+                        <div class="stat-chip stat-chip--quiz">
+                            <div class="stat-chip-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                            </div>
                             <div class="stat-value" id="stat-quiz">—</div>
                             <div class="stat-label">Meilleur quiz</div>
                         </div>
@@ -1122,53 +1793,66 @@
                     <div id="stat-top-theme" class="mt-2 text-center text-xs text-[var(--color-text-light)]"></div>
                 </div>
 
-                <!-- Historique de navigation -->
+                <!-- ── HISTORIQUE ── -->
                 <div class="max-w-3xl mx-auto mb-8 fade-in" id="history-section" style="display:none">
-                    <h2 class="text-xl font-serif text-[var(--color-heading)] mb-3 font-semibold flex items-center gap-2">
-                        <span>🕐</span> Récemment consultés
+                    <h2 class="accueil-section-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Récemment consultés
                     </h2>
                     <div id="history-list" class="custom-scrollbar"></div>
                 </div>
 
-                <!-- Proverbe du Jour -->
-                <div class="flex items-center justify-between max-w-3xl mx-auto mb-3">
-                    <h2 id="proverb-of-the-day-title" class="text-3xl font-serif text-[var(--color-primary)] font-semibold flex items-center gap-2">Proverbe du Jour 💡</h2>
-                    <div class="flex gap-2">
-                        <button id="daily-prev-btn" class="daily-nav-btn" title="Proverbe précédent" aria-label="Proverbe précédent">◀</button>
-                        <button id="daily-next-btn" class="daily-nav-btn" title="Proverbe suivant" aria-label="Proverbe suivant">▶</button>
+                <!-- ── PROVERBE DU JOUR ── -->
+                <div class="max-w-3xl mx-auto mb-3 fade-in">
+                    <div class="flex items-center justify-between">
+                        <h2 id="proverb-of-the-day-title" class="accueil-section-title mb-0">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            Proverbe du Jour
+                        </h2>
+                        <div class="flex gap-2">
+                            <button id="daily-prev-btn" class="daily-nav-btn" title="Proverbe précédent" aria-label="Proverbe précédent">◀</button>
+                            <button id="daily-next-btn" class="daily-nav-btn" title="Proverbe suivant" aria-label="Proverbe suivant">▶</button>
+                        </div>
                     </div>
                 </div>
                 <div id="proverb-of-the-day-card" class="max-w-3xl mx-auto fade-in">
-                    <div class="bg-[var(--color-bg-card)] p-6 rounded-xl shadow-2xl border-t-8 border-[var(--color-accent)] flex flex-col justify-center items-center h-40">
-                        <span class="loader loader-dark"></span> 
-                        <p class="mt-4 text-sm text-[var(--color-text-light)]">Chargement de la sagesse...</p>
+                    <div class="daily-card-loading">
+                        <span class="loader loader-dark"></span>
+                        <p class="mt-3 text-sm text-[var(--color-text-light)]">Chargement de la sagesse…</p>
                     </div>
                 </div>
 
-                <!-- Bouton Mode Flashcards -->
+                <!-- ── CTA FLASHCARDS ── -->
                 <div class="max-w-3xl mx-auto mt-8 fade-in">
-                    <button id="open-flashcards-btn" class="w-full px-5 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:scale-[1.02]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16"/></svg>
-                        <span>🃏 Mode Flashcards — Apprendre par l'immersion</span>
+                    <button id="open-flashcards-btn" class="accueil-cta-btn">
+                        <span class="accueil-cta-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16"/></svg>
+                        </span>
+                        <span class="flex flex-col text-left">
+                            <span class="font-bold text-base leading-tight">Mode Flashcards</span>
+                            <span class="text-xs opacity-80 font-normal">Apprendre les proverbes par l'immersion</span>
+                        </span>
+                        <svg class="ml-auto flex-shrink-0 opacity-70" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </button>
                 </div>
 
-                <div class="max-w-3xl mx-auto mt-8 fade-in">
-                    <div class="bg-gradient-to-br from-yellow-50/50 to-amber-100/50 dark:from-gray-700/50 dark:to-gray-800/50 border-t-4 border-[var(--color-accent)] rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 shadow-lg">
-                        <div class="flex-shrink-0 text-[var(--color-accent)]">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <!-- ── Une Œuvre Originale à Découvrir ── -->
+                <div class="max-w-3xl mx-auto mt-6 mb-8 fade-in">
+                    <div class="accueil-book-card">
+                        <div class="accueil-book-icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-serif font-bold text-[var(--color-heading)] mb-2">Découvrez Une Œuvre Originale</h3>
-                            <p class="text-[var(--color-text)] mb-2">
-                                Une partie de cette banque de proverbes est extraite des 4 tomes de l'œuvre magistrale de Monsieur Aomar SIDER : <strong class="text-[var(--color-primary)] font-semibold">"INZAN amek i d-llan"</strong> ("Origines des proverbes et expressions kabyles").
+                        <div class="accueil-book-body">
+                            <div class="accueil-book-label">Une Œuvre Originale à Découvrir</div>
+                            <h3 class="accueil-book-title">"INZAN amek i d-llan"</h3>
+                            <p class="accueil-book-desc">
+                                Une partie de cette banque est extraite des 4 tomes de l'œuvre magistrale de <strong>Aomar SIDER</strong> — Origines des proverbes et expressions kabyles, un travail remarquable pour ceux qui cherchent des explications étymologiques détaillées.
                             </p>
-                            <p class="text-sm text-[var(--color-text-light)]">
-                                <strong>Son livre, avec les explications étymologiques et l'origine détaillée de chaque proverbe, est disponible à la vente en 4 tomes dans les librairies.</strong>
-                            </p>
+                            <p class="accueil-book-note">📚 Disponible à la vente en 4 tomes dans les librairies.</p>
                         </div>
                     </div>
                 </div>
+
             </section>
 
             <section id="explorer-tab" class="tab-content" aria-labelledby="explorer-title">
@@ -1328,18 +2012,90 @@
             </section>
 
             <section id="ai-sage-tab" class="tab-content" aria-labelledby="ai-sage-title">
-                <h2 id="ai-sage-title" class="text-3xl font-serif text-[var(--color-primary)] mb-5 text-center font-semibold">Le Sage Artificiel ✨</h2>
-                <div class="fade-in max-w-3xl mx-auto bg-[var(--color-bg-card)]/95 p-6 rounded-xl shadow-lg border border-[var(--color-border)]">
-                    <p class="text-center text-[var(--color-text-light)] mb-1">Décrivez une situation, et laissez notre sage vous proposer les proverbes les plus pertinents.</p>
-                    <p class="text-center text-xs text-[var(--color-text-light)] mb-4 opacity-70">Propulsé par <strong>Llama 3.3 70B</strong> via Groq</p>
-                    <textarea id="ai-context-input" class="w-full p-3 border-2 border-[var(--color-border)] rounded-lg focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/30 transition duration-200 text-lg shadow-inner mb-4 bg-[var(--color-bg)]" rows="3" placeholder="Exemple : Mon ami parle beaucoup mais n'agit jamais..."></textarea>
-                    <button id="ai-suggest-btn" class="w-full px-5 py-3 bg-[var(--color-secondary)] text-white font-semibold rounded-lg hover:bg-[var(--color-primary)] transition-all duration-300 flex items-center justify-center gap-2 shadow-md transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                        <span>✨ Demander conseil</span>
-                    </button>
-                    <div id="ai-step-feedback" role="status" aria-live="polite" class="mt-4 text-center text-sm text-[var(--color-text-light)] min-h-[20px]"></div>
-                    <div id="ai-result-feedback" class="mt-4 min-h-[24px]"></div>
+
+                <!-- ── HEADER MYSTIQUE ── -->
+                <div class="sage-header fade-in">
+                    <div class="sage-aura" aria-hidden="true">
+                        <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="80" cy="80" r="70" fill="none" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <circle cx="80" cy="80" r="55" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"/>
+                            <circle cx="80" cy="80" r="38" fill="none" stroke="currentColor" stroke-width="1" opacity="0.12"/>
+                            <!-- étoile Amazigh à 8 branches -->
+                            <g transform="translate(80,80)" fill="currentColor" opacity="0.9">
+                                <polygon points="0,-22 4,-8 0,-4 -4,-8" />
+                                <polygon points="22,0 8,4 4,0 8,-4" />
+                                <polygon points="0,22 -4,8 0,4 4,8" />
+                                <polygon points="-22,0 -8,-4 -4,0 -8,4" />
+                                <polygon points="15,-15 4,-6 0,-4 -3,-7" />
+                                <polygon points="15,15 6,4 4,0 7,-3" />
+                                <polygon points="-15,15 -4,6 0,4 3,7" />
+                                <polygon points="-15,-15 -6,-4 -4,0 -7,3" />
+                                <circle cx="0" cy="0" r="5"/>
+                            </g>
+                            <!-- petites étoiles orbitales -->
+                            <circle cx="80" cy="10" r="2" fill="currentColor" opacity="0.4"/>
+                            <circle cx="150" cy="80" r="2" fill="currentColor" opacity="0.4"/>
+                            <circle cx="80" cy="150" r="2" fill="currentColor" opacity="0.4"/>
+                            <circle cx="10" cy="80" r="2" fill="currentColor" opacity="0.4"/>
+                            <circle cx="125" cy="23" r="1.5" fill="currentColor" opacity="0.3"/>
+                            <circle cx="137" cy="125" r="1.5" fill="currentColor" opacity="0.3"/>
+                            <circle cx="23" cy="137" r="1.5" fill="currentColor" opacity="0.3"/>
+                            <circle cx="23" cy="23" r="1.5" fill="currentColor" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <h2 id="ai-sage-title" class="sage-title">Le Sage Artificiel</h2>
+                    <p class="sage-subtitle">Décrivez votre situation. Le sage puise dans les millénaires de sagesse kabyle pour vous répondre.</p>
+                    <div class="sage-powered">Propulsé par <strong>Llama 3.3 70B</strong> · Groq</div>
                 </div>
+
+                <!-- ── PANNEAU PRINCIPAL ── -->
+                <div class="sage-panel fade-in max-w-3xl mx-auto">
+
+                    <!-- Suggestions rapides -->
+                    <div class="sage-examples-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+                        Exemples de situations
+                    </div>
+                    <div class="sage-examples" id="sage-examples">
+                        <button class="sage-example-pill" data-example="Mon ami parle beaucoup mais n'agit jamais.">🗣️ L'ami bavard</button>
+                        <button class="sage-example-pill" data-example="Je dois choisir entre deux chemins et j'hésite à prendre une décision importante.">🌿 Un choix difficile</button>
+                        <button class="sage-example-pill" data-example="Quelqu'un m'a trahi alors que je lui faisais confiance.">💔 La trahison</button>
+                        <button class="sage-example-pill" data-example="Je travaille dur mais les résultats tardent à venir.">⏳ La patience au travail</button>
+                        <button class="sage-example-pill" data-example="Je veux enseigner quelque chose à mes enfants sur la valeur de la famille.">🏡 La famille</button>
+                    </div>
+
+                    <!-- Zone de saisie -->
+                    <div class="sage-textarea-wrap">
+                        <div class="sage-textarea-corner sage-textarea-corner--tl" aria-hidden="true"></div>
+                        <div class="sage-textarea-corner sage-textarea-corner--tr" aria-hidden="true"></div>
+                        <div class="sage-textarea-corner sage-textarea-corner--bl" aria-hidden="true"></div>
+                        <div class="sage-textarea-corner sage-textarea-corner--br" aria-hidden="true"></div>
+                        <textarea id="ai-context-input"
+                            class="sage-textarea"
+                            rows="4"
+                            placeholder="Décrivez votre situation en quelques mots… Le sage vous guidera avec la sagesse de nos ancêtres."></textarea>
+                    </div>
+
+                    <!-- Bouton principal -->
+                    <button id="ai-suggest-btn" class="sage-ask-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                        <span>Consulter le Sage</span>
+                    </button>
+
+                    <!-- Feedback progression -->
+                    <div id="ai-step-feedback" role="status" aria-live="polite" class="sage-step-feedback"></div>
+
+                    <!-- Séparateur décoratif (visible uniquement quand résultats) -->
+                    <div class="sage-divider" id="sage-divider" style="display:none" aria-hidden="true">
+                        <div class="sage-divider-line"></div>
+                        <span class="sage-divider-symbol">✦</span>
+                        <div class="sage-divider-line"></div>
+                    </div>
+
+                    <!-- Zone résultats -->
+                    <div id="ai-result-feedback" class="sage-results mt-2 min-h-[24px]"></div>
+                </div>
+
             </section>
 
              <section id="quiz-tab" class="tab-content" aria-labelledby="quiz-title">
@@ -1349,6 +2105,85 @@
                         <span class="loader loader-dark"></span>
                         <p class="mt-4 text-sm text-[var(--color-text-light)]">Chargement du module de Quiz...</p>
                     </div>
+                </div>
+            </section>
+
+            <!-- ── SALON TAB ── -->
+            <section id="salon-tab" class="tab-content" aria-labelledby="salon-title">
+                <div class="max-w-3xl mx-auto">
+
+                    <!-- Header strip -->
+                    <div class="salon-header-strip">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586"/><path d="M15 2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4l4-4h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+                            <h2 id="salon-title" class="text-2xl font-serif font-bold text-white">Le Salon des Voix</h2>
+                        </div>
+                        <p class="text-white/80 text-sm">Partagez votre avis sur Inzan ou sur la sagesse kabyle. Vos messages sont visibles par toute la communauté.</p>
+                        <div class="flex items-center gap-2 mt-3">
+                            <span class="text-white/60 text-xs">ⵣ</span>
+                            <span id="salon-count-label" class="text-white/70 text-xs">Chargement des avis…</span>
+                        </div>
+                    </div>
+
+                    <!-- Identité utilisateur (persistée en localStorage) -->
+                    <div id="salon-identity-block" class="salon-card mb-5">
+                        <p class="text-sm font-semibold text-[var(--color-heading)] mb-2">Votre identité dans le salon</p>
+                        <div class="flex gap-3 items-center">
+                            <div class="salon-avatar" id="salon-my-avatar">?</div>
+                            <div class="flex-1">
+                                <input id="salon-username-input" type="text" maxlength="30" placeholder="Votre prénom ou pseudo…" class="salon-input" style="padding: 0.5rem 0.8rem; font-size:0.85rem;">
+                            </div>
+                            <button id="salon-save-name-btn" class="salon-submit-btn" style="padding:0.5rem 1rem; white-space:nowrap">
+                                Valider
+                            </button>
+                        </div>
+                        <p id="salon-identity-msg" class="text-xs text-[var(--color-text-light)] mt-1.5 hidden"></p>
+                    </div>
+
+                    <!-- Formulaire de nouvel avis -->
+                    <div class="salon-card mb-6">
+                        <p class="text-sm font-semibold text-[var(--color-heading)] mb-3">✍️ Déposer un avis</p>
+
+                        <!-- Note étoiles -->
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs text-[var(--color-text-light)]">Note :</span>
+                            <div class="salon-stars" id="salon-star-picker">
+                                <button class="salon-star" data-star="1">★</button>
+                                <button class="salon-star" data-star="2">★</button>
+                                <button class="salon-star" data-star="3">★</button>
+                                <button class="salon-star" data-star="4">★</button>
+                                <button class="salon-star" data-star="5">★</button>
+                            </div>
+                            <span id="salon-star-label" class="text-xs text-[var(--color-text-light)] ml-1"></span>
+                        </div>
+
+                        <!-- Catégorie -->
+                        <div class="flex gap-2 flex-wrap mb-3">
+                            <button class="salon-badge" style="cursor:pointer; border:2px solid transparent;" data-cat="application" id="cat-application">📱 L'application</button>
+                            <button class="salon-badge" style="cursor:pointer; border:2px solid transparent; background:color-mix(in srgb, var(--color-primary) 15%, transparent); color:var(--color-primary);" data-cat="sagesse" id="cat-sagesse">🌿 La sagesse kabyle</button>
+                            <button class="salon-badge" style="cursor:pointer; border:2px solid transparent; background:color-mix(in srgb, var(--color-primary) 15%, transparent); color:var(--color-primary);" data-cat="suggestion" id="cat-suggestion">💡 Suggestion</button>
+                            <button class="salon-badge" style="cursor:pointer; border:2px solid transparent; background:color-mix(in srgb, var(--color-primary) 15%, transparent); color:var(--color-primary);" data-cat="autre" id="cat-autre">💬 Autre</button>
+                        </div>
+
+                        <textarea id="salon-new-avis-text" class="salon-input" rows="3" maxlength="500" placeholder="Partagez votre avis, une remarque, une suggestion…"></textarea>
+                        <div class="flex justify-between items-center mt-2">
+                            <span id="salon-char-count" class="text-xs text-[var(--color-text-light)]">0 / 500</span>
+                            <button id="salon-post-btn" class="salon-submit-btn" disabled>Publier</button>
+                        </div>
+                    </div>
+
+                    <!-- Liste des avis -->
+                    <div id="salon-loading" class="hidden">
+                        <div class="salon-spinner"></div>
+                        <span class="text-sm">Chargement des avis…</span>
+                    </div>
+                    <div id="salon-feed"></div>
+                    <div class="text-center mt-4 mb-2" id="salon-load-more-wrap" style="display:none">
+                        <button id="salon-load-more-btn" class="salon-submit-btn" style="background:var(--color-bg-alt); color:var(--color-text); border:1px solid var(--color-border);">
+                            Voir plus d'avis
+                        </button>
+                    </div>
+
                 </div>
             </section>
         </main>
@@ -1386,6 +2221,10 @@
         <button data-tab="quiz-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
             <span class="text-[0.65rem] font-semibold mt-0.5">Quiz</span>
+        </button>
+        <button data-tab="salon-tab" class="nav-btn mobile flex-1 flex flex-col items-center pb-1 px-1 text-[var(--color-text)]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586"/><path d="M15 2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4l4-4h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+            <span class="text-[0.65rem] font-semibold mt-0.5">Salon</span>
         </button>
     </nav>
     
@@ -2327,7 +3166,7 @@ ${proverb.theme ? `Thème : ${proverb.theme}` : ''}`;
     };
 
     const getAISuggestion_Stage1_GetKeywords = async (context) => {
-        dom.ai.stepFeedback.textContent = "Étape 1/2 : Analyse de la situation...";
+        dom.ai.stepFeedback.innerHTML = `<span style="font-size:1rem">🔍</span><span>Analyse de la situation…</span>`;
 
         const systemPrompt =
 `Vous êtes un expert en recherche sémantique spécialisé dans la culture kabyle.
@@ -2340,7 +3179,7 @@ Répondez UNIQUEMENT avec un objet JSON valide : { "keywords": ["mot1", "mot2", 
     };
 
     const getAISuggestion_Stage2_GetFinalSelection = async (context, candidateProverbs) => {
-        dom.ai.stepFeedback.textContent = "Étape 2/2 : Sélection des meilleurs proverbes...";
+        dom.ai.stepFeedback.innerHTML = `<span style="font-size:1rem">⚖️</span><span>Sélection des proverbes les plus pertinents…</span>`;
 
         const systemPrompt =
 `Vous êtes un sage kabyle expert en proverbes.
@@ -2362,49 +3201,85 @@ Choisissez le ou les plus pertinents et répondez avec le JSON demandé.`;
 
     const getAISuggestion = async (context) => {
         dom.ai.suggestBtn.disabled = true;
-        dom.ai.suggestBtn.innerHTML = `<span class="loader"></span> <span>Analyse...</span>`;
+        dom.ai.suggestBtn.innerHTML = `<span class="loader"></span> <span>Le sage réfléchit…</span>`;
         dom.ai.resultFeedback.innerHTML = '';
-        
+        const divider = document.getElementById('sage-divider');
+        if (divider) divider.style.display = 'none';
+
+        const setStep = (icon, text) => {
+            dom.ai.stepFeedback.innerHTML =
+                `<span style="font-size:1rem">${icon}</span><span>${text}</span>`;
+        };
+
         try {
+            setStep('🔍', 'Analyse de la situation…');
             const keywordsResponse = await getAISuggestion_Stage1_GetKeywords(context);
             if (!keywordsResponse || !keywordsResponse.keywords) {
                 throw new Error("L'IA n'a pas pu générer de mots-clés.");
             }
             const keywords = keywordsResponse.keywords;
-            dom.ai.stepFeedback.textContent = `Étape 1/2 : Mots-clés trouvés : ${keywords.join(', ')}`;
-            
-            const localSearchResults = filterProverbs(keywords); 
+            setStep('🗂️', `Mots-clés : <em>${keywords.join(', ')}</em>`);
+
+            const localSearchResults = filterProverbs(keywords);
             if (localSearchResults.length === 0) {
-                 dom.ai.resultFeedback.innerHTML = `<p class="text-center text-[var(--color-text-light)]">Le sage n'a pas trouvé de proverbe correspondant à ces thèmes dans la base de données.</p>`;
-                 resetAIButton();
-                 return;
+                dom.ai.resultFeedback.innerHTML =
+                    `<div class="sage-empty-state">
+                        <span class="sage-empty-icon">🌿</span>
+                        <p>Le sage n'a pas trouvé de proverbe correspondant à ces thèmes dans la base. Essayez d'autres mots.</p>
+                    </div>`;
+                resetAIButton();
+                return;
             }
 
+            setStep('✨', 'Sélection des proverbes les plus sages…');
             const candidates = localSearchResults.slice(0, 30).map(p => ({ id: p.id, kabyle: p.kabyle, francais: p.francais, theme: p.theme }));
-
             const suggestion = await getAISuggestion_Stage2_GetFinalSelection(context, candidates);
 
             if (!suggestion || !suggestion.proverbs || suggestion.proverbs.length === 0) {
-                 dom.ai.resultFeedback.innerHTML = `<p class="text-center text-[var(--color-text-light)]">Le sage a analysé les résultats mais n'a pas trouvé de correspondance parfaite. Essayez de reformuler.</p>`;
-                 resetAIButton();
-                 return;
+                dom.ai.resultFeedback.innerHTML =
+                    `<div class="sage-empty-state">
+                        <span class="sage-empty-icon">🤔</span>
+                        <p>Le sage a médité, mais n'a pas trouvé de correspondance parfaite. Reformulez votre situation.</p>
+                    </div>`;
+                resetAIButton();
+                return;
             }
 
-            let htmlResult = `<p class="text-center italic text-[var(--color-text-light)] mb-4">"${suggestion.reasoning}"</p>`;
-            suggestion.proverbs.forEach(p => {
+            let htmlResult = '';
+            if (suggestion.reasoning) {
+                htmlResult += `
+                    <div class="sage-reasoning">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                        <p>${suggestion.reasoning}</p>
+                    </div>`;
+            }
+
+            suggestion.proverbs.forEach((p, i) => {
                 const fullProverb = state.proverbs.find(fp => fp.id === p.id);
                 if (fullProverb) {
-                    htmlResult += `<div class="p-3 mb-3 bg-[var(--color-bg)] rounded-lg border-l-4 border-dashed border-[var(--color-secondary)]">
-                        <p class="font-semibold text-sm text-[var(--color-heading)]">Justification du sage :</p>
-                        <p class="italic text-sm">"${p.justification}"</p>
-                    </div>`;
-                    htmlResult += createProverbCardHTML(fullProverb);
+                    htmlResult += `
+                        <div class="sage-result-block">
+                            <div class="sage-result-num">${i + 1}</div>
+                            <div class="sage-justification">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                <span>${p.justification}</span>
+                            </div>
+                            ${createProverbCardHTML(fullProverb)}
+                        </div>`;
                 }
             });
+
             dom.ai.resultFeedback.innerHTML = htmlResult;
 
         } catch (e) {
-            dom.ai.resultFeedback.innerHTML = `<p class="text-red-500 text-center">Le sage doit se reposer. Une erreur est survenue.<br><strong>Détail :</strong> ${e.message}</p>`;
+            dom.ai.resultFeedback.innerHTML =
+                `<div class="sage-error">
+                    <span>⚠️</span>
+                    <div>
+                        <p class="font-semibold">Le sage doit se reposer.</p>
+                        <p class="text-sm opacity-80">${e.message}</p>
+                    </div>
+                </div>`;
         } finally {
             resetAIButton();
         }
@@ -2414,8 +3289,13 @@ Choisissez le ou les plus pertinents et répondez avec le JSON demandé.`;
         dom.ai.suggestBtn.disabled = false;
         dom.ai.suggestBtn.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            <span>✨ Demander conseil</span>`;
+            <span>Consulter le Sage</span>`;
         dom.ai.stepFeedback.textContent = "";
+        // Afficher le séparateur si des résultats sont présents
+        const divider = document.getElementById('sage-divider');
+        if (divider) {
+            divider.style.display = dom.ai.resultFeedback.innerHTML.trim() ? 'flex' : 'none';
+        }
     };
 
     // =========================================================================
@@ -3181,6 +4061,24 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
             if (!context) return showToast("Veuillez décrire une situation.", true);
             getAISuggestion(context);
         });
+
+        // ── Sage: exemple pills → remplissent le textarea ──
+        document.querySelectorAll('.sage-example-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const example = pill.dataset.example;
+                if (dom.ai.contextInput && example) {
+                    dom.ai.contextInput.value = example;
+                    dom.ai.contextInput.focus();
+                    // Petit feedback visuel sur la pill
+                    pill.style.borderColor = 'var(--color-primary)';
+                    pill.style.color = 'var(--color-primary)';
+                    setTimeout(() => {
+                        pill.style.borderColor = '';
+                        pill.style.color = '';
+                    }, 1200);
+                }
+            });
+        });
     };
 
     const main = () => {
@@ -3493,6 +4391,492 @@ Génère exactement ${nQ} questions, une par proverbe différent, en variant les
 
     main();
 });
+</script>
+
+<!-- ── SALON BACK4APP SCRIPT ── -->
+<script>
+(function() {
+    // ╔══════════════════════════════════════════════════════╗
+    // ║  🔑  REMPLACE ICI TES CLÉS BACK4APP                ║
+    // ║  App Settings → Security & Keys dans Back4App       ║
+    // ╚══════════════════════════════════════════════════════╝
+    const B4A_APP_ID  = 'vfsQuwB3TZT3AIbDRSASZEM4Fuekvf14zg9Y37P7';
+    const B4A_JS_KEY  = '4woljtW9NTZZbKPIwbkqJLKnNCSLnwTEQCyxZ53l';
+
+    Parse.initialize(B4A_APP_ID, B4A_JS_KEY);
+    Parse.serverURL = 'https://parseapi.back4app.com/';
+
+    // ── État local du Salon ──
+    const salonState = {
+        username: localStorage.getItem('inzan_salon_username') || '',
+        selectedStar: 0,
+        selectedCat: 'application',
+        avisList: [],
+        skip: 0,
+        limit: 10,
+        hasMore: false,
+        myLikes: JSON.parse(localStorage.getItem('inzan_salon_likes') || '{}'),
+        openComments: new Set(),
+    };
+
+    const CAT_LABELS = {
+        application: '📱 Application',
+        sagesse:     '🌿 Sagesse kabyle',
+        suggestion:  '💡 Suggestion',
+        autre:       '💬 Autre',
+    };
+
+    const STAR_LABELS = ['', 'Médiocre', 'Passable', 'Bien', 'Très bien', 'Excellent !'];
+
+    // ── DOM refs ──
+    const $  = id => document.getElementById(id);
+    let feed, postBtn, textarea, charCount, starPicker, starLabel, loadMoreWrap, loadMoreBtn,
+        myAvatar, usernameInput, saveNameBtn, identityMsg, countLabel, salonLoadingEl;
+
+    function initDOM() {
+        feed          = $('salon-feed');
+        postBtn       = $('salon-post-btn');
+        textarea      = $('salon-new-avis-text');
+        charCount     = $('salon-char-count');
+        starPicker    = $('salon-star-picker');
+        starLabel     = $('salon-star-label');
+        loadMoreWrap  = $('salon-load-more-wrap');
+        loadMoreBtn   = $('salon-load-more-btn');
+        myAvatar      = $('salon-my-avatar');
+        usernameInput = $('salon-username-input');
+        saveNameBtn   = $('salon-save-name-btn');
+        identityMsg   = $('salon-identity-msg');
+        countLabel    = $('salon-count-label');
+        salonLoadingEl = $('salon-loading');
+
+        if (!feed) return; // Salon tab not yet in DOM
+
+        // Pre-fill username
+        if (salonState.username) {
+            usernameInput.value = salonState.username;
+            updateAvatarDisplay(salonState.username);
+        }
+
+        bindEvents();
+        loadAvis(true);
+    }
+
+    // ── Helpers ──
+    function initials(name) {
+        if (!name) return '?';
+        return name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    function avatarColor(name) {
+        if (!name) return '#4A7C59';
+        let h = 0;
+        for (let c of name) h = (h * 31 + c.charCodeAt(0)) & 0xFFFFFF;
+        const colors = ['#4A7C59','#C79A2A','#3A644B','#7B5EA7','#2D8B8B','#C9664A'];
+        return colors[h % colors.length];
+    }
+
+    function updateAvatarDisplay(name) {
+        if (!myAvatar) return;
+        myAvatar.textContent = initials(name);
+        myAvatar.style.background = `linear-gradient(135deg, ${avatarColor(name)}, ${avatarColor(name + '1')})`;
+    }
+
+    function timeAgo(date) {
+        const s = Math.floor((Date.now() - date.getTime()) / 1000);
+        if (s < 60) return 'à l\'instant';
+        if (s < 3600) return `il y a ${Math.floor(s/60)} min`;
+        if (s < 86400) return `il y a ${Math.floor(s/3600)} h`;
+        return `il y a ${Math.floor(s/86400)} j`;
+    }
+
+    function escHtml(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function starsHtml(n) {
+        return Array.from({length:5}, (_,i) =>
+            `<span style="color:${i < n ? 'var(--color-accent)' : 'var(--color-border)'}">★</span>`
+        ).join('');
+    }
+
+    // ── Category selector ──
+    function selectCat(cat) {
+        salonState.selectedCat = cat;
+        ['application','sagesse','suggestion','autre'].forEach(c => {
+            const btn = $('cat-' + c);
+            if (!btn) return;
+            if (c === cat) {
+                btn.style.border = '2px solid var(--color-primary)';
+                btn.style.background = 'color-mix(in srgb, var(--color-primary) 25%, transparent)';
+                btn.style.color = 'var(--color-primary)';
+            } else {
+                btn.style.border = '2px solid transparent';
+                btn.style.background = 'color-mix(in srgb, var(--color-primary) 12%, transparent)';
+                btn.style.color = 'var(--color-primary)';
+            }
+        });
+    }
+
+    // ── Star picker ──
+    function selectStar(n) {
+        salonState.selectedStar = n;
+        starPicker.querySelectorAll('.salon-star').forEach(s => {
+            const v = parseInt(s.dataset.star);
+            s.classList.toggle('active', v <= n);
+        });
+        starLabel.textContent = STAR_LABELS[n] || '';
+        updatePostBtn();
+    }
+
+    function updatePostBtn() {
+        const ok = salonState.username.trim() && textarea.value.trim().length >= 5;
+        postBtn.disabled = !ok;
+    }
+
+    // ── Bind events ──
+    function bindEvents() {
+        // Save username
+        saveNameBtn.addEventListener('click', () => {
+            const name = usernameInput.value.trim();
+            if (!name) { showIdentityMsg('Entrez un pseudo.', true); return; }
+            salonState.username = name;
+            localStorage.setItem('inzan_salon_username', name);
+            updateAvatarDisplay(name);
+            showIdentityMsg('✓ Identité enregistrée !', false);
+            updatePostBtn();
+        });
+
+        usernameInput.addEventListener('keydown', e => { if (e.key === 'Enter') saveNameBtn.click(); });
+
+        // Category
+        ['application','sagesse','suggestion','autre'].forEach(cat => {
+            const btn = $('cat-' + cat);
+            if (btn) btn.addEventListener('click', () => selectCat(cat));
+        });
+        selectCat('application');
+
+        // Stars
+        starPicker.querySelectorAll('.salon-star').forEach(btn => {
+            btn.addEventListener('click', () => selectStar(parseInt(btn.dataset.star)));
+        });
+
+        // Textarea
+        textarea.addEventListener('input', () => {
+            charCount.textContent = `${textarea.value.length} / 500`;
+            updatePostBtn();
+        });
+
+        // Post
+        postBtn.addEventListener('click', postAvis);
+
+        // Load more
+        loadMoreBtn.addEventListener('click', () => loadAvis(false));
+    }
+
+    // ── Show identity message ──
+    function showIdentityMsg(msg, isErr) {
+        identityMsg.textContent = msg;
+        identityMsg.style.color = isErr ? '#EF4444' : 'var(--color-primary)';
+        identityMsg.classList.remove('hidden');
+        setTimeout(() => identityMsg.classList.add('hidden'), 2500);
+    }
+
+    // ── Load avis from Back4App ──
+    async function loadAvis(reset) {
+        if (reset) {
+            salonState.skip = 0;
+            salonState.avisList = [];
+            feed.innerHTML = '';
+        }
+        salonLoadingEl.classList.remove('hidden');
+        loadMoreWrap.style.display = 'none';
+
+        try {
+            const Avis = Parse.Object.extend('SalonAvis');
+            const query = new Parse.Query(Avis);
+            query.descending('createdAt');
+            query.limit(salonState.limit + 1);
+            query.skip(salonState.skip);
+
+            const results = await query.find();
+            salonLoadingEl.classList.add('hidden');
+
+            salonState.hasMore = results.length > salonState.limit;
+            const toShow = results.slice(0, salonState.limit);
+            salonState.skip += toShow.length;
+
+            if (reset && toShow.length === 0) {
+                feed.innerHTML = `<div class="salon-empty"><div class="salon-empty-icon">🌿</div><p class="font-semibold text-[var(--color-heading)]">Aucun avis pour l'instant</p><p class="text-sm mt-1">Soyez le premier à partager votre voix !</p></div>`;
+            } else {
+                toShow.forEach(obj => {
+                    salonState.avisList.push(obj);
+                    feed.appendChild(buildAvisCard(obj));
+                });
+            }
+
+            // Update count label
+            const countQ = new Parse.Query(Avis);
+            const total = await countQ.count();
+            countLabel.textContent = `${total} avis de la communauté`;
+
+            if (salonState.hasMore) {
+                loadMoreWrap.style.display = 'block';
+            }
+        } catch(e) {
+            salonLoadingEl.classList.add('hidden');
+            const errMsg = e.message || 'Erreur de connexion à Back4App.';
+            if (feed.innerHTML === '') {
+                feed.innerHTML = `<div class="salon-empty">
+                    <div class="salon-empty-icon">⚠️</div>
+                    <p class="font-semibold text-[var(--color-heading)]">Connexion impossible</p>
+                    <p class="text-sm mt-1 text-red-500">${escHtml(errMsg)}</p>
+                    <p class="text-xs mt-2 text-[var(--color-text-light)]">Vérifiez vos clés Back4App dans le code.</p>
+                </div>`;
+            }
+            console.error('[Salon Back4App]', e);
+        }
+    }
+
+    // ── Post a new avis ──
+    async function postAvis() {
+        const text = textarea.value.trim();
+        if (!text || !salonState.username.trim()) return;
+
+        postBtn.disabled = true;
+        postBtn.textContent = 'Publication…';
+
+        try {
+            const Avis = Parse.Object.extend('SalonAvis');
+            const avis = new Avis();
+            avis.set('author', salonState.username.trim());
+            avis.set('text', text);
+            avis.set('stars', salonState.selectedStar);
+            avis.set('category', salonState.selectedCat);
+            avis.set('likes', 0);
+
+            // Set ACL: public read, owner write
+            const acl = new Parse.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true); // allow likes from others
+            avis.setACL(acl);
+
+            const saved = await avis.save();
+            textarea.value = '';
+            charCount.textContent = '0 / 500';
+            selectStar(0);
+            postBtn.textContent = 'Publier';
+            updatePostBtn();
+
+            // Prepend to feed
+            const newCard = buildAvisCard(saved);
+            newCard.style.animation = 'fadeIn 0.4s ease';
+            if (feed.firstChild && feed.firstChild.classList && feed.firstChild.classList.contains('salon-empty')) {
+                feed.innerHTML = '';
+            }
+            feed.prepend(newCard);
+
+            // Update count
+            const Avis2 = Parse.Object.extend('SalonAvis');
+            const countQ = new Parse.Query(Avis2);
+            const total = await countQ.count();
+            countLabel.textContent = `${total} avis de la communauté`;
+
+        } catch(e) {
+            postBtn.textContent = 'Publier';
+            postBtn.disabled = false;
+            alert('Erreur lors de la publication : ' + (e.message || e));
+            console.error('[Salon Post]', e);
+        }
+    }
+
+    // ── Build avis card HTML ──
+    function buildAvisCard(obj) {
+        const id       = obj.id;
+        const author   = escHtml(obj.get('author') || 'Anonyme');
+        const text     = escHtml(obj.get('text') || '');
+        const stars    = obj.get('stars') || 0;
+        const cat      = obj.get('category') || 'autre';
+        const likes    = obj.get('likes') || 0;
+        const date     = obj.createdAt ? timeAgo(obj.createdAt) : '';
+        const ini      = initials(author);
+        const bgColor  = avatarColor(author);
+        const liked    = !!salonState.myLikes[id];
+
+        const card = document.createElement('div');
+        card.className = 'salon-card mb-4';
+        card.id = `salon-card-${id}`;
+        card.innerHTML = `
+            <div class="flex items-start gap-3">
+                <div class="salon-avatar" style="background:linear-gradient(135deg,${bgColor},${avatarColor(author+'1')})">${ini}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-semibold text-[var(--color-heading)] text-sm">${author}</span>
+                        <span class="salon-badge">${CAT_LABELS[cat] || cat}</span>
+                        <span class="text-[0.7rem] text-[var(--color-text-light)] ml-auto">${date}</span>
+                    </div>
+                    ${stars > 0 ? `<div class="mt-0.5 text-sm leading-none">${starsHtml(stars)}</div>` : ''}
+                    <p class="text-sm text-[var(--color-text)] mt-2 leading-relaxed">${text}</p>
+                    <div class="flex items-center gap-3 mt-3">
+                        <button class="salon-like-btn ${liked ? 'liked' : ''}" data-id="${id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            <span class="like-count-${id}">${likes}</span>
+                        </button>
+                        <button class="salon-toggle-comments" data-id="${id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            <span>Répondre</span>
+                        </button>
+                    </div>
+                    <div class="salon-comments-section mt-3 hidden" id="salon-comments-${id}">
+                        <div class="salon-comments-list mb-2" id="salon-comments-list-${id}">
+                            <p class="text-xs text-[var(--color-text-light)]">Chargement…</p>
+                        </div>
+                        <div class="flex gap-2 mt-2">
+                            <input type="text" maxlength="200" placeholder="Votre réponse…" class="salon-input flex-1" style="padding:0.4rem 0.7rem;font-size:0.82rem;" id="salon-comment-input-${id}">
+                            <button class="salon-submit-btn" style="padding:0.4rem 0.8rem;font-size:0.82rem;" data-comment-id="${id}">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        // Like button
+        card.querySelector('.salon-like-btn').addEventListener('click', () => toggleLike(id, obj));
+
+        // Toggle comments
+        card.querySelector('.salon-toggle-comments').addEventListener('click', () => toggleComments(id, obj));
+
+        // Comment submit
+        card.querySelector(`[data-comment-id="${id}"]`).addEventListener('click', () => {
+            const input = card.querySelector(`#salon-comment-input-${id}`);
+            submitComment(id, input.value.trim(), input);
+        });
+
+        return card;
+    }
+
+    // ── Toggle like ──
+    async function toggleLike(id, obj) {
+        const liked = !!salonState.myLikes[id];
+        const delta = liked ? -1 : 1;
+        const newCount = Math.max(0, (obj.get('likes') || 0) + delta);
+
+        // Optimistic UI
+        salonState.myLikes[id] = !liked;
+        localStorage.setItem('inzan_salon_likes', JSON.stringify(salonState.myLikes));
+        const btn = document.querySelector(`#salon-card-${id} .salon-like-btn`);
+        if (btn) {
+            btn.classList.toggle('liked', !liked);
+            btn.querySelector(`svg`).setAttribute('fill', !liked ? 'currentColor' : 'none');
+            const countEl = document.querySelector(`.like-count-${id}`);
+            if (countEl) countEl.textContent = newCount;
+        }
+        obj.set('likes', newCount);
+
+        try {
+            await obj.save();
+        } catch(e) {
+            // Revert on error
+            salonState.myLikes[id] = liked;
+            localStorage.setItem('inzan_salon_likes', JSON.stringify(salonState.myLikes));
+            console.error('[Salon Like]', e);
+        }
+    }
+
+    // ── Toggle comments ──
+    async function toggleComments(id, obj) {
+        const section = document.getElementById(`salon-comments-${id}`);
+        if (!section) return;
+        const isOpen = !section.classList.contains('hidden');
+        if (isOpen) { section.classList.add('hidden'); return; }
+        section.classList.remove('hidden');
+
+        if (salonState.openComments.has(id)) return;
+        salonState.openComments.add(id);
+        await loadComments(id);
+    }
+
+    // ── Load comments ──
+    async function loadComments(avisId) {
+        const listEl = document.getElementById(`salon-comments-list-${avisId}`);
+        if (!listEl) return;
+        try {
+            const Comment = Parse.Object.extend('SalonComment');
+            const q = new Parse.Query(Comment);
+            q.equalTo('avisId', avisId);
+            q.ascending('createdAt');
+            q.limit(50);
+            const results = await q.find();
+            if (results.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-[var(--color-text-light)] italic">Aucune réponse pour l'instant.</p>`;
+            } else {
+                listEl.innerHTML = results.map(c => {
+                    const a = escHtml(c.get('author') || 'Anonyme');
+                    const t = escHtml(c.get('text') || '');
+                    const d = c.createdAt ? timeAgo(c.createdAt) : '';
+                    const ini = initials(a);
+                    const bg = avatarColor(a);
+                    return `<div class="salon-comment-card flex gap-2 mb-2">
+                        <div class="salon-avatar" style="width:28px;height:28px;font-size:0.7rem;background:linear-gradient(135deg,${bg},${avatarColor(a+'1')})">${ini}</div>
+                        <div class="flex-1">
+                            <div class="flex gap-2 items-center">
+                                <span class="text-xs font-semibold text-[var(--color-heading)]">${a}</span>
+                                <span class="text-[0.65rem] text-[var(--color-text-light)]">${d}</span>
+                            </div>
+                            <p class="text-xs text-[var(--color-text)] mt-0.5">${t}</p>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+        } catch(e) {
+            if (listEl) listEl.innerHTML = `<p class="text-xs text-red-400">Erreur de chargement.</p>`;
+        }
+    }
+
+    // ── Submit comment ──
+    async function submitComment(avisId, text, input) {
+        if (!text || text.length < 2) return;
+        if (!salonState.username.trim()) {
+            alert('Veuillez d\'abord enregistrer votre pseudo dans le salon.');
+            return;
+        }
+        input.disabled = true;
+        try {
+            const Comment = Parse.Object.extend('SalonComment');
+            const c = new Comment();
+            c.set('avisId', avisId);
+            c.set('author', salonState.username.trim());
+            c.set('text', text);
+            const acl = new Parse.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(false);
+            c.setACL(acl);
+            await c.save();
+            input.value = '';
+            input.disabled = false;
+            salonState.openComments.delete(avisId); // force reload
+            await loadComments(avisId);
+            salonState.openComments.add(avisId);
+        } catch(e) {
+            input.disabled = false;
+            alert('Erreur : ' + (e.message || e));
+        }
+    }
+
+    // ── Init when Salon tab is activated ──
+    let salonInited = false;
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-tab="salon-tab"]');
+        if (btn && !salonInited) {
+            salonInited = true;
+            setTimeout(initDOM, 50); // wait for tab to be visible
+        }
+    });
+
+    // Also init if page loads on #salon-tab hash
+    if (location.hash === '#salon-tab') {
+        setTimeout(() => { salonInited = true; initDOM(); }, 300);
+    }
+
+})();
 </script>
     <!-- ── EXPLORER SCROLL TOP ── -->
     <button id="explorer-scroll-top" title="Retour en haut de l'Explorer" aria-label="Retour en haut">
