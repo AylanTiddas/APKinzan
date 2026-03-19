@@ -1561,13 +1561,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const normalizeText = (text) => {
         if (!text) return '';
         let normalized = text.toLowerCase().trim();
-        // Kabyle special characters → ASCII phonetic equivalents
+
+        // 1. Caractères spéciaux kabyles → équivalents phonétiques ASCII
         normalized = normalized
             .replace(/ɣ/g, "gh")
-            .replace(/č/g, "ch")
+            .replace(/č/g, "tch")   // č = "tch" (ex: "ačemmaɣ")
             .replace(/ǧ/g, "dj")
             .replace(/ɛ/g, "3");
-        // Kabyle diacritic variants → base letter
+
+        // 2. Digrammes / géminées kabyles
+        normalized = normalized
+            .replace(/xx/g, "kh")   // xx = kh dans certaines transcriptions
+            .replace(/tt/g, "ts");  // tt = ts (géminée kabyle)
+
+        // 3. Variantes diacritiques kabyles → lettre de base
         normalized = normalized
             .replace(/ṣ/g, "s")
             .replace(/ṭ/g, "t")
@@ -1575,8 +1582,19 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/ḍ/g, "d")
             .replace(/ḥ/g, "h")
             .replace(/ṛ/g, "r");
-        // Strip all remaining accents (NFD decomposition)
+
+        // 4. Suppression de tous les accents restants (décomposition NFD)
         normalized = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        // 5. Équivalences phonétiques (orthographe française ↔ transcription kabyle)
+        //    Appliquées sur la donnée ET la requête pour que tout converge vers la même forme
+        normalized = normalized
+            .replace(/(?<!o)u/g, "ou")  // u (sauf dans "ou") → "ou" (phonétique française)
+            .replace(/c(?!h)/g, "ch")   // c (pas suivi de h) → "ch"
+            .replace(/t(?!s|h)/g, "th") // t (pas suivi de s ou h) → "th"
+            .replace(/d(?!j|h)/g, "dh") // d (pas suivi de j ou h) → "dh"
+            .replace(/(?<!k)x/g, "kh"); // x (pas précédé de k) → "kh"
+
         return normalized.replace(/[^a-z0-9\s]/g, '');
     };
 
