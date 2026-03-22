@@ -3066,17 +3066,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // =========================================================================
-    // COUCHE IA — Groq (llama-3.3-70b-versatile) — API compatible OpenAI
+    // COUCHE IA — Groq (multi-modèles avec fallback automatique) — API compatible OpenAI
     // Clé gratuite sur : https://console.groq.com
     // =========================================================================
     const AI_CONFIG = {
-        apiKey: "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",          // ← remplacer par votre clé Groq
-        model:  "llama-3.3-70b-versatile",
+        apiKey: "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",
+        // Modèles par ordre de préférence — le premier disponible est utilisé
+        models: [
+            "llama-3.1-8b-instant",          // rapide, limite TPD très haute
+            "gemma2-9b-it",                  // fallback léger Google
+            "llama-3.3-70b-versatile",       // grand modèle (limite TPD basse)
+        ],
         endpoint: "https://api.groq.com/openai/v1/chat/completions"
     };
 
+    // Cache local du modèle actif pour éviter de re-tenter les modèles épuisés
+    const _groqModelState = {
+        current: 0,    // index dans AI_CONFIG.models
+        exhaustedUntil: {}  // { modelName: timestampMs }
+    };
+
     /**
-     * Appel générique à l'IA.
+     * Appel générique à l'IA avec fallback automatique sur rate-limit (429).
      * @param {string} systemPrompt  – instructions système
      * @param {string} userPrompt    – message utilisateur
      * @param {boolean} expectJson   – si true, force la sortie JSON et parse la réponse
@@ -3087,10 +3098,27 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error("Clé API Groq manquante. Ajoutez-la dans AI_CONFIG.apiKey (console.groq.com — gratuit).");
         }
 
+        const now = Date.now();
+        // Trouver le premier modèle non-épuisé
+        let modelIndex = -1;
+        for (let i = 0; i < AI_CONFIG.models.length; i++) {
+            const m = AI_CONFIG.models[i];
+            const until = _groqModelState.exhaustedUntil[m] || 0;
+            if (now > until) { modelIndex = i; break; }
+        }
+        if (modelIndex === -1) {
+            // Tous les modèles sont en rate-limit — calculer le délai minimal restant
+            const minUntil = Math.min(...AI_CONFIG.models.map(m => _groqModelState.exhaustedUntil[m] || 0));
+            const waitMin = Math.ceil((minUntil - now) / 60000);
+            throw new Error(`Limite de l'IA atteinte pour tous les modèles disponibles. Réessayez dans environ ${waitMin} minute(s).`);
+        }
+
+        const model = AI_CONFIG.models[modelIndex];
+
         const body = {
-            model: AI_CONFIG.model,
+            model,
             temperature: 0.5,
-            max_tokens: 2048,
+            max_tokens: 1024,
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user",   content: userPrompt   }
@@ -3115,6 +3143,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const errBody = await response.text().catch(() => '');
             let detail = '';
             try { detail = JSON.parse(errBody)?.error?.message || errBody; } catch { detail = errBody; }
+
+            if (response.status === 429) {
+                // Extraire le délai d'attente depuis le message d'erreur si disponible
+                const retryMatch = detail.match(/try again in\s+([\d.]+)(m|s)/i);
+                let waitMs = 20 * 60 * 1000; // 20 min par défaut
+                if (retryMatch) {
+                    const val = parseFloat(retryMatch[1]);
+                    waitMs = retryMatch[2].toLowerCase() === 'm' ? val * 60000 : val * 1000;
+                    waitMs += 5000; // 5 s de marge
+                }
+                _groqModelState.exhaustedUntil[model] = Date.now() + waitMs;
+                console.warn(`[IA] Modèle "${model}" épuisé. Basculement automatique…`);
+                // Réessayer avec le prochain modèle disponible
+                return callAI(systemPrompt, userPrompt, expectJson);
+            }
+
             throw new Error(`Erreur API Groq (${response.status}) : ${detail.slice(0, 300)}`);
         }
 
