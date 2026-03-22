@@ -3070,11 +3070,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clé gratuite sur : https://console.groq.com
     // =========================================================================
     const AI_CONFIG = {
-        apiKey: "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",
+        apiKey: "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",
         // Modèles par ordre de préférence — le premier disponible est utilisé
         models: [
             "llama-3.1-8b-instant",          // rapide, limite TPD très haute
-            "gemma2-9b-it",                  // fallback léger Google
+            "llama3-8b-8192",               // fallback léger Meta
             "llama-3.3-70b-versatile",       // grand modèle (limite TPD basse)
         ],
         endpoint: "https://api.groq.com/openai/v1/chat/completions"
